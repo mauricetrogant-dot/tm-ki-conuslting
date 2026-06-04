@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>TM KI Consulting GbR — KI-Beratung für den öffentlichen und privaten Sektor</title>
+<meta name="description" content="Strategische KI-Beratung für den öffentlichen und privaten Sektor. Von der ersten Idee bis zur produktiven Lösung." />
+<!-- Assets wie Logos, Portraits, Projektbilder und PDF liegen extern im Ordner /assets. -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+
+<script src="https://unpkg.com/lenis@1.0.42/dist/lenis.min.js"></script>
+
+<style>
+  :root {
+    --navy-900: #0a1628;    /* tiefes Dunkelblau */
+    --navy-800: #0f1d33;
+    --navy-700: #152540;
+    --navy-600: #1c3050;
+    --navy-500: #2a4163;
+    --black:    #050a14;
+    --white:    #ffffff;
+    --off-white: #f4f6fa;
+    --gray-300: #b8c2d0;
+    --gray-400: #8a96a8;
+    --gray-500: #5a6578;
+    --line:     rgba(255, 255, 255, .1);
+    --line-light: rgba(255, 255, 255, .06);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: var(--navy-900);
+    color: var(--off-white);
+    font-family: 'Inter', system-ui, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    font-size: 16px;
+  }
+  html.lenis { height: auto; }
+  .lenis.lenis-smooth { scroll-behavior: auto; }
+
+  /* Background — sehr ruhig, kein wildes Effekt */
+  body::before {
+    content: "";
+    position: fixed; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse 100% 80% at 50% 0%, rgba(28, 48, 80, .4), transparent 60%),
+      radial-gradient(ellipse 80% 60% at 100% 100%, rgba(15, 29, 51, .6), transparent 60%);
+    pointer-events: none;
+  }
+  body > * { position: relative; z-index: 1; }
+
+  h1, h2, h3, h4 {
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    color: var(--white);
+  }
+  .serif {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+  }
+  a { color: var(--white); text-decoration: none; transition: opacity .2s; }
+
+  .container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 48px;
+  }
+
+  /* ============ HEADER ============ */
+  header.site {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(10, 22, 40, .8);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--line-light);
+  }
+  .nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 22px 0;
+    max-width: 1280px; margin: 0 auto;
+    padding-left: 48px; padding-right: 48px;
+  }
+  .brand {
+    display: flex; align-items: center; gap: 14px;
+    color: var(--white);
+  }
+  .brand-logo {
+    width: 44px; height: 44px;
+    border: 1px solid rgba(255,255,255,.18);
+    background: var(--white);
+    display: grid; place-items: center;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .brand-logo img {
+    width: 100%; height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+  .brand-text .title {
+    font-size: 15px; font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+  .brand-text .sub {
+    font-size: 11px; color: var(--gray-400);
+    letter-spacing: .14em; text-transform: uppercase;
+    margin-top: 2px;
+  }
+
+  nav.primary ul {
+    list-style: none; display: flex; gap: 36px; align-items: center;
+  }
+  nav.primary a {
+    color: var(--off-white); font-size: 14px; font-weight: 400;
+    opacity: .75; transition: opacity .2s;
+  }
+  nav.primary a:hover { opacity: 1; }
+  .nav-cta {
+    margin-left: 8px;
+    background: var(--white); color: var(--navy-900) !important;
+    padding: 10px 22px; font-size: 13px; font-weight: 500;
+    opacity: 1 !important;
+    transition: background .2s;
+  }
+  .nav-cta:hover { background: var(--off-white); }
+
+  /* ============ HERO ============ */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 140px 0 80px;
+    position: relative;
+  }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-size: 12px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--gray-300); margin-bottom: 36px;
+  }
+  .hero-eyebrow::before {
+    content: ""; width: 32px; height: 1px; background: var(--gray-400);
+  }
+  .hero h1 {
+    font-size: clamp(48px, 6.5vw, 92px);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    font-weight: 300;
+    margin-bottom: 36px;
+    max-width: 18ch;
+  }
+  .hero h1 .serif { color: var(--white); }
+  .hero-lead {
+    font-size: clamp(17px, 1.4vw, 20px);
+    line-height: 1.6;
+    color: var(--gray-300);
+    max-width: 56ch;
+    margin-bottom: 56px;
+    font-weight: 300;
+  }
+  .hero-cta-row { display: flex; gap: 16px; flex-wrap: wrap; }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 16px 28px; font-size: 14px; font-weight: 500;
+    cursor: pointer; border: 1px solid transparent;
+    text-decoration: none; transition: all .25s;
+    letter-spacing: .01em;
+    font-family: inherit;
+  }
+  .btn-primary {
+    background: var(--white); color: var(--navy-900);
+  }
+  .btn-primary:hover { background: var(--off-white); color: var(--navy-900); }
+  .btn-ghost {
+    background: transparent; color: var(--white);
+    border-color: rgba(255,255,255,.25);
+  }
+  .btn-ghost:hover { border-color: var(--white); background: rgba(255,255,255,.05); color: var(--white); }
+  .btn .arrow { transition: transform .25s; font-size: 16px; }
+  .btn:hover .arrow { transform: translateX(4px); }
+
+  .hero-meta {
+    margin-top: 96px;
+    padding-top: 36px;
+    border-top: 1px solid var(--line);
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px;
+  }
+  .hero-meta-item .label {
+    font-size: 11px; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--gray-400);
+    margin-bottom: 8px;
+  }
+  .hero-meta-item .value {
+    font-size: 16px; color: var(--white); font-weight: 400;
+  }
+
+  /* ============ SECTION BASIS ============ */
+  section.block {
+    padding: 140px 0;
+    position: relative;
+  }
+  .section-eyebrow {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-size: 12px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--gray-300); margin-bottom: 24px;
+  }
+  .section-eyebrow::before {
+    content: ""; width: 32px; height: 1px; background: var(--gray-400);
+  }
+  .section-head {
+    margin-bottom: 80px; max-width: 900px;
+  }
+  .section-head h2 {
+    font-size: clamp(36px, 4.5vw, 60px);
+    line-height: 1.1;
+    font-weight: 300;
+    letter-spacing: -0.025em;
+    margin-bottom: 24px;
+  }
+  .section-head p {
+    font-size: 17px; line-height: 1.65;
+    color: var(--gray-300);
+    max-width: 60ch;
+    font-weight: 300;
+  }
+
+  /* ============ SEKTOREN ============ */
+  .sectors-section { background: var(--navy-800); border-top: 1px solid var(--line-light); border-bottom: 1px solid var(--line-light); }
+  .sectors {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 32px;
+  }
+  .sector {
+    background: var(--navy-700);
+    border: 1px solid var(--line);
+    padding: 56px 48px;
+    transition: border-color .25s, background .25s;
+    position: relative;
+  }
+  .sector:hover {
+    border-color: rgba(255, 255, 255, .25);
+    background: var(--navy-600);
+  }
+  .sector-num {
+    font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--gray-400); margin-bottom: 32px;
+  }
+  .sector h3 {
+    font-size: 32px;
+    line-height: 1.15;
+    margin-bottom: 20px;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+  .sector p {
+    color: var(--gray-300);
+    font-size: 16px; line-height: 1.65;
+    margin-bottom: 36px;
+    font-weight: 300;
+  }
+  .sector-list {
+    list-style: none; padding-top: 28px;
+    border-top: 1px solid var(--line);
+  }
+  .sector-list li {
+    padding: 12px 0;
+    font-size: 14px; color: var(--off-white);
+    display: flex; align-items: start; gap: 14px;
+    border-bottom: 1px solid var(--line-light);
+  }
+  .sector-list li:last-child { border-bottom: 0; }
+  .sector-list li::before {
+    content: ""; width: 14px; height: 1px;
+    background: var(--gray-400); margin-top: 11px; flex-shrink: 0;
+  }
+
+  /* ============ LEISTUNGEN ============ */
+  .services {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;
+  }
+  .service {
+    border-top: 1px solid var(--white);
+    padding-top: 36px;
+  }
+  .service-num {
+    font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--gray-400); margin-bottom: 32px;
+  }
+  .service h3 {
+    font-size: 26px; font-weight: 400;
+    margin-bottom: 18px;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+  .service p {
+    color: var(--gray-300); font-size: 15.5px;
+    line-height: 1.65; font-weight: 300;
+    margin-bottom: 28px;
+  }
+  .service-tag {
+    font-size: 12px; color: var(--gray-400);
+    letter-spacing: .04em;
+  }
+
+  /* ============ PROJEKTE ============ */
+  .projects-section { background: var(--navy-800); border-top: 1px solid var(--line-light); border-bottom: 1px solid var(--line-light); }
+  .projects {
+    display: flex; flex-direction: column;
+    border-top: 1px solid var(--line);
+  }
+  .project {
+    display: grid;
+    grid-template-columns: 64px 200px 1fr 180px 40px;
+    gap: 32px; align-items: center;
+    padding: 32px 0;
+    border-bottom: 1px solid var(--line);
+    cursor: pointer;
+    transition: padding-left .3s, background .3s;
+    color: inherit;
+    text-decoration: none;
+  }
+  .project:hover {
+    padding-left: 16px;
+  }
+  .project-logo {
+    width: 56px; height: 56px;
+    border-radius: 12px;
+    display: grid; place-items: center;
+    overflow: hidden;
+    background: var(--navy-700);
+    border: 1px solid var(--line);
+  }
+  .project-logo img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+  }
+  .project-logo.gbm-logo {
+    background: #ffffff;
+    border-color: rgba(255,255,255,.16);
+    padding: 3px;
+  }
+  .project-logo.gbm-logo img {
+    object-fit: contain;
+    border-radius: 8px;
+  }
+  .project-logo.placeholder {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 22px;
+    color: var(--white);
+    opacity: .85;
+  }
+  .project-client {
+    font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--gray-400);
+  }
+  .project-client strong {
+    display: block; color: var(--white); font-size: 15px;
+    margin-top: 8px; font-weight: 500;
+    text-transform: none; letter-spacing: -0.01em;
+  }
+  .project-title {
+    font-size: clamp(22px, 2.2vw, 30px); line-height: 1.2;
+    color: var(--white); margin-bottom: 10px;
+    font-weight: 400; letter-spacing: -0.02em;
+  }
+  .project-desc {
+    font-size: 15px; line-height: 1.6;
+    color: var(--gray-300); font-weight: 300;
+    max-width: 56ch;
+  }
+  .project-meta {
+    font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--gray-400); text-align: right;
+  }
+  .project-meta strong {
+    display: block; color: var(--white); font-size: 14px;
+    margin-top: 6px; font-weight: 500;
+    text-transform: none; letter-spacing: -0.01em;
+  }
+  .project-arrow {
+    color: var(--gray-400); font-size: 20px; transition: all .3s;
+    text-align: right;
+  }
+  .project:hover .project-arrow { color: var(--white); transform: translateX(6px); }
+
+  /* Expand-Variante: Karte mit aufklappbarem Visual */
+  .project-expand {
+    display: block;
+    border-bottom: 1px solid var(--line);
+    padding: 0;
+  }
+  .project-expand .project {
+    border-bottom: none;
+  }
+  .project-expand .project-arrow {
+    transition: transform .3s;
+  }
+  .project-expand[open] .project-arrow {
+    transform: rotate(90deg);
+    color: var(--white);
+  }
+  .project-expand summary {
+    list-style: none;
+    cursor: pointer;
+  }
+  .project-expand summary::-webkit-details-marker { display: none; }
+  .project-detail {
+    padding: 0 0 48px 96px;
+    animation: fadeIn .4s ease-out;
+  }
+  .project-detail-image {
+    display: block;
+    width: 100%;
+    max-width: 720px;
+    height: auto;
+    border: 1px solid var(--line);
+    background: var(--navy-700);
+    box-shadow: 0 30px 60px -30px rgba(0, 0, 0, .6);
+  }
+  .project-detail-caption {
+    margin-top: 18px;
+    font-size: 13px;
+    color: var(--gray-400);
+    letter-spacing: .02em;
+    max-width: 56ch;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ============ TEAM ============ */
+  .team {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 48px;
+  }
+  .member {
+    border: 1px solid var(--line);
+    background: var(--navy-800);
+    padding: 48px;
+    display: flex; flex-direction: column;
+  }
+  .member-portrait {
+    width: 100%; aspect-ratio: 4 / 3;
+    background:
+      linear-gradient(135deg, var(--navy-700) 0%, var(--navy-600) 100%);
+    border: 1px solid var(--line);
+    margin-bottom: 36px;
+    display: grid; place-items: center;
+    position: relative; overflow: hidden;
+  }
+  .member-portrait::before {
+    content: "";
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(circle at 30% 20%, rgba(255,255,255,.04), transparent 50%);
+  }
+
+  .member-portrait .member-photo {
+    position: relative;
+    z-index: 1;
+    width: min(72%, 305px);
+    aspect-ratio: 1 / 1;
+    object-fit: contain;
+    border-radius: 50%;
+    display: block;
+    filter: drop-shadow(0 24px 42px rgba(0,0,0,.24));
+  }
+  .member-portrait .initials {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 88px; color: var(--white);
+    opacity: .25;
+  }
+  .member-portrait .ph-label {
+    position: absolute; bottom: 14px; left: 18px;
+    font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--gray-400);
+  }
+  .member-role {
+    font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--gray-400); margin-bottom: 14px;
+  }
+  .member-name {
+    font-size: 30px; font-weight: 400;
+    line-height: 1.15;
+    margin-bottom: 24px;
+    letter-spacing: -0.02em;
+  }
+  .member-bio {
+    font-size: 15px; line-height: 1.7;
+    color: var(--gray-300); font-weight: 300;
+    margin-bottom: auto;
+  }
+  .member-foot {
+    margin-top: 36px; padding-top: 24px;
+    border-top: 1px solid var(--line);
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 13px; color: var(--gray-400);
+  }
+  .member-foot a {
+    color: var(--white); font-weight: 500;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .member-foot a:hover { color: var(--gray-300); }
+
+  /* ============ KONTAKT CTA ============ */
+  .cta-section {
+    padding: 160px 0;
+    background: var(--black);
+    border-top: 1px solid var(--line-light);
+    text-align: center;
+  }
+  .cta-section h2 {
+    font-size: clamp(40px, 5.5vw, 76px);
+    line-height: 1.1;
+    font-weight: 300;
+    max-width: 22ch;
+    margin: 0 auto 36px;
+    letter-spacing: -0.025em;
+  }
+  .cta-lead {
+    font-size: clamp(16px, 1.3vw, 19px);
+    line-height: 1.65;
+    color: var(--gray-300);
+    max-width: 60ch;
+    margin: 0 auto 48px;
+    font-weight: 300;
+  }
+  .cta-row {
+    display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+  }
+  .cta-trust {
+    margin-top: 40px;
+    display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;
+    font-size: 13px; color: var(--gray-400);
+    letter-spacing: .01em;
+  }
+  .cta-trust .dot-sep { color: var(--gray-500); }
+
+  /* ============ FOOTER ============ */
+  footer {
+    background: var(--black);
+    padding: 80px 0 40px;
+    border-top: 1px solid var(--line-light);
+  }
+  .foot-grid {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 56px; padding-bottom: 56px;
+    border-bottom: 1px solid var(--line);
+  }
+  .foot-brand .foot-name {
+    font-size: 18px; font-weight: 500;
+    margin-bottom: 6px;
+  }
+  .foot-brand .foot-sub {
+    font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--gray-400); margin-bottom: 24px;
+  }
+  .foot-brand p {
+    font-size: 14px; line-height: 1.65;
+    color: var(--gray-300); max-width: 34ch; font-weight: 300;
+  }
+  footer h5 {
+    font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--gray-400); margin-bottom: 18px; font-weight: 500;
+  }
+  footer ul { list-style: none; }
+  footer li { padding: 6px 0; }
+  footer a { color: var(--off-white); font-size: 14px; opacity: .8; }
+  footer a:hover { opacity: 1; }
+  .foot-bottom {
+    padding-top: 32px;
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+    font-size: 12px; letter-spacing: .04em;
+    color: var(--gray-500);
+  }
+
+  /* Reveal animation — nur aktiv wenn JS geladen ist (Klasse wird von Script gesetzt) */
+  html.js-ready .reveal:not(.is-visible) {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  html.js-ready .reveal {
+    transition: opacity .9s ease-out, transform .9s ease-out;
+  }
+  html.js-ready .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ============ LEISTUNGSKATALOG ============ */
+  .catalog-section {
+    background: var(--navy-800);
+    border-top: 1px solid var(--line-light);
+    border-bottom: 1px solid var(--line-light);
+  }
+  .catalog {
+    display: grid;
+    grid-template-columns: 0.85fr 1fr;
+    gap: 72px;
+    align-items: center;
+  }
+  .catalog-cover-link {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    background: var(--navy-700);
+    transition: transform .4s ease, border-color .25s ease, box-shadow .4s ease;
+    box-shadow: 0 30px 60px -30px rgba(0, 0, 0, .6);
+  }
+  .catalog-cover-link:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255, 255, 255, .25);
+    box-shadow: 0 40px 80px -30px rgba(0, 0, 0, .8);
+  }
+  .catalog-cover-link img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .catalog-cover-badge {
+    position: absolute;
+    top: 18px; left: 18px;
+    background: rgba(10, 22, 40, .85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid var(--line);
+    color: var(--white);
+    font-size: 10px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    padding: 8px 12px;
+    font-weight: 500;
+  }
+  .catalog-cover-overlay {
+    position: absolute;
+    inset: auto 0 0 0;
+    padding: 20px 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(to top, rgba(5, 10, 20, .92), rgba(5, 10, 20, 0));
+    color: var(--white);
+    font-size: 13px;
+    letter-spacing: .04em;
+    opacity: 0;
+    transition: opacity .3s ease;
+  }
+  .catalog-cover-link:hover .catalog-cover-overlay { opacity: 1; }
+  .catalog-cover-overlay .arrow { transition: transform .25s; font-size: 16px; }
+  .catalog-cover-link:hover .catalog-cover-overlay .arrow { transform: translateX(4px); }
+
+  .catalog-content h2 {
+    font-size: clamp(36px, 4.5vw, 60px);
+    line-height: 1.1;
+    font-weight: 300;
+    letter-spacing: -0.025em;
+    margin-bottom: 28px;
+  }
+  .catalog-content p {
+    font-size: 17px;
+    line-height: 1.65;
+    color: var(--gray-300);
+    max-width: 56ch;
+    font-weight: 300;
+    margin-bottom: 20px;
+  }
+  .catalog-meta {
+    margin-top: 36px;
+    padding-top: 28px;
+    border-top: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    margin-bottom: 40px;
+  }
+  .catalog-meta .label {
+    font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--gray-400); margin-bottom: 8px;
+  }
+  .catalog-meta .value {
+    font-size: 15px; color: var(--white); font-weight: 400;
+  }
+
+  /* ============ IMPRESSUM MODAL ============ */
+  .impressum-link {
+    font: inherit;
+    color: var(--off-white);
+    opacity: .8;
+    cursor: pointer;
+  }
+  .impressum-link:hover { opacity: 1; }
+  .impressum-modal {
+    width: min(920px, calc(100vw - 32px));
+    max-width: 920px;
+    border: 0;
+    padding: 0;
+    background: transparent;
+    color: var(--off-white);
+    position: fixed;
+    inset: 50% auto auto 50%;
+    transform: translate(-50%, -50%);
+  }
+  .impressum-modal::backdrop {
+    background: rgba(5, 10, 20, .76);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  .impressum-modal-card {
+    position: relative;
+    max-height: min(82vh, 820px);
+    overflow: auto;
+    border: 1px solid var(--line);
+    background: var(--navy-800);
+    padding: 48px;
+    box-shadow: 0 40px 90px -30px rgba(0, 0, 0, .9);
+  }
+  .impressum-modal-card h2 {
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 300;
+    margin-bottom: 24px;
+  }
+  .impressum-modal-card h3 {
+    font-size: 18px;
+    font-weight: 500;
+    margin-top: 30px;
+    margin-bottom: 10px;
+  }
+  .impressum-modal-card p {
+    color: var(--gray-300);
+    font-size: 15px;
+    line-height: 1.7;
+    margin-bottom: 14px;
+    font-weight: 300;
+  }
+  .impressum-note {
+    border: 1px solid var(--line);
+    background: rgba(255,255,255,.04);
+    padding: 18px 20px;
+    margin: 22px 0 8px;
+    color: var(--off-white) !important;
+  }
+  .modal-close {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--line);
+    background: rgba(255,255,255,.04);
+    color: var(--white);
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .modal-close:hover { background: rgba(255,255,255,.08); }
+  .project-static { cursor: default; }
+  .project-static:hover { padding-left: 0; }
+  .project-static:hover .project-arrow { transform: none; color: var(--gray-400); }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 1024px) {
+    .nav { padding-left: 32px; padding-right: 32px; }
+    .container { padding: 0 32px; }
+    .services { grid-template-columns: 1fr; gap: 40px; }
+    .hero-meta { grid-template-columns: 1fr 1fr; gap: 28px; }
+    .catalog { grid-template-columns: 1fr; gap: 48px; }
+    .catalog-cover-link { max-width: 480px; }
+  }
+  @media (max-width: 768px) {
+    nav.primary ul { display: none; }
+    .nav { padding: 18px 24px; }
+    .container { padding: 0 24px; }
+    section.block, .cta-section { padding: 80px 0; }
+    .hero { padding: 120px 0 60px; }
+    .sectors, .team { grid-template-columns: 1fr; gap: 24px; }
+    .sector, .member { padding: 36px 28px; }
+    .impressum-card { padding: 36px 28px; }
+    .project { grid-template-columns: 56px 1fr; gap: 16px; padding: 24px 0; }
+    .project-logo { width: 48px; height: 48px; }
+    .project-client { grid-column: 1 / -1; }
+    .project-meta { text-align: left; grid-column: 1 / -1; }
+    .project > div:nth-child(3) { grid-column: 1 / -1; }
+    .project-arrow { display: none; }
+    .project-detail { padding: 0 0 32px 0; }
+    .foot-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+    .foot-bottom { flex-direction: column; gap: 8px; }
+    .hero-meta { grid-template-columns: 1fr; gap: 20px; padding-top: 28px; margin-top: 56px; }
+    .catalog-meta { grid-template-columns: 1fr; gap: 18px; }
+  }
+</style>
+</head>
+
+<body>
+<header class="site">
+  <div class="nav">
+    <a href="index.html" class="brand">
+      <div class="brand-logo"><img src="assets/TM_KI_Logo.png" alt="TM KI Consulting Logo" /></div>
+      <div class="brand-text">
+        <div class="title">TM KI Consulting GbR</div>
+        <div class="sub">Beratung · Strategie · Umsetzung</div>
+      </div>
+    </a>
+    <nav class="primary">
+      <ul>
+        <li><a href="index.html#leistungen">Leistungen</a></li>
+        <li><a href="index.html#leistungskatalog">Katalog</a></li>
+        <li><a href="index.html#projekte">Vorhaben</a></li>
+        <li><a href="index.html#kontakt" class="nav-cta">Kontakt</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="block" style="padding-top: 160px;">
+    <div class="container">
+      <div class="section-head reveal is-visible" style="margin-bottom: 48px;">
+        <div class="section-eyebrow">Rechtliche Angaben</div>
+        <h1 style="font-size: clamp(40px, 5vw, 68px); font-weight: 300;">Impressum</h1>
+      </div>
+
+      <div class="member" style="max-width: 920px;">
+        <p class="impressum-note">
+          Hinweis: TM KI Consulting wird derzeit als Gesellschaft bürgerlichen Rechts (GbR) durch Julian Manske und Maurice Trogant betrieben. Eine spätere Kapitalgesellschaft befindet sich in Vorbereitung; die Angaben werden nach einer formalen Gründung beziehungsweise Eintragung entsprechend aktualisiert.
+        </p>
+
+        <h3>Angaben gemäß § 5 DDG</h3>
+        <p class="member-bio">
+          TM KI Consulting GbR<br>
+          Julian Manske und Maurice Trogant<br>
+          Ernst-Tengelmann-Ring 22<br>
+          45259 Essen<br>
+          Deutschland
+        </p>
+
+        <h3>Vertreten durch</h3>
+        <p class="member-bio">Julian Manske und Maurice Trogant</p>
+
+        <h3>Kontakt</h3>
+        <p class="member-bio">
+          E-Mail: <a href="mailto:hallo@tm-ai-consulting.de">hallo@tm-ai-consulting.de</a><br>
+          Telefon: <a href="tel:+4915737284004">+49 157 37284004</a>
+        </p>
+
+        <h3>Redaktionell verantwortlich</h3>
+        <p class="member-bio">
+          Verantwortlich für journalistisch-redaktionelle Inhalte gemäß § 18 Abs. 2 MStV:<br>
+          Julian Manske und Maurice Trogant<br>
+          Ernst-Tengelmann-Ring 22<br>
+          45259 Essen
+        </p>
+
+        <h3>Haftungshinweis</h3>
+        <p class="member-bio">
+          Die Inhalte dieser Website wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte übernehmen wir jedoch keine Gewähr.
+        </p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="foot-bottom">
+      <span>© 2026 TM KI Consulting GbR</span>
+      <span>Ernst-Tengelmann-Ring 22 · 45259 Essen</span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
