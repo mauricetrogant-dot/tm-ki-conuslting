@@ -787,49 +787,6 @@
     cursor: pointer;
   }
   .impressum-link:hover { opacity: 1; }
-  .impressum-modal {
-    width: min(920px, calc(100vw - 32px));
-    max-width: 920px;
-    border: 0;
-    padding: 0;
-    background: transparent;
-    color: var(--off-white);
-    position: fixed;
-    inset: 50% auto auto 50%;
-    transform: translate(-50%, -50%);
-  }
-  .impressum-modal::backdrop {
-    background: rgba(5, 10, 20, .76);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-  }
-  .impressum-modal-card {
-    position: relative;
-    max-height: min(82vh, 820px);
-    overflow: auto;
-    border: 1px solid var(--line);
-    background: var(--navy-800);
-    padding: 48px;
-    box-shadow: 0 40px 90px -30px rgba(0, 0, 0, .9);
-  }
-  .impressum-modal-card h2 {
-    font-size: clamp(32px, 4vw, 52px);
-    font-weight: 300;
-    margin-bottom: 24px;
-  }
-  .impressum-modal-card h3 {
-    font-size: 18px;
-    font-weight: 500;
-    margin-top: 30px;
-    margin-bottom: 10px;
-  }
-  .impressum-modal-card p {
-    color: var(--gray-300);
-    font-size: 15px;
-    line-height: 1.7;
-    margin-bottom: 14px;
-    font-weight: 300;
-  }
   .impressum-note {
     border: 1px solid var(--line);
     background: rgba(255,255,255,.04);
@@ -875,7 +832,8 @@
     .container { padding: 0 24px; }
     section.block, .cta-section { padding: 80px 0; }
     .hero { padding: 120px 0 60px; }
-    .hero-3d { display: none; }
+    .hero-3d { opacity: .42; }
+    .hero-3d::before { top: 4%; right: -22%; width: min(120vw, 560px); height: min(120vw, 560px); }
     .sectors, .team { grid-template-columns: 1fr; gap: 24px; }
     .sector, .member { padding: 36px 28px; }
     .impressum-card { padding: 36px 28px; }
@@ -915,7 +873,7 @@
         <li><a href="#sektoren">Sektoren</a></li>
         <li><a href="#projekte">Projekte</a></li>
         <li><a href="#team">Team</a></li>
-        <li><a href="impressum.html" data-open-impressum>Impressum</a></li>
+        <li><a href="impressum.html">Impressum</a></li>
         <li><a href="#kontakt" class="nav-cta">Kontakt</a></li>
       </ul>
     </nav>
@@ -1276,7 +1234,8 @@
           <li><a href="#leistungskatalog">Leistungskatalog (PDF)</a></li>
           <li><a href="#projekte">Projekte</a></li>
           <li><a href="#team">Team</a></li>
-          <li><a href="impressum.html" data-open-impressum>Impressum</a></li>
+          <li><a href="impressum.html">Impressum</a></li>
+          <li><a href="datenschutz.html">Datenschutzerklärung</a></li>
         </ul>
       </div>
       <div>
@@ -1296,37 +1255,6 @@
 </footer>
 
 
-<dialog id="impressum-modal" class="impressum-modal" aria-labelledby="impressum-title">
-  <div class="impressum-modal-card">
-    <button class="modal-close" type="button" data-close-impressum aria-label="Impressum schließen">×</button>
-    <h2 id="impressum-title">Impressum</h2>
-
-    <p class="impressum-note">
-      Hinweis: TM KI Consulting wird derzeit als Gesellschaft bürgerlichen Rechts (GbR) durch Julian Manske und Maurice Trogant betrieben. Eine spätere Kapitalgesellschaft befindet sich in Vorbereitung; die Angaben werden nach einer formalen Gründung beziehungsweise Eintragung entsprechend aktualisiert.
-    </p>
-
-    <h3>Angaben gemäß § 5 DDG</h3>
-    <p>
-      TM KI Consulting GbR<br>
-      Julian Manske und Maurice Trogant<br>
-      Ernst-Tengelmann-Ring 22<br>
-      45259 Essen<br>
-      Deutschland
-    </p>
-
-    <h3>Vertreten durch</h3>
-    <p>
-      Julian Manske und Maurice Trogant
-    </p>
-
-    <h3>Kontakt</h3>
-    <p>
-      E-Mail: <a href="mailto:info@tm-ki-consulting.de">info@tm-ki-consulting.de</a><br>
-      Telefon: <a href="tel:+4915737284004">+49 157 37284004</a>
-    </p>
-
-      </div>
-</dialog>
 
 <script type="module" src="assets/js/hero-three.js"></script>
 
@@ -1371,44 +1299,9 @@ if (typeof Lenis !== 'undefined') {
 
 
 // ============================================================
-// Impressum Modal
-// ============================================================
-const impressumModal = document.getElementById('impressum-modal');
-const openImpressumLinks = document.querySelectorAll('[data-open-impressum]');
-const closeImpressumButtons = document.querySelectorAll('[data-close-impressum]');
-
-openImpressumLinks.forEach(link => {
-  link.addEventListener('click', (e) => {
-    e.preventDefault();
-    if (!impressumModal) return;
-    if (typeof impressumModal.showModal === 'function') {
-      impressumModal.showModal();
-    } else {
-      impressumModal.setAttribute('open', '');
-    }
-  });
-});
-
-closeImpressumButtons.forEach(button => {
-  button.addEventListener('click', () => {
-    if (impressumModal && typeof impressumModal.close === 'function') {
-      impressumModal.close();
-    } else if (impressumModal) {
-      impressumModal.removeAttribute('open');
-    }
-  });
-});
-
-if (impressumModal) {
-  impressumModal.addEventListener('click', (e) => {
-    if (e.target === impressumModal) impressumModal.close();
-  });
-}
-
 // Anchor-Links smooth scroll (mit oder ohne Lenis)
 document.querySelectorAll('a[href^="#"]').forEach(link => {
   link.addEventListener('click', (e) => {
-    if (link.hasAttribute('data-open-impressum')) return;
     const href = link.getAttribute('href');
     if (href === '#' || href.length < 2) return;
     const target = document.querySelector(href);
