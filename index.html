@@ -875,7 +875,8 @@
     .container { padding: 0 24px; }
     section.block, .cta-section { padding: 80px 0; }
     .hero { padding: 120px 0 60px; }
-    .hero-3d { display: none; }
+    .hero-3d { opacity: .42; }
+    .hero-3d::before { top: 4%; right: -22%; width: min(120vw, 560px); height: min(120vw, 560px); }
     .sectors, .team { grid-template-columns: 1fr; gap: 24px; }
     .sector, .member { padding: 36px 28px; }
     .impressum-card { padding: 36px 28px; }
@@ -937,7 +938,7 @@
       <div class="hero-eyebrow reveal">Essen · Gründungsphase 2026</div>
       <h1 class="reveal">
         KI-Beratung für<br>
-        den <span class="serif">öffentlichen</span> und<br>
+        den öffentlichen und<br>
         privaten Sektor.
       </h1>
       <p class="hero-lead reveal">
