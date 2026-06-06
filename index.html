@@ -147,7 +147,7 @@
     content: ""; width: 32px; height: 1px; background: var(--gray-400);
   }
   .hero h1 {
-    font-size: clamp(48px, 6.5vw, 92px);
+    font-size: clamp(42px, 5.4vw, 76px);
     line-height: 1.05;
     letter-spacing: -0.03em;
     font-weight: 300;
@@ -875,8 +875,7 @@
     .container { padding: 0 24px; }
     section.block, .cta-section { padding: 80px 0; }
     .hero { padding: 120px 0 60px; }
-    .hero-3d { opacity: .42; }
-    .hero-3d::before { top: 4%; right: -22%; width: min(120vw, 560px); height: min(120vw, 560px); }
+    .hero-3d { display: none; }
     .sectors, .team { grid-template-columns: 1fr; gap: 24px; }
     .sector, .member { padding: 36px 28px; }
     .impressum-card { padding: 36px 28px; }
@@ -905,7 +904,7 @@
         <img src="assets/TM_KI_Logo.png" alt="TM KI Consulting Logo" />
       </div>
       <div class="brand-text">
-        <div class="title">TM KI Consulting GbR</div>
+        <div class="title">TM KI Consulting </div>
         <div class="sub">Beratung · Strategie · Umsetzung</div>
       </div>
     </a>
@@ -929,10 +928,6 @@
   <section class="hero">
     <div class="hero-3d" aria-hidden="true">
       <canvas id="hero-agent-field"></canvas>
-      <div class="hero-3d-label">
-        <span>Agentenlogik</span>
-        <strong>Input · Modell · Output</strong>
-      </div>
     </div>
     <div class="container">
       <div class="hero-eyebrow reveal">Essen · Gründungsphase 2026</div>
@@ -943,7 +938,7 @@
       </h1>
       <p class="hero-lead reveal">
         Wir begleiten öffentliche Einrichtungen und Unternehmen bei der strategischen
-        und operativen Einführung Künstlicher Intelligenz — von der ersten Idee bis zur produktiven Lösung.
+        und operativen Einführung Künstlicher Intelligenz, von der ersten Idee bis zur produktiven Lösung.
         Wirtschaftlich tragfähig, technisch fundiert, menschlich orientiert.
       </p>
       <div class="hero-cta-row reveal">
@@ -958,7 +953,7 @@
         </div>
         <div class="hero-meta-item">
           <div class="label">Status</div>
-          <div class="value">GbR · Gründungsphase</div>
+          <div class="value">UG · Gründungsphase</div>
         </div>
         <div class="hero-meta-item">
           <div class="label">Sektoren</div>
@@ -1045,15 +1040,15 @@
           <div class="catalog-meta">
             <div>
               <div class="label">Umfang</div>
-              <div class="value">12 Seiten · 10 Phasen</div>
+              <div class="value">13 Seiten · 10 Phasen</div>
             </div>
             <div>
               <div class="label">Rahmenwerk</div>
-              <div class="value">EU AI Act · Datenschutz</div>
+              <div class="value">Consultant Analyse · EU AI Act</div>
             </div>
             <div>
               <div class="label">Stand</div>
-              <div class="value">Mai 2026</div>
+              <div class="value">Juni 2026</div>
             </div>
           </div>
 
@@ -1260,7 +1255,7 @@
   <div class="container">
     <div class="foot-grid">
       <div class="foot-brand">
-        <div class="foot-name">TM KI Consulting GbR</div>
+        <div class="foot-name">TM KI Consulting </div>
         <div class="foot-sub">Beratung · Strategie · Umsetzung</div>
         <p>
           KI-Beratung für den öffentlichen und privaten Sektor.
@@ -1287,14 +1282,14 @@
       <div>
         <h5>Kontakt</h5>
         <ul>
-          <li><a href="mailto:info@tm-ki-consulting.de">hallo@tm-ai-consulting.de</a></li>
+          <li><a href="mailto:info@tm-ki-consulting.de">info@tm-ki-consulting.de</a></li>
           <li><a href="tel:+4915737284004">+49 157 37284004</a></li>
           <li><a href="#">LinkedIn</a></li>
         </ul>
       </div>
     </div>
     <div class="foot-bottom">
-      <span>© 2026 TM KI Consulting GbR</span>
+      <span>© 2026 TM KI Consulting </span>
       <span>Ernst-Tengelmann-Ring 22 · 45259 Essen</span>
     </div>
   </div>
@@ -1330,19 +1325,7 @@
       Telefon: <a href="tel:+4915737284004">+49 157 37284004</a>
     </p>
 
-    <h3>Redaktionell verantwortlich</h3>
-    <p>
-      Verantwortlich für journalistisch-redaktionelle Inhalte gemäß § 18 Abs. 2 MStV:<br>
-      Julian Manske und Maurice Trogant<br>
-      Ernst-Tengelmann-Ring 22<br>
-      45259 Essen
-    </p>
-
-    <h3>Haftungshinweis</h3>
-    <p>
-      Die Inhalte dieser Website wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte übernehmen wir jedoch keine Gewähr.
-    </p>
-  </div>
+      </div>
 </dialog>
 
 <script type="module" src="assets/js/hero-three.js"></script>
