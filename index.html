@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>TM KI Consulting — KI-Agenten für den öffentlichen und privaten Sektor</title>
-<meta name="description" content="KI-Agenten für den öffentlichen und privaten Sektor. Von der ersten Idee bis zur produktiven Lösung." />
+<title>TM KI Consulting GbR — KI-Beratung für den öffentlichen und privaten Sektor</title>
+<meta name="description" content="Strategische KI-Beratung für den öffentlichen und privaten Sektor. Von der ersten Idee bis zur produktiven Lösung." />
 <!-- Assets wie Logos, Portraits, Projektbilder und PDF liegen extern im Ordner /assets. -->
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -147,7 +147,7 @@
     content: ""; width: 32px; height: 1px; background: var(--gray-400);
   }
   .hero h1 {
-    font-size: clamp(48px, 6.5vw, 92px);
+    font-size: clamp(42px, 5.4vw, 76px);
     line-height: 1.05;
     letter-spacing: -0.03em;
     font-weight: 300;
@@ -220,15 +220,16 @@
   .hero-3d::before {
     content: "";
     position: absolute;
-    top: 8%;
-    right: -4%;
-    width: min(68vw, 900px);
-    height: min(68vw, 900px);
+    top: 11%;
+    right: -8%;
+    width: min(60vw, 780px);
+    height: min(60vw, 780px);
     border-radius: 50%;
     background:
-      radial-gradient(circle at 50% 50%, rgba(255,255,255,.10), transparent 0 2px, transparent 3px),
-      radial-gradient(circle at 50% 50%, rgba(42, 65, 99, .46), rgba(21, 37, 64, .14) 45%, transparent 70%);
-    opacity: .80;
+      radial-gradient(circle at 50% 50%, rgba(255,255,255,.09), transparent 0 2px, transparent 3px),
+      radial-gradient(circle at 50% 50%, rgba(42, 65, 99, .42), rgba(21, 37, 64, .12) 45%, transparent 70%);
+    filter: blur(.2px);
+    opacity: .72;
   }
   .hero-3d canvas {
     position: absolute;
@@ -236,7 +237,7 @@
     width: 100%;
     height: 100%;
     display: block;
-    opacity: .88;
+    opacity: .78;
   }
   .hero-3d-label {
     position: absolute;
@@ -778,7 +779,6 @@
     font-size: 15px; color: var(--white); font-weight: 400;
   }
 
-
   /* ============ IMPRESSUM MODAL ============ */
   .impressum-link {
     font: inherit;
@@ -787,49 +787,6 @@
     cursor: pointer;
   }
   .impressum-link:hover { opacity: 1; }
-  .impressum-modal {
-    width: min(920px, calc(100vw - 32px));
-    max-width: 920px;
-    border: 0;
-    padding: 0;
-    background: transparent;
-    color: var(--off-white);
-    position: fixed;
-    inset: 50% auto auto 50%;
-    transform: translate(-50%, -50%);
-  }
-  .impressum-modal::backdrop {
-    background: rgba(5, 10, 20, .76);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-  }
-  .impressum-modal-card {
-    position: relative;
-    max-height: min(82vh, 820px);
-    overflow: auto;
-    border: 1px solid var(--line);
-    background: var(--navy-800);
-    padding: 48px;
-    box-shadow: 0 40px 90px -30px rgba(0, 0, 0, .9);
-  }
-  .impressum-modal-card h2 {
-    font-size: clamp(32px, 4vw, 52px);
-    font-weight: 300;
-    margin-bottom: 24px;
-  }
-  .impressum-modal-card h3 {
-    font-size: 18px;
-    font-weight: 500;
-    margin-top: 30px;
-    margin-bottom: 10px;
-  }
-  .impressum-modal-card p {
-    color: var(--gray-300);
-    font-size: 15px;
-    line-height: 1.7;
-    margin-bottom: 14px;
-    font-weight: 300;
-  }
   .impressum-note {
     border: 1px solid var(--line);
     background: rgba(255,255,255,.04);
@@ -875,9 +832,11 @@
     .container { padding: 0 24px; }
     section.block, .cta-section { padding: 80px 0; }
     .hero { padding: 120px 0 60px; }
-    .hero-3d { display: none; }
+    .hero-3d { opacity: .42; }
+    .hero-3d::before { top: 4%; right: -22%; width: min(120vw, 560px); height: min(120vw, 560px); }
     .sectors, .team { grid-template-columns: 1fr; gap: 24px; }
     .sector, .member { padding: 36px 28px; }
+    .impressum-card { padding: 36px 28px; }
     .project { grid-template-columns: 56px 1fr; gap: 16px; padding: 24px 0; }
     .project-logo { width: 48px; height: 48px; }
     .project-client { grid-column: 1 / -1; }
@@ -903,7 +862,7 @@
         <img src="assets/TM_KI_Logo.png" alt="TM KI Consulting Logo" />
       </div>
       <div class="brand-text">
-        <div class="title">TM KI Consulting</div>
+        <div class="title">TM KI Consulting </div>
         <div class="sub">Beratung · Strategie · Umsetzung</div>
       </div>
     </a>
@@ -914,7 +873,7 @@
         <li><a href="#sektoren">Sektoren</a></li>
         <li><a href="#projekte">Projekte</a></li>
         <li><a href="#team">Team</a></li>
-        <li><a href="impressum.html" data-open-impressum>Impressum</a></li>
+        <li><a href="impressum.html">Impressum</a></li>
         <li><a href="#kontakt" class="nav-cta">Kontakt</a></li>
       </ul>
     </nav>
@@ -927,26 +886,22 @@
   <section class="hero">
     <div class="hero-3d" aria-hidden="true">
       <canvas id="hero-agent-field"></canvas>
-      <div class="hero-3d-label">
-        <span>Agentenlogik</span>
-        <strong>Input · Modell · Output</strong>
-      </div>
     </div>
     <div class="container">
       <div class="hero-eyebrow reveal">Essen · Gründungsphase 2026</div>
       <h1 class="reveal">
-        KI-Agenten für den<br>
-        <span class="serif">öffentlichen</span> und<br>
+        KI-Beratung für<br>
+        den öffentlichen und<br>
         privaten Sektor.
       </h1>
       <p class="hero-lead reveal">
         Wir begleiten öffentliche Einrichtungen und Unternehmen bei der strategischen
-        und operativen Einführung Künstlicher Intelligenz — von der ersten Idee bis zur produktiven Lösung.
+        und operativen Einführung Künstlicher Intelligenz, von der ersten Idee bis zur produktiven Lösung.
         Wirtschaftlich tragfähig, technisch fundiert, menschlich orientiert.
       </p>
       <div class="hero-cta-row reveal">
         <a href="#kontakt" class="btn btn-primary">Erstgespräch buchen <span class="arrow">→</span></a>
-        <a href="#projekte" class="btn btn-ghost">Vorhaben ansehen</a>
+        <a href="#projekte" class="btn btn-ghost">Projekte ansehen</a>
       </div>
 
       <div class="hero-meta reveal">
@@ -956,7 +911,7 @@
         </div>
         <div class="hero-meta-item">
           <div class="label">Status</div>
-          <div class="value">GbR · Gründungsphase</div>
+          <div class="value">UG · Gründungsphase</div>
         </div>
         <div class="hero-meta-item">
           <div class="label">Sektoren</div>
@@ -1018,7 +973,7 @@
   <section class="block catalog-section" id="leistungskatalog">
     <div class="container">
       <div class="catalog">
-        <a href="assets/Leistungskatalog_TM-KI-Consulting_2026.pdf" target="_blank" rel="noopener" class="catalog-cover-link reveal" aria-label="Leistungskatalog als PDF öffnen">
+        <a href="assets/Leistungskatalog_TM-KI-Consulting_v.1.pdf" target="_blank" rel="noopener" class="catalog-cover-link reveal" aria-label="Leistungskatalog als PDF öffnen">
           <span class="catalog-cover-badge">PDF · Version 1.0</span>
           <img src="assets/leistungskatalog-cover.png" alt="Titelseite Leistungskatalog TM KI Consulting 2026" loading="lazy" />
           <div class="catalog-cover-overlay">
@@ -1043,19 +998,19 @@
           <div class="catalog-meta">
             <div>
               <div class="label">Umfang</div>
-              <div class="value">12 Seiten · 10 Phasen</div>
+              <div class="value">13 Seiten · 10 Phasen</div>
             </div>
             <div>
               <div class="label">Rahmenwerk</div>
-              <div class="value">EU AI Act · Datenschutz</div>
+              <div class="value">Consultant Analyse · EU AI Act</div>
             </div>
             <div>
               <div class="label">Stand</div>
-              <div class="value">Mai 2026</div>
+              <div class="value">Juni 2026</div>
             </div>
           </div>
 
-          <a href="assets/Leistungskatalog_TM-KI-Consulting_2026.pdf" target="_blank" rel="noopener" class="btn btn-primary">
+          <a href="assets/Leistungskatalog_TM-KI-Consulting_v.1.pdf" target="_blank" rel="noopener" class="btn btn-primary">
             Leistungskatalog als PDF <span class="arrow">→</span>
           </a>
         </div>
@@ -1082,7 +1037,7 @@
           <h3>Kommunen &<br>öffentliche Einrichtungen</h3>
           <p>
             Wir entwickeln KI-Lösungen für den städtischen Raum — Projekte mit direktem
-            Nutzen für Bürgerinnen, Bürger und öffentliche Aufgaben. Datenschutzkonform und förderfähig.
+            Nutzen für Bürgerinnen, Bürger und öffentliche Aufgaben. Datenschutz- und fördermittelorientiert konzipiert.
           </p>
           <ul class="sector-list">
             <li>Bürgerservices und digitale Beratungsangebote</li>
@@ -1133,7 +1088,7 @@
           </div>
           <div class="project-client">
             Public Sector
-            <strong>Kommunaler Bezug</strong>
+            <strong>Kommunaler Bezug: Stadt Essen</strong>
           </div>
           <div>
             <h3 class="project-title">Projektvorhaben digitaler Betrugsmaschenerkennungsagent</h3>
@@ -1198,7 +1153,7 @@
             KI-Potenziale und ihre praktische Umsetzung in komplexen Organisationen.
           </p>
           <div class="member-foot">
-            <span>julian@tm-ai-consulting.de</span>
+            <span>julian.manske@tm-ki-consulting.de</span>
             <a href="https://www.linkedin.com/in/julian-manske-9ab853406" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn-Profil von Julian Manske öffnen">LinkedIn →</a>
           </div>
         </article>
@@ -1215,7 +1170,7 @@
             von der ersten Spezifikation bis zur ausgelieferten Anwendung.
           </p>
           <div class="member-foot">
-            <span>maurice@tm-ai-consulting.de</span>
+            <span>maurice.trogant@tm-ki-consulting.de</span>
             <a href="https://www.linkedin.com/in/maurice-trogant-8a6109359?utm_source=share_via&utm_content=profile&utm_medium=member_ios" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn-Profil von Maurice Trogant öffnen">LinkedIn →</a>
           </div>
         </article>
@@ -1237,10 +1192,10 @@
         Mitarbeitende entlasten kann. Sie erhalten eine erste fundierte Einschätzung — ehrlich und kostenfrei.
       </p>
       <div class="cta-row reveal">
-        <a href="mailto:hallo@tm-ai-consulting.de" class="btn btn-primary">
+        <a href="mailto:info@tm-ki-consulting.de" class="btn btn-primary">
           Erstgespräch vereinbaren <span class="arrow">→</span>
         </a>
-        <a href="#projekte" class="btn btn-ghost">Referenzen ansehen</a>
+        <a href="#projekte" class="btn btn-ghost">Vorhaben ansehen</a>
       </div>
       <div class="cta-trust reveal">
         <span>Antwort innerhalb von 24 Stunden</span>
@@ -1258,10 +1213,10 @@
   <div class="container">
     <div class="foot-grid">
       <div class="foot-brand">
-        <div class="foot-name">TM KI Consulting</div>
+        <div class="foot-name">TM KI Consulting </div>
         <div class="foot-sub">Beratung · Strategie · Umsetzung</div>
         <p>
-          KI-Agenten für den öffentlichen und privaten Sektor.
+          KI-Beratung für den öffentlichen und privaten Sektor.
           Strategisch, technisch, menschlich.
         </p>
       </div>
@@ -1279,69 +1234,27 @@
           <li><a href="#leistungskatalog">Leistungskatalog (PDF)</a></li>
           <li><a href="#projekte">Projekte</a></li>
           <li><a href="#team">Team</a></li>
-          <li><a href="impressum.html" data-open-impressum>Impressum</a></li>
+          <li><a href="impressum.html">Impressum</a></li>
+          <li><a href="datenschutz.html">Datenschutzerklärung</a></li>
         </ul>
       </div>
       <div>
         <h5>Kontakt</h5>
         <ul>
-          <li><a href="mailto:hallo@tm-ai-consulting.de">hallo@tm-ai-consulting.de</a></li>
+          <li><a href="mailto:info@tm-ki-consulting.de">info@tm-ki-consulting.de</a></li>
           <li><a href="tel:+4915737284004">+49 157 37284004</a></li>
           <li><a href="#">LinkedIn</a></li>
         </ul>
       </div>
     </div>
     <div class="foot-bottom">
-      <span>© 2026 TM KI Consulting</span>
+      <span>© 2026 TM KI Consulting </span>
       <span>Ernst-Tengelmann-Ring 22 · 45259 Essen</span>
     </div>
   </div>
 </footer>
 
 
-<dialog id="impressum-modal" class="impressum-modal" aria-labelledby="impressum-title">
-  <div class="impressum-modal-card">
-    <button class="modal-close" type="button" data-close-impressum aria-label="Impressum schließen">×</button>
-    <h2 id="impressum-title">Impressum</h2>
-
-    <p class="impressum-note">
-      Hinweis: TM KI Consulting wird derzeit als Gesellschaft bürgerlichen Rechts (GbR) durch Julian Manske und Maurice Trogant betrieben. Eine spätere Kapitalgesellschaft befindet sich in Vorbereitung; die Angaben werden nach einer formalen Gründung beziehungsweise Eintragung entsprechend aktualisiert.
-    </p>
-
-    <h3>Angaben gemäß § 5 DDG</h3>
-    <p>
-      TM KI Consulting GbR<br>
-      Julian Manske und Maurice Trogant<br>
-      Ernst-Tengelmann-Ring 22<br>
-      45259 Essen<br>
-      Deutschland
-    </p>
-
-    <h3>Vertreten durch</h3>
-    <p>
-      Julian Manske und Maurice Trogant
-    </p>
-
-    <h3>Kontakt</h3>
-    <p>
-      E-Mail: <a href="mailto:hallo@tm-ai-consulting.de">hallo@tm-ai-consulting.de</a><br>
-      Telefon: <a href="tel:+4915737284004">+49 157 37284004</a>
-    </p>
-
-    <h3>Redaktionell verantwortlich</h3>
-    <p>
-      Verantwortlich für journalistisch-redaktionelle Inhalte gemäß § 18 Abs. 2 MStV:<br>
-      Julian Manske und Maurice Trogant<br>
-      Ernst-Tengelmann-Ring 22<br>
-      45259 Essen
-    </p>
-
-    <h3>Haftungshinweis</h3>
-    <p>
-      Die Inhalte dieser Website wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte übernehmen wir jedoch keine Gewähr.
-    </p>
-  </div>
-</dialog>
 
 <script type="module" src="assets/js/hero-three.js"></script>
 
@@ -1384,10 +1297,11 @@ if (typeof Lenis !== 'undefined') {
   requestAnimationFrame(raf);
 }
 
+
+// ============================================================
 // Anchor-Links smooth scroll (mit oder ohne Lenis)
 document.querySelectorAll('a[href^="#"]').forEach(link => {
   link.addEventListener('click', (e) => {
-    if (link.hasAttribute('data-open-impressum')) return;
     const href = link.getAttribute('href');
     if (href === '#' || href.length < 2) return;
     const target = document.querySelector(href);
