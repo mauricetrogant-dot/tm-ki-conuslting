@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>TM KI Consulting GbR — KI-Beratung für den öffentlichen und privaten Sektor</title>
-<meta name="description" content="Strategische KI-Beratung für den öffentlichen und privaten Sektor. Von der ersten Idee bis zur produktiven Lösung." />
+<title>TM KI Consulting GbR — KI-Agenten und KI-Beratung für den öffentlichen und privaten Sektor</title>
+<meta name="description" content="Strategische KI-Beratung und fachspezifische KI-Agenten für den öffentlichen und privaten Sektor — inklusive öffentlich testbarer Live-Demo unseres Gefahrgut-Agenten." />
 <!-- Assets wie Logos, Portraits, Projektbilder und PDF liegen extern im Ordner /assets. -->
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -164,6 +164,31 @@
     font-weight: 300;
   }
   .hero-cta-row { display: flex; gap: 16px; flex-wrap: wrap; }
+
+  .hero-proof {
+    margin-top: 24px;
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px;
+    border: 1px solid var(--line);
+    background: rgba(255,255,255,.04);
+    color: var(--gray-300);
+    max-width: 620px;
+  }
+  .hero-proof span {
+    font-size: 10px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--gray-400);
+    white-space: nowrap;
+  }
+  .hero-proof strong {
+    font-size: 14px;
+    color: var(--off-white);
+    font-weight: 400;
+    letter-spacing: -.01em;
+  }
 
   .btn {
     display: inline-flex; align-items: center; gap: 10px;
@@ -398,6 +423,228 @@
     letter-spacing: .04em;
   }
 
+  .service-case-link {
+    display: block;
+    border: 1px solid var(--line);
+    background: rgba(255,255,255,.035);
+    padding: 18px 20px;
+    margin: -6px 0 26px;
+    transition: border-color .25s ease, background .25s ease, transform .25s ease;
+  }
+  .service-case-link:hover {
+    border-color: rgba(255,255,255,.25);
+    background: rgba(255,255,255,.06);
+    transform: translateY(-2px);
+  }
+  .service-case-link span {
+    display: block;
+    font-size: 10px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--gray-400);
+    margin-bottom: 7px;
+  }
+  .service-case-link strong {
+    display: block;
+    color: var(--white);
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.35;
+    margin-bottom: 8px;
+  }
+  .service-case-link em {
+    color: var(--gray-300);
+    font-size: 13px;
+    font-style: normal;
+  }
+
+  /* ============ IM EINSATZ / LIVE-BEWEIS ============ */
+  .proof-section {
+    background: var(--navy-800);
+    border-top: 1px solid var(--line-light);
+    border-bottom: 1px solid var(--line-light);
+  }
+  .proof-grid {
+    display: grid;
+    grid-template-columns: 1fr .9fr;
+    gap: 72px;
+    align-items: center;
+  }
+  .proof-content h2 {
+    font-size: clamp(36px, 4.8vw, 64px);
+    line-height: 1.08;
+    font-weight: 300;
+    margin-bottom: 28px;
+  }
+  .proof-content p {
+    color: var(--gray-300);
+    font-size: 17px;
+    line-height: 1.7;
+    font-weight: 300;
+    max-width: 60ch;
+    margin-bottom: 36px;
+  }
+  .proof-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 36px;
+  }
+  .tech-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    max-width: 720px;
+  }
+  .tech-stack span {
+    border: 1px solid var(--line);
+    background: rgba(255,255,255,.035);
+    padding: 9px 12px;
+    font-size: 12px;
+    color: var(--gray-300);
+    letter-spacing: .02em;
+  }
+  .agent-demo-card {
+    border: 1px solid var(--line);
+    background: var(--navy-700);
+    box-shadow: 0 30px 60px -30px rgba(0, 0, 0, .6);
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .agent-demo-card::before {
+    content: "";
+    position: absolute;
+    inset: -20% -10% auto auto;
+    width: 260px;
+    height: 260px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.05);
+    pointer-events: none;
+  }
+  .demo-topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+    z-index: 1;
+  }
+  .demo-brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .demo-brand img {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 5px;
+  }
+  .demo-brand span {
+    display: block;
+    color: var(--gray-400);
+    font-size: 10px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+  }
+  .demo-brand strong {
+    display: block;
+    color: var(--white);
+    font-size: 17px;
+    font-weight: 500;
+    margin-top: 2px;
+  }
+  .demo-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--gray-300);
+    border: 1px solid var(--line);
+    padding: 8px 10px;
+    background: rgba(255,255,255,.035);
+  }
+  .demo-status::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--off-white);
+    opacity: .75;
+  }
+  .chat-window {
+    position: relative;
+    z-index: 1;
+    padding-top: 28px;
+    display: grid;
+    gap: 16px;
+  }
+  .chat-bubble {
+    border: 1px solid var(--line);
+    padding: 16px 18px;
+    font-size: 14px;
+    line-height: 1.55;
+  }
+  .chat-bubble.user {
+    background: rgba(255,255,255,.08);
+    color: var(--white);
+    margin-left: 54px;
+  }
+  .chat-bubble.agent {
+    background: rgba(10,22,40,.42);
+    color: var(--gray-300);
+    margin-right: 34px;
+  }
+  .chat-result-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 8px;
+  }
+  .chat-result-grid span {
+    border: 1px solid var(--line);
+    background: rgba(255,255,255,.035);
+    padding: 12px 14px;
+    font-size: 12px;
+    color: var(--off-white);
+  }
+  .capability-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-top: 48px;
+  }
+  .capability-grid article {
+    border: 1px solid var(--line);
+    background: rgba(255,255,255,.035);
+    padding: 26px 24px;
+  }
+  .capability-grid span {
+    display: block;
+    font-size: 10px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--gray-400);
+    margin-bottom: 18px;
+  }
+  .capability-grid h3 {
+    font-size: 20px;
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+  .capability-grid p {
+    color: var(--gray-300);
+    font-size: 14px;
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
   /* ============ PROJEKTE ============ */
   .projects-section { background: var(--navy-800); border-top: 1px solid var(--line-light); border-bottom: 1px solid var(--line-light); }
   .projects {
@@ -478,6 +725,136 @@
     text-align: right;
   }
   .project:hover .project-arrow { color: var(--white); transform: translateX(6px); }
+
+  .project-featured {
+    display: grid;
+    grid-template-columns: 1.35fr .9fr;
+    gap: 48px;
+    align-items: stretch;
+    padding: 46px;
+    margin: 34px 0 18px;
+    border: 1px solid rgba(255,255,255,.16);
+    background: var(--navy-700);
+    color: inherit;
+    text-decoration: none;
+    box-shadow: 0 30px 60px -30px rgba(0,0,0,.6);
+    transition: transform .3s ease, border-color .25s ease, background .25s ease;
+  }
+  .project-featured:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255,255,255,.3);
+    background: var(--navy-600);
+  }
+  .project-featured-kicker {
+    font-size: 11px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--gray-400);
+    margin-bottom: 24px;
+  }
+  .project-featured-logo {
+    width: 68px;
+    height: 68px;
+    display: grid;
+    place-items: center;
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 6px;
+    margin-bottom: 28px;
+  }
+  .project-featured-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  .project-featured h3 {
+    font-size: clamp(30px, 3.4vw, 48px);
+    line-height: 1.08;
+    margin-bottom: 22px;
+  }
+  .project-featured p {
+    color: var(--gray-300);
+    font-size: 16px;
+    line-height: 1.65;
+    max-width: 60ch;
+    font-weight: 300;
+    margin-bottom: 28px;
+  }
+  .featured-functions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    list-style: none;
+    margin-bottom: 30px;
+  }
+  .featured-functions li {
+    border: 1px solid var(--line);
+    background: rgba(255,255,255,.035);
+    padding: 12px 14px;
+    color: var(--off-white);
+    font-size: 13px;
+  }
+  .featured-meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 18px;
+    align-items: center;
+    padding-top: 22px;
+    border-top: 1px solid var(--line);
+    color: var(--gray-400);
+    font-size: 13px;
+  }
+  .featured-meta strong {
+    color: var(--white);
+    font-weight: 500;
+  }
+  .project-featured-visual {
+    display: grid;
+    place-items: center;
+    min-height: 360px;
+    border: 1px solid var(--line);
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255,255,255,.06), transparent 65%),
+      var(--navy-800);
+  }
+  .mini-widget {
+    width: min(100%, 360px);
+    border: 1px solid var(--line);
+    background: rgba(10,22,40,.72);
+    box-shadow: 0 30px 60px -30px rgba(0,0,0,.7);
+  }
+  .mini-widget-bar {
+    display: flex;
+    gap: 7px;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--line);
+  }
+  .mini-widget-bar span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--gray-500);
+  }
+  .mini-widget-body {
+    padding: 22px;
+    display: grid;
+    gap: 12px;
+  }
+  .mini-line {
+    height: 10px;
+    width: 62%;
+    background: rgba(255,255,255,.08);
+  }
+  .mini-line.wide { width: 86%; }
+  .mini-card {
+    border: 1px solid var(--line);
+    background: rgba(255,255,255,.045);
+    padding: 13px 14px;
+    color: var(--off-white);
+    font-size: 13px;
+  }
+  .mini-card.muted { color: var(--gray-300); }
 
   /* Expand-Variante: Karte mit aufklappbarem Visual */
   .project-expand {
@@ -815,6 +1192,13 @@
   .project-static:hover { padding-left: 0; }
   .project-static:hover .project-arrow { transform: none; color: var(--gray-400); }
 
+
+  @media (max-width: 1100px) {
+    .proof-grid, .project-featured { grid-template-columns: 1fr; }
+    .capability-grid { grid-template-columns: 1fr 1fr; }
+    .project-featured-visual { min-height: 280px; }
+  }
+
   /* ============ RESPONSIVE ============ */
   @media (max-width: 1024px) {
     .hero-3d { opacity: .58; }
@@ -824,6 +1208,7 @@
     .services { grid-template-columns: 1fr; gap: 40px; }
     .hero-meta { grid-template-columns: 1fr 1fr; gap: 28px; }
     .catalog { grid-template-columns: 1fr; gap: 48px; }
+    .proof-grid { gap: 48px; }
     .catalog-cover-link { max-width: 480px; }
   }
   @media (max-width: 768px) {
@@ -838,6 +1223,12 @@
     .sector, .member { padding: 36px 28px; }
     .impressum-card { padding: 36px 28px; }
     .project { grid-template-columns: 56px 1fr; gap: 16px; padding: 24px 0; }
+    .hero-proof { align-items: flex-start; flex-direction: column; gap: 6px; }
+    .project-featured { padding: 28px; gap: 28px; }
+    .project-featured-visual { min-height: 240px; }
+    .featured-functions, .chat-result-grid, .capability-grid { grid-template-columns: 1fr; }
+    .featured-meta { flex-direction: column; align-items: flex-start; }
+    .chat-bubble.user, .chat-bubble.agent { margin-left: 0; margin-right: 0; }
     .project-logo { width: 48px; height: 48px; }
     .project-client { grid-column: 1 / -1; }
     .project-meta { text-align: left; grid-column: 1 / -1; }
@@ -870,6 +1261,7 @@
       <ul>
         <li><a href="#leistungen">Leistungen</a></li>
         <li><a href="#leistungskatalog">Katalog</a></li>
+        <li><a href="#im-einsatz">Im Einsatz</a></li>
         <li><a href="#sektoren">Sektoren</a></li>
         <li><a href="#projekte">Projekte</a></li>
         <li><a href="#team">Team</a></li>
@@ -890,7 +1282,7 @@
     <div class="container">
       <div class="hero-eyebrow reveal">Essen · Gründungsphase 2026</div>
       <h1 class="reveal">
-        KI-Beratung für<br>
+        KI-Agenten für<br>
         den öffentlichen und<br>
         privaten Sektor.
       </h1>
@@ -900,18 +1292,19 @@
         Wirtschaftlich tragfähig, technisch fundiert, menschlich orientiert.
       </p>
       <div class="hero-cta-row reveal">
-        <a href="#kontakt" class="btn btn-primary">Erstgespräch buchen <span class="arrow">→</span></a>
-        <a href="#projekte" class="btn btn-ghost">Projekte ansehen</a>
+        <a href="https://gefahrgutberatung-manske.de/#ki" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Live-Demo: Gefahrgut-Agent testen <span class="arrow">→</span></a>
+        <a href="#kontakt" class="btn btn-ghost">Erstgespräch buchen</a>
+        <a href="#im-einsatz" class="btn btn-ghost">Referenz ansehen</a>
       </div>
-
+      
       <div class="hero-meta reveal">
         <div class="hero-meta-item">
           <div class="label">Sitz</div>
           <div class="value">Essen, Deutschland</div>
         </div>
         <div class="hero-meta-item">
-          <div class="label">Status</div>
-          <div class="value">UG · Gründungsphase</div>
+          <div class="label">Proof of Concept</div>
+          <div class="value">GB-Agent live testbar</div>
         </div>
         <div class="hero-meta-item">
           <div class="label">Sektoren</div>
@@ -945,6 +1338,11 @@
             Wir entwickeln KI-Agenten, die exakt auf Ihre Fachprozesse zugeschnitten sind — und
             integrieren sie nahtlos in Ihre Website oder bestehende Systeme.
           </p>
+          <a class="service-case-link" href="#im-einsatz" aria-label="Referenz Gefahrgut-Agent für GBM Manske ansehen">
+            <span>In Produktion erlebbar</span>
+            <strong>Unser Gefahrgut-Agent für GBM</strong>
+            <em>Referenz ansehen →</em>
+          </a>
           <div class="service-tag">Custom Agents · Web-Integration · Schnittstellen</div>
         </div>
         <div class="service reveal">
@@ -965,6 +1363,85 @@
           </p>
           <div class="service-tag">Training · Support · Qualitätssicherung</div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- IM EINSATZ -->
+  <section class="block proof-section" id="im-einsatz">
+    <div class="container">
+      <div class="proof-grid">
+        <div class="proof-content reveal">
+          <div class="section-eyebrow">Im Einsatz</div>
+          <h2>Gefahrgut-Agent<br><span class="serif">für GBM.</span></h2>
+          <p>
+            Unser stärkster Proof of Concept ist kein Konzeptpapier, sondern ein öffentlich testbarer
+            KI-Agent für die Gefahrgutberatung. Er zeigt, wie fachspezifisches Wissen, Regelwerke,
+            Dokumentenprüfung und Eskalationslogik in eine nutzbare Anwendung übersetzt werden.
+          </p>
+          <div class="proof-actions">
+            <a href="https://gefahrgutberatung-manske.de/#ki" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+              Live-Demo öffnen <span class="arrow">→</span>
+            </a>
+            <a href="#projekte" class="btn btn-ghost">Projektkarte ansehen</a>
+          </div>
+          <div class="tech-stack" aria-label="Technische Bausteine des Gefahrgut-Agenten">
+            <span>RAG-Wissensabruf</span>
+            <span>ADR/RID/IMDG-Regelwerksabgleich</span>
+            <span>EU-AI-Act-orientierte Guardrails</span>
+            <span>Human-in-the-Loop</span>
+            <span>Sicherer SDB-Upload</span>
+          </div>
+        </div>
+
+        <div class="agent-demo-card reveal" aria-label="Vorschau des Gefahrgut-Agenten">
+          <div class="demo-topbar">
+            <div class="demo-brand">
+              <img src="assets/logo-gefahrgutberatung-manske.png" alt="GBM Logo" loading="lazy" />
+              <div>
+                <span>GB-Agent</span>
+                <strong>Live-Demo</strong>
+              </div>
+            </div>
+            <div class="demo-status">Online</div>
+          </div>
+          <div class="chat-window">
+            <div class="chat-bubble user">Prüfe bitte UN 1203 und die wichtigsten ADR-Punkte.</div>
+            <div class="chat-bubble agent">
+              Ich strukturiere UN-Nummer, Transportkontext, Sicherheitsdatenblatt und offene Rückfragen.
+              Kritische Punkte werden zur Expertenprüfung markiert.
+            </div>
+            <div class="chat-result-grid">
+              <span>UN-Nummern-Suche</span>
+              <span>Dokumenten-Check</span>
+              <span>Vorschriften-Lotse</span>
+              <span>Experten-Eskalation</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="capability-grid reveal">
+        <article>
+          <span>01</span>
+          <h3>UN-Nummern-Suche</h3>
+          <p>Strukturierte Recherche nach Stoffdaten, Gefahrgutklassen und relevanten Prüfpunkten.</p>
+        </article>
+        <article>
+          <span>02</span>
+          <h3>Dokumenten-Check</h3>
+          <p>Vorprüfung von Sicherheitsdatenblättern, Beförderungsdokumenten und fehlenden Angaben.</p>
+        </article>
+        <article>
+          <span>03</span>
+          <h3>Vorschriften-Lotse</h3>
+          <p>Geführter Abgleich mit ADR, RID, IMDG-Code und internen Checklisten.</p>
+        </article>
+        <article>
+          <span>04</span>
+          <h3>Experten-Eskalation</h3>
+          <p>Unsicherheiten werden nicht versteckt, sondern zur fachlichen Freigabe weitergereicht.</p>
+        </article>
       </div>
     </div>
   </section>
@@ -998,7 +1475,7 @@
           <div class="catalog-meta">
             <div>
               <div class="label">Umfang</div>
-              <div class="value">13 Seiten · 10 Phasen</div>
+              <div class="value">14 Seiten · 10 Phasen</div>
             </div>
             <div>
               <div class="label">Rahmenwerk</div>
@@ -1069,15 +1546,38 @@
   <section class="block projects-section" id="projekte">
     <div class="container">
       <div class="section-head reveal">
-        <div class="section-eyebrow">Woran wir arbeiten</div>
-        <h2>Ausgewählte<br><span class="serif">Vorhaben.</span></h2>
+        <div class="section-eyebrow">Ausgewählte Vorhaben</div>
+        <h2>Woran wir arbeiten<br><span class="serif">ausgewählte Projekte.</span></h2>
         <p>
-          Ein Auszug aus unseren aktuellen Vorhaben in beiden Sektoren. Weitere Informationen
-          stellen wir auf Anfrage gerne zur Verfügung.
+          Wir entwickeln KI-Agenten und KI-Konzepte für konkrete fachliche Einsatzbereiche.
+          Einige Vorhaben sind bereits in Umsetzung, andere befinden sich in Konzeption oder Vorbereitung.
         </p>
       </div>
 
       <div class="projects">
+        <!-- Private Sector: Gefahrgutberatung Manske -->
+        <a href="https://gefahrgutberatung-manske.de/" class="project reveal" target="_blank" rel="noopener noreferrer" aria-label="Gefahrgutberatung Manske öffnen">
+          <div class="project-logo gbm-logo">
+            <img src="assets/logo-gefahrgutberatung-manske.png" alt="Logo Gefahrgutberatung Manske" loading="lazy" />
+          </div>
+          <div class="project-client">
+            Private Sector
+            <strong>GBM</strong>
+          </div>
+          <div>
+            <h3 class="project-title">Gefahrgut-Agent</h3>
+            <p class="project-desc">
+              Fachspezifischer KI-Agent zur Unterstützung in der Gefahrgutberatung — mit strukturierter
+              Wissensbasis, Dokumentenprüfung und fachlicher Eskalation.
+            </p>
+          </div>
+          <div class="project-meta">
+            Status
+            <strong>In Umsetzung</strong>
+          </div>
+          <div class="project-arrow" aria-hidden="true">→</div>
+        </a>
+
         <!-- Public Sector: mögliches Projektvorhaben mit Bezug zur Stadt Essen -->
         <article class="project project-static reveal" aria-label="Projektvorhaben mit Bezug zur Stadt Essen in Vorbereitung">
           <div class="project-logo" aria-hidden="true">
@@ -1088,11 +1588,11 @@
           </div>
           <div class="project-client">
             Public Sector
-            <strong>Kommunaler Bezug: Stadt Essen</strong>
+            <strong>Kommunaler Bezug</strong>
           </div>
           <div>
-            <h3 class="project-title">Projektvorhaben digitaler Betrugsmaschenerkennungsagent</h3>
-            <p class="project-desc">Wir planen die Entwicklung eines digitalen Betrugsmaschenerkennungsagenten zur Unterstützung bei der Erkennung potenzieller Betrugsfälle und verdächtiger Muster.</p>
+            <h3 class="project-title">Betrugsmaschenerkennungsagent in Vorbereitung</h3>
+            <p class="project-desc">Geplantes kommunales Assistenzsystem mit Ampellogik zur strukturierten Vorprüfung verdächtiger Nachrichten, Anrufe und Webseiten.</p>
           </div>
           <div class="project-meta">
             Status
@@ -1100,30 +1600,6 @@
           </div>
           <div class="project-arrow" aria-hidden="true">·</div>
         </article>
-
-        <!-- Private Sector: GB Manske (extern verlinkt) -->
-        <!-- TODO: href auf die finale GBM-Website-URL setzen, sobald verfügbar -->
-        <a href="https://gefahrgutberatung-manske.de" class="project reveal" target="_blank" rel="noopener" aria-label="Zur Website der Gefahrgutberatung Manske (öffnet in neuem Tab)">
-          <div class="project-logo gbm-logo">
-            <img src="assets/logo-gefahrgutberatung-manske.png" alt="Logo Gefahrgutberatung Manske" loading="lazy" />
-          </div>
-          <div class="project-client">
-            Private Sector
-            <strong>Gefahrgutberatung Manske</strong>
-          </div>
-          <div>
-            <h3 class="project-title">KI-Transformation</h3>
-            <p class="project-desc">
-              Strategische Begleitung und technische Umsetzung einer unternehmensweiten
-              KI-Integration — Testen sie unseren GB-Agenten für die Gefahrgutberatung.
-            </p>
-          </div>
-          <div class="project-meta">
-            Seit 2026
-            <strong>Laufend</strong>
-          </div>
-          <div class="project-arrow">↗</div>
-        </a>
       </div>
     </div>
   </section>
@@ -1195,7 +1671,7 @@
         <a href="mailto:info@tm-ki-consulting.de" class="btn btn-primary">
           Erstgespräch vereinbaren <span class="arrow">→</span>
         </a>
-        <a href="#projekte" class="btn btn-ghost">Vorhaben ansehen</a>
+        <a href="https://gefahrgutberatung-manske.de/#ki" class="btn btn-ghost" target="_blank" rel="noopener noreferrer">Live-Demo ansehen</a>
       </div>
       <div class="cta-trust reveal">
         <span>Antwort innerhalb von 24 Stunden</span>
@@ -1232,6 +1708,7 @@
         <ul>
           <li><a href="#leistungen">Leistungen</a></li>
           <li><a href="#leistungskatalog">Leistungskatalog (PDF)</a></li>
+          <li><a href="#im-einsatz">Im Einsatz</a></li>
           <li><a href="#projekte">Projekte</a></li>
           <li><a href="#team">Team</a></li>
           <li><a href="impressum.html">Impressum</a></li>
