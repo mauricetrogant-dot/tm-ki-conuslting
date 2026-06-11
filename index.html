@@ -3,29 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>TM KI Consulting — KI-Agenten für den öffentlichen und privaten Sektor</title>
-<!-- Favicon -->
-<link rel="icon" href="/favicon.ico" sizes="any" />
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<title>TM KI Consulting GbR — KI-Agenten und KI-Beratung für den öffentlichen und privaten Sektor</title>
 <meta name="description" content="Strategische KI-Beratung und fachspezifische KI-Agenten für den öffentlichen und privaten Sektor — inklusive öffentlich testbarer Live-Demo unseres Gefahrgut-Agenten." />
-<!-- Open Graph (LinkedIn, Facebook, WhatsApp etc.) -->
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://tm-ki-consulting.de/" />
-<meta property="og:title" content="TM KI Consulting — KI-Agenten für den öffentlichen und privaten Sektor" />
-<meta property="og:description" content="Strategische KI-Beratung und fachspezifische KI-Agenten für den öffentlichen und privaten Sektor — inklusive öffentlich testbarer Live-Demo unseres Gefahrgut-Agenten." />
-<meta property="og:image" content="https://tm-ki-consulting.de/og-image.png" />
-<meta property="og:image:width" content="1200" />
-<meta property="og:image:height" content="630" />
-<meta property="og:image:alt" content="TM KI Consulting — KI. Strategie. Wirkung." />
-<meta property="og:site_name" content="TM KI Consulting" />
-<meta property="og:locale" content="de_DE" />
-<!-- Twitter / X Card -->
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="TM KI Consulting GbR — KI-Beratung für den öffentlichen und privaten Sektor" />
-<meta name="twitter:description" content="Strategische KI-Beratung und fachspezifische KI-Agenten für den öffentlichen und privaten Sektor." />
-<meta name="twitter:image" content="https://tm-ki-consulting.de/og-image.png" />
 <!-- Assets wie Logos, Portraits, Projektbilder und PDF liegen extern im Ordner /assets. -->
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -151,6 +130,32 @@
     transition: background .2s;
   }
   .nav-cta:hover { background: var(--off-white); }
+
+  /* ============ MOBILE NAV TOGGLE ============ */
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 44px;
+    height: 44px;
+    padding: 10px;
+    background: transparent;
+    border: 1px solid rgba(255,255,255,.18);
+    cursor: pointer;
+    z-index: 110;
+  }
+  .nav-toggle span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: var(--white);
+    transition: transform .3s ease, opacity .3s ease;
+  }
+  .nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+  .nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
 
   /* ============ HERO ============ */
   .hero {
@@ -586,18 +591,24 @@
     align-items: center;
     gap: 8px;
     font-size: 12px;
-    color: var(--gray-300);
-    border: 1px solid var(--line);
+    color: #4ade80;
+    border: 1px solid rgba(74, 222, 128, .4);
     padding: 8px 10px;
-    background: rgba(255,255,255,.035);
+    background: rgba(74, 222, 128, .08);
   }
   .demo-status::before {
     content: "";
-    width: 7px;
-    height: 7px;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
-    background: var(--off-white);
-    opacity: .75;
+    background: #4ade80;
+    box-shadow: 0 0 8px rgba(74, 222, 128, .9);
+    animation: status-pulse 2s ease-out infinite;
+  }
+  @keyframes status-pulse {
+    0%   { box-shadow: 0 0 8px rgba(74, 222, 128, .9), 0 0 0 0 rgba(74, 222, 128, .45); }
+    70%  { box-shadow: 0 0 8px rgba(74, 222, 128, .9), 0 0 0 9px rgba(74, 222, 128, 0); }
+    100% { box-shadow: 0 0 8px rgba(74, 222, 128, .9), 0 0 0 0 rgba(74, 222, 128, 0); }
   }
   .chat-window {
     position: relative;
@@ -1233,7 +1244,46 @@
     .catalog-cover-link { max-width: 480px; }
   }
   @media (max-width: 768px) {
-    nav.primary ul { display: none; }
+    .nav-toggle { display: inline-flex; }
+    nav.primary {
+      position: absolute;
+      top: 100%; left: 0; right: 0;
+      background: rgba(10, 22, 40, .97);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line-light);
+      max-height: 0;
+      overflow: hidden;
+      visibility: hidden;
+      transition: max-height .35s ease, visibility .35s ease;
+    }
+    nav.primary.is-open {
+      max-height: calc(100vh - 80px);
+      visibility: visible;
+      overflow-y: auto;
+    }
+    nav.primary ul {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      padding: 12px 24px 24px;
+    }
+    nav.primary ul li { border-bottom: 1px solid var(--line-light); }
+    nav.primary ul li:last-child { border-bottom: none; }
+    nav.primary a {
+      display: block;
+      padding: 16px 4px;
+      font-size: 16px;
+      opacity: .9;
+    }
+    nav.primary .nav-cta {
+      margin: 16px 0 0;
+      text-align: center;
+      padding: 14px 22px;
+    }
+    header.site { overflow: visible; }
+    .nav { position: relative; }
     .nav { padding: 18px 24px; }
     .container { padding: 0 24px; }
     section.block, .cta-section { padding: 80px 0; }
@@ -1278,7 +1328,7 @@
         <div class="sub">Beratung · Strategie · Umsetzung</div>
       </div>
     </a>
-    <nav class="primary">
+    <nav class="primary" id="primary-nav">
       <ul>
         <li><a href="#leistungen">Leistungen</a></li>
         <li><a href="#leistungskatalog">Katalog</a></li>
@@ -1290,6 +1340,9 @@
         <li><a href="#kontakt" class="nav-cta">Kontakt</a></li>
       </ul>
     </nav>
+    <button class="nav-toggle" type="button" aria-label="Menü öffnen" aria-expanded="false" aria-controls="primary-nav">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </header>
 
@@ -1361,7 +1414,7 @@
           </p>
           <a class="service-case-link" href="#im-einsatz" aria-label="Referenz Gefahrgut-Agent für GBM Manske ansehen">
             <span>In Produktion erlebbar</span>
-            <strong>Unser Gefahrgut-Agent für GBM</strong>
+            <strong>Unser Gefahrgut-Agent für GBM Manske</strong>
             <em>Referenz ansehen →</em>
           </a>
           <div class="service-tag">Custom Agents · Web-Integration · Schnittstellen</div>
@@ -1394,7 +1447,7 @@
       <div class="proof-grid">
         <div class="proof-content reveal">
           <div class="section-eyebrow">Im Einsatz</div>
-          <h2>Gefahrgut-Agent<br><span class="serif">für GBM.</span></h2>
+          <h2>Gefahrgut-Agent<br><span class="serif">für GBM Manske.</span></h2>
           <p>
             Unser stärkster Proof of Concept ist kein Konzeptpapier, sondern ein öffentlich testbarer
             KI-Agent für die Gefahrgutberatung. Er zeigt, wie fachspezifisches Wissen, Regelwerke,
@@ -1583,7 +1636,7 @@
           </div>
           <div class="project-client">
             Private Sector
-            <strong>GBM</strong>
+            <strong>GBM Manske</strong>
           </div>
           <div>
             <h3 class="project-title">Gefahrgut-Agent</h3>
@@ -1815,5 +1868,36 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
 });
 </script>
 
+
+<script>
+// ============================================================
+// Mobile Nav Toggle (Hamburger)
+// ============================================================
+(function () {
+  const toggle = document.querySelector('.nav-toggle');
+  const nav = document.getElementById('primary-nav');
+  if (!toggle || !nav) return;
+
+  function closeMenu() {
+    nav.classList.remove('is-open');
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.setAttribute('aria-label', 'Men\u00fc \u00f6ffnen');
+  }
+  function openMenu() {
+    nav.classList.add('is-open');
+    toggle.setAttribute('aria-expanded', 'true');
+    toggle.setAttribute('aria-label', 'Men\u00fc schlie\u00dfen');
+  }
+  toggle.addEventListener('click', () => {
+    nav.classList.contains('is-open') ? closeMenu() : openMenu();
+  });
+  // Menü schließen, wenn ein Link angeklickt wird
+  nav.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+  // Menü schließen bei Resize auf Desktop-Breite
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 768) closeMenu();
+  });
+})();
+</script>
 </body>
 </html>

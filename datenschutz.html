@@ -132,6 +132,32 @@
   }
   .nav-cta:hover { background: var(--off-white); }
 
+  /* ============ MOBILE NAV TOGGLE ============ */
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 44px;
+    height: 44px;
+    padding: 10px;
+    background: transparent;
+    border: 1px solid rgba(255,255,255,.18);
+    cursor: pointer;
+    z-index: 110;
+  }
+  .nav-toggle span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: var(--white);
+    transition: transform .3s ease, opacity .3s ease;
+  }
+  .nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+  .nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+
   /* ============ HERO ============ */
   .hero {
     min-height: 100vh;
@@ -778,7 +804,46 @@
     .catalog-cover-link { max-width: 480px; }
   }
   @media (max-width: 768px) {
-    nav.primary ul { display: none; }
+    .nav-toggle { display: inline-flex; }
+    nav.primary {
+      position: absolute;
+      top: 100%; left: 0; right: 0;
+      background: rgba(10, 22, 40, .97);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line-light);
+      max-height: 0;
+      overflow: hidden;
+      visibility: hidden;
+      transition: max-height .35s ease, visibility .35s ease;
+    }
+    nav.primary.is-open {
+      max-height: calc(100vh - 80px);
+      visibility: visible;
+      overflow-y: auto;
+    }
+    nav.primary ul {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      padding: 12px 24px 24px;
+    }
+    nav.primary ul li { border-bottom: 1px solid var(--line-light); }
+    nav.primary ul li:last-child { border-bottom: none; }
+    nav.primary a {
+      display: block;
+      padding: 16px 4px;
+      font-size: 16px;
+      opacity: .9;
+    }
+    nav.primary .nav-cta {
+      margin: 16px 0 0;
+      text-align: center;
+      padding: 14px 22px;
+    }
+    header.site { overflow: visible; }
+    .nav { position: relative; }
     .nav { padding: 18px 24px; }
     .container { padding: 0 24px; }
     section.block, .cta-section { padding: 80px 0; }
@@ -807,18 +872,25 @@
     <a href="index.html" class="brand">
       <div class="brand-logo"><img src="assets/TM_KI_Logo.png" alt="TM KI Consulting Logo" /></div>
       <div class="brand-text">
-        <div class="title">TM KI Consulting GbR</div>
+        <div class="title">TM KI Consulting</div>
         <div class="sub">Beratung · Strategie · Umsetzung</div>
       </div>
     </a>
-    <nav class="primary">
+    <nav class="primary" id="primary-nav">
       <ul>
-        <li><a href="index.html#leistungen">Leistungen</a></li>
-        <li><a href="index.html#leistungskatalog">Katalog</a></li>
-        <li><a href="index.html#projekte">Vorhaben</a></li>
-        <li><a href="index.html#kontakt" class="nav-cta">Kontakt</a></li>
-      </ul>
-    </nav>
+    <li><a href="index.html#leistungen">Leistungen</a></li>
+    <li><a href="index.html#leistungskatalog">Katalog</a></li>
+    <li><a href="index.html#im-einsatz">Im Einsatz</a></li>
+    <li><a href="index.html#sektoren">Sektoren</a></li>
+    <li><a href="index.html#projekte">Projekte</a></li>
+    <li><a href="index.html#team">Team</a></li>
+    <li><a href="impressum.html">Impressum</a></li>
+    <li><a href="index.html#kontakt" class="nav-cta">Kontakt</a></li>
+  </ul>
+</nav>
+    <button class="nav-toggle" type="button" aria-label="Menü öffnen" aria-expanded="false" aria-controls="primary-nav">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </header>
 
@@ -955,5 +1027,36 @@
     </div>
   </div>
 </footer>
+
+<script>
+// ============================================================
+// Mobile Nav Toggle (Hamburger)
+// ============================================================
+(function () {
+  const toggle = document.querySelector('.nav-toggle');
+  const nav = document.getElementById('primary-nav');
+  if (!toggle || !nav) return;
+
+  function closeMenu() {
+    nav.classList.remove('is-open');
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.setAttribute('aria-label', 'Men\u00fc \u00f6ffnen');
+  }
+  function openMenu() {
+    nav.classList.add('is-open');
+    toggle.setAttribute('aria-expanded', 'true');
+    toggle.setAttribute('aria-label', 'Men\u00fc schlie\u00dfen');
+  }
+  toggle.addEventListener('click', () => {
+    nav.classList.contains('is-open') ? closeMenu() : openMenu();
+  });
+  // Menü schließen, wenn ein Link angeklickt wird
+  nav.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+  // Menü schließen bei Resize auf Desktop-Breite
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 768) closeMenu();
+  });
+})();
+</script>
 </body>
 </html>
