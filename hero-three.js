@@ -1,4 +1,4 @@
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.184.0/build/three.module.js';
+import * as THREE from './assets/js/vendor/three.module.min.js';
 
 const canvas = document.getElementById('hero-agent-field');
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
