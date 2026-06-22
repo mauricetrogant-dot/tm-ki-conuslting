@@ -484,6 +484,94 @@
     font-style: normal;
   }
 
+  /* ============ KI-AGENTEN / ARCHITEKTUR ============ */
+  .agents-section {
+    background: var(--navy-800);
+    border-top: 1px solid var(--line-light);
+    border-bottom: 1px solid var(--line-light);
+  }
+  .arch-sub {
+    margin: 0 0 40px;
+    max-width: 760px;
+  }
+  .arch-sub .arch-kicker {
+    font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--gray-400); margin-bottom: 20px;
+  }
+  .arch-sub h3 {
+    font-size: clamp(26px, 3vw, 38px);
+    font-weight: 300; letter-spacing: -.02em; line-height: 1.15;
+    margin-bottom: 18px;
+  }
+  .arch-sub p {
+    color: var(--gray-300); font-size: 16px; line-height: 1.65; font-weight: 300;
+  }
+  .arch-paths {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 32px;
+    margin-bottom: 28px;
+  }
+  .arch-path {
+    background: var(--navy-700);
+    border: 1px solid var(--line);
+    padding: 48px 44px;
+    position: relative;
+    transition: border-color .25s, background .25s;
+  }
+  .arch-path:hover { border-color: rgba(255,255,255,.25); background: var(--navy-600); }
+  .arch-path .pt {
+    font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--gray-400); margin-bottom: 20px;
+  }
+  .arch-path h4 {
+    font-size: 23px; font-weight: 400; letter-spacing: -.02em;
+    line-height: 1.2; margin-bottom: 16px;
+  }
+  .arch-path > p {
+    color: var(--gray-300); font-size: 15px; line-height: 1.6;
+    font-weight: 300; margin-bottom: 24px;
+  }
+  .arch-list { list-style: none; padding-top: 22px; border-top: 1px solid var(--line); }
+  .arch-list li {
+    padding: 11px 0; font-size: 14px; color: var(--off-white);
+    display: flex; gap: 14px; align-items: start;
+    border-bottom: 1px solid var(--line-light);
+  }
+  .arch-list li:last-child { border-bottom: 0; }
+  .arch-list li::before {
+    content: ""; width: 14px; height: 1px; background: var(--gray-400);
+    margin-top: 11px; flex-shrink: 0;
+  }
+  .arch-list li strong { color: var(--white); font-weight: 500; }
+  .arch-note {
+    border: 1px solid var(--line);
+    background: rgba(255,255,255,.035);
+    padding: 26px 30px;
+    font-size: 15px; line-height: 1.65; color: var(--gray-300); font-weight: 300;
+  }
+  .arch-note strong { color: var(--white); font-weight: 500; }
+  .arch-diagram {
+    margin: 0 0 28px;
+    background: var(--navy-700);
+    border: 1px solid var(--line);
+    padding: 30px 30px 26px;
+  }
+  .arch-diagram .ad-ttl { color: var(--white); font-weight: 500; font-size: 16px; margin-bottom: 5px; }
+  .arch-diagram .ad-sub { color: var(--gray-400); font-size: 13.5px; line-height: 1.55; margin-bottom: 20px; max-width: 78ch; }
+  .arch-diagram svg { width: 100%; height: auto; display: block; }
+  .eff-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;
+  }
+  .eff { border-top: 1px solid var(--white); padding-top: 34px; }
+  .eff-num {
+    font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--gray-400); margin-bottom: 26px;
+  }
+  .eff h4 {
+    font-size: 22px; font-weight: 400; margin-bottom: 16px;
+    line-height: 1.2; letter-spacing: -.02em;
+  }
+  .eff p { color: var(--gray-300); font-size: 15px; line-height: 1.6; font-weight: 300; }
+
   /* ============ IM EINSATZ / LIVE-BEWEIS ============ */
   .proof-section {
     background: var(--navy-800);
@@ -1238,6 +1326,7 @@
     .nav { padding-left: 32px; padding-right: 32px; }
     .container { padding: 0 32px; }
     .services { grid-template-columns: 1fr; gap: 40px; }
+    .eff-grid { grid-template-columns: 1fr; gap: 40px; }
     .hero-meta { grid-template-columns: 1fr 1fr; gap: 28px; }
     .catalog { grid-template-columns: 1fr; gap: 48px; }
     .proof-grid { gap: 48px; }
@@ -1291,7 +1380,8 @@
     .hero-3d { opacity: .42; }
     .hero-3d::before { top: 4%; right: -22%; width: min(120vw, 560px); height: min(120vw, 560px); }
     .sectors, .team { grid-template-columns: 1fr; gap: 24px; }
-    .sector, .member { padding: 36px 28px; }
+    .arch-paths { grid-template-columns: 1fr; gap: 24px; }
+    .sector, .member, .arch-path { padding: 36px 28px; }
     .impressum-card { padding: 36px 28px; }
     .project { grid-template-columns: 56px 1fr; gap: 16px; padding: 24px 0; }
     .hero-proof { align-items: flex-start; flex-direction: column; gap: 6px; }
@@ -1310,6 +1400,44 @@
     .foot-bottom { flex-direction: column; gap: 8px; }
     .hero-meta { grid-template-columns: 1fr; gap: 20px; padding-top: 28px; margin-top: 56px; }
     .catalog-meta { grid-template-columns: 1fr; gap: 18px; }
+  }
+
+  /* ============ INSIGHTS ============ */
+  .insight-card {
+    display: grid; grid-template-columns: 1.05fr .95fr;
+    background: var(--navy-800); border: 1px solid var(--line);
+    overflow: hidden; color: var(--off-white);
+    transition: border-color .25s, transform .25s;
+  }
+  .insight-card:hover { border-color: rgba(255,255,255,.28); transform: translateY(-2px); }
+  .insight-body { padding: 48px; }
+  .insight-eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--gray-400); margin-bottom: 20px;
+  }
+  .insight-eyebrow::before { content: ""; width: 24px; height: 1px; background: var(--gray-500); }
+  .insight-card h3 {
+    font-size: clamp(24px, 2.6vw, 34px); font-weight: 300;
+    letter-spacing: -0.02em; line-height: 1.15; margin-bottom: 16px; color: var(--white);
+  }
+  .insight-card p { color: var(--gray-300); font-size: 15px; line-height: 1.65; font-weight: 300; margin-bottom: 22px; max-width: 48ch; }
+  .insight-meta { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 12.5px; color: var(--gray-400); margin-bottom: 26px; }
+  .insight-readmore { display: inline-flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 500; color: var(--white); }
+  .insight-readmore .arrow { transition: transform .25s; font-size: 16px; }
+  .insight-card:hover .insight-readmore .arrow { transform: translateX(4px); }
+  .insight-visual {
+    position: relative; border-left: 1px solid var(--line);
+    background:
+      radial-gradient(ellipse 120% 100% at 100% 0%, rgba(28,48,80,.55), transparent 60%),
+      linear-gradient(135deg, var(--navy-700), var(--navy-900));
+    display: grid; place-items: center; padding: 32px; min-height: 260px;
+  }
+  .insight-visual svg { width: 100%; height: auto; max-width: 360px; display: block; }
+  @media (max-width: 768px) {
+    .insight-card { grid-template-columns: 1fr; }
+    .insight-body { padding: 32px 28px; }
+    .insight-visual { min-height: 180px; border-left: none; border-top: 1px solid var(--line); order: -1; }
   }
 </style>
 </head>
@@ -1333,8 +1461,9 @@
         <li><a href="#leistungen">Leistungen</a></li>
         <li><a href="#leistungskatalog">Katalog</a></li>
         <li><a href="#im-einsatz">Im Einsatz</a></li>
+        <li><a href="#ki-agenten">KI-Agenten</a></li>
         <li><a href="#sektoren">Sektoren</a></li>
-        <li><a href="#projekte">Projekte</a></li>
+        <li><a href="#insights">Insights</a></li>
         <li><a href="#team">Team</a></li>
         <li><a href="impressum.html">Impressum</a></li>
         <li><a href="#kontakt" class="nav-cta">Kontakt</a></li>
@@ -1457,7 +1586,6 @@
             <a href="https://gefahrgutberatung-manske.de/#ki" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
               Live-Demo öffnen <span class="arrow">→</span>
             </a>
-            <a href="#projekte" class="btn btn-ghost">Projektkarte ansehen</a>
           </div>
           <div class="tech-stack" aria-label="Technische Bausteine des Gefahrgut-Agenten">
             <span>RAG-Wissensabruf</span>
@@ -1520,6 +1648,164 @@
     </div>
   </section>
 
+  <!-- KI-AGENTEN / ARCHITEKTUR -->
+  <section class="block agents-section" id="ki-agenten">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="section-eyebrow">Wie wir KI-Agenten bauen</div>
+        <h2>Sichere Agenten,<br><span class="serif">sparsam gebaut.</span></h2>
+        <p>
+          Unsere KI-Agenten folgen zwei Grundsätzen, die wir in jedem Projekt anwenden:
+          eine Sicherheitsarchitektur, die sensible Daten strukturell von der KI trennt,
+          und ein effizienter Bau auf schlanken Modellen, der mit wenig Rechenleistung
+          und planbaren Kosten auskommt.
+        </p>
+      </div>
+
+      <div class="arch-sub reveal">
+        <div class="arch-kicker">01 · Sicherheit</div>
+        <h3>Die Zwei-Pfad-Sicherheitsarchitektur</h3>
+        <p>
+          Jeder Agent ist strukturell in zwei getrennte Pfade aufgeteilt. So gelangt
+          kein sensibler Rohinhalt in die KI-Verarbeitung, und die Verantwortung über
+          schützenswerte Daten bleibt beim Menschen.
+        </p>
+      </div>
+
+      <figure class="arch-diagram reveal">
+        <div class="ad-ttl">Die Zwei-Pfad-Architektur im Überblick</div>
+        <div class="ad-sub">Sensible Rohdaten und KI-Verarbeitung sind strukturell getrennt. Die KI arbeitet ausschließlich auf abstrahierten Daten (Pfad A). Originalinhalte bleiben im geschützten Kanal (Pfad B) und erreichen nur befugte Menschen nach Freigabe. Beide Wege münden in eine Entscheidung, die beim Menschen liegt.</div>
+        <svg viewBox="0 0 820 380" role="img" aria-label="Schema der Zwei-Pfad-Sicherheitsarchitektur: Eingangsdaten teilen sich in den KI-Pfad mit abstrahierten Daten und den geschützten Kanal mit sensiblen Rohdaten, der nur Menschen nach Freigabe zugänglich ist. Beide münden in eine menschliche Entscheidung." font-family="Inter, system-ui, sans-serif">
+          <defs>
+            <marker id="adArrow" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+              <path d="M0,0 L7,3 L0,6 Z" fill="#8a96a8"/>
+            </marker>
+          </defs>
+
+          <text x="300" y="26" text-anchor="middle" fill="#8a96a8" font-size="11" letter-spacing="1.5">PFAD A · KI-PFAD</text>
+          <text x="300" y="368" text-anchor="middle" fill="#8a96a8" font-size="11" letter-spacing="1.5">PFAD B · GESCHÜTZTER KANAL</text>
+
+          <g fill="none" stroke="#8a96a8" stroke-width="1.5">
+            <path d="M160,190 L185,190 L185,81 L206,81" marker-end="url(#adArrow)"/>
+            <path d="M160,190 L185,190 L185,299 L206,299" marker-end="url(#adArrow)"/>
+            <path d="M390,81 L416,81" marker-end="url(#adArrow)"/>
+            <path d="M390,299 L416,299" marker-end="url(#adArrow)"/>
+            <path d="M600,81 L624,81 L624,176 L640,176" marker-end="url(#adArrow)"/>
+            <path d="M600,299 L624,299 L624,204 L640,204" marker-end="url(#adArrow)"/>
+          </g>
+
+          <line x1="196" y1="190" x2="624" y2="190" stroke="#5a6578" stroke-width="1" stroke-dasharray="5 5"/>
+          <rect x="336" y="178" width="148" height="24" rx="12" fill="#0f1d33" stroke="#5a6578"/>
+          <text x="410" y="194" text-anchor="middle" fill="#b8c2d0" font-size="11" letter-spacing="1">STRIKTE TRENNUNG</text>
+
+          <rect x="20" y="150" width="140" height="80" rx="8" fill="#2a4163" stroke="rgba(255,255,255,.2)"/>
+          <text x="90" y="186" text-anchor="middle" fill="#f4f6fa" font-size="14" font-weight="500">Anfrage &amp;</text>
+          <text x="90" y="206" text-anchor="middle" fill="#f4f6fa" font-size="14" font-weight="500">Eingangsdaten</text>
+
+          <rect x="210" y="46" width="180" height="70" rx="8" fill="#1c3050" stroke="rgba(255,255,255,.2)"/>
+          <text x="300" y="76" text-anchor="middle" fill="#f4f6fa" font-size="14" font-weight="500">Abstrahierte Daten</text>
+          <text x="300" y="96" text-anchor="middle" fill="#8a96a8" font-size="12">Merkmals- &amp; Sachdaten</text>
+
+          <rect x="420" y="46" width="180" height="70" rx="8" fill="#1c3050" stroke="rgba(255,255,255,.4)"/>
+          <text x="510" y="76" text-anchor="middle" fill="#f4f6fa" font-size="14" font-weight="500">KI-Pfad</text>
+          <text x="510" y="96" text-anchor="middle" fill="#8a96a8" font-size="12">RAG · lokal · datensparsam</text>
+
+          <rect x="210" y="264" width="180" height="70" rx="8" fill="#1c3050" stroke="rgba(255,255,255,.2)"/>
+          <text x="300" y="294" text-anchor="middle" fill="#f4f6fa" font-size="14" font-weight="500">Sensible Rohdaten</text>
+          <text x="300" y="314" text-anchor="middle" fill="#8a96a8" font-size="12">Roh- &amp; Originaldaten</text>
+
+          <rect x="420" y="264" width="180" height="70" rx="8" fill="#1c3050" stroke="rgba(255,255,255,.2)"/>
+          <text x="510" y="294" text-anchor="middle" fill="#f4f6fa" font-size="14" font-weight="500">Geschützter Kanal</text>
+          <text x="510" y="314" text-anchor="middle" fill="#8a96a8" font-size="12">nur nach Freigabe</text>
+
+          <rect x="644" y="148" width="156" height="84" rx="8" fill="#2a4163" stroke="rgba(255,255,255,.2)"/>
+          <text x="722" y="184" text-anchor="middle" fill="#f4f6fa" font-size="14" font-weight="500">Mensch entscheidet</text>
+          <text x="722" y="204" text-anchor="middle" fill="#8a96a8" font-size="12">Sichtung &amp; Freigabe</text>
+        </svg>
+      </figure>
+
+      <div class="arch-paths reveal">
+        <div class="arch-path">
+          <div class="pt">Pfad A · KI-Pfad</div>
+          <h4>Datensparsame Verarbeitung</h4>
+          <p>
+            Der KI-Pfad arbeitet ausschließlich auf abstrahierten, auf das Nötige
+            reduzierten Daten und beantwortet Anfragen nur aus verifizierten Quellen.
+          </p>
+          <ul class="arch-list">
+            <li>verarbeitet nur strukturierte Merkmals- und Sachdaten</li>
+            <li>kein Zugriff auf sensible Roh- oder Originalinhalte</li>
+            <li>Antworten <strong>ausschließlich</strong> aus geprüften Quellen (RAG)</li>
+            <li>läuft lokal auf eigener, kontrollierter Hardware</li>
+          </ul>
+        </div>
+        <div class="arch-path">
+          <div class="pt">Pfad B · Geschützter Kanal</div>
+          <h4>Nur menschlich, nur auf Freigabe</h4>
+          <p>
+            Sensible Rohinhalte laufen über einen getrennten, kontrollierten Kanal,
+            den ausschließlich befugte Personen einsehen, und auch das nur nach
+            ausdrücklicher Freigabe.
+          </p>
+          <ul class="arch-list">
+            <li>reiner Durchleitungskanal für schützenswerte Originaldaten</li>
+            <li>aktiv erst nach ausdrücklicher Freigabe durch befugtes Personal</li>
+            <li>wird von der KI <strong>nicht</strong> verarbeitet, ausgewertet oder gespeichert</li>
+            <li>dient allein der menschlichen Sichtung und Entscheidung</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="arch-note reveal">
+        <strong>Wirkung der Trennung:</strong> Was die KI „sieht", ist abstrahiert und
+        datensparsam (Pfad A). Was ein Mensch bei Bedarf im Original sieht, bleibt strikt
+        getrennt und ohne KI-seitige Verarbeitung (Pfad B). Sensible Daten verlassen so
+        das geschützte System nicht, und jede kritische Entscheidung bleibt nachvollziehbar
+        in menschlicher Hand.
+      </div>
+
+      <div class="arch-sub reveal">
+        <div class="arch-kicker">02 · Effizienz</div>
+        <h3>Schlanke Modelle, tokenminimal gebaut</h3>
+        <p>
+          Wir bauen unsere Agenten so effizient, dass leistungsfähige Low-Parameter-Modelle
+          lokal auf eigener Hardware in Deutschland laufen. Das senkt die nötige
+          Rechenleistung, macht Kosten planbar und hält die Daten im Haus.
+        </p>
+      </div>
+
+      <div class="eff-grid reveal">
+        <div class="eff">
+          <div class="eff-num">Methode</div>
+          <h4>Wissen in Quellen, nicht im Prompt</h4>
+          <p>
+            Fachwissen lebt in pflegbaren RAG-Quellen und Werkzeugen, nicht in
+            überladenen Anweisungen. Der System-Prompt bleibt schlank und stabil,
+            die Quellen wachsen mit.
+          </p>
+        </div>
+        <div class="eff">
+          <div class="eff-num">Wirkung</div>
+          <h4>Jedes Token kostet Rechenzeit</h4>
+          <p>
+            Knappe, klare Anweisungen belegen weniger Speicher und sparen Rechenzeit
+            bei jeder Anfrage. Das erhöht den Durchsatz und die Zahl paralleler Nutzer
+            auch bei begrenzter Hardware.
+          </p>
+        </div>
+        <div class="eff">
+          <div class="eff-num">Nutzen</div>
+          <h4>Souverän und planbar</h4>
+          <p>
+            Eigene Hardware bedeutet planbare Fixkosten statt offener API-Kosten,
+            Unabhängigkeit von US- oder China-Clouds und einen Betrieb, der dem
+            EU AI Act und der DSGVO standhält.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- LEISTUNGSKATALOG -->
   <section class="block catalog-section" id="leistungskatalog">
     <div class="container">
@@ -1549,7 +1835,7 @@
           <div class="catalog-meta">
             <div>
               <div class="label">Umfang</div>
-              <div class="value">14 Seiten · 10 Phasen</div>
+              <div class="value">15 Seiten · 10 Phasen</div>
             </div>
             <div>
               <div class="label">Rahmenwerk</div>
@@ -1616,65 +1902,59 @@
     </div>
   </section>
 
-  <!-- PROJEKTE -->
-  <section class="block projects-section" id="projekte">
+  <!-- INSIGHTS -->
+  <section class="block insights-section" id="insights">
     <div class="container">
       <div class="section-head reveal">
-        <div class="section-eyebrow">Ausgewählte Vorhaben</div>
-        <h2>Woran wir arbeiten<br><span class="serif">ausgewählte Projekte.</span></h2>
+        <div class="section-eyebrow">Aus unserem Wissen</div>
+        <h2>Einordnung statt Hype,<br><span class="serif">unsere Insights.</span></h2>
         <p>
-          Wir entwickeln KI-Agenten und KI-Konzepte für konkrete fachliche Einsatzbereiche.
-          Einige Vorhaben sind bereits in Umsetzung, andere befinden sich in Konzeption oder Vorbereitung.
+          Wir verfolgen die Entwicklung der KI-Spitzenmodelle genau und ordnen sie ehrlich ein,
+          mit belegten Zahlen statt Versprechen. Was das für die Datensouveränität von Unternehmen bedeutet,
+          lesen Sie hier.
         </p>
       </div>
 
-      <div class="projects">
-        <!-- Private Sector: Gefahrgutberatung Manske -->
-        <a href="https://gefahrgutberatung-manske.de/" class="project reveal" target="_blank" rel="noopener noreferrer" aria-label="Gefahrgutberatung Manske öffnen">
-          <div class="project-logo gbm-logo">
-            <img src="assets/logo-gefahrgutberatung-manske.png" alt="Logo Gefahrgutberatung Manske" loading="lazy" />
+      <a href="agi-artikel.html" class="insight-card reveal" aria-label="Artikel öffnen: Ab wann ist ein KI-System AGI?">
+        <div class="insight-body">
+          <span class="insight-eyebrow">Fachbeitrag · KI-Strategie</span>
+          <h3>Ab wann ist ein KI-System <span class="serif">AGI</span>?</h3>
+          <p>
+            Warum Deutschland über einen längeren Zeitraum von der KI-Spitze abgeschnitten sein könnte,
+            was die AGI-Debatte dazu beiträgt und warum jetzt der Aufbau eigener, lokaler Modelle zählt.
+          </p>
+          <div class="insight-meta">
+            <span>Stand: Juni 2026</span>
+            <span>·</span>
+            <span>Lesezeit ca. 9 Minuten</span>
           </div>
-          <div class="project-client">
-            Private Sector
-            <strong>GBM</strong>
-          </div>
-          <div>
-            <h3 class="project-title">Gefahrgut-Agent</h3>
-            <p class="project-desc">
-              Fachspezifischer KI-Agent zur Unterstützung in der Gefahrgutberatung — mit strukturierter
-              Wissensbasis, Dokumentenprüfung und fachlicher Eskalation.
-            </p>
-          </div>
-          <div class="project-meta">
-            Status
-            <strong>In Umsetzung</strong>
-          </div>
-          <div class="project-arrow" aria-hidden="true">→</div>
-        </a>
-
-        <!-- Public Sector: mögliches Projektvorhaben mit Bezug zur Stadt Essen -->
-        <article class="project project-static reveal" aria-label="Projektvorhaben mit Bezug zur Stadt Essen in Vorbereitung">
-          <div class="project-logo" aria-hidden="true">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="opacity: .85;">
-              <path d="M12 2L4 6v6c0 5 3.5 9.5 8 10 4.5-.5 8-5 8-10V6l-8-4z"/>
-              <path d="M9 12l2 2 4-4"/>
-            </svg>
-          </div>
-          <div class="project-client">
-            Public Sector
-            <strong>Kommunaler Bezug</strong>
-          </div>
-          <div>
-            <h3 class="project-title">Betrugsmaschenerkennungsagent in Vorbereitung</h3>
-            <p class="project-desc">Geplantes kommunales Assistenzsystem mit Ampellogik zur strukturierten Vorprüfung verdächtiger Nachrichten, Anrufe und Webseiten.</p>
-          </div>
-          <div class="project-meta">
-            Status
-            <strong>In Vorbereitung</strong>
-          </div>
-          <div class="project-arrow" aria-hidden="true">·</div>
-        </article>
-      </div>
+          <span class="insight-readmore">Artikel lesen <span class="arrow" aria-hidden="true">→</span></span>
+        </div>
+        <div class="insight-visual" aria-hidden="true">
+          <svg viewBox="0 0 360 200" font-family="Inter, system-ui, sans-serif">
+            <defs>
+              <linearGradient id="insightFill" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#ffffff" stop-opacity="0.16"/>
+                <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <g stroke="rgba(255,255,255,0.10)" stroke-width="1">
+              <line x1="20" y1="40" x2="340" y2="40"/>
+              <line x1="20" y1="90" x2="340" y2="90"/>
+              <line x1="20" y1="140" x2="340" y2="140"/>
+            </g>
+            <path d="M28,168 L28,150 L130,118 L232,92 L332,52 L332,168 Z" fill="url(#insightFill)"/>
+            <path d="M28,150 L130,118 L232,92 L332,52" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+            <g fill="#ffffff">
+              <circle cx="28" cy="150" r="4"/>
+              <circle cx="130" cy="118" r="4"/>
+              <circle cx="232" cy="92" r="4"/>
+              <circle cx="332" cy="52" r="5.5" stroke="#0f1d33" stroke-width="2"/>
+            </g>
+            <text x="332" y="40" text-anchor="end" fill="#b8c2d0" font-size="11">Fähigkeit über Zeit</text>
+          </svg>
+        </div>
+      </a>
     </div>
   </section>
 
@@ -1783,7 +2063,8 @@
           <li><a href="#leistungen">Leistungen</a></li>
           <li><a href="#leistungskatalog">Leistungskatalog (PDF)</a></li>
           <li><a href="#im-einsatz">Im Einsatz</a></li>
-          <li><a href="#projekte">Projekte</a></li>
+          <li><a href="#ki-agenten">KI-Agenten</a></li>
+          <li><a href="#insights">Insights</a></li>
           <li><a href="#team">Team</a></li>
           <li><a href="impressum.html">Impressum</a></li>
           <li><a href="datenschutz.html">Datenschutzerklärung</a></li>

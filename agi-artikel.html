@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ab wann ist ein KI-System AGI? · TM KI Consulting</title>
+<meta name="description" content="Warum Deutschland über einen längeren Zeitraum von der KI-Spitze abgeschnitten sein könnte, was die AGI-Debatte dazu beiträgt und warum lokale, datensouveräne Modelle jetzt zählen." />
+<meta property="og:title" content="Ab wann ist ein KI-System AGI?" />
+<meta property="og:description" content="Warum der Zugang aus Deutschland zur KI-Spitze wegbrechen kann, und warum souveräne lokale KI jetzt zählt." />
+<meta property="og:type" content="article" />
+<meta property="og:image" content="og-image.png" />
+
+<link rel="icon" href="favicon.ico" />
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
+<link rel="apple-touch-icon" href="apple-touch-icon.png" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --navy-900: #0a1628;
+    --navy-800: #0f1d33;
+    --navy-700: #152540;
+    --navy-600: #1c3050;
+    --navy-500: #2a4163;
+    --black:    #050a14;
+    --white:    #ffffff;
+    --off-white: #f4f6fa;
+    --gray-300: #b8c2d0;
+    --gray-400: #8a96a8;
+    --gray-500: #5a6578;
+    --line:     rgba(255, 255, 255, .1);
+    --line-light: rgba(255, 255, 255, .06);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: var(--navy-900);
+    color: var(--off-white);
+    font-family: 'Inter', system-ui, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    font-size: 16px;
+  }
+  body::before {
+    content: "";
+    position: fixed; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse 100% 80% at 50% 0%, rgba(28, 48, 80, .4), transparent 60%),
+      radial-gradient(ellipse 80% 60% at 100% 100%, rgba(15, 29, 51, .6), transparent 60%);
+    pointer-events: none;
+  }
+  body > * { position: relative; z-index: 1; }
+  h1, h2, h3, h4 { font-weight: 400; letter-spacing: -0.02em; line-height: 1.15; color: var(--white); }
+  .serif { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-weight: 400; }
+  a { color: var(--white); text-decoration: none; transition: opacity .2s; }
+  .container { max-width: 1280px; margin: 0 auto; padding: 0 48px; }
+
+  /* ===== HEADER (von der Startseite übernommen) ===== */
+  header.site {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(10, 22, 40, .8);
+    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--line-light);
+  }
+  .nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 22px 48px; max-width: 1280px; margin: 0 auto;
+  }
+  .brand { display: flex; align-items: center; gap: 14px; color: var(--white); }
+  .brand-logo {
+    width: 44px; height: 44px; border: 1px solid rgba(255,255,255,.18);
+    background: var(--white); display: grid; place-items: center; overflow: hidden; flex-shrink: 0;
+  }
+  .brand-logo img { width: 100%; height: 100%; object-fit: contain; display: block; }
+  .brand-text .title { font-size: 15px; font-weight: 500; letter-spacing: -0.01em; }
+  .brand-text .sub { font-size: 11px; color: var(--gray-400); letter-spacing: .14em; text-transform: uppercase; margin-top: 2px; }
+  nav.primary ul { list-style: none; display: flex; gap: 36px; align-items: center; }
+  nav.primary a { color: var(--off-white); font-size: 14px; font-weight: 400; opacity: .75; transition: opacity .2s; }
+  nav.primary a:hover, nav.primary a[aria-current="page"] { opacity: 1; }
+  .nav-cta {
+    margin-left: 8px; background: var(--white); color: var(--navy-900) !important;
+    padding: 10px 22px; font-size: 13px; font-weight: 500; opacity: 1 !important; transition: background .2s;
+  }
+  .nav-cta:hover { background: var(--off-white); }
+  .nav-toggle {
+    display: none; flex-direction: column; justify-content: center; gap: 5px;
+    width: 44px; height: 44px; padding: 10px; background: transparent;
+    border: 1px solid rgba(255,255,255,.18); cursor: pointer; z-index: 110;
+  }
+  .nav-toggle span { display: block; width: 100%; height: 2px; background: var(--white); transition: transform .3s ease, opacity .3s ease; }
+  .nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+  .nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* ===== BUTTONS ===== */
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px; padding: 16px 28px;
+    font-size: 14px; font-weight: 500; cursor: pointer; border: 1px solid transparent;
+    text-decoration: none; transition: all .25s; letter-spacing: .01em; font-family: inherit;
+  }
+  .btn-primary { background: var(--white); color: var(--navy-900); }
+  .btn-primary:hover { background: var(--off-white); color: var(--navy-900); }
+  .btn-ghost { background: transparent; color: var(--white); border-color: rgba(255,255,255,.25); }
+  .btn-ghost:hover { border-color: var(--white); background: rgba(255,255,255,.05); color: var(--white); }
+  .btn .arrow { transition: transform .25s; font-size: 16px; }
+  .btn:hover .arrow { transform: translateX(4px); }
+
+  /* ===== ARTIKEL ===== */
+  .article-main { padding-top: 88px; }
+  .read { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+
+  .a-hero { padding: 64px 0 48px; }
+  .a-back { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: var(--gray-400); margin-bottom: 30px; }
+  .a-back:hover { color: var(--white); }
+  .a-eyebrow { display: inline-flex; align-items: center; gap: 12px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--gray-400); margin-bottom: 26px; }
+  .a-eyebrow::before { content: ""; width: 30px; height: 1px; background: var(--gray-500); }
+  .a-hero h1 { font-weight: 300; font-size: clamp(34px, 5.5vw, 58px); line-height: 1.08; letter-spacing: -0.02em; margin-bottom: 26px; }
+  .a-lead { font-size: clamp(17px, 2vw, 20px); line-height: 1.6; color: var(--off-white); font-weight: 300; max-width: 640px; }
+  .a-meta { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-top: 34px; padding-top: 22px; border-top: 1px solid var(--line); font-size: 13px; color: var(--gray-400); }
+  .a-meta b { color: var(--gray-300); font-weight: 500; }
+
+  .article-body { padding: 16px 0 32px; }
+  .article-body h2 { font-weight: 400; color: var(--white); font-size: clamp(24px, 3vw, 32px); line-height: 1.2; letter-spacing: -0.02em; margin: 60px 0 22px; }
+  .article-body h3 { color: var(--white); font-weight: 500; font-size: 18px; margin: 32px 0 12px; letter-spacing: -0.01em; }
+  .article-body p { margin: 0 0 20px; color: var(--gray-300); font-size: 17px; line-height: 1.7; font-weight: 300; }
+  .article-body p strong, .article-body li strong { color: var(--off-white); font-weight: 600; }
+  .article-body em { font-style: italic; }
+  .article-body a { color: var(--white); border-bottom: 1px solid var(--line); transition: border-color .2s; }
+  .article-body a:hover { border-color: var(--white); }
+  .article-body .btn { border-bottom: none; }
+  .article-body .btn-primary { color: var(--navy-900); }
+  .article-body .btn-ghost { color: var(--white); }
+
+  .callout { background: var(--navy-800); border: 1px solid var(--line); border-left: 3px solid var(--white); padding: 28px 30px; margin: 34px 0; box-shadow: 0 30px 60px -30px rgba(0,0,0,.6); }
+  .callout .k { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--gray-400); font-weight: 500; display: block; margin-bottom: 10px; }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout.warn { border-left-color: var(--gray-400); }
+
+  .article-body blockquote { margin: 38px 0; padding: 6px 0 6px 30px; border-left: 2px solid var(--navy-500); }
+  .article-body blockquote p { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-weight: 400; color: var(--off-white); font-size: 20px; line-height: 1.6; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin: 30px 0; }
+  .cell { background: var(--navy-800); border: 1px solid var(--line); padding: 22px; }
+  .cell .name { color: var(--white); font-weight: 600; font-size: 15.5px; margin-bottom: 6px; }
+  .cell .val { font-family: 'Playfair Display', Georgia, serif; font-size: 30px; color: var(--white); line-height: 1; margin: 4px 0 8px; }
+  .cell .val span { font-size: 15px; color: var(--gray-400); font-family: 'Inter', sans-serif; }
+  .cell .desc { font-size: 13.5px; color: var(--gray-400); line-height: 1.5; }
+  .tag { display: inline-block; font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--gray-400); border: 1px solid var(--line); border-radius: 20px; padding: 2px 9px; margin-top: 10px; }
+
+  figure.chart { margin: 36px 0; background: var(--navy-800); border: 1px solid var(--line); padding: 26px 24px 18px; box-shadow: 0 30px 60px -30px rgba(0,0,0,.6); }
+  figure.chart .ttl { color: var(--white); font-weight: 600; font-size: 16.5px; margin-bottom: 3px; }
+  figure.chart .sub { color: var(--gray-400); font-size: 13px; line-height: 1.45; margin-bottom: 16px; }
+  figure.chart svg { width: 100%; height: auto; display: block; }
+  figure.chart figcaption { margin-top: 14px; font-size: 12.5px; color: var(--gray-500); line-height: 1.55; }
+  figure.chart figcaption a { color: var(--gray-400); border-bottom: 1px solid var(--line); }
+  figure.chart figcaption a:hover { color: var(--white); }
+  figure.chart .legend { display: flex; flex-wrap: wrap; gap: 18px; margin: 0 0 12px; font-size: 13px; color: var(--gray-300); }
+  figure.chart .legend span { display: inline-flex; align-items: center; gap: 7px; }
+  figure.chart .legend i { width: 13px; height: 13px; border-radius: 3px; display: inline-block; }
+
+  .cta-box { margin: 70px 0 20px; background: var(--navy-800); border: 1px solid var(--line); padding: 48px 44px; box-shadow: 0 30px 60px -30px rgba(0,0,0,.6); }
+  .cta-box h2 { margin: 0 0 12px; font-weight: 300; font-size: clamp(24px, 3vw, 32px); }
+  .cta-box p { color: var(--gray-300); font-size: 16px; font-weight: 300; line-height: 1.65; margin-bottom: 4px; }
+  .cta-box .btn { margin-top: 22px; }
+
+  .sources { margin-top: 64px; padding-top: 34px; border-top: 1px solid var(--line); }
+  .sources h2 { font-size: 20px; margin: 0 0 18px; font-weight: 400; }
+  .sources ol { list-style: none; counter-reset: s; padding: 0; }
+  .sources li { counter-increment: s; position: relative; padding: 8px 0 8px 38px; font-size: 13.5px; color: var(--gray-400); border-bottom: 1px solid var(--line-light); word-break: break-word; }
+  .sources li::before { content: counter(s); position: absolute; left: 0; top: 8px; font-size: 11.5px; color: var(--gray-500); font-variant-numeric: tabular-nums; }
+  .sources a { color: var(--gray-300); border-bottom: 1px solid var(--line); }
+  .sources a:hover { color: var(--white); }
+  .sources .note { margin-top: 22px; font-size: 12.5px; color: var(--gray-500); line-height: 1.6; font-style: italic; }
+
+  /* ===== FOOTER (von der Startseite übernommen) ===== */
+  footer { background: var(--black); padding: 80px 0 40px; border-top: 1px solid var(--line-light); }
+  .foot-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 56px; padding-bottom: 56px; border-bottom: 1px solid var(--line); }
+  .foot-brand .foot-name { font-size: 18px; font-weight: 500; margin-bottom: 6px; }
+  .foot-brand .foot-sub { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--gray-400); margin-bottom: 24px; }
+  .foot-brand p { font-size: 14px; line-height: 1.65; color: var(--gray-300); max-width: 34ch; font-weight: 300; }
+  footer h5 { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--gray-400); margin-bottom: 18px; font-weight: 500; }
+  footer ul { list-style: none; }
+  footer li { padding: 6px 0; }
+  footer a { color: var(--off-white); font-size: 14px; opacity: .8; }
+  footer a:hover { opacity: 1; }
+  .foot-bottom { padding-top: 32px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-size: 12px; letter-spacing: .04em; color: var(--gray-500); }
+
+  @media (max-width: 768px) {
+    .nav-toggle { display: inline-flex; }
+    nav.primary {
+      position: absolute; top: 100%; left: 0; right: 0;
+      background: rgba(10, 22, 40, .97); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line-light); max-height: 0; overflow: hidden; visibility: hidden;
+      transition: max-height .35s ease, visibility .35s ease;
+    }
+    nav.primary.is-open { max-height: calc(100vh - 80px); visibility: visible; overflow-y: auto; }
+    nav.primary ul { display: flex; flex-direction: column; align-items: stretch; gap: 0; padding: 12px 24px 24px; }
+    nav.primary ul li { border-bottom: 1px solid var(--line-light); }
+    nav.primary ul li:last-child { border-bottom: none; }
+    nav.primary a { display: block; padding: 16px 4px; font-size: 16px; opacity: .9; }
+    nav.primary .nav-cta { margin: 16px 0 0; text-align: center; padding: 14px 22px; }
+    header.site { overflow: visible; }
+    .nav { position: relative; padding: 18px 24px; }
+    .container { padding: 0 24px; }
+    .foot-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+    .foot-bottom { flex-direction: column; gap: 8px; }
+    .cta-box { padding: 32px 24px; }
+    .callout { padding: 26px 22px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site">
+  <div class="nav">
+    <a href="index.html" class="brand" aria-label="TM KI Consulting Startseite">
+      <div class="brand-logo">
+        <img src="assets/TM_KI_Logo.png" alt="TM KI Consulting Logo" />
+      </div>
+      <div class="brand-text">
+        <div class="title">TM KI Consulting </div>
+        <div class="sub">Beratung · Strategie · Umsetzung</div>
+      </div>
+    </a>
+    <nav class="primary" id="primary-nav">
+      <ul>
+        <li><a href="index.html#leistungen">Leistungen</a></li>
+        <li><a href="index.html#leistungskatalog">Katalog</a></li>
+        <li><a href="index.html#im-einsatz">Im Einsatz</a></li>
+        <li><a href="index.html#insights" aria-current="page">Insights</a></li>
+        <li><a href="index.html#team">Team</a></li>
+        <li><a href="impressum.html">Impressum</a></li>
+        <li><a href="index.html#kontakt" class="nav-cta">Kontakt</a></li>
+      </ul>
+    </nav>
+    <button class="nav-toggle" type="button" aria-label="Menü öffnen" aria-expanded="false" aria-controls="primary-nav">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main class="article-main">
+
+  <div class="a-hero">
+    <div class="read">
+      <a class="a-back" href="index.html#insights">← Zurück zur Startseite</a>
+      <span class="a-eyebrow">KI-Strategie · Datensouveränität</span>
+      <h1>Ab wann ist ein KI-System <span class="serif">AGI</span>?</h1>
+      <p class="a-lead">Die KI-Spitze entwickelt sich rasend schnell. Doch seit dem 12. Juni 2026 ist belegt, dass der Zugang aus Deutschland jederzeit gekappt werden kann. Gut möglich, dass wir hier über einen längeren Zeitraum kein KI-System nutzen können, das über die heutige Spitze, die Mythos-Generation, hinausgeht. Was das bedeutet, und warum jetzt der Aufbau eigener, lokaler Modelle zählt.</p>
+      <div class="a-meta">
+        <span><b>TM KI Consulting</b></span>
+        <span>Stand: Juni 2026</span>
+        <span>Lesezeit: ca. 9 Minuten</span>
+      </div>
+    </div>
+  </div>
+
+  <article class="article-body">
+    <div class="read">
+
+      <h2>Worum es geht</h2>
+      <p>Im Juni 2026 sind innerhalb weniger Tage zwei Dinge passiert. Anthropic stellte mit Fable 5 und Mythos 5 die bis dahin stärksten KI-Modelle vor. Und nur drei Tage später war der Zugang zu beiden, auch aus Deutschland, per US-Direktive gesperrt. Beides zusammen ist die eigentliche Geschichte dieses Beitrags.</p>
+      <p>Daraus folgt eine unbequeme Möglichkeit, und sie zieht sich durch alles Weitere: dass wir in Deutschland über einen längeren Zeitraum kein KI-System nutzen können, das über die heutige Spitze, die Mythos-Generation, hinausgeht. Nicht, weil die Technik nicht existiert, sondern weil der Zugang dazu nicht in unserer Hand liegt.</p>
+      <p>Um zu verstehen, was da auf dem Spiel steht, lohnt der nüchterne Blick auf die Frage, die gerade alle umtreibt: Wie nah ist diese Spitze eigentlich an dem, was man AGI nennt? Sie klingt einfach, zerfällt aber in drei härtere Fragen: Was ist überhaupt ein KI-System? Was würde „AGI" bedeuten? Und woran würde man es messen? Erst danach wird greifbar, warum der Zugang zu dieser Technik zu wichtig ist, um ihn aus der Hand zu geben.</p>
+
+      <h2>Was ist ein KI-System?</h2>
+      <p>Ein KI-System wie Claude ist kein Wesen und kein digitales Gehirn. Es ist ein sehr großes statistisches Modell, das aus enormen Textmengen gelernt hat, welcher Gedanke, welches Wort, welcher Lösungsschritt am wahrscheinlichsten als Nächstes folgt. Im Kern sagt es immer wieder das nächste Stück Text voraus.</p>
+      <p>Bemerkenswert ist, was aus diesem einfachen Prinzip entsteht, sobald man es millionenfach verschaltet und mit genug Daten trainiert. Es wächst Verhalten, das im Einzelteil nirgends angelegt ist: Das System schreibt funktionierenden Code, führt mathematische Beweise, plant mehrstufige Arbeitsschritte. Diese Fähigkeiten sehen nach mehr aus als nach bloßer Statistik, und genau deshalb ist die Frage nach AGI überhaupt sinnvoll. Sie zwingt uns zu der Entscheidung, ab wann aus einem nützlichen Werkzeug etwas wird, das man dem menschlichen Verstand ebenbürtig nennen müsste.</p>
+
+      <h2>Was würde „AGI" überhaupt bedeuten?</h2>
+      <p>AGI steht für <em>Artificial General Intelligence</em>, also ein System, das nicht nur eine Aufgabe beherrscht, sondern über ein breites Spektrum hinweg auf menschlichem Niveau oder darüber arbeitet. Es gibt jedoch keine einzige verbindliche Definition. Drei Bezugspunkte haben sich durchgesetzt:</p>
+      <h3>Google DeepMind, „Levels of AGI" (Morris et al., 2023)</h3>
+      <p>Der wohl sauberste Rahmen. Er misst auf zwei Achsen: Leistungstiefe und Breite der Aufgaben. Daraus ergeben sich fünf Stufen: Emerging, Competent, Expert, Virtuoso, Superhuman. Aktuelle Chatbots ordnen die Autoren ausdrücklich nur als <em>Emerging AGI</em> ein, also die unterste Stufe allgemeiner Intelligenz. <a href="https://arxiv.org/abs/2311.02462">(Quelle 11)</a></p>
+      <h3>OpenAIs fünf Stufen (2024)</h3>
+      <p>Chatbots, dann Reasoner, dann Agenten, dann Innovatoren, schließlich ganze Organisationen. Eine eingängige Leiter, allerdings nur über Berichterstattung bekannt, nicht als offizielles Dokument. <a href="https://theaiinsider.tech/2024/07/12/what-are-openais-five-levels-of-ai-and-where-are-we-now/">(Quelle 13)</a></p>
+      <h3>Der Turing-Test, und warum er ausgedient hat</h3>
+      <p>Lange galt: Wer einen Menschen im Gespräch nicht mehr von der Maschine unterscheiden kann, hat den Test bestanden. 2025 hielten Probanden GPT-4.5 mit passender Rollenanweisung in 73 Prozent der Fälle für den Menschen. Formal bestanden. Doch ohne diese Anweisung fiel die Quote auf 36 Prozent. Der Test misst überzeugende Kommunikation und Täuschung, nicht Intelligenz. Als AGI-Maßstab ist er überholt. <a href="https://arxiv.org/pdf/2503.23674">(Quelle 14)</a></p>
+      <p>Festhalten lässt sich: Selbst die Fachwelt hat keine scharfe Grenze. „AGI" ist heute eher eine Richtung als ein klar markierter Punkt.</p>
+
+      <h2>Woran man es messen würde: die harten Benchmarks</h2>
+      <p>Wenn es keine saubere Definition gibt, behilft man sich mit Tests, die so konstruiert sind, dass reines Auswendiglernen nicht ausreicht. Ein wichtiger Vorbehalt vorab: Viele Bestwerte auf den Ranglisten sind <strong>vom Hersteller selbst gemeldet und nicht unabhängig geprüft</strong>. Wir kennzeichnen das hier.</p>
+
+      <h3>ARC-AGI (François Chollet)</h3>
+      <p>Der wohl bekannteste AGI-nahe Test. Er prüft nicht Wissen, sondern die Fähigkeit, aus wenigen Beispielen eine neue Regel zu erschließen. Menschen lösen rund 85 Prozent. Ende 2024 überschritt OpenAIs Modell o3 mit 76 bis 88 Prozent erstmals diese Schwelle, im Hochleistungsmodus jedoch zu geschätzten 3.460 US-Dollar pro Aufgabe. Damit gilt die erste Version als weitgehend gelöst. Der Nachfolger <strong>ARC-AGI-2</strong> ist deutlich härter: Laut ARC-Prize-Report vom Dezember 2025 lag das beste <em>verifizierte</em> kommerzielle Modell, Claude Opus 4.5, bei nur 37,6 Prozent, zu 2,20 US-Dollar pro Aufgabe. Was für Menschen leicht ist, bleibt für Maschinen teuer und schwer. <a href="https://arcprize.org/arc-agi/1">(Quellen 1, 2, 3)</a></p>
+
+      <h3>GPQA Diamond</h3>
+      <p>Naturwissenschaftliche Fragen auf Promotionsniveau, „google-sicher" formuliert. Fachpromovierte erreichen rund 65 Prozent. Hier sind die Spitzenmodelle inzwischen über 90 Prozent, der Test gilt als nahezu ausgereizt. <a href="https://epoch.ai/benchmarks/gpqa-diamond">(Quelle 4)</a></p>
+
+      <h3>Humanity's Last Exam</h3>
+      <p>2.500 Expertenfragen über viele Fächer, bewusst als Härtetest gebaut. Bei Veröffentlichung Anfang 2025 erreichten Spitzenmodelle nur einstellige Werte (GPT-4o 2,7 Prozent, o1 8,0 Prozent). Wie schnell sich das verschoben hat, zeigt der nächste Abschnitt. <a href="https://agi.safe.ai/">(Quellen 5, 6)</a></p>
+
+      <h3>SWE-bench</h3>
+      <p>Echte Programmierfehler aus GitHub, die das Modell mit lauffähigem Code beheben muss. Wichtig: Die meisten Werte sind herstellergemeldet, nicht unabhängig verifiziert. <a href="https://leaderboard.steel.dev/leaderboards/swe-bench-verified/">(Quellen 7, 8)</a></p>
+
+      <h3>FrontierMath (Epoch AI)</h3>
+      <p>Sehr schwere, neue Forschungsmathematik. Ende 2024 lag der Bestwert bei 25,2 Prozent. Bezeichnend für die Vorsicht, die hier nötig ist: Am 12. Juni 2026 musste Epoch eine überarbeitete Fassung veröffentlichen, nachdem ein Audit in 42 Prozent der ursprünglichen Aufgaben kleine, aber kritische Fehler gefunden hatte. Selbst die Messlatten sind in Bewegung. <a href="https://epoch.ai/frontiermath/the-benchmark">(Quelle 9)</a></p>
+
+      <p><strong>MMLU</strong> schließlich, lange der Standardtest, gilt heute als gesättigt und taugt kaum noch als AGI-Maßstab.</p>
+
+      <h2>Wie weit ist die Spitze heute? Das Beispiel Fable 5</h2>
+      <p>Anthropic stellte am 9. Juni 2026 zwei neue Modelle vor: Claude Fable 5 und Claude Mythos 5. Was sich seriös belegen lässt:</p>
+
+      <div class="grid">
+        <div class="cell">
+          <div class="name">Intelligence Index</div>
+          <div class="val">64,9 <span>· Platz 1</span></div>
+          <div class="desc">Fable 5 führt den unabhängigen Index von Artificial Analysis an, mit dem höchsten Score auf 5 von 10 Benchmarks.</div>
+          <span class="tag">Drittquelle, verifiziert</span>
+        </div>
+        <div class="cell">
+          <div class="name">Humanity's Last Exam</div>
+          <div class="val">53 <span>%</span></div>
+          <div class="desc">Anfang 2025 lagen Spitzenmodelle hier noch im einstelligen Bereich. Ein Sprung um mehr als das Sechsfache.</div>
+          <span class="tag">Drittquelle, verifiziert</span>
+        </div>
+        <div class="cell">
+          <div class="name">SWE-bench Pro</div>
+          <div class="val">80,3 <span>%</span></div>
+          <div class="desc">Reale Programmieraufgaben in der strengeren Pro-Variante.</div>
+          <span class="tag">Herstellergemeldet</span>
+        </div>
+      </div>
+
+      <figure class="chart">
+        <div class="ttl">Humanity's Last Exam: der Sprung an der Spitze</div>
+        <div class="sub">Bestes öffentlich gelistetes Modell je Zeitpunkt, Anteil korrekt beantworteter Expertenfragen in Prozent. In rund anderthalb Jahren von einstellig auf über 50 Prozent.</div>
+        <svg viewBox="0 0 720 400" role="img" aria-label="Liniendiagramm: Bestwerte auf Humanity's Last Exam von Januar 2025 (8 Prozent) bis Juni 2026 (53,3 Prozent)" font-family="Inter, system-ui, sans-serif">
+          <defs>
+            <linearGradient id="areaFill" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#ffffff" stop-opacity="0.16"/>
+              <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <g stroke="rgba(255,255,255,0.10)" stroke-width="1">
+            <line x1="56" y1="44" x2="696" y2="44"/>
+            <line x1="56" y1="145.3" x2="696" y2="145.3"/>
+            <line x1="56" y1="246.7" x2="696" y2="246.7"/>
+            <line x1="56" y1="348" x2="696" y2="348"/>
+          </g>
+          <g fill="#8a96a8" font-size="12" text-anchor="end">
+            <text x="46" y="48">60 %</text>
+            <text x="46" y="149.3">40 %</text>
+            <text x="46" y="250.7">20 %</text>
+            <text x="46" y="352">0</text>
+          </g>
+          <path d="M56,348 L56,307.5 L319.5,219.8 L545.4,158 L696,77.9 L696,348 Z" fill="url(#areaFill)"/>
+          <path d="M56,307.5 L319.5,219.8 L545.4,158 L696,77.9" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+          <g fill="#ffffff">
+            <circle cx="56" cy="307.5" r="5"/>
+            <circle cx="319.5" cy="219.8" r="5"/>
+            <circle cx="545.4" cy="158" r="5"/>
+            <circle cx="696" cy="77.9" r="7" stroke="#0f1d33" stroke-width="2"/>
+          </g>
+          <g text-anchor="middle" font-weight="600" fill="#ffffff" font-size="13">
+            <text x="56" y="295.5">8,0 %</text>
+            <text x="319.5" y="207.8">25,3 %</text>
+            <text x="545.4" y="146">37,5 %</text>
+            <text x="696" y="65.9">53,3 %</text>
+          </g>
+          <g text-anchor="middle" fill="#b8c2d0" font-size="11">
+            <text x="56" y="279.5">o1</text>
+            <text x="319.5" y="191.8">GPT-5</text>
+            <text x="545.4" y="130">Gemini 3 Pro</text>
+            <text x="696" y="49.9">Fable 5</text>
+          </g>
+          <g fill="#8a96a8" font-size="12">
+            <text x="56" y="368" text-anchor="start">Jan 2025</text>
+            <text x="319.5" y="368" text-anchor="middle">Mitte 2025</text>
+            <text x="545.4" y="368" text-anchor="middle">Anfang 2026</text>
+            <text x="696" y="368" text-anchor="end">Juni 2026</text>
+          </g>
+        </svg>
+        <figcaption>Datenquelle: öffentliche HLE-Ranglisten, bester gelisteter Wert je Zeitpunkt (<a href="https://artificialanalysis.ai/evaluations/humanitys-last-exam">Artificial Analysis</a>, <a href="https://pricepertoken.com/leaderboards/benchmark/hle">pricepertoken.com</a>). Die Spitze wird zu verschiedenen Zeitpunkten von verschiedenen Modellen gehalten. Stand: Juni 2026.</figcaption>
+      </figure>
+
+      <p>Aus Gründen der Redlichkeit: Einzelwerte von Fable 5 speziell für GPQA, ARC-AGI-2 oder FrontierMath ließen sich <strong>nicht aus einer Primärquelle verifizieren</strong>. Sie kursieren nur in widersprüchlichen Drittlisten. Wir nennen sie hier daher bewusst nicht. Was bleibt, ist trotzdem eindrucksvoll: Das Tempo der Fähigkeitszuwächse ist außergewöhnlich. <a href="https://artificialanalysis.ai/articles/claude-fable-5-mythos-intelligence-index">(Quellen 6, 8, 10)</a></p>
+
+      <h2>Der Spiegeltest, und warum Benchmarks die eigentliche Frage nicht beantworten</h2>
+      <p>Hier kommt der unbequeme Teil. Keiner der genannten Tests misst Bewusstsein. Sie messen Leistung.</p>
+      <p>Oft wird der Spiegeltest ins Spiel gebracht. Er stammt aus der Tierkognition, 1970 von Gordon Gallup entwickelt, und prüft, ob ein Lebewesen sich selbst im Spiegel erkennt. Bestanden haben ihn unter anderem Menschenaffen, Delfine und Elefanten. Auf eine KI übertragen ist er jedoch nur eine Analogie, kein etablierter Test.</p>
+      <p>Der wissenschaftliche Befund ist eindeutig und sollte jeden ehrlichen Beitrag zum Thema prägen: <strong>Es gibt keinen validierten Benchmark, der bei einem Sprachmodell Bewusstsein oder „echte" AGI beweist.</strong> Ein Übersichtspapier von 2025 stellt ausdrücklich fest, dass ein einheitlicher Bewusstseins-Benchmark schlicht fehlt, schon weil es keinen Konsens über die richtige Bewusstseinstheorie gibt. <a href="https://www.nature.com/articles/s41599-025-05868-8">(Quellen 15, 16, 17)</a></p>
+      <p>Damit lässt sich die Titelfrage so ehrlich beantworten, wie sie es verdient:</p>
+
+      <blockquote>
+        <p>Ist Fable 5 AGI? Nach dem strengsten verfügbaren Rahmen, den DeepMind-Stufen, bewegen wir uns weiterhin im Bereich Emerging AGI, allerdings am oberen Rand, mit beeindruckendem Tempo. Ein Beweis für AGI im Vollsinn oder gar für Bewusstsein existiert nicht, weil es das Messinstrument dafür nicht gibt. Wer das Gegenteil behauptet, verkauft eine Gewissheit, die die Wissenschaft nicht hergibt.</p>
+      </blockquote>
+
+      <p>Genau diese Nüchternheit ist der Punkt. Man muss AGI nicht ausrufen, um zu erkennen, wie groß der Sprung bereits ist. Und gerade <em>weil</em> der Sprung so groß ist, wird die nächste Frage geschäftskritisch: Wer hat überhaupt verlässlich Zugriff auf diese Spitze, und wie lange noch?</p>
+
+      <h2>Die Dringlichkeit: Warum das genau jetzt zählt</h2>
+      <p>Bis vor Kurzem war der wichtigste Einwand gegen das Verlassen auf externe Spitzenmodelle ein Szenario. Seit dem 12. Juni 2026 ist es ein Fall.</p>
+
+      <div class="callout">
+        <span class="k">Belegte Realität, seit dem 12. Juni 2026</span>
+        <p><strong>Der Zugang kann von heute auf morgen wegfallen.</strong> An diesem Tag wies die US-Regierung Anthropic per Exportkontroll-Direktive an, Fable 5 und Mythos 5 weltweit für alle Nutzer zu sperren, ausdrücklich auch für „foreign nationals, whether inside or outside the United States". Anthropic hat das umgesetzt und widerspricht inhaltlich, doch der Zugang war weg. Die Kanzlei Greenberg Traurig ordnet den Vorgang als den „first known U.S. use of export control authorities to regulate a particular AI frontier model on a national security basis" ein.</p>
+        <p>Für Unternehmen in Deutschland heißt das konkret: Das beste wieder verlässlich nutzbare Modell ist faktisch Opus 4.8. Wer seine Prozesse auf Fable 5 oder Mythos 5 aufgebaut hatte, stand über Nacht ohne da. <a href="https://www.anthropic.com/news/fable-mythos-access">(Quellen 18, 19)</a></p>
+      </div>
+
+      <p>Einordnung, weil Redlichkeit hier zählt: Dies war ein Einzelfall-Befehl, kein dauerhafter Lizenzrahmen. Die US-Regel, die so etwas hätte verstetigen können, die „AI Diffusion Rule", wurde im Mai 2025 zurückgenommen. Der EU AI Act wiederum reguliert den Einsatz, sperrt aber keine US-Modelle; seine Durchsetzung greift ab dem 2. August 2026. Eine dauerhafte, generelle Zugangssperre für Europa ist also weiterhin Szenario. Dass eine <em>einzelne</em> Anweisung den Zugang sofort kappen kann, ist dagegen seit dem 12. Juni belegte Realität. Und genau hier liegt der wunde Punkt dieses Beitrags: Für die Planung sollte man sich darauf einstellen, dass die jeweils beste Technik über einen längeren Zeitraum hinweg nicht verlässlich aus Deutschland nutzbar ist, auch wenn einzelne Modelle zwischendurch wieder freigeschaltet werden. <a href="https://artificialintelligenceact.eu/implementation-timeline/">(Quellen 23, 24)</a></p>
+
+      <div class="callout warn">
+        <span class="k">Einschätzung, keine gesicherte Prognose</span>
+        <p><strong>Und die Kosten geraten unter Druck.</strong> Parallel laufen OpenAI und Anthropic auf Börsengänge zu, bei angepeilten Bewertungen jenseits von 800 Milliarden US-Dollar. Berichten zufolge erwartet OpenAI für 2026 über 20 Milliarden Dollar Umsatz bei rund 14 Milliarden Dollar Verlust, mit Profitabilität erst gegen 2029. CNBC titelte am 20. Mai 2026 „Cheap AI could derail OpenAI and Anthropic's IPOs". Wir kennzeichnen das als Medien- und Analystenlage, nicht als gesicherte Prognose. <a href="https://www.cnbc.com/2026/05/20/cheap-ai-could-derail-openai-and-anthropics-ipos.html">(Quellen 22, 25)</a> Die betriebswirtschaftliche Logik ist dennoch eindeutig: Wer vor einem Börsengang Gewinne zeigen muss, hat wenig Anreiz, Inferenz dauerhaft unter Selbstkosten anzubieten. Steigende oder volatile Token-Preise sind damit ein reales Geschäftsrisiko.</p>
+      </div>
+
+      <p>Ein struktureller Hinweis dazu, ohne unbelegte Zahl: Pauschal-Abos wie Claude Pro (rund 20 US-Dollar im Monat) oder Max (100 bis 200 US-Dollar) enthalten ein Nutzungskontingent zum Festpreis, während die API streng pro Token abrechnet (für die neuen Modelle 10 US-Dollar je Million Eingabe- und 50 US-Dollar je Million Ausgabe-Token). Wer produktiv und in Volumen arbeitet, zahlt über die API real oft deutlich mehr als über ein Abo. Eine seriöse, allgemeingültige „X-mal günstiger"-Zahl gibt es nicht, deshalb nennen wir keine. Die Richtung der Kosten aber ist klar: nach oben, und schwer kalkulierbar. <a href="https://platform.claude.com/docs/en/about-claude/pricing">(Quellen 20, 21)</a></p>
+
+      <figure class="chart">
+        <div class="ttl">Was ein Modell pro Million Token kostet (API)</div>
+        <div class="sub">Listenpreise der Claude-API. Die neuen Spitzenmodelle Fable 5 und Mythos 5 kosten pro Ausgabe-Token das Doppelte von Opus 4.8 und das Zehnfache von Haiku.</div>
+        <div class="legend">
+          <span><i style="background:rgba(255,255,255,.30)"></i> Eingabe (Input)</span>
+          <span><i style="background:#ffffff"></i> Ausgabe (Output)</span>
+        </div>
+        <svg viewBox="0 0 720 400" role="img" aria-label="Balkendiagramm der Claude-API-Preise pro Million Token: Haiku 1/5, Sonnet 3/15, Opus 4.8 5/25, Fable 5 10/50, Mythos 5 10/50 US-Dollar" font-family="Inter, system-ui, sans-serif">
+          <g stroke="rgba(255,255,255,0.10)" stroke-width="1">
+            <line x1="56" y1="40" x2="696" y2="40"/>
+            <line x1="56" y1="98" x2="696" y2="98"/>
+            <line x1="56" y1="156" x2="696" y2="156"/>
+            <line x1="56" y1="214" x2="696" y2="214"/>
+            <line x1="56" y1="272" x2="696" y2="272"/>
+            <line x1="56" y1="330" x2="696" y2="330"/>
+          </g>
+          <g fill="#8a96a8" font-size="12" text-anchor="end">
+            <text x="46" y="44">50 $</text>
+            <text x="46" y="102">40 $</text>
+            <text x="46" y="160">30 $</text>
+            <text x="46" y="218">20 $</text>
+            <text x="46" y="276">10 $</text>
+            <text x="46" y="334">0</text>
+          </g>
+          <g fill="rgba(255,255,255,0.30)">
+            <rect x="84" y="324.2" width="34" height="5.8" rx="2"/>
+            <rect x="212" y="312.6" width="34" height="17.4" rx="2"/>
+            <rect x="340" y="301" width="34" height="29" rx="2"/>
+            <rect x="468" y="272" width="34" height="58" rx="2"/>
+            <rect x="596" y="272" width="34" height="58" rx="2"/>
+          </g>
+          <g fill="#ffffff">
+            <rect x="122" y="301" width="34" height="29" rx="2"/>
+            <rect x="250" y="243" width="34" height="87" rx="2"/>
+            <rect x="378" y="185" width="34" height="145" rx="2"/>
+            <rect x="506" y="40" width="34" height="290" rx="2"/>
+            <rect x="634" y="40" width="34" height="290" rx="2"/>
+          </g>
+          <g text-anchor="middle" font-weight="600" fill="#ffffff" font-size="13">
+            <text x="139" y="293">5 $</text>
+            <text x="267" y="235">15 $</text>
+            <text x="395" y="177">25 $</text>
+            <text x="523" y="32">50 $</text>
+            <text x="651" y="32">50 $</text>
+          </g>
+          <g text-anchor="middle" fill="#b8c2d0" font-size="11">
+            <text x="101" y="317">1 $</text>
+            <text x="229" y="305">3 $</text>
+            <text x="357" y="294">5 $</text>
+            <text x="485" y="265">10 $</text>
+            <text x="613" y="265">10 $</text>
+          </g>
+          <line x1="56" y1="330" x2="696" y2="330" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+          <g fill="#b8c2d0" font-size="12" text-anchor="middle">
+            <text x="120" y="350">Haiku 4.5</text>
+            <text x="248" y="350">Sonnet 4.6</text>
+            <text x="376" y="350">Opus 4.8</text>
+            <text x="504" y="350">Fable 5</text>
+            <text x="632" y="350">Mythos 5</text>
+          </g>
+          <g fill="#5a6578" font-size="11" text-anchor="middle">
+            <text x="376" y="372">Preis in US-Dollar je 1 Mio. Token</text>
+          </g>
+        </svg>
+        <figcaption>Datenquelle: <a href="https://platform.claude.com/docs/en/about-claude/pricing">Anthropic, Listenpreise der Claude-API</a>. Stand: Juni 2026. Günstigere Optionen wie Batch-Verarbeitung (50 Prozent Rabatt) oder Prompt-Caching sind hier nicht berücksichtigt.</figcaption>
+      </figure>
+
+      <h2>Was das für Unternehmen heißt</h2>
+      <p>Aus beidem, dem plötzlich kappbaren Zugang und der Kostenseite, folgt kein „zurück zu schwächerer Technik". Es folgt eine zweite Ebene, die man jetzt aufbauen sollte, solange die Lage es zulässt.</p>
+      <p>Die ehrliche Botschaft lautet: Ein lokales Modell mit überschaubarer Parameterzahl auf eigener Hardware erreicht roh nicht das Niveau eines Spitzenmodells. Nutzbare, hochwertige Leistung entsteht nicht aus dem Modell allein, sondern aus der Architektur darum herum: angebundenes Fachwissen (RAG), Werkzeuge, saubere, kontextsparsame Anweisungen. Genau hier liegt unsere Überzeugung und unsere Praxis: Ein datensparsam und kosteneffizient betriebenes Low-Parameter-Modell liefert für klar umrissene Fachaufgaben bereits heute verlässlich gute Ergebnisse.</p>
+      <p>Der entscheidende Vorteil: Ein solches System läuft auf eigenen Servern, in Deutschland, unter Ihrer Kontrolle. Es lässt sich nicht per Direktive aus dem Ausland abschalten, und seine Kosten sind planbar statt von einem Börsengang getrieben. Es ersetzt das Spitzenmodell nicht im Alltag, aber es ist die Rückfallebene, die übernimmt, wenn der externe Zugang wegbricht oder unbezahlbar wird. Und je früher man sie aufbaut, desto weiter ist sie, wenn man sie braucht.</p>
+      <p>Die Frage „Ab wann ist ein KI-System AGI?" bleibt offen, und das ist wissenschaftlich ehrlich so. Die geschäftliche Frage dagegen ist längst entschieden. Wenn es gut möglich ist, dass die jeweils beste Technik über Jahre nicht verlässlich aus Deutschland nutzbar ist, dann braucht jeder, der auf KI baut, eine souveräne Ebene, die ihm gehört.</p>
+
+      <div class="cta-box">
+        <h2>Souverän statt abhängig</h2>
+        <p>Die TM KI Consulting baut für mittelständische Unternehmen datensouveräne, lokal betriebene KI-Systeme: vom einsatzbereiten Fachagenten bis zum eigenen Modell auf eigener Hardware in Deutschland. Planbare Kosten, volle Datenkontrolle, kein Abschaltrisiko aus dem Ausland.</p>
+        <a class="btn btn-primary" href="mailto:info@tm-ki-consulting.de">Erstgespräch vereinbaren <span class="arrow">→</span></a>
+      </div>
+
+      <div class="sources">
+        <h2>Quellen</h2>
+        <ol>
+          <li>ARC Prize, ARC-AGI-1: <a href="https://arcprize.org/arc-agi/1">arcprize.org/arc-agi/1</a></li>
+          <li>ARC Prize, o3-Durchbruch: <a href="https://arcprize.org/blog/oai-o3-pub-breakthrough">arcprize.org/blog/oai-o3-pub-breakthrough</a></li>
+          <li>ARC Prize 2025, Ergebnisanalyse: <a href="https://arcprize.org/blog/arc-prize-2025-results-analysis">arcprize.org/blog/arc-prize-2025-results-analysis</a></li>
+          <li>Epoch AI / Artificial Analysis, GPQA Diamond: <a href="https://epoch.ai/benchmarks/gpqa-diamond">epoch.ai/benchmarks/gpqa-diamond</a></li>
+          <li>Humanity's Last Exam: <a href="https://agi.safe.ai/">agi.safe.ai</a></li>
+          <li>Artificial Analysis zu Fable 5 / Mythos 5: <a href="https://artificialanalysis.ai/articles/claude-fable-5-mythos-intelligence-index">artificialanalysis.ai</a></li>
+          <li>SWE-bench Verified Leaderboard: <a href="https://leaderboard.steel.dev/leaderboards/swe-bench-verified/">leaderboard.steel.dev</a></li>
+          <li>Anthropic, Fable 5 / Mythos 5: <a href="https://www.anthropic.com/news/claude-fable-5-mythos-5">anthropic.com/news/claude-fable-5-mythos-5</a></li>
+          <li>Epoch AI, FrontierMath: <a href="https://epoch.ai/frontiermath/the-benchmark">epoch.ai/frontiermath/the-benchmark</a></li>
+          <li>Anthropic, Ankündigung + System Card: <a href="https://www.anthropic.com/news/claude-fable-5-mythos-5">anthropic.com/news/claude-fable-5-mythos-5</a></li>
+          <li>Morris et al., „Levels of AGI": <a href="https://arxiv.org/abs/2311.02462">arxiv.org/abs/2311.02462</a></li>
+          <li>MIT Technology Review zu DeepMinds AGI-Stufen: <a href="https://www.technologyreview.com/2023/11/16/1083498/">technologyreview.com</a></li>
+          <li>OpenAIs fünf Stufen (Berichterstattung): <a href="https://theaiinsider.tech/2024/07/12/what-are-openais-five-levels-of-ai-and-where-are-we-now/">theaiinsider.tech</a></li>
+          <li>Turing-Test-Studie, UC San Diego: <a href="https://arxiv.org/pdf/2503.23674">arxiv.org/pdf/2503.23674</a></li>
+          <li>Spiegeltest (Gallup): <a href="https://en.wikipedia.org/wiki/Mirror_test">en.wikipedia.org/wiki/Mirror_test</a></li>
+          <li>„Exploring Consciousness in LLMs": <a href="https://arxiv.org/html/2505.19806v1">arxiv.org/html/2505.19806v1</a></li>
+          <li>Nature, „There is no such thing as conscious artificial intelligence": <a href="https://www.nature.com/articles/s41599-025-05868-8">nature.com</a></li>
+          <li>Anthropic, Zugangs-Sperre Fable 5 / Mythos 5: <a href="https://www.anthropic.com/news/fable-mythos-access">anthropic.com/news/fable-mythos-access</a></li>
+          <li>Greenberg Traurig, Einordnung der Exportkontroll-Direktive: <a href="https://www.gtlaw.com/en/insights/2026/6/ai-company-anthropic-suspends-access">gtlaw.com</a></li>
+          <li>Anthropic API-Preise: <a href="https://platform.claude.com/docs/en/about-claude/pricing">platform.claude.com/docs/en/about-claude/pricing</a></li>
+          <li>Claude Abo-Preise: <a href="https://claude.com/pricing">claude.com/pricing</a></li>
+          <li>CNBC, „Cheap AI could derail OpenAI and Anthropic's IPOs" (20.05.2026): <a href="https://www.cnbc.com/2026/05/20/cheap-ai-could-derail-openai-and-anthropics-ipos.html">cnbc.com</a></li>
+          <li>EU AI Act, Zeitplan: <a href="https://artificialintelligenceact.eu/implementation-timeline/">artificialintelligenceact.eu/implementation-timeline</a></li>
+          <li>US AI Diffusion Rule (zurückgenommen): <a href="https://www.federalregister.gov/documents/2025/01/15/2025-00636/">federalregister.gov</a></li>
+          <li>Analyse zu Token-Preisen und IPO-Druck: <a href="https://www.investing.com/analysis/the-ai-token-pricing-crisis-behind-openai-and-anthropics-revenue-race-200680777">investing.com</a></li>
+          <li>HLE-Zeitverlauf (Grafik): <a href="https://artificialanalysis.ai/evaluations/humanitys-last-exam">artificialanalysis.ai</a>, <a href="https://pricepertoken.com/leaderboards/benchmark/hle">pricepertoken.com</a></li>
+        </ol>
+      </div>
+
+    </div>
+  </article>
+
+</main>
+
+<footer>
+  <div class="container">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <div class="foot-name">TM KI Consulting </div>
+        <div class="foot-sub">Beratung · Strategie · Umsetzung</div>
+        <p>KI-Beratung für den öffentlichen und privaten Sektor. Strategisch, technisch, menschlich.</p>
+      </div>
+      <div>
+        <h5>Sektoren</h5>
+        <ul>
+          <li><a href="index.html#sektoren">Public Sector</a></li>
+          <li><a href="index.html#sektoren">Private Sector</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Unternehmen</h5>
+        <ul>
+          <li><a href="index.html#leistungen">Leistungen</a></li>
+          <li><a href="index.html#leistungskatalog">Leistungskatalog (PDF)</a></li>
+          <li><a href="index.html#insights">Insights</a></li>
+          <li><a href="index.html#team">Team</a></li>
+          <li><a href="impressum.html">Impressum</a></li>
+          <li><a href="datenschutz.html">Datenschutzerklärung</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Kontakt</h5>
+        <ul>
+          <li><a href="mailto:info@tm-ki-consulting.de">info@tm-ki-consulting.de</a></li>
+          <li><a href="tel:+4915737284004">+49 157 37284004</a></li>
+          <li><a href="#">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 TM KI Consulting </span>
+      <span>Ernst-Tengelmann-Ring 22 · 45259 Essen</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Mobile Nav Toggle (Hamburger)
+(function () {
+  const toggle = document.querySelector('.nav-toggle');
+  const nav = document.getElementById('primary-nav');
+  if (!toggle || !nav) return;
+  function closeMenu() {
+    nav.classList.remove('is-open');
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.setAttribute('aria-label', 'Menü öffnen');
+  }
+  function openMenu() {
+    nav.classList.add('is-open');
+    toggle.setAttribute('aria-expanded', 'true');
+    toggle.setAttribute('aria-label', 'Menü schließen');
+  }
+  toggle.addEventListener('click', () => {
+    nav.classList.contains('is-open') ? closeMenu() : openMenu();
+  });
+  nav.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+  window.addEventListener('resize', () => { if (window.innerWidth > 768) closeMenu(); });
+})();
+</script>
+</body>
+</html>
