@@ -9,9 +9,11 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"></noscript>
 
-<script src="https://unpkg.com/lenis@1.0.42/dist/lenis.min.js"></script>
+<script defer src="assets/js/vendor/lenis.min.js"></script>
 
 <style>
   :root {
@@ -1052,8 +1054,10 @@
     position: relative;
     z-index: 1;
     width: min(72%, 305px);
+    height: auto;
     aspect-ratio: 1 / 1;
-    object-fit: contain;
+    object-fit: cover;
+    object-position: center 22%;
     border-radius: 50%;
     display: block;
     filter: drop-shadow(0 24px 42px rgba(0,0,0,.24));
@@ -1449,7 +1453,7 @@
   <div class="nav">
     <a href="#" class="brand" aria-label="TM KI Consulting Startseite">
       <div class="brand-logo">
-        <img src="assets/TM_KI_Logo.png" alt="TM KI Consulting Logo" />
+        <img src="assets/TM_KI_Logo.webp" alt="TM KI Consulting Logo" width="44" height="44" fetchpriority="high" decoding="async" />
       </div>
       <div class="brand-text">
         <div class="title">TM KI Consulting </div>
@@ -1599,7 +1603,7 @@
         <div class="agent-demo-card reveal" aria-label="Vorschau des Gefahrgut-Agenten">
           <div class="demo-topbar">
             <div class="demo-brand">
-              <img src="assets/logo-gefahrgutberatung-manske.png" alt="GBM Logo" loading="lazy" />
+              <img src="assets/logo-gefahrgutberatung-manske.webp" alt="GBM Logo" width="220" height="196" loading="lazy" decoding="async" />
               <div>
                 <span>GB-Agent</span>
                 <strong>Live-Demo</strong>
@@ -1812,7 +1816,7 @@
       <div class="catalog">
         <a href="assets/Leistungskatalog_TM-KI-Consulting_v.1.pdf" target="_blank" rel="noopener" class="catalog-cover-link reveal" aria-label="Leistungskatalog als PDF öffnen">
           <span class="catalog-cover-badge">PDF · Version 1.0</span>
-          <img src="assets/leistungskatalog-cover.png" alt="Titelseite Leistungskatalog TM KI Consulting 2026" loading="lazy" />
+          <img src="assets/leistungskatalog-cover.webp" alt="Titelseite Leistungskatalog TM KI Consulting 2026" width="720" height="1018" loading="lazy" decoding="async" />
           <div class="catalog-cover-overlay">
             <span>Leistungskatalog öffnen</span>
             <span class="arrow">→</span>
@@ -1973,7 +1977,7 @@
       <div class="team">
         <article class="member reveal">
           <div class="member-portrait">
-            <img src="assets/julian-manske.png" alt="Portrait von Julian Manske" class="member-photo" loading="lazy" />
+            <img src="assets/julian-manske.webp" alt="Portrait von Julian Manske" class="member-photo" width="560" height="560" loading="lazy" decoding="async" />
           </div>
           <div class="member-role">Gründer · Geschäftsführer</div>
           <h3 class="member-name">Julian Manske</h3>
@@ -1990,7 +1994,7 @@
 
         <article class="member reveal">
           <div class="member-portrait">
-            <img src="assets/maurice-trogant.jpg" alt="Portrait von Maurice Trogant" class="member-photo" loading="lazy" />
+            <img src="assets/maurice-trogant.webp" alt="Portrait von Maurice Trogant" class="member-photo" width="560" height="560" loading="lazy" decoding="async" />
           </div>
           <div class="member-role">Mitgründer · CTO</div>
           <h3 class="member-name">Maurice Trogant</h3>
@@ -2119,7 +2123,8 @@ setTimeout(() => {
 // LENIS — smooth scroll (nur wenn verfügbar)
 // ============================================================
 let lenis = null;
-if (typeof Lenis !== 'undefined') {
+function initLenis() {
+  if (typeof Lenis === 'undefined' || lenis) return;
   lenis = new Lenis({
     duration: 1.2,
     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -2127,6 +2132,12 @@ if (typeof Lenis !== 'undefined') {
   });
   function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
   requestAnimationFrame(raf);
+}
+// Deferred lenis script is ready by DOMContentLoaded
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initLenis);
+} else {
+  initLenis();
 }
 
 
