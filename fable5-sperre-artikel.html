@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>18 Tage ohne die KI-Spitze · TM KI Consulting</title>
+<meta name="description" content="Am 12. Juni 2026 sperrte eine US-Direktive Fable 5 und Mythos 5 weltweit, am 1. Juli waren sie wieder da. Und schon die ersten Benchmarks der zurückgekehrten Version brechen ein. Warum die Aufhebung keine Entwarnung ist und welche drei Konsequenzen Unternehmen jetzt ziehen sollten." />
+<meta property="og:title" content="18 Tage ohne die KI-Spitze: Was die Fable-5-Sperre lehrt" />
+<meta property="og:description" content="Gesperrt per Direktive, freigegeben per Direktive, und schon die ersten Benchmarks der Rückkehr brechen ein. Drei Konsequenzen für Unternehmen, die auf KI bauen." />
+<meta property="og:type" content="article" />
+<meta property="og:image" content="og-image.png" />
+
+<link rel="icon" href="favicon.ico" />
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
+<link rel="apple-touch-icon" href="apple-touch-icon.png" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --navy-900: #0a1628;
+    --navy-800: #0f1d33;
+    --navy-700: #152540;
+    --navy-600: #1c3050;
+    --navy-500: #2a4163;
+    --black:    #050a14;
+    --white:    #ffffff;
+    --off-white: #f4f6fa;
+    --gray-300: #b8c2d0;
+    --gray-400: #8a96a8;
+    --gray-500: #5a6578;
+    --line:     rgba(255, 255, 255, .1);
+    --line-light: rgba(255, 255, 255, .06);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: var(--navy-900);
+    color: var(--off-white);
+    font-family: 'Inter', system-ui, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    font-size: 16px;
+  }
+  body::before {
+    content: "";
+    position: fixed; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse 100% 80% at 50% 0%, rgba(28, 48, 80, .4), transparent 60%),
+      radial-gradient(ellipse 80% 60% at 100% 100%, rgba(15, 29, 51, .6), transparent 60%);
+    pointer-events: none;
+  }
+  body > * { position: relative; z-index: 1; }
+  h1, h2, h3, h4 { font-weight: 400; letter-spacing: -0.02em; line-height: 1.15; color: var(--white); }
+  .serif { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-weight: 400; }
+  a { color: var(--white); text-decoration: none; transition: opacity .2s; }
+  .container { max-width: 1280px; margin: 0 auto; padding: 0 48px; }
+
+  /* ===== HEADER (von der Startseite übernommen) ===== */
+  header.site {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(10, 22, 40, .8);
+    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--line-light);
+  }
+  .nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 22px 48px; max-width: 1280px; margin: 0 auto;
+  }
+  .brand { display: flex; align-items: center; gap: 14px; color: var(--white); }
+  .brand-logo {
+    width: 44px; height: 44px; border: 1px solid rgba(255,255,255,.18);
+    background: var(--white); display: grid; place-items: center; overflow: hidden; flex-shrink: 0;
+  }
+  .brand-logo img { width: 100%; height: 100%; object-fit: contain; display: block; }
+  .brand-text .title { font-size: 15px; font-weight: 500; letter-spacing: -0.01em; }
+  .brand-text .sub { font-size: 11px; color: var(--gray-400); letter-spacing: .14em; text-transform: uppercase; margin-top: 2px; }
+  nav.primary ul { list-style: none; display: flex; gap: 36px; align-items: center; }
+  nav.primary a { color: var(--off-white); font-size: 14px; font-weight: 400; opacity: .75; transition: opacity .2s; }
+  nav.primary a:hover, nav.primary a[aria-current="page"] { opacity: 1; }
+  .nav-cta {
+    margin-left: 8px; background: var(--white); color: var(--navy-900) !important;
+    padding: 10px 22px; font-size: 13px; font-weight: 500; opacity: 1 !important; transition: background .2s;
+  }
+  .nav-cta:hover { background: var(--off-white); }
+  .nav-toggle {
+    display: none; flex-direction: column; justify-content: center; gap: 5px;
+    width: 44px; height: 44px; padding: 10px; background: transparent;
+    border: 1px solid rgba(255,255,255,.18); cursor: pointer; z-index: 110;
+  }
+  .nav-toggle span { display: block; width: 100%; height: 2px; background: var(--white); transition: transform .3s ease, opacity .3s ease; }
+  .nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+  .nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* ===== BUTTONS ===== */
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px; padding: 16px 28px;
+    font-size: 14px; font-weight: 500; cursor: pointer; border: 1px solid transparent;
+    text-decoration: none; transition: all .25s; letter-spacing: .01em; font-family: inherit;
+  }
+  .btn-primary { background: var(--white); color: var(--navy-900); }
+  .btn-primary:hover { background: var(--off-white); color: var(--navy-900); }
+  .btn-ghost { background: transparent; color: var(--white); border-color: rgba(255,255,255,.25); }
+  .btn-ghost:hover { border-color: var(--white); background: rgba(255,255,255,.05); color: var(--white); }
+  .btn .arrow { transition: transform .25s; font-size: 16px; }
+  .btn:hover .arrow { transform: translateX(4px); }
+
+  /* ===== ARTIKEL ===== */
+  .article-main { padding-top: 88px; }
+  .read { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+
+  .a-hero { padding: 64px 0 48px; }
+  .a-back { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: var(--gray-400); margin-bottom: 30px; }
+  .a-back:hover { color: var(--white); }
+  .a-eyebrow { display: inline-flex; align-items: center; gap: 12px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--gray-400); margin-bottom: 26px; }
+  .a-eyebrow::before { content: ""; width: 30px; height: 1px; background: var(--gray-500); }
+  .a-hero h1 { font-weight: 300; font-size: clamp(34px, 5.5vw, 58px); line-height: 1.08; letter-spacing: -0.02em; margin-bottom: 26px; }
+  .a-lead { font-size: clamp(17px, 2vw, 20px); line-height: 1.6; color: var(--off-white); font-weight: 300; max-width: 640px; }
+  .a-meta { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-top: 34px; padding-top: 22px; border-top: 1px solid var(--line); font-size: 13px; color: var(--gray-400); }
+  .a-meta b { color: var(--gray-300); font-weight: 500; }
+
+  .article-body { padding: 16px 0 32px; }
+  .article-body h2 { font-weight: 400; color: var(--white); font-size: clamp(24px, 3vw, 32px); line-height: 1.2; letter-spacing: -0.02em; margin: 60px 0 22px; }
+  .article-body h3 { color: var(--white); font-weight: 500; font-size: 18px; margin: 32px 0 12px; letter-spacing: -0.01em; }
+  .article-body p { margin: 0 0 20px; color: var(--gray-300); font-size: 17px; line-height: 1.7; font-weight: 300; }
+  .article-body p strong, .article-body li strong { color: var(--off-white); font-weight: 600; }
+  .article-body em { font-style: italic; }
+  .article-body a { color: var(--white); border-bottom: 1px solid var(--line); transition: border-color .2s; }
+  .article-body a:hover { border-color: var(--white); }
+  .article-body .btn { border-bottom: none; }
+  .article-body .btn-primary { color: var(--navy-900); }
+  .article-body .btn-ghost { color: var(--white); }
+
+  .callout { background: var(--navy-800); border: 1px solid var(--line); border-left: 3px solid var(--white); padding: 28px 30px; margin: 34px 0; box-shadow: 0 30px 60px -30px rgba(0,0,0,.6); }
+  .callout .k { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--gray-400); font-weight: 500; display: block; margin-bottom: 10px; }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout.warn { border-left-color: var(--gray-400); }
+
+  .article-body blockquote { margin: 38px 0; padding: 6px 0 6px 30px; border-left: 2px solid var(--navy-500); }
+  .article-body blockquote p { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-weight: 400; color: var(--off-white); font-size: 20px; line-height: 1.6; }
+
+  /* Zeitleiste */
+  .tl-list { list-style: none; margin: 30px 0 10px; padding: 0; }
+  .tl-list li { position: relative; padding: 0 0 26px 34px; border-left: 1px solid var(--line); margin-left: 8px; }
+  .tl-list li:last-child { padding-bottom: 4px; border-left-color: transparent; }
+  .tl-list li::before { content: ""; position: absolute; left: -6px; top: 4px; width: 11px; height: 11px; border-radius: 50%; background: var(--navy-500); border: 2px solid var(--gray-400); }
+  .tl-list li.hot::before { background: var(--white); border-color: var(--white); }
+  .tl-list .d { display: block; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--gray-400); margin-bottom: 4px; }
+  .tl-list .t { color: var(--gray-300); font-size: 16px; font-weight: 300; line-height: 1.6; }
+  .tl-list .t strong { color: var(--off-white); font-weight: 600; }
+
+  .cta-box { margin: 70px 0 20px; background: var(--navy-800); border: 1px solid var(--line); padding: 48px 44px; box-shadow: 0 30px 60px -30px rgba(0,0,0,.6); }
+  .cta-box h2 { margin: 0 0 12px; font-weight: 300; font-size: clamp(24px, 3vw, 32px); }
+  .cta-box p { color: var(--gray-300); font-size: 16px; font-weight: 300; line-height: 1.65; margin-bottom: 4px; }
+  .cta-box .btn { margin-top: 22px; }
+
+  .sources { margin-top: 64px; padding-top: 34px; border-top: 1px solid var(--line); }
+  .sources h2 { font-size: 20px; margin: 0 0 18px; font-weight: 400; }
+  .sources ol { list-style: none; counter-reset: s; padding: 0; }
+  .sources li { counter-increment: s; position: relative; padding: 8px 0 8px 38px; font-size: 13.5px; color: var(--gray-400); border-bottom: 1px solid var(--line-light); word-break: break-word; }
+  .sources li::before { content: counter(s); position: absolute; left: 0; top: 8px; font-size: 11.5px; color: var(--gray-500); font-variant-numeric: tabular-nums; }
+  .sources a { color: var(--gray-300); border-bottom: 1px solid var(--line); }
+  .sources a:hover { color: var(--white); }
+  .sources .note { margin-top: 22px; font-size: 12.5px; color: var(--gray-500); line-height: 1.6; font-style: italic; }
+
+  /* ===== FOOTER (von der Startseite übernommen) ===== */
+  footer { background: var(--black); padding: 80px 0 40px; border-top: 1px solid var(--line-light); }
+  .foot-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 56px; padding-bottom: 56px; border-bottom: 1px solid var(--line); }
+  .foot-brand .foot-name { font-size: 18px; font-weight: 500; margin-bottom: 6px; }
+  .foot-brand .foot-sub { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--gray-400); margin-bottom: 24px; }
+  .foot-brand p { font-size: 14px; line-height: 1.65; color: var(--gray-300); max-width: 34ch; font-weight: 300; }
+  footer h5 { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--gray-400); margin-bottom: 18px; font-weight: 500; }
+  footer ul { list-style: none; }
+  footer li { padding: 6px 0; }
+  footer a { color: var(--off-white); font-size: 14px; opacity: .8; }
+  footer a:hover { opacity: 1; }
+  .foot-bottom { padding-top: 32px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-size: 12px; letter-spacing: .04em; color: var(--gray-500); }
+
+  @media (max-width: 768px) {
+    .nav-toggle { display: inline-flex; }
+    nav.primary {
+      position: absolute; top: 100%; left: 0; right: 0;
+      background: rgba(10, 22, 40, .97); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line-light); max-height: 0; overflow: hidden; visibility: hidden;
+      transition: max-height .35s ease, visibility .35s ease;
+    }
+    nav.primary.is-open { max-height: calc(100vh - 80px); visibility: visible; overflow-y: auto; }
+    nav.primary ul { display: flex; flex-direction: column; align-items: stretch; gap: 0; padding: 12px 24px 24px; }
+    nav.primary ul li { border-bottom: 1px solid var(--line-light); }
+    nav.primary ul li:last-child { border-bottom: none; }
+    nav.primary a { display: block; padding: 16px 4px; font-size: 16px; opacity: .9; }
+    nav.primary .nav-cta { margin: 16px 0 0; text-align: center; padding: 14px 22px; }
+    header.site { overflow: visible; }
+    .nav { position: relative; padding: 18px 24px; }
+    .container { padding: 0 24px; }
+    .foot-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+    .foot-bottom { flex-direction: column; gap: 8px; }
+    .cta-box { padding: 32px 24px; }
+    .callout { padding: 26px 22px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site">
+  <div class="nav">
+    <a href="index.html" class="brand" aria-label="TM KI Consulting Startseite">
+      <div class="brand-logo">
+        <img src="assets/TM_KI_Logo.webp" alt="TM KI Consulting Logo" width="44" height="44" decoding="async" />
+      </div>
+      <div class="brand-text">
+        <div class="title">TM KI Consulting </div>
+        <div class="sub">Beratung · Strategie · Umsetzung</div>
+      </div>
+    </a>
+    <nav class="primary" id="primary-nav">
+      <ul>
+        <li><a href="index.html#leistungen">Leistungen</a></li>
+        <li><a href="index.html#leistungskatalog">Katalog</a></li>
+        <li><a href="index.html#im-einsatz">Im Einsatz</a></li>
+        <li><a href="index.html#insights" aria-current="page">Insights</a></li>
+        <li><a href="index.html#team">Team</a></li>
+        <li><a href="impressum.html">Impressum</a></li>
+        <li><a href="index.html#kontakt" class="nav-cta">Kontakt</a></li>
+      </ul>
+    </nav>
+    <button class="nav-toggle" type="button" aria-label="Menü öffnen" aria-expanded="false" aria-controls="primary-nav">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main class="article-main">
+
+  <div class="a-hero">
+    <div class="read">
+      <a class="a-back" href="index.html#insights">← Zurück zur Startseite</a>
+      <span class="a-eyebrow">KI-Strategie · Datensouveränität</span>
+      <h1>18 Tage ohne die <span class="serif">KI-Spitze</span></h1>
+      <p class="a-lead">Am 12. Juni 2026 sperrte eine US-Direktive die stärksten KI-Modelle weltweit. Am 1. Juli waren sie wieder da. Für Unternehmen in Deutschland ist diese Episode keine Entwarnung, sondern der bislang klarste Beleg, wie fremdbestimmt der Zugang zur KI-Spitze ist. Eine Chronologie und drei Konsequenzen.</p>
+      <div class="a-meta">
+        <span><b>TM KI Consulting</b></span>
+        <span>Stand: 3. Juli 2026 (aktualisiert)</span>
+        <span>Lesezeit: ca. 6 Minuten</span>
+      </div>
+    </div>
+  </div>
+
+  <article class="article-body">
+    <div class="read">
+
+      <h2>Was passiert ist, in fünf Daten</h2>
+      <ul class="tl-list">
+        <li>
+          <span class="d">9. Juni 2026</span>
+          <span class="t"><strong>Anthropic stellt Fable 5 und Mythos 5 vor</strong>, die bis dahin stärksten KI-Modelle. Fable 5 führt unabhängige Ranglisten wie den Intelligence Index von Artificial Analysis an.</span>
+        </li>
+        <li class="hot">
+          <span class="d">12. Juni 2026</span>
+          <span class="t"><strong>Die US-Regierung ordnet per Exportkontroll-Direktive die weltweite Sperre beider Modelle an</strong>, ausdrücklich auch für Nutzer außerhalb der USA. Anthropic setzt die Anweisung um und widerspricht inhaltlich. Der Zugang ist weg, auch aus Deutschland.</span>
+        </li>
+        <li>
+          <span class="d">26. Juni 2026</span>
+          <span class="t"><strong>Erste Teilfreigabe:</strong> Mythos 5 darf an einzelne, von der Regierung freigegebene US-Organisationen wieder ausgeliefert werden.</span>
+        </li>
+        <li>
+          <span class="d">30. Juni 2026</span>
+          <span class="t"><strong>Das US-Handelsministerium hebt die Exportkontrollen auf.</strong></span>
+        </li>
+        <li class="hot">
+          <span class="d">1. Juli 2026</span>
+          <span class="t"><strong>Fable 5 ist wieder weltweit verfügbar</strong>, auf der Claude-Plattform, in Claude.ai und Claude Code. Mythos 5 bleibt zunächst freigegebenen Organisationen vorbehalten.</span>
+        </li>
+        <li class="hot">
+          <span class="d">2. Juli 2026</span>
+          <span class="t"><strong>Erste unabhängige Benchmarks der zurückgekehrten Version</strong> zeigen einen massiven Einbruch bei Coding-Aufgaben. Der Grund ist nicht eine schwächere Modellleistung, sondern der neue Sicherheitsfilter, der einen Großteil der Anfragen an ein Ausweichmodell umleitet.</span>
+        </li>
+      </ul>
+
+      <h2>Warum gesperrt wurde</h2>
+      <p>Auslöser war nach übereinstimmenden Berichten ein Befund von Amazon-Forschern: Sie hatten eine Methode gefunden, die Schutzmechanismen von Fable 5 so zu umgehen, dass das Modell systematisch Software-Schwachstellen identifizierte. Die US-Regierung stufte das als Frage der nationalen Sicherheit ein und nutzte erstmals Exportkontrollrecht, um ein einzelnes KI-Modell zu regulieren.</p>
+      <p>Anthropic hat nach eigenen Angaben gemeinsam mit der Regierung einen verbesserten Sicherheitsfilter trainiert, der die konkrete Umgehungstechnik in über 99 Prozent der Fälle blockiert. Diese Zahl ist eine Herstellerangabe, wir kennzeichnen sie entsprechend. Auf dieser Grundlage wurde die Sperre aufgehoben.</p>
+
+      <h2>Warum die Aufhebung keine Entwarnung ist</h2>
+      <p>Man könnte die Geschichte als gelöstes Problem lesen: Sicherheitslücke gefunden, nachgebessert, Zugang wieder da. Technisch stimmt das. Strategisch greift es zu kurz.</p>
+      <p>Entscheidend ist, <em>wie</em> beides geschah. Der Zugang zur KI-Spitze wurde per Direktive gekappt und per Direktive wiederhergestellt. Kein Unternehmen in Deutschland hatte auf das eine oder das andere Einfluss, keines wurde vorgewarnt, keines konnte den Zeitpunkt der Rückkehr planen. Wer geschäftskritische Prozesse auf diesen Modellen aufgebaut hatte, stand 18 Tage ohne da und erfuhr aus den Nachrichten, dass es weitergeht.</p>
+      <blockquote>
+        <p>Verfügbarkeit ist zurück. Verlässlichkeit ist es nicht. Denn über beide entscheidet nicht, wer die Systeme nutzt, sondern wer sie kontrolliert.</p>
+      </blockquote>
+      <p>Dazu kommt: Die Sperre traf ausgerechnet die neueste Modellgeneration, drei Tage nach Vorstellung. Es gibt keinen Grund anzunehmen, dass sich ein solcher Eingriff nicht wiederholt, beim nächsten Sicherheitsbefund, bei der nächsten geopolitischen Lage, beim nächsten Modell.</p>
+
+      <h2>Und die Nachbesserung hat einen Preis</h2>
+      <p>Wie unmittelbar dieser Kontrollverlust wirkt, zeigte sich schon einen Tag nach der Rückkehr. Am 2. Juli veröffentlichte die Testplattform BridgeMind neue Messungen: In einem Debugging-Benchmark brach die zurückgekehrte Fable-5-Version um rund 70 Prozent ein und fiel von Platz 9 auf Platz 41 von 42 bewerteten Modellen. Auf den ersten Blick sieht das so aus, als sei die neu ausgelieferte Version schlechter als die vor der Sperre.</p>
+      <p>Der wahre Grund ist ein anderer, und er ist deutlich aufschlussreicher: Nicht das Modell rechnet schlechter. Der neue Sicherheitsfilter greift so breit, dass er einen Großteil der Coding-Anfragen bereits abfängt und automatisch an das schwächere Ausweichmodell Opus 4.8 umleitet, bevor Fable 5 überhaupt antwortet. Im Test erreichten nur 3 von 12 Aufgaben tatsächlich Fable 5, die übrigen 9 landeten bei Opus 4.8 und wurden vom Benchmark mit null Punkten gewertet. Anwender bekommen also ein anderes, schwächeres Modell, ohne es angefordert zu haben und in den meisten Fällen, ohne es zu bemerken.</p>
+      <p>Anthropic hat angekündigt, den Filter weiter nachzujustieren, um solche Fehlklassifikationen zu verringern, nennt aber weder Zeitplan noch Zielwert. Diese Aussage ist eine Herstellerangabe. Für Unternehmen liegt darin die zweite Lehre derselben Episode: Selbst wenn ein Modell nominell verfügbar ist, kann sich sein Verhalten über Nacht ändern, weil an einer Stelle nachgeregelt wird, die von außen niemand kontrolliert. Verfügbarkeit ist eben nicht dasselbe wie Verlässlichkeit.</p>
+
+      <h2>Drei Konsequenzen für Unternehmen</h2>
+
+      <h3>1. Modell-agnostisch bauen</h3>
+      <p>Kein Workflow sollte fest an ein einzelnes Modell gebunden sein. Eine saubere Abstraktionsschicht zwischen Anwendung und KI-Modell kostet beim Aufbau wenig und entscheidet im Ernstfall darüber, ob der Wechsel auf ein anderes Modell Stunden oder Wochen dauert. Wer im Juni auf diese Weise gebaut hatte, konnte auf Opus 4.8 oder andere Modelle ausweichen und weiterarbeiten.</p>
+
+      <h3>2. Eine souveräne Rückfallebene aufbauen</h3>
+      <p>Ein lokal betriebenes Modell auf eigener Hardware erreicht roh nicht das Niveau der Spitze. Aber mit angebundenem Fachwissen (RAG), Werkzeugen und präzisen Anweisungen liefert es für klar umrissene Fachaufgaben verlässlich gute Ergebnisse, und es hat zwei Eigenschaften, die kein externes Spitzenmodell bieten kann: Es lässt sich nicht per Direktive aus dem Ausland abschalten, und seine Kosten sind planbar. Je früher diese Ebene entsteht, desto weiter ist sie, wenn sie gebraucht wird.</p>
+
+      <h3>3. Abhängigkeiten kennen und dokumentieren</h3>
+      <p>Die einfachste Übung mit der größten Wirkung: einmal sauber aufschreiben, welche Prozesse im Unternehmen von welchem KI-Modell abhängen, was bei einem Ausfall passiert und welche Ausweichoption je Prozess besteht. Wer dazu Verträge mit KI-Anbietern schließt, sollte Verfügbarkeits- und Preisänderungsklauseln bewusst prüfen. Das ersetzt keine Rechtsberatung, aber es macht das Risiko sichtbar und verhandelbar.</p>
+
+      <div class="callout">
+        <span class="k">Zur Vertiefung</span>
+        <p>Wie weit die heutige KI-Spitze wirklich ist, was hinter dem Begriff AGI steckt und warum der Zugang dazu zu wichtig ist, um ihn aus der Hand zu geben: <a href="agi-artikel.html">Ab wann ist ein KI-System AGI?</a> (aktualisiert am 2. Juli 2026)</p>
+      </div>
+
+      <div class="cta-box">
+        <h2>Souverän statt abhängig</h2>
+        <p>Die TM KI Consulting baut für mittelständische Unternehmen datensouveräne, lokal betriebene KI-Systeme: vom einsatzbereiten Fachagenten bis zum eigenen Modell auf eigener Hardware in Deutschland. Planbare Kosten, volle Datenkontrolle, kein Abschaltrisiko aus dem Ausland.</p>
+        <a class="btn btn-primary" href="mailto:info@tm-ki-consulting.de">Erstgespräch vereinbaren <span class="arrow">→</span></a>
+      </div>
+
+      <div class="sources">
+        <h2>Quellen</h2>
+        <ol>
+          <li>Anthropic, „Redeploying Claude Fable 5": <a href="https://www.anthropic.com/news/redeploying-fable-5">anthropic.com/news/redeploying-fable-5</a></li>
+          <li>Anthropic, Zugangs-Sperre Fable 5 / Mythos 5 (Juni 2026): <a href="https://www.anthropic.com/news/fable-mythos-access">anthropic.com/news/fable-mythos-access</a></li>
+          <li>CNBC, „Anthropic says Trump admin has lifted export controls on Claude Fable 5 and Mythos 5" (30.06.2026): <a href="https://www.cnbc.com/amp/2026/06/30/anthropic-says-trump-admin-has-lifted-export-controls-on-claude-fable-5-and-mythos-5.html">cnbc.com</a></li>
+          <li>CyberScoop, „U.S. lifting export control restrictions on Anthropic's Mythos, Fable": <a href="https://cyberscoop.com/us-lifting-export-control-restrictions-anthropic-mythos-fable/">cyberscoop.com</a></li>
+          <li>Nextgov/FCW, „US to lift export controls on key Anthropic models": <a href="https://www.nextgov.com/artificial-intelligence/2026/07/us-lift-export-controls-key-anthropic-models/414561/">nextgov.com</a></li>
+          <li>CoinDesk, „Anthropic restores AI models Fable, Mythos after the U.S. lifts export controls" (01.07.2026): <a href="https://www.coindesk.com/tech/2026/07/01/anthropic-restores-ai-models-fable-mythos-after-the-u-s-lifts-export-controls">coindesk.com</a></li>
+          <li>Greenberg Traurig, Einordnung der Exportkontroll-Direktive: <a href="https://www.gtlaw.com/en/insights/2026/6/ai-company-anthropic-suspends-access">gtlaw.com</a></li>
+          <li>TechTimes, „Claude Fable 5 Debugging Scores Drop 70%: Safety Classifier Reroutes Tasks to Weaker Fallback Model" (BridgeMind-Benchmark, 02.07.2026): <a href="https://www.techtimes.com/articles/319576/20260702/claude-fable-5-debugging-scores-drop-70-safety-classifier-reroutes-tasks-weaker-fallback-model.htm">techtimes.com</a></li>
+          <li>Digital Applied, „Why Claude Just Got More Cautious About Your Code" (Sicherheitsfilter und Coding-Tradeoffs): <a href="https://www.digitalapplied.com/blog/claude-fable-5-safety-classifier-coding-tradeoffs-2026">digitalapplied.com</a></li>
+          <li>MarkTechPost, „Anthropic Redeploys Claude Fable 5 on July 1 After US Export Controls Lift, Adds New Cybersecurity Classifier" (01.07.2026): <a href="https://www.marktechpost.com/2026/07/01/anthropic-redeploys-claude-fable-5-on-july-1-after-us-export-controls-lift-adds-new-cybersecurity-classifier/">marktechpost.com</a></li>
+        </ol>
+        <p class="note">Alle Angaben nach bestem Wissen zum Stand 3. Juli 2026. Die Benchmark-Zahlen stammen von der unabhängigen Testplattform BridgeMind (Stand 2. Juli 2026); Herstellerangaben (z. B. die Wirksamkeit des nachgerüsteten Sicherheitsfilters und die angekündigte Nachjustierung) sind als solche gekennzeichnet. Dieser Beitrag ist eine strategische Einordnung und keine Rechtsberatung.</p>
+      </div>
+
+    </div>
+  </article>
+
+</main>
+
+<footer>
+  <div class="container">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <div class="foot-name">TM KI Consulting </div>
+        <div class="foot-sub">Beratung · Strategie · Umsetzung</div>
+        <p>KI-Beratung für den öffentlichen und privaten Sektor. Strategisch, technisch, menschlich.</p>
+      </div>
+      <div>
+        <h5>Sektoren</h5>
+        <ul>
+          <li><a href="index.html#sektoren">Public Sector</a></li>
+          <li><a href="index.html#sektoren">Private Sector</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Unternehmen</h5>
+        <ul>
+          <li><a href="index.html#leistungen">Leistungen</a></li>
+          <li><a href="index.html#leistungskatalog">Leistungskatalog (PDF)</a></li>
+          <li><a href="index.html#insights">Insights</a></li>
+          <li><a href="index.html#team">Team</a></li>
+          <li><a href="impressum.html">Impressum</a></li>
+          <li><a href="datenschutz.html">Datenschutzerklärung</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Kontakt</h5>
+        <ul>
+          <li><a href="mailto:info@tm-ki-consulting.de">info@tm-ki-consulting.de</a></li>
+          <li><a href="tel:+4915737284004">+49 157 37284004</a></li>
+          <li><a href="#">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 TM KI Consulting </span>
+      <span>Ernst-Tengelmann-Ring 22 · 45259 Essen</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Mobile Nav Toggle (Hamburger)
+(function () {
+  const toggle = document.querySelector('.nav-toggle');
+  const nav = document.getElementById('primary-nav');
+  if (!toggle || !nav) return;
+  function closeMenu() {
+    nav.classList.remove('is-open');
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.setAttribute('aria-label', 'Menü öffnen');
+  }
+  function openMenu() {
+    nav.classList.add('is-open');
+    toggle.setAttribute('aria-expanded', 'true');
+    toggle.setAttribute('aria-label', 'Menü schließen');
+  }
+  toggle.addEventListener('click', () => {
+    nav.classList.contains('is-open') ? closeMenu() : openMenu();
+  });
+  nav.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+  window.addEventListener('resize', () => { if (window.innerWidth > 768) closeMenu(); });
+})();
+</script>
+</body>
+</html>

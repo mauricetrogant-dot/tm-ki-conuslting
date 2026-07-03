@@ -736,6 +736,37 @@
     font-size: 12px;
     color: var(--off-white);
   }
+  /* Live-Typing-Demo (nur mit JS aktiv, sonst bleibt der statische Text stehen) */
+  .caret {
+    display: inline-block;
+    width: 2px;
+    height: 1.05em;
+    margin-left: 1px;
+    background: var(--white);
+    vertical-align: text-bottom;
+    animation: caret-blink 1s steps(1) infinite;
+  }
+  @keyframes caret-blink { 0%, 50% { opacity: 1; } 50.01%, 100% { opacity: 0; } }
+  .typing-dots { display: inline-flex; gap: 5px; align-items: center; padding: 3px 0; }
+  .typing-dots i {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--gray-400); display: inline-block;
+    animation: typing-bounce 1.2s ease-in-out infinite;
+  }
+  .typing-dots i:nth-child(2) { animation-delay: .15s; }
+  .typing-dots i:nth-child(3) { animation-delay: .30s; }
+  @keyframes typing-bounce {
+    0%, 60%, 100% { transform: translateY(0); opacity: .45; }
+    30% { transform: translateY(-5px); opacity: 1; }
+  }
+  .chat-result-grid span.chip-in { animation: chip-pop .45s ease-out both; }
+  @keyframes chip-pop {
+    0%   { opacity: 0; transform: translateY(8px) scale(.96); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .caret, .typing-dots i, .chat-result-grid span.chip-in { animation: none; }
+  }
   .capability-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -1438,6 +1469,7 @@
     display: grid; place-items: center; padding: 32px; min-height: 260px;
   }
   .insight-visual svg { width: 100%; height: auto; max-width: 360px; display: block; }
+  .insight-card + .insight-card { margin-top: 24px; }
   @media (max-width: 768px) {
     .insight-card { grid-template-columns: 1fr; }
     .insight-body { padding: 32px 28px; }
@@ -1919,16 +1951,52 @@
         </p>
       </div>
 
+      <a href="fable5-sperre-artikel.html" class="insight-card reveal" aria-label="Artikel öffnen: 18 Tage ohne die KI-Spitze">
+        <div class="insight-body">
+          <span class="insight-eyebrow">Aktuelle Einordnung · KI-Strategie</span>
+          <h3>18 Tage ohne die <span class="serif">KI-Spitze</span></h3>
+          <p>
+            Am 12. Juni sperrte eine US-Direktive die stärksten KI-Modelle weltweit, am 1. Juli
+            waren sie wieder da. Warum das keine Entwarnung ist, und welche drei Konsequenzen
+            Unternehmen jetzt ziehen sollten.
+          </p>
+          <div class="insight-meta">
+            <span>Stand: 2. Juli 2026</span>
+            <span>·</span>
+            <span>Lesezeit ca. 5 Minuten</span>
+          </div>
+          <span class="insight-readmore">Artikel lesen <span class="arrow" aria-hidden="true">→</span></span>
+        </div>
+        <div class="insight-visual" aria-hidden="true">
+          <svg viewBox="0 0 360 200" font-family="Inter, system-ui, sans-serif">
+            <g stroke="rgba(255,255,255,0.10)" stroke-width="1">
+              <line x1="20" y1="50" x2="340" y2="50"/>
+              <line x1="20" y1="100" x2="340" y2="100"/>
+              <line x1="20" y1="150" x2="340" y2="150"/>
+            </g>
+            <path d="M28,60 L120,60 L120,150 L268,150 L268,60 L332,60" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+            <g fill="#ffffff">
+              <circle cx="120" cy="60" r="4.5"/>
+              <circle cx="268" cy="60" r="4.5"/>
+            </g>
+            <text x="120" y="44" text-anchor="middle" fill="#b8c2d0" font-size="11">12. Juni · Sperre</text>
+            <text x="268" y="44" text-anchor="middle" fill="#b8c2d0" font-size="11">1. Juli · wieder da</text>
+            <text x="332" y="170" text-anchor="end" fill="#8a96a8" font-size="11">Zugang zur KI-Spitze über Zeit</text>
+          </svg>
+        </div>
+      </a>
+
       <a href="agi-artikel.html" class="insight-card reveal" aria-label="Artikel öffnen: Ab wann ist ein KI-System AGI?">
         <div class="insight-body">
           <span class="insight-eyebrow">Fachbeitrag · KI-Strategie</span>
           <h3>Ab wann ist ein KI-System <span class="serif">AGI</span>?</h3>
           <p>
-            Warum Deutschland über einen längeren Zeitraum von der KI-Spitze abgeschnitten sein könnte,
-            was die AGI-Debatte dazu beiträgt und warum jetzt der Aufbau eigener, lokaler Modelle zählt.
+            Was hinter dem Begriff AGI steckt, wie weit die heutige Spitze wirklich ist und warum
+            der Zugang dazu zu wichtig ist, um ihn aus der Hand zu geben. Mit Update zur
+            Fable-5-Wiederfreischaltung.
           </p>
           <div class="insight-meta">
-            <span>Stand: Juni 2026</span>
+            <span>Stand: 2. Juli 2026 (aktualisiert)</span>
             <span>·</span>
             <span>Lesezeit ca. 9 Minuten</span>
           </div>
@@ -2160,6 +2228,110 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
 });
 </script>
 
+
+<script>
+// ============================================================
+// Live-Typing-Demo (GB-Agent-Vorschaukarte)
+// Progressive Enhancement: ohne JS bleibt der statische Text.
+// Läuft nur im Sichtbereich, pausiert bei Hover, respektiert
+// prefers-reduced-motion. Kein externer Code, minimaler Aufwand.
+// ============================================================
+(function () {
+  const card = document.querySelector('.agent-demo-card');
+  if (!card) return;
+  const userEl  = card.querySelector('.chat-bubble.user');
+  const agentEl = card.querySelector('.chat-bubble.agent');
+  const grid    = card.querySelector('.chat-result-grid');
+  const win     = card.querySelector('.chat-window');
+  if (!userEl || !agentEl || !grid || !win) return;
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const userText  = userEl.textContent.trim().replace(/\s+/g, ' ');
+  const agentText = agentEl.textContent.trim().replace(/\s+/g, ' ');
+  const chips     = Array.from(grid.children).map(c => c.textContent.trim());
+  if (!userText || !agentText) return;
+
+  // Höhe reservieren, damit das Tippen kein Layout-Springen auslöst
+  win.style.minHeight = win.offsetHeight + 'px';
+  // Für Screenreader ist die animierte Karte dekorativ; Inhalt steht daneben
+  win.setAttribute('aria-hidden', 'true');
+
+  let paused = false;
+  let token = 0;
+  const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+  const idle  = async () => { while (paused) await sleep(120); };
+
+  function reset() {
+    userEl.innerHTML = '';
+    agentEl.innerHTML = '';
+    agentEl.style.display = 'none';
+    grid.innerHTML = '';
+    grid.style.display = 'none';
+  }
+
+  async function type(el, text, speed, myToken) {
+    const caret = document.createElement('span');
+    caret.className = 'caret';
+    el.textContent = '';
+    el.appendChild(caret);
+    for (let i = 0; i < text.length; i++) {
+      await idle();
+      if (token !== myToken) { caret.remove(); return false; }
+      caret.insertAdjacentText('beforebegin', text[i]);
+      await sleep(speed + Math.random() * speed * 0.7);
+    }
+    caret.remove();
+    return true;
+  }
+
+  async function play() {
+    const myToken = ++token;
+    while (token === myToken) {
+      reset();
+      await idle(); await sleep(500); if (token !== myToken) return;
+
+      if (!(await type(userEl, userText, 34, myToken))) return;
+      await sleep(550);
+
+      agentEl.style.display = '';
+      agentEl.innerHTML = '<span class="typing-dots"><i></i><i></i><i></i></span>';
+      await idle(); await sleep(1150); if (token !== myToken) return;
+
+      if (!(await type(agentEl, agentText, 15, myToken))) return;
+      await sleep(400);
+
+      grid.style.display = '';
+      for (const t of chips) {
+        await idle();
+        if (token !== myToken) return;
+        const s = document.createElement('span');
+        s.className = 'chip-in';
+        s.textContent = t;
+        grid.appendChild(s);
+        await sleep(170);
+      }
+
+      await idle(); await sleep(4200); if (token !== myToken) return;
+    }
+  }
+
+  card.addEventListener('mouseenter', () => { paused = true; });
+  card.addEventListener('mouseleave', () => { paused = false; });
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        play();
+      } else {
+        token++;      // laufende Sequenz abbrechen
+        reset();
+      }
+    });
+  }, { threshold: 0.35 });
+  io.observe(card);
+})();
+</script>
 
 <script>
 // ============================================================
