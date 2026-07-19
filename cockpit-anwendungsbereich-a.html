@@ -1,0 +1,1383 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Modulares KI-Cockpit · Anwendungsbereich A · TM KI Consulting</title>
+<style>
+  :root{
+    --navy-900:#0a1628; --navy-850:#0c1a30; --navy-800:#0f1d33; --navy-700:#152540;
+    --navy-600:#1c3050; --navy-500:#2a4163;
+    --white:#ffffff; --off-white:#f4f6fa; --gray-2:#b8c2d0; --gray-3:#8a96a8;
+    --line:rgba(255,255,255,.08); --line-strong:rgba(255,255,255,.14);
+    --accent:#4a86c8;
+    --green:#3fb950; --green-bg:rgba(63,185,80,.12);
+    --amber:#e3b341; --amber-bg:rgba(227,179,65,.12);
+    --red:#f0644b; --red-bg:rgba(240,100,75,.14);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;height:100%;}
+  body{
+    font-family:'Inter','Segoe UI',Arial,sans-serif;
+    background:
+      radial-gradient(900px 520px at 8% -12%, rgba(74,134,200,.18), transparent 62%),
+      radial-gradient(760px 520px at 92% 8%, rgba(63,185,80,.08), transparent 58%),
+      linear-gradient(145deg, rgba(255,255,255,.045), transparent 30%),
+      linear-gradient(180deg, #142033 0%, #101a2b 48%, #0b1321 100%);
+    color:var(--off-white);
+    font-size:13px; line-height:1.5; font-weight:400;
+    -webkit-font-smoothing:antialiased;
+  }
+  body::before{
+    content:""; position:fixed; inset:0; pointer-events:none; z-index:-1;
+    background:
+      linear-gradient(90deg, rgba(255,255,255,.032) 1px, transparent 1px),
+      linear-gradient(180deg, rgba(255,255,255,.024) 1px, transparent 1px);
+    background-size:48px 48px;
+    mask-image:linear-gradient(180deg, rgba(0,0,0,.58), transparent 74%);
+  }
+
+  /* ---------- Top bar ---------- */
+  .topbar{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 24px; border-bottom:1px solid var(--line-strong);
+    background:rgba(12,26,48,.82);
+    backdrop-filter:blur(14px);
+    box-shadow:0 12px 34px rgba(0,0,0,.22);
+    position:relative; z-index:5;
+  }
+  .topbar .brand{ font-size:10.5px; letter-spacing:.22em; text-transform:uppercase;
+    color:var(--gray-3); font-weight:500; }
+  .topbar h1{ font-size:17px; font-weight:600; margin:2px 0 0; letter-spacing:-.01em; color:#fff; }
+  .topbar h1 span{ color:var(--accent); font-weight:400; }
+  .topbar .purpose{ display:flex; gap:8px; flex-wrap:wrap; margin-top:7px; }
+  .purpose-pill{
+    font-size:10px; color:var(--gray-2); border:1px solid rgba(255,255,255,.10);
+    background:rgba(255,255,255,.035); border-radius:999px; padding:3px 8px;
+  }
+  .topbar .right{
+    text-align:right; font-size:11px; color:var(--gray-2);
+    border:1px solid rgba(255,255,255,.10); border-radius:12px;
+    background:rgba(28,48,80,.52); padding:9px 12px;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.04), 0 10px 24px rgba(0,0,0,.18);
+  }
+  .topbar .right b{ color:#fff; font-weight:600; }
+  .live{ display:inline-flex; align-items:center; gap:6px; }
+  .live .dot{ width:7px; height:7px; border-radius:50%; background:var(--green);
+    box-shadow:0 0 0 0 rgba(63,185,80,.5); animation:pulse 2s infinite; }
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(63,185,80,.5)}70%{box-shadow:0 0 0 6px rgba(63,185,80,0)}100%{box-shadow:0 0 0 0 rgba(63,185,80,0)}}
+
+  /* ---------- Grid ---------- */
+  .grid{
+    display:grid; gap:18px; padding:18px 24px 24px;
+    grid-template-columns:1fr 1.7fr 1fr;
+    grid-template-rows:1fr 1fr;
+    height:calc(100vh - 64px); min-height:680px;
+  }
+  .card{
+    background:linear-gradient(180deg, rgba(18,34,58,.96), rgba(12,26,48,.98));
+    border:1px solid rgba(255,255,255,.095);
+    border-radius:14px; display:flex; flex-direction:column; overflow:hidden;
+    min-height:0; box-shadow:0 18px 42px rgba(0,0,0,.28);
+  }
+  .card.center{
+    background:
+      radial-gradient(900px 420px at 50% -18%, rgba(74,134,200,.14), transparent 58%),
+      linear-gradient(180deg, rgba(20,39,66,.98), rgba(12,26,48,.99));
+  }
+  .center{ grid-row:1 / span 2; grid-column:2; }
+
+  .card-head{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 16px; border-bottom:1px solid rgba(255,255,255,.075); flex:none;
+    background:linear-gradient(180deg, rgba(255,255,255,.035), transparent);
+  }
+  .card-head .title{ display:flex; align-items:center; gap:9px; }
+  .card-head .ic{ width:26px; height:26px; border-radius:7px; background:var(--navy-600);
+    display:flex; align-items:center; justify-content:center; color:var(--accent);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.06), 0 0 18px rgba(74,134,200,.12); }
+  .card-head h2{ font-size:13px; font-weight:600; margin:0; color:#fff; letter-spacing:-.01em; }
+  .card-head .sub{ font-size:10px; color:var(--gray-3); margin-top:1px; }
+  .src{ font-size:9px; letter-spacing:.08em; text-transform:uppercase; color:var(--gray-3);
+    border:1px solid var(--line-strong); border-radius:20px; padding:3px 9px; white-space:nowrap; }
+  .src.ki{ color:var(--accent); border-color:rgba(74,134,200,.4); background:rgba(74,134,200,.08); }
+  .card-body{ padding:8px 10px; overflow-y:auto; flex:1; min-height:0; }
+
+  /* scrollbar */
+  .card-body::-webkit-scrollbar{ width:8px; }
+  .card-body::-webkit-scrollbar-thumb{ background:var(--navy-500); border-radius:8px; }
+  .card-body::-webkit-scrollbar-track{ background:transparent; }
+
+  /* ---------- Employees ---------- */
+  .legend{ display:flex; gap:12px; padding:2px 6px 8px; font-size:10px; color:var(--gray-2); }
+  .legend span{ display:inline-flex; align-items:center; gap:5px; }
+  .sdot{ width:8px; height:8px; border-radius:50%; flex:none; }
+  .s-aktiv{ background:var(--green); } .s-unterwegs{ background:var(--amber); } .s-inaktiv{ background:var(--red); }
+
+  .emp{ display:flex; align-items:center; gap:10px; padding:8px 10px; border-radius:8px;
+    cursor:pointer; border:1px solid transparent; transition:background .12s, border-color .12s, transform .12s; }
+  .emp:hover{ background:rgba(74,134,200,.08); border-color:rgba(74,134,200,.22); transform:translateX(2px); }
+  .emp .status{ width:9px; height:9px; border-radius:50%; flex:none; }
+  .emp .avatar{ width:28px; height:28px; border-radius:50%; flex:none; background:var(--navy-600);
+    display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:600; color:#fff; }
+  .emp .info{ flex:1; min-width:0; }
+  .emp .name{ font-size:12px; font-weight:500; color:#fff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .emp .meta{ font-size:10px; color:var(--gray-3); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .emp .badge{ font-size:9px; padding:2px 7px; border-radius:20px; font-weight:600; flex:none; }
+  .b-aktiv{ background:var(--green-bg); color:var(--green); }
+  .b-unterwegs{ background:var(--amber-bg); color:var(--amber); }
+  .b-inaktiv{ background:var(--red-bg); color:var(--red); }
+  .expand-btn{ width:calc(100% - 12px); margin:6px; padding:9px; background:var(--navy-700);
+    border:1px solid var(--line); color:var(--gray-2); border-radius:8px; cursor:pointer;
+    font-family:inherit; font-size:11px; font-weight:500; transition:background .12s; }
+  .expand-btn:hover{ background:var(--navy-600); color:#fff; }
+
+  /* employee detail panel (inline) */
+  .emp-detail{ display:none; margin:2px 6px 8px; padding:12px 14px; border-radius:8px;
+    background:var(--navy-850); border:1px solid var(--line-strong); }
+  .emp-detail.open{ display:block; }
+  .emp-detail .dt-head{ display:flex; align-items:center; gap:8px; margin-bottom:8px; }
+  .emp-detail .dt-head b{ font-size:12.5px; color:#fff; }
+  .emp-detail .row{ font-size:11px; margin-bottom:5px; color:var(--gray-2); }
+  .emp-detail .row b{ color:#fff; font-weight:600; }
+  .emp-detail .lv{ margin-top:8px; padding:9px 11px; border-left:2px solid var(--accent);
+    background:var(--navy-800); border-radius:0 6px 6px 0; }
+  .emp-detail .lv .lbl{ font-size:9px; letter-spacing:.1em; text-transform:uppercase; color:var(--gray-3); margin-bottom:3px; }
+  .emp-detail .lv .chg{ font-size:11.5px; color:var(--off-white); }
+  .emp-detail .ts{ font-size:10px; color:var(--gray-3); margin-top:6px; }
+
+  /* ---------- Calendar ---------- */
+  .cal-day{ display:flex; gap:10px; padding:7px 8px; }
+  .cal-day .date{ flex:none; width:40px; text-align:center; }
+  .cal-day .date .d{ font-size:17px; font-weight:700; color:#fff; line-height:1; }
+  .cal-day .date .m{ font-size:9px; letter-spacing:.08em; text-transform:uppercase; color:var(--gray-3); }
+  .cal-day .events{ flex:1; border-left:1px solid var(--line); padding-left:10px; }
+  .ev{ display:flex; gap:8px; align-items:flex-start; padding:5px 0; }
+  .ev .time{ font-size:10px; color:var(--accent); font-weight:600; flex:none; width:46px; }
+  .ev .txt{ font-size:11px; color:var(--off-white); }
+  .ev .txt span{ display:block; font-size:10px; color:var(--gray-3); }
+
+  /* ---------- Finance ---------- */
+  .fin-kpis{ display:flex; gap:10px; padding:10px 12px 4px; flex:none; }
+  .kpi{ flex:1; background:var(--navy-850); border:1px solid var(--line); border-radius:9px; padding:11px 13px; }
+  .kpi .lbl{ font-size:9.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--gray-3); }
+  .kpi .val{ font-size:21px; font-weight:700; margin-top:3px; letter-spacing:-.02em; }
+  .kpi .val.pos{ color:var(--green); } .kpi .val.neg{ color:#ff9d86; } .kpi .val.net{ color:#fff; }
+  .ki-bar{ display:flex; align-items:center; gap:9px; margin:8px 12px; padding:9px 12px;
+    background:var(--red-bg); border:1px solid rgba(240,100,75,.3); border-radius:9px; }
+  .ki-bar .ic{ color:var(--red); flex:none; }
+  .ki-bar .tx{ font-size:11px; color:#ffd9d0; } .ki-bar .tx b{ color:#fff; }
+  .fin-scroll{ flex:1; min-height:0; overflow-y:auto; }
+  .fin-scroll::-webkit-scrollbar{ width:8px; }
+  .fin-scroll::-webkit-scrollbar-thumb{ background:var(--navy-500); border-radius:8px; }
+  .fin-scroll::-webkit-scrollbar-track{ background:transparent; }
+  .fin-cols{ display:flex; gap:14px; padding:4px 12px 12px; }
+  .fin-col{ flex:1; }
+  .fin-col h3 .cnt{ color:var(--gray-3); font-weight:400; }
+
+  .fin-expand{ display:inline-flex; align-items:center; gap:6px; font-family:inherit;
+    font-size:10.5px; font-weight:600; color:var(--gray-2); cursor:pointer;
+    background:var(--navy-700); border:1px solid var(--line-strong); border-radius:20px;
+    padding:5px 11px; transition:background .12s,color .12s; }
+  .fin-expand:hover{ background:var(--navy-600); color:#fff; }
+
+  /* ---------- Vollansicht-Overlay ---------- */
+  .overlay{ position:fixed; inset:0; background:rgba(5,11,22,.78);
+    backdrop-filter:blur(3px); display:none; align-items:center; justify-content:center;
+    z-index:50; padding:32px; }
+  .overlay.open{ display:flex; }
+  .modal{ width:100%; max-width:1100px; max-height:88vh; background:var(--navy-800);
+    border:1px solid var(--line-strong); border-radius:14px; display:flex; flex-direction:column;
+    overflow:hidden; box-shadow:0 24px 60px rgba(0,0,0,.5); }
+  .modal-head{ display:flex; align-items:center; justify-content:space-between;
+    padding:16px 22px; border-bottom:1px solid var(--line); flex:none; }
+  .modal-head h2{ font-size:16px; margin:0; color:#fff; font-weight:600; }
+  .modal-head .sub{ font-size:11px; color:var(--gray-3); margin-top:2px; }
+  .modal-close{ width:32px; height:32px; border-radius:8px; background:var(--navy-700);
+    border:1px solid var(--line-strong); color:var(--gray-2); cursor:pointer;
+    display:flex; align-items:center; justify-content:center; font-family:inherit; }
+  .modal-close:hover{ background:var(--navy-600); color:#fff; }
+  .modal-body{ padding:18px 22px 22px; overflow-y:auto; flex:1; min-height:0; }
+  .modal-body::-webkit-scrollbar{ width:9px; }
+  .modal-body::-webkit-scrollbar-thumb{ background:var(--navy-500); border-radius:8px; }
+  .modal .fin-kpis{ padding:0 0 12px; }
+  .modal .fin-cols{ padding:0; }
+  .modal .fin-col h3{ font-size:11px; }
+  .modal .item{ padding:11px 13px; }
+  .modal .item .who .n{ font-size:12.5px; } .modal .item .amt{ font-size:13.5px; }
+  .fin-col h3{ font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--gray-3);
+    margin:6px 4px 8px; display:flex; justify-content:space-between; }
+  .ledger{ display:flex; flex-direction:column; gap:5px; }
+  .item{ display:flex; align-items:center; gap:10px; padding:9px 11px; border-radius:8px;
+    background:var(--navy-850); border:1px solid var(--line); }
+  .item .bar{ width:3px; align-self:stretch; border-radius:3px; flex:none; }
+  .item.in .bar{ background:var(--green); } .item.out .bar{ background:#5a6f92; }
+  .item.flag{ background:var(--red-bg); border-color:rgba(240,100,75,.35); }
+  .item.flag .bar{ background:var(--red); }
+  .item .who{ flex:1; min-width:0; }
+  .item .who .n{ font-size:11.5px; color:#fff; font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .item .who .c{ font-size:9.5px; color:var(--gray-3); }
+  .item .amt{ font-size:12.5px; font-weight:700; flex:none; letter-spacing:-.01em; }
+  .item.in .amt{ color:var(--green); } .item.out .amt{ color:#cdd6e4; }
+  .item .warn{ color:var(--red); flex:none; }
+
+  /* ---------- Mails ---------- */
+  .mail{ display:flex; gap:10px; padding:9px 10px; border-radius:8px; cursor:pointer; border:1px solid transparent; transition:background .12s, border-color .12s, transform .12s; }
+  .mail:hover{ background:rgba(74,134,200,.08); border-color:rgba(74,134,200,.22); transform:translateX(2px); }
+  .mail.unread{ background:rgba(74,134,200,.06); }
+  .mail .av{ width:30px; height:30px; border-radius:8px; flex:none; background:var(--navy-600);
+    display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; color:#fff; }
+  .mail .m{ flex:1; min-width:0; }
+  .mail .from{ display:flex; justify-content:space-between; gap:8px; }
+  .mail .from .nm{ font-size:11.5px; font-weight:600; color:#fff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .mail .from .tm{ font-size:9.5px; color:var(--gray-3); flex:none; }
+  .mail .subj{ font-size:11px; color:var(--off-white); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .mail .prev{ font-size:10px; color:var(--gray-3); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .mail .uw{ width:7px; height:7px; border-radius:50%; background:var(--accent); flex:none; align-self:center; }
+
+  /* ---------- News ---------- */
+  .news{ padding:9px 11px; border-radius:10px; margin-bottom:7px; background:linear-gradient(180deg, rgba(15,29,51,.96), rgba(10,22,40,.96)); border:1px solid rgba(74,134,200,.18); }
+  .news .tag{ font-size:9px; letter-spacing:.06em; text-transform:uppercase; font-weight:600;
+    color:var(--accent); margin-bottom:4px; display:flex; gap:10px; justify-content:space-between; flex:1; }
+  .news .tag .rel{ color:var(--green); }
+  .news .h{ font-size:11.5px; font-weight:600; color:#fff; line-height:1.35; margin-bottom:3px; }
+  .news .so{ font-size:10px; color:var(--gray-3); }
+  .news .why{ font-size:10px; color:var(--gray-2); margin-top:5px; padding-top:5px; border-top:1px solid var(--line); }
+  .news .why b{ color:var(--accent); }
+
+  .foot{ font-size:9px; color:var(--gray-3); text-align:center; padding:0 24px 10px; }
+
+  /* ---------- News-Agent (Live, Merken, Overlay) ---------- */
+  .news-actions{ display:flex; gap:6px; align-items:center; }
+  .icon-btn{ height:24px; min-width:24px; padding:0 6px; border-radius:6px; background:var(--navy-600);
+    border:1px solid var(--line-strong); color:var(--gray-2); cursor:pointer; font-family:inherit;
+    font-size:12px; display:inline-flex; align-items:center; justify-content:center; gap:3px; }
+  .icon-btn:hover{ background:var(--navy-500); color:#fff; }
+  .icon-btn:disabled, .icon-btn.busy{ opacity:.5; cursor:default; }
+  .news-insight{ display:flex; gap:9px; margin:2px 4px 12px; padding:12px 13px;
+    background:linear-gradient(180deg, rgba(74,134,200,.16), rgba(74,134,200,.08));
+    border:1px solid rgba(74,134,200,.36); border-radius:11px;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.045), 0 10px 24px rgba(0,0,0,.16); }
+  .news-insight .ic{ color:var(--accent); flex:none; margin-top:1px; }
+  .news-insight .tx{ font-size:11px; color:#dbe6f3; line-height:1.5; } .news-insight .tx b{ color:#fff; }
+  .news .top{ display:flex; align-items:flex-start; justify-content:space-between; gap:8px; }
+  .news .rel.hoch{ color:var(--red); } .news .rel.mittel{ color:var(--amber); } .news .rel.niedrig{ color:var(--gray-3); }
+  .fav-btn{ background:transparent; border:none; color:var(--gray-3); cursor:pointer; font-size:15px; line-height:1; padding:0 2px; flex:none; }
+  .fav-btn.on{ color:var(--amber); }
+  .news .src-line{ margin-top:6px; font-size:10px; color:var(--gray-3); }
+  .news .src-line a{ color:var(--accent); text-decoration:none; } .news .src-line a:hover{ text-decoration:underline; }
+  .news-detail{ font-size:11px; color:var(--gray-2); margin-top:6px; line-height:1.5; }
+  .news-more{ width:calc(100% - 8px); margin:6px 4px 2px; padding:8px; background:var(--navy-700);
+    border:1px solid var(--line); color:var(--gray-2); border-radius:8px; cursor:pointer; font-family:inherit; font-size:11px; }
+  .news-more:hover{ background:var(--navy-600); color:#fff; }
+  .news-stamp{ font-size:9px; color:var(--gray-3); margin:8px 4px 2px; }
+  .modal-news .news{ margin-bottom:10px; }
+  .tab-row{ display:flex; gap:8px; margin-bottom:14px; }
+  .tab-btn{ font-family:inherit; font-size:11px; padding:6px 13px; border-radius:20px; cursor:pointer;
+    background:var(--navy-700); border:1px solid var(--line-strong); color:var(--gray-2); }
+  .tab-btn.active{ background:var(--accent); border-color:var(--accent); color:#08121f; font-weight:600; }
+
+  /* ---------- Lesbarkeit: groessere News-Typografie ---------- */
+  #newsBody{ padding:10px 12px; }
+  .news{ padding:12px 13px; }
+  .news .h{ font-size:13.5px; line-height:1.4; margin-bottom:5px; }
+  .news .why{ font-size:12px; line-height:1.5; margin-top:7px; padding-top:7px; }
+  .news-detail{ font-size:12.5px; line-height:1.6; margin-top:8px; }
+  .news .src-line{ font-size:11px; margin-top:8px; }
+  .news-insight .tx{ font-size:12px; line-height:1.55; }
+  .news-more{ font-size:12px; padding:10px; }
+  .news-source-note{ font-size:12px; color:var(--gray-2); margin-top:9px; }
+  .news-source-note a{ color:var(--accent); text-decoration:none; font-weight:600; }
+  .tab-btn{ font-size:12px; }
+
+  /* Vollansicht (Overlay): deutlich groesser, mehr Inhalt sichtbar */
+  .modal-news .news{ padding:16px 18px; margin-bottom:14px; }
+  .modal-news .news .tag{ font-size:11px; }
+  .modal-news .news .h{ font-size:16.5px; line-height:1.4; margin-bottom:8px; }
+  .modal-news .news .why{ font-size:13px; line-height:1.6; margin-top:9px; padding-top:9px; }
+  .modal-news .news-detail{ font-size:14px; line-height:1.7; margin-top:10px; color:var(--off-white); }
+  .modal-news .news .src-line{ font-size:12px; margin-top:12px; }
+  .modal-news .news-source-note{ font-size:13px; margin-top:11px; }
+  .modal-news .fav-btn{ font-size:18px; }
+
+  /* ---------- Dezente Bewegung / Feinschliff ---------- */
+  @keyframes cardIn { from { opacity:0; } to { opacity:1; } }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @keyframes kiGlow { 0%,100%{ box-shadow:0 0 0 0 rgba(74,134,200,0); } 50%{ box-shadow:0 0 10px 0 rgba(74,134,200,.45); } }
+  @keyframes shimmer { 0%{ background-position:-200% 0; } 100%{ background-position:200% 0; } }
+  @keyframes favPop { 0%{ transform:scale(1);} 40%{ transform:scale(1.45);} 100%{ transform:scale(1);} }
+  @keyframes modalIn { from{ opacity:0; transform:translateY(8px) scale(.985);} to{ opacity:1; transform:none;} }
+  @keyframes dotPing { 0%{ box-shadow:0 0 0 0 rgba(63,185,80,.5);} 70%{ box-shadow:0 0 0 6px rgba(63,185,80,0);} 100%{ box-shadow:0 0 0 0 rgba(63,185,80,0);} }
+
+  .card{ animation: cardIn .5s ease both; transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease; }
+  .card:nth-of-type(1){ animation-delay:.03s; } .card:nth-of-type(2){ animation-delay:.09s; }
+  .card:nth-of-type(3){ animation-delay:.15s; } .card:nth-of-type(4){ animation-delay:.21s; } .card:nth-of-type(5){ animation-delay:.27s; }
+  .card:hover{ transform:translateY(-2px); box-shadow:0 12px 30px rgba(0,0,0,.35); border-color:var(--line-strong); }
+
+  .src.ki{ animation: kiGlow 3.4s ease-in-out infinite; }
+  #newsBody{ position:relative; }
+  .card:has(#newsBody)::after{ content:""; position:absolute; left:0; right:0; top:0; height:2px; pointer-events:none;
+    background:linear-gradient(90deg, transparent, var(--accent), transparent); background-size:200% 100%; animation: shimmer 5s linear infinite; opacity:.85; }
+
+  .icon-btn{ transition: background .12s, color .12s, transform .12s; }
+  .icon-btn:hover{ transform: translateY(-1px); }
+  .icon-btn.busy{ animation: spin .9s linear infinite; }
+
+  .fav-btn{ transition: transform .12s, color .12s; }
+  .fav-btn:active{ transform: scale(1.35); }
+  .fav-btn.on{ animation: favPop .28s ease; }
+
+  .news{ transition: background .14s, border-color .14s, transform .12s, box-shadow .14s; }
+  .news:hover{ border-color: rgba(74,134,200,.45); background:rgba(18,34,58,.98); transform:translateY(-1px); box-shadow:0 10px 24px rgba(0,0,0,.18); }
+  .tab-btn{ transition: background .14s, color .14s, border-color .14s; }
+  .expand-btn, .fin-expand, .news-more, .modal-close, .mail, .emp{ transition: background .14s, color .14s, transform .12s; }
+  .news-more:hover, .expand-btn:hover{ transform: translateY(-1px); }
+
+  .overlay.open .modal{ animation: modalIn .2s ease both; }
+
+  /* ---------- Live-Elemente: Uhr, Einsatzkarte, Ring, Sparklines ---------- */
+  #clock b{ color:#fff; font-weight:600; font-variant-numeric:tabular-nums; }
+  .fin-kpis .val{ font-variant-numeric:tabular-nums; }
+
+  .ops-map{ margin:2px 6px 10px; border-radius:12px; border:1px solid rgba(74,134,200,.20); overflow:hidden;
+    background:
+      radial-gradient(120% 140% at 30% 15%, rgba(74,134,200,.16), transparent 60%),
+      radial-gradient(90% 120% at 80% 0%, rgba(63,185,80,.08), transparent 62%),
+      rgba(10,22,40,.86);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.04), 0 10px 26px rgba(0,0,0,.18); }
+  .ops-map svg{ display:block; width:100%; height:auto; }
+  .ops-map .grid line{ stroke:rgba(255,255,255,.045); stroke-width:1; }
+  .ops-map .road{ stroke:rgba(74,134,200,.34); stroke-width:2.2; fill:none; stroke-linecap:round; }
+  .ops-map .city-dot{ fill:#5a6f92; }
+  .ops-map .city-label{ fill:var(--gray-3); font-size:9px; letter-spacing:.04em; }
+  .ops-map .home-ring{ fill:none; stroke:var(--accent); stroke-width:1.2; opacity:.75; }
+  .ops-map .m-dot{ cursor:pointer; }
+  .ops-map .m-dot .core{ transform-box:fill-box; transform-origin:center; transition:transform .15s; }
+  .ops-map .m-dot:hover .core{ transform:scale(1.6); }
+  .ops-map .m-dot .halo{ transform-box:fill-box; transform-origin:center; opacity:0; animation:haloPulse 2.6s ease-out infinite; }
+  @keyframes haloPulse{ 0%{ transform:scale(.4); opacity:.5; } 75%{ transform:scale(2.6); opacity:0; } 100%{ transform:scale(.4); opacity:0; } }
+  .map-foot{ display:flex; justify-content:space-between; padding:6px 10px 8px; font-size:9px; color:var(--gray-2); letter-spacing:.05em;
+    background:rgba(5,11,22,.20); border-top:1px solid rgba(255,255,255,.055); }
+
+  .util-ring{ position:relative; width:42px; height:42px; flex:none; }
+  .util-ring svg{ display:block; transform:rotate(-90deg); }
+  .util-ring circle{ fill:none; stroke-width:5; transition:stroke-dasharray 1.1s ease; }
+  .util-ring .num{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; color:#fff; }
+
+  .kpi .spark{ margin-top:9px; }
+  .kpi .spark svg{ display:block; width:100%; height:26px; overflow:visible; }
+  .kpi .spark .line{ fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+  .kpi .spark .area{ opacity:.14; stroke:none; }
+  .spark-draw{ stroke-dasharray:var(--len); stroke-dashoffset:var(--len); animation:sparkDraw 1.3s .35s ease forwards; }
+  @keyframes sparkDraw{ to{ stroke-dashoffset:0; } }
+
+  /* ---------- Voice-Agent: schwebender An/Aus-Knopf ---------- */
+  .va-fab{ position:fixed; right:22px; bottom:22px; z-index:60; width:58px; height:58px; border-radius:50%;
+    border:1px solid var(--line-strong); background:radial-gradient(circle at 35% 30%, #1c3050, #0c1a30);
+    color:var(--accent); cursor:pointer; display:flex; align-items:center; justify-content:center;
+    box-shadow:0 14px 34px rgba(0,0,0,.46), 0 0 0 1px rgba(74,134,200,.10); transition:transform .15s, color .2s, box-shadow .15s; }
+  .va-fab:hover{ transform:translateY(-2px) scale(1.03); box-shadow:0 18px 42px rgba(0,0,0,.52), 0 0 28px rgba(74,134,200,.18); }
+  .va-fab.on{ color:#0b1a2e; background:radial-gradient(circle at 35% 30%, #8ec0ff, var(--accent)); animation:vaPulse 2.4s infinite; }
+  @keyframes vaPulse{ 0%,100%{ box-shadow:0 0 0 0 rgba(74,134,200,.5), 0 10px 30px rgba(0,0,0,.5);} 60%{ box-shadow:0 0 0 14px rgba(74,134,200,0), 0 10px 30px rgba(0,0,0,.5);} }
+  .va-panel{ position:fixed; right:22px; bottom:92px; z-index:60; width:300px;
+    background:linear-gradient(180deg, rgba(18,34,58,.98), rgba(10,22,40,.98));
+    border:1px solid rgba(255,255,255,.12); border-radius:14px; padding:16px; box-shadow:0 24px 60px rgba(0,0,0,.55); display:none; }
+  .va-panel.show{ display:block; }
+  .va-panel h4{ margin:0 0 4px; font-size:14px; color:#fff; font-family:var(--disp,inherit); }
+  .va-status{ font-size:11px; color:var(--gray-3); margin-bottom:12px; }
+  .va-status b{ color:var(--green); }
+  .va-row{ display:flex; align-items:center; justify-content:space-between; gap:8px; margin:9px 0; font-size:12px; color:var(--gray-2); }
+  .va-panel select{ background:var(--navy-700); border:1px solid var(--line); color:var(--off-white); border-radius:6px; padding:5px 7px; font-size:11px; max-width:160px; }
+  .va-btn{ font-family:inherit; font-size:11px; padding:7px 11px; border-radius:7px; cursor:pointer; background:var(--navy-700); border:1px solid var(--line-strong); color:var(--gray-2); transition:background .12s,color .12s; }
+  .va-btn:hover{ background:var(--navy-600); color:#fff; }
+  .va-hint{ color:var(--gray-3); font-size:10px; line-height:1.4; margin-top:6px; }
+  .va-log{ height:200px; overflow-y:auto; background:var(--navy-850); border:1px solid var(--line); border-radius:8px; padding:9px; margin:8px 0; font-size:12px; line-height:1.5; }
+  .va-log::-webkit-scrollbar{ width:7px; } .va-log::-webkit-scrollbar-thumb{ background:var(--navy-500); border-radius:8px; }
+  .va-msg{ margin:7px 0; }
+  .va-msg.u{ text-align:right; }
+  .va-msg .b{ display:inline-block; max-width:92%; padding:7px 10px; border-radius:9px; text-align:left; }
+  .va-msg.u .b{ background:var(--navy-600); color:#fff; }
+  .va-msg.a .b{ background:rgba(74,134,200,.12); border:1px solid rgba(74,134,200,.25); color:var(--off-white); }
+  .va-msg.a.think .b{ color:var(--gray-3); font-style:italic; }
+  .va-input{ display:flex; gap:6px; align-items:center; }
+  .va-input input{ flex:1; background:var(--navy-700); border:1px solid var(--line); color:#fff; border-radius:7px; padding:9px 11px; font-size:12px; font-family:inherit; }
+  .va-mic{ width:34px; height:34px; flex:none; border-radius:7px; background:var(--navy-700); border:1px solid var(--line-strong); color:var(--gray-2); cursor:pointer; }
+  .va-mic.rec{ color:#fff; background:var(--red); animation:vaPulse 1.4s infinite; }
+  .va-send{ background:var(--accent); color:#08121f; border:none; border-radius:7px; width:36px; height:34px; cursor:pointer; font-weight:700; }
+
+  /* ---------- Kacheln: dezent fliessendes Licht an der Umrandung ---------- */
+  @property --cbf{ syntax:"<angle>"; inherits:false; initial-value:0deg; }
+  .grid > .card{ position:relative; }
+  .grid > .card::before{
+    content:""; position:absolute; inset:0; z-index:3; border-radius:inherit; padding:1.4px; pointer-events:none;
+    background:conic-gradient(from var(--cbf),
+      transparent 0deg, transparent 248deg,
+      rgba(74,134,200,.28) 300deg, #cfe6ff 342deg, rgba(74,134,200,.5) 351deg, transparent 360deg);
+    -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor; mask-composite:exclude;
+    opacity:.7; animation:cbfSpin 9s linear infinite;
+  }
+  @keyframes cbfSpin{ to{ --cbf:360deg; } }
+  .grid > .card:nth-of-type(1)::before{ animation-duration:9s;   animation-delay:-1s; }
+  .grid > .card:nth-of-type(2)::before{ animation-duration:12s;  animation-delay:-4s; }
+  .grid > .card:nth-of-type(3)::before{ animation-duration:8.5s; animation-delay:-6s; }
+  .grid > .card:nth-of-type(4)::before{ animation-duration:10.5s;animation-delay:-2.5s; }
+  .grid > .card:nth-of-type(5)::before{ animation-duration:9.5s; animation-delay:-7s; }
+  /* Fallback ohne @property-Unterstuetzung: ruhiger Rand statt Sprung */
+  @supports not (background:conic-gradient(from var(--cbf), #000, #000)){
+    .grid > .card::before{ display:none; }
+  }
+
+  /* ---------- Prozessressourcen · Vollansicht ---------- */
+  .modal-emp{ max-width:1240px; }
+  .emp-modal-grid{ display:grid; grid-template-columns:1.2fr 1fr; gap:20px; align-items:start; }
+  #empModalMap .ops-map{ margin:0; }
+  #empModalMap .ops-map .city-label{ font-size:6.5px; }
+  .emp-modal-detail{ margin:14px 0 0; }
+  .emp-modal-right{ max-height:66vh; overflow-y:auto; padding-right:6px; }
+  .emp-modal-right::-webkit-scrollbar{ width:8px; }
+  .emp-modal-right::-webkit-scrollbar-thumb{ background:var(--navy-500); border-radius:8px; }
+  .emp-modal-right::-webkit-scrollbar-track{ background:transparent; }
+  .emp-group-h{ display:flex; align-items:center; gap:7px; font-size:10px; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--gray-3); margin:12px 4px 7px; }
+  .emp-group-h:first-child{ margin-top:2px; }
+  @media (max-width:900px){ .emp-modal-grid{ grid-template-columns:1fr; } }
+
+  /* ---------- Mobile Cockpit ---------- */
+  @media (max-width:1024px){
+    html,body{ height:auto; min-height:100%; overflow-x:hidden; }
+    .topbar{ align-items:flex-start; gap:14px; padding:14px 18px; }
+    .grid{ height:auto; min-height:0; grid-template-columns:1fr 1fr; grid-template-rows:auto; padding:16px 18px 92px; }
+    .center{ grid-row:auto; grid-column:1 / -1; order:-1; }
+    .card{ min-height:360px; }
+    .card.center{ min-height:620px; }
+    .overlay{ padding:18px; }
+  }
+  @media (max-width:768px){
+    .topbar{ flex-direction:column; }
+    .topbar>div:last-child{ width:100%; display:grid !important; grid-template-columns:minmax(0,1fr) minmax(0,1fr); }
+    .role-box,.topbar .right{ text-align:left; min-width:0; }
+    .role-box select{ width:100%; min-height:44px; }
+    .grid{ grid-template-columns:1fr; gap:14px; }
+    .center{ grid-column:auto; }
+    .card,.card.center{ min-height:480px; }
+    .card-head{ padding:12px 14px; gap:10px; }
+    .card-head .title{ min-width:0; }
+    .fin-kpis,.fin-cols{ flex-direction:column; }
+    .fin-expand,.expand-btn,.icon-btn,.modal-close,.va-btn,.va-mic,.va-send{ min-height:44px; }
+    .icon-btn,.modal-close,.va-mic,.va-send{ min-width:44px; }
+    .modal{ max-height:calc(100dvh - 24px); }
+    .modal-head{ padding:14px 16px; }
+    .modal-body{ padding:14px 16px 18px; }
+  }
+  @media (max-width:480px){
+    body{ font-size:14px; }
+    .topbar{ padding:12px; }
+    .topbar h1{ font-size:16px; }
+    .topbar .purpose{ gap:6px; }
+    .purpose-pill{ font-size:9px; }
+    .topbar>div:last-child{ grid-template-columns:1fr; }
+    .grid{ padding:12px 12px 88px; }
+    .card,.card.center{ min-height:440px; }
+    .card-head{ align-items:flex-start; flex-wrap:wrap; }
+    .card-head h2{ font-size:14px; }
+    .card-head .sub,.emp .meta,.mail .prev,.news .so{ font-size:11px; }
+    .kpi .val{ font-size:18px; }
+    .map-foot{ flex-direction:column; gap:3px; }
+    .item{ align-items:flex-start; flex-wrap:wrap; }
+    .item .amt{ width:100%; padding-left:11px; }
+    .cal-day{ align-items:flex-start; }
+    .ev{ align-items:flex-start; }
+    .va-panel{ left:10px; right:10px; bottom:78px; width:auto; max-height:calc(100dvh - 96px); overflow-y:auto; }
+    .va-fab{ right:12px; bottom:12px; width:54px; height:54px; }
+    .va-log{ height:160px; }
+    .overlay{ padding:8px; }
+  }
+
+  /* ---------- Freigabe-Demo: Rollen-Schalter + Sperr-Schleier ---------- */
+  .role-box{ display:flex; flex-direction:column; justify-content:center; gap:5px; text-align:right;
+    border:1px solid rgba(74,134,200,.35); border-radius:12px; background:rgba(74,134,200,.10); padding:9px 12px; }
+  .role-lbl{ font-size:9px; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); font-weight:600; }
+  .role-box select{ background:var(--navy-700); border:1px solid var(--line-strong); color:#fff;
+    border-radius:8px; padding:6px 8px; font-size:11px; font-family:inherit; cursor:pointer; }
+  .lock-veil{ position:absolute; inset:0; z-index:6; display:none; align-items:center; justify-content:center;
+    flex-direction:column; gap:9px; text-align:center; padding:22px; border-radius:inherit;
+    background:rgba(8,16,30,.6); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); }
+  .card.locked .lock-veil{ display:flex; }
+  .lock-veil .lk{ width:36px; height:36px; border-radius:10px; background:var(--navy-700);
+    border:1px solid var(--line-strong); display:flex; align-items:center; justify-content:center; color:var(--amber); }
+  .lock-veil b{ color:#fff; font-size:12.5px; }
+  .lock-veil span{ color:var(--gray-2); font-size:11px; max-width:280px; line-height:1.55; }
+
+  @media (prefers-reduced-motion: reduce){
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div>
+    <div class="brand">TM KI Consulting · Intelligente Schaltzentrale</div>
+    <h1>Modulares KI-Cockpit <span>· Anwendungsbereich A</span></h1>
+    <div class="purpose">
+      <span class="purpose-pill">Prozesslage</span>
+      <span class="purpose-pill">Finanzen</span>
+      <span class="purpose-pill">Informationsradar</span>
+      <span class="purpose-pill">Sicherheitsfreigaben</span>
+    </div>
+  </div>
+  <div style="display:flex;align-items:stretch;gap:10px">
+    <div class="role-box">
+      <div class="role-lbl">Sicherheitsfreigabe · Rolle</div>
+      <select id="roleSel" title="Rolle wechseln – die Freigabelogik steuert, welche Bereiche sichtbar sind">
+        <option value="gf">Rolle A · Vollzugriff</option>
+        <option value="dispo">Rolle B · eingeschränkt</option>
+        <option value="buha">Rolle C · eingeschränkt</option>
+      </select>
+    </div>
+    <div class="right">
+      <div class="live"><span class="dot"></span> <b>Live</b> · Microsoft 365</div>
+      <div id="clock">Dienstag, 16. Juni 2026</div>
+    </div>
+  </div>
+</div>
+
+<div class="grid">
+
+  <!-- ============ LINKS OBEN: Prozessressourcen ============ -->
+  <div class="card">
+    <div class="card-head">
+      <div class="title">
+        <div class="ic">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div><h2>Prozessressourcen</h2><div class="sub" id="empCount">35 Einheiten · aktuelle Verfügbarkeit</div></div>
+      </div>
+      <span class="src">Power Apps</span>
+    </div>
+    <div class="legend">
+      <span><i class="sdot s-aktiv"></i>aktiv</span>
+      <span><i class="sdot s-unterwegs"></i>unterwegs</span>
+      <span><i class="sdot s-inaktiv"></i>inaktiv</span>
+    </div>
+    <div class="emp-detail" id="empDetail"></div>
+    <div class="card-body" id="empList"></div>
+    <button class="expand-btn" id="empToggle">Alle 35 Einheiten anzeigen</button>
+  </div>
+
+  <!-- ============ MITTE: Finanzdashboard ============ -->
+  <div class="card center">
+    <div class="card-head">
+      <div class="title">
+        <div class="ic">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        </div>
+        <div><h2>Finanzdashboard</h2><div class="sub">Einnahmen &amp; Ausgaben · laufender Monat</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:9px">
+        <button class="fin-expand" id="finExpand" title="Vollansicht öffnen">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+          Vollansicht
+        </button>
+        <span class="src">DATEV</span>
+      </div>
+    </div>
+
+    <div class="fin-kpis">
+      <div class="kpi"><div class="lbl">Einnahmen</div><div class="val pos">+ 487.250 €</div></div>
+      <div class="kpi"><div class="lbl">Ausgaben</div><div class="val neg">− 312.880 €</div></div>
+      <div class="kpi"><div class="lbl">Saldo</div><div class="val net">+ 174.370 €</div></div>
+    </div>
+
+    <div class="ki-bar">
+      <span class="ic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+      <span class="tx"><b>KI-Betrugsprüfung:</b> 2 auffällige Buchungen markiert (rot). Doppelzahlung und unbekannter Empfänger zur Prüfung.</span>
+    </div>
+
+    <div class="fin-scroll">
+      <div class="fin-cols">
+        <div class="fin-col">
+          <h3><span>Einnahmen</span><span>nach Betrag</span></h3>
+          <div class="ledger" id="inLedger"></div>
+        </div>
+        <div class="fin-col">
+          <h3><span>Ausgaben</span><span>nach Betrag</span></h3>
+          <div class="ledger" id="outLedger"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ LINKS UNTEN: Terminkalender ============ -->
+  <div class="card">
+    <div class="card-head">
+      <div class="title">
+        <div class="ic">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </div>
+        <div><h2>Terminkalender</h2><div class="sub">Einsätze &amp; Termine</div></div>
+      </div>
+      <span class="src">SharePoint</span>
+    </div>
+    <div class="card-body" id="calBody"></div>
+  </div>
+
+  <!-- ============ RECHTS OBEN: Mails ============ -->
+  <div class="card">
+    <div class="card-head">
+      <div class="title">
+        <div class="ic">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <div><h2>Posteingang</h2><div class="sub" id="mailCount">3 ungelesen</div></div>
+      </div>
+      <span class="src">SharePoint</span>
+    </div>
+    <div class="card-body" id="mailBody"></div>
+  </div>
+
+  <!-- ============ RECHTS UNTEN: Informationsradar KI ============ -->
+  <div class="card">
+    <div class="card-head">
+      <div class="title">
+        <div class="ic">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8M15 18h-5M10 6h8v4h-8z"/></svg>
+        </div>
+        <div><h2>Informationsradar</h2><div class="sub">passend zur Prozesskonfiguration</div></div>
+      </div>
+      <div class="news-actions">
+        <button class="icon-btn" id="newsRefresh" title="News neu generieren">&#8635;</button>
+        <button class="icon-btn" id="newsFav" title="Gemerkte Meldungen">&#9733; <span id="favCount">0</span></button>
+        <span class="src ki">KI-Agent</span>
+      </div>
+    </div>
+    <div class="card-body" id="newsBody"></div>
+  </div>
+
+</div>
+
+<!-- ============ Vollansicht Finanzdashboard ============ -->
+<div class="overlay" id="finOverlay">
+  <div class="modal">
+    <div class="modal-head">
+      <div>
+        <h2>Finanzdashboard · Vollansicht</h2>
+        <div class="sub">Alle Buchungen · DATEV · laufender Monat</div>
+      </div>
+      <button class="modal-close" id="finClose" title="Schließen">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="fin-kpis">
+        <div class="kpi"><div class="lbl">Einnahmen</div><div class="val pos">+ 487.250 €</div></div>
+        <div class="kpi"><div class="lbl">Ausgaben</div><div class="val neg">− 312.880 €</div></div>
+        <div class="kpi"><div class="lbl">Saldo</div><div class="val net">+ 174.370 €</div></div>
+      </div>
+      <div class="ki-bar">
+        <span class="ic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+        <span class="tx"><b>KI-Betrugsprüfung:</b> 2 auffällige Buchungen markiert (rot). Doppelzahlung und unbekannter Empfänger zur Prüfung.</span>
+      </div>
+      <div class="fin-cols">
+        <div class="fin-col">
+          <h3><span>Einnahmen <span class="cnt" id="inCnt"></span></span><span>nach Betrag</span></h3>
+          <div class="ledger" id="inLedgerFull"></div>
+        </div>
+        <div class="fin-col">
+          <h3><span>Ausgaben <span class="cnt" id="outCnt"></span></span><span>nach Betrag</span></h3>
+          <div class="ledger" id="outLedgerFull"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ Prozessressourcen · Vollansicht ============ -->
+<div class="overlay" id="empOverlay">
+  <div class="modal modal-emp">
+    <div class="modal-head">
+      <div>
+        <h2>Prozessressourcen · Vollansicht</h2>
+        <div class="sub" id="empModalSub">35 Einheiten · aktuelle Verfügbarkeit</div>
+      </div>
+      <button class="modal-close" id="empClose" title="Schließen">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="emp-modal-grid">
+        <div class="emp-modal-left">
+          <div id="empModalMap"></div>
+          <div class="emp-detail emp-modal-detail" id="empModalDetail"></div>
+        </div>
+        <div class="emp-modal-right" id="empModalList"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ Informationsradar · Vollansicht + Gemerkt ============ -->
+<div class="overlay" id="newsOverlay">
+  <div class="modal modal-news">
+    <div class="modal-head">
+      <div>
+        <h2>Informationsradar · KI-Agent</h2>
+        <div class="sub">Auswertung passend zur Prozesskonfiguration · neutrale Demonstrationsdaten</div>
+      </div>
+      <button class="modal-close" id="newsClose" title="Schließen">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="tab-row">
+        <button class="tab-btn active" id="tabAll" onclick="showNewsTab('all')">Aktuelle Meldungen</button>
+        <button class="tab-btn" id="tabFav" onclick="showNewsTab('fav')">Gemerkt (<span id="favCount2">0</span>)</button>
+      </div>
+      <div id="newsModalBody"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ Cockpit-Assistent (Voice + Terminal) ============ -->
+<button class="va-fab" id="vaFab" title="Cockpit-Assistent an/aus">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3M8 21h8"/></svg>
+</button>
+<div class="va-panel" id="vaPanel">
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+    <h4>Cockpit-Assistent</h4>
+    <button class="va-btn" id="vaVoice" title="Sprachausgabe an/aus">&#128266; An</button>
+  </div>
+  <div class="va-status" id="vaStatus">Bereit &middot; Demo-Modus</div>
+  <div class="va-log" id="vaLog"></div>
+  <div class="va-input">
+    <button class="va-mic" id="vaMic" title="Sprechen">&#127908;</button>
+    <input id="vaText" placeholder="Verbesserung besprechen ..." autocomplete="off" />
+    <button class="va-send" id="vaSend" title="Senden">&#9654;</button>
+  </div>
+  <div class="va-row" style="margin-top:8px"><span style="font-size:10px;color:var(--gray-3)">Stimme</span><select id="vaVoiceSel"></select><button class="va-btn" id="vaTest" title="Stimme testen">Test</button></div>
+  <div class="va-hint">Tippen, oder das Mikrofon einmal klicken fuer dauerhaften Sprachmodus (nochmal klicken beendet). Der Kreis-Knopf schaltet den Assistenten an/aus, seitenuebergreifend.</div>
+</div>
+
+
+<script>
+/* ---------------- Prozessressourcen ---------------- */
+const STAFF = [
+  {id:1, name:"Einheit 01", status:"aktiv", anlage:"Prozessbereich A · Station 03", lv:"Schritt 4.2 · Statusprüfung dokumentiert", ts:"heute, 10:42 Uhr"},
+  {id:2, name:"Einheit 02", status:"aktiv", anlage:"Prozessbereich B · Station 01", lv:"Schritt 2.8 · Sollwert bestätigt", ts:"heute, 10:15 Uhr"},
+  {id:3, name:"Einheit 03", status:"aktiv", anlage:"Prozessbereich C · Station 04", lv:"Schritt 7.1 · Qualitätsprüfung abgeschlossen", ts:"heute, 09:58 Uhr"},
+  {id:4, name:"Einheit 04", status:"unterwegs", anlage:"Übergang zu Prozessbereich D", lv:"Schritt 1.3 · Auftrag geöffnet", ts:"heute, 09:30 Uhr"},
+  {id:5, name:"Einheit 05", status:"unterwegs", anlage:"Übergang zu Prozessbereich E", lv:"Schritt 5.0 · Ressourcen bestätigt", ts:"heute, 08:50 Uhr"},
+  {id:6, name:"Einheit 06", status:"aktiv", anlage:"Prozessbereich F · Station 02", lv:"Schritt 3.4 · Parameter aktualisiert", ts:"heute, 09:12 Uhr"},
+  {id:7, name:"Einheit 07", status:"unterwegs", anlage:"Übergang zu Prozessbereich G", lv:"Schritt 1.1 · Ablauf gestartet", ts:"heute, 08:20 Uhr"},
+  {id:8, name:"Einheit 08", status:"aktiv", anlage:"Prozessbereich H · Station 05", lv:"Schritt 6.2 · Validierung bestanden", ts:"heute, 10:05 Uhr"},
+  {id:9, name:"Einheit 09", status:"inaktiv", anlage:"Ablauf beendet", lv:"Schritt 8.0 · Bericht abgeschlossen", ts:"gestern, 18:20 Uhr"},
+  {id:10, name:"Einheit 10", status:"inaktiv", anlage:"Derzeit nicht eingeplant", lv:"keine Aktivität", ts:"gestern, 16:00 Uhr"},
+];
+/* Restliche Einheiten 11-35 generiert */
+const BEREICHE=["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O"];
+const stsCycle=["aktiv","unterwegs","inaktiv"];
+for(let i=11;i<=35;i++){
+  const st = i%4===0?"inaktiv":(i%3===0?"unterwegs":"aktiv");
+  STAFF.push({id:i, name:"Einheit "+String(i).padStart(2,"0"), status:st,
+    anlage: st==="inaktiv"?"derzeit nicht eingeplant": (st==="unterwegs"?"Übergang zu Prozessbereich "+BEREICHE[i%BEREICHE.length] : "Prozessbereich "+BEREICHE[i%BEREICHE.length]+" · Station "+(1+i%6)),
+    lv: st==="inaktiv"?"keine Aktivität":"Schritt "+(1+i%8)+"."+(i%5)+" · Status dokumentiert",
+    ts: st==="inaktiv"?"gestern":"heute, "+(8+i%3)+":"+(i%6)+"5 Uhr"});
+}
+const ORDER={aktiv:0,unterwegs:1,inaktiv:2};
+const LABEL={aktiv:"aktiv",unterwegs:"unterwegs",inaktiv:"inaktiv"};
+const sorted=[...STAFF].sort((a,b)=>ORDER[a.status]-ORDER[b.status]);
+let selectedEmp=null;
+
+function initials(n){return n.split(" ").map(w=>w[0]).join("").slice(0,2).toUpperCase();}
+function empRowHtml(e){
+  return `
+    <div class="emp" data-id="${e.id}">
+      <span class="status s-${e.status}"></span>
+      <span class="avatar">${initials(e.name)}</span>
+      <span class="info">
+        <span class="name">${e.name}</span>
+        <span class="meta">${e.anlage}</span>
+      </span>
+      <span class="badge b-${e.status}">${LABEL[e.status]}</span>
+    </div>`;
+}
+function renderEmp(){
+  const list=document.getElementById("empList");
+  list.innerHTML = sorted.slice(0,5).map(empRowHtml).join("");
+  list.querySelectorAll(".emp").forEach(el=>el.onclick=()=>showEmp(+el.dataset.id));
+  document.getElementById("empCount").textContent =
+    "Einheiten · "+sorted.filter(e=>e.status==="aktiv").length+" aktiv / "+
+    sorted.filter(e=>e.status==="unterwegs").length+" unterwegs / "+
+    sorted.filter(e=>e.status==="inaktiv").length+" inaktiv";
+}
+function empDetailHtml(e){
+  return `
+    <div class="dt-head"><span class="status s-${e.status}" style="width:10px;height:10px;border-radius:50%;display:inline-block"></span>
+      <b>${e.name}</b><span class="badge b-${e.status}" style="margin-left:auto">${LABEL[e.status]}</span></div>
+    <div class="row"><b>Prozessposition:</b> ${e.anlage}</div>
+    <div class="lv">
+      <div class="lbl">Letzte Statusänderung</div>
+      <div class="chg">${e.lv}</div>
+      <div class="ts">⟳ ${e.ts}</div>
+    </div>`;
+}
+function showEmp(id){
+  const e=STAFF.find(x=>x.id===id);
+  const d=document.getElementById("empDetail");
+  if(selectedEmp===id){ d.classList.remove("open"); selectedEmp=null; return; }
+  selectedEmp=id;
+  d.innerHTML=empDetailHtml(e);
+  d.classList.add("open");
+}
+document.getElementById("empToggle").onclick=function(){ openEmpOverlay(); };
+
+/* ---------------- Ablaufkalender (SharePoint) ---------------- */
+const CAL=[
+  {d:"16",m:"Jun",events:[
+    {t:"09:00",h:"Qualitätsprüfung",s:"Prozessbereich C · Einheit 03"},
+    {t:"13:30",h:"Freigabe Prozessschritt",s:"Prozessbereich A"},
+    {t:"16:00",h:"Abstimmung Prozesssteuerung",s:"Digitaler Besprechungsraum"}]},
+  {d:"17",m:"Jun",events:[
+    {t:"08:00",h:"Aktivierung Modul 04",s:"Prozessbereich H"},
+    {t:"11:00",h:"Planmäßige Prüfung",s:"Prozessbereich D · Einheit 04"}]},
+  {d:"18",m:"Jun",events:[
+    {t:"10:00",h:"Prozessaufnahme Modul 06",s:"Prozessbereich E"},
+    {t:"15:00",h:"Monatsabschluss",s:"Finanzsteuerung"}]},
+];
+document.getElementById("calBody").innerHTML=CAL.map(day=>`
+  <div class="cal-day">
+    <div class="date"><div class="d">${day.d}</div><div class="m">${day.m}</div></div>
+    <div class="events">${day.events.map(ev=>`
+      <div class="ev"><span class="time">${ev.t}</span><span class="txt">${ev.h}<span>${ev.s}</span></span></div>`).join("")}</div>
+  </div>`).join("");
+
+/* ---------------- Finanzdashboard (DATEV) ---------------- */
+const EIN=[
+  {n:"Vorgang A-0418",c:"Periode Q2 · Modul A",a:"86.400 €"},
+  {n:"Vorgang B-0412",c:"Periode Q2 · Modul B",a:"72.150 €"},
+  {n:"Vorgang C-0421",c:"Periode Q2 · Modul C",a:"58.900 €"},
+  {n:"Vorgang D-0409",c:"Periode Q2 · Modul D",a:"44.300 €"},
+  {n:"Vorgang E-0415",c:"Periode Q2 · Modul E",a:"39.700 €"},
+  {n:"Vorgang F-0420",c:"Periode Q2 · Modul F",a:"22.800 €"},
+  {n:"Vorgang G-0417",c:"Periode Q2 · Modul G",a:"14.250 €"},
+  {n:"Sammelvorgänge",c:"Gebündelte Positionen",a:"9.480 €"},
+];
+const AUS=[
+  {n:"Kostenblock A",c:"Ressourcen · laufende Periode",a:"64.200 €",flag:false},
+  {n:"Kostenblock B",c:"Kapazitäten · 35 Einheiten",a:"58.900 €",flag:false},
+  {n:"Kostenblock C",c:"Prozesskomponenten",a:"31.400 €",flag:false},
+  {n:"Zuordnung offen",c:"KI-Hinweis: neue Referenz",a:"18.750 €",flag:true},
+  {n:"Kostenblock D",c:"Infrastruktur · laufende Periode",a:"12.600 €",flag:false},
+  {n:"Kostenblock A",c:"KI-Hinweis: mögliche Doppelbuchung",a:"11.900 €",flag:true},
+  {n:"Kostenblock E",c:"Pauschale · Quartal",a:"7.300 €",flag:false},
+  {n:"Kostenblock F",c:"Digitale Dienste",a:"4.150 €",flag:false},
+];
+function ledger(arr,dir){
+  return arr.map(x=>`
+    <div class="item ${dir} ${x.flag?'flag':''}">
+      <span class="bar"></span>
+      <span class="who"><span class="n">${x.n}</span><span class="c">${x.c}</span></span>
+      ${x.flag?'<span class="warn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>':''}
+      <span class="amt">${dir==='in'?'+ ':'− '}${x.a}</span>
+    </div>`).join("");
+}
+document.getElementById("inLedger").innerHTML=ledger(EIN,"in");
+document.getElementById("outLedger").innerHTML=ledger(AUS,"out");
+/* Vollansicht befüllen */
+document.getElementById("inLedgerFull").innerHTML=ledger(EIN,"in");
+document.getElementById("outLedgerFull").innerHTML=ledger(AUS,"out");
+document.getElementById("inCnt").textContent="("+EIN.length+")";
+document.getElementById("outCnt").textContent="("+AUS.length+")";
+/* Overlay öffnen / schließen */
+const finOverlay=document.getElementById("finOverlay");
+document.getElementById("finExpand").onclick=()=>finOverlay.classList.add("open");
+document.getElementById("finClose").onclick=()=>finOverlay.classList.remove("open");
+finOverlay.onclick=(e)=>{ if(e.target===finOverlay) finOverlay.classList.remove("open"); };
+document.addEventListener("keydown",(e)=>{ if(e.key==="Escape"){ finOverlay.classList.remove("open"); var no=document.getElementById("newsOverlay"); if(no) no.classList.remove("open"); var eo=document.getElementById("empOverlay"); if(eo) eo.classList.remove("open"); } });
+
+/* ---------------- Posteingang (SharePoint) ---------------- */
+const MAILS=[
+  {nm:"Kontakt A · Prozesskoordination",subj:"Freigabe Ablaufplan Q3",prev:"Die Freigabe für den nächsten Zyklus liegt vor …",tm:"08:41",unread:true},
+  {nm:"Kontakt B · Ressourcenplanung",subj:"Statusmeldung Modul 04",prev:"Die angeforderten Ressourcen stehen am Mittwoch …",tm:"08:02",unread:true},
+  {nm:"Kontakt C · Steuerung",subj:"Rückfrage zu Vorgang E-0415",prev:"Bitte ergänzen Sie den vorgesehenen Prüfschritt …",tm:"gestern",unread:true},
+  {nm:"Einheit 03",subj:"Dokumentation Qualitätsprüfung",prev:"Die aktualisierte Dokumentation wurde abgelegt.",tm:"gestern",unread:false},
+  {nm:"Systemmeldung",subj:"Offene Vorgänge · Stufe 1",prev:"Zwei Vorgänge überschreiten den Zieltermin …",tm:"14. Jun",unread:false},
+];
+document.getElementById("mailBody").innerHTML=MAILS.map(m=>`
+  <div class="mail ${m.unread?'unread':''}">
+    <span class="av">${initials(m.nm.replace(/[·].*/,''))}</span>
+    <span class="m">
+      <span class="from"><span class="nm">${m.nm}</span><span class="tm">${m.tm}</span></span>
+      <span class="subj">${m.subj}</span>
+      <span class="prev">${m.prev}</span>
+    </span>
+    ${m.unread?'<span class="uw"></span>':''}
+  </div>`).join("");
+
+/* ---------------- Informationsradar (KI-Agent · Live) ---------------- */
+// Fallback-Beispieldaten, falls kein Live-Backend erreichbar ist (z. B. Datei-Vorschau).
+const NEWS_FALLBACK = [
+  {tag:"Prozess",relevanz:"hoch",headline:"Neue Prüflogik für mehrstufige Freigaben verfügbar",warum:"Betrifft die konfigurierte Freigabekette direkt.",detail:"Die neue Prüflogik kann Durchlaufzeiten verkürzen und die Dokumentation vereinheitlichen.",quelle:"Quelle A · Demo",link:"",datum:""},
+  {tag:"Automatisierung",relevanz:"mittel",headline:"Standardmodul für wiederkehrende Statusabgleiche erweitert",warum:"Kann manuelle Prüfschritte in mehreren Abläufen reduzieren.",detail:"Das erweiterte Modul bündelt Statussignale und markiert Abweichungen frühzeitig.",quelle:"Quelle B · Demo",link:"",datum:""},
+  {tag:"Kapazität",relevanz:"niedrig",headline:"Planungsmodell berücksichtigt variable Ressourcenfenster",warum:"Relevant für die Disposition der 35 Einheiten.",detail:"Flexible Zeitfenster verbessern die Verteilung verfügbarer Kapazitäten.",quelle:"Quelle C · Demo",link:"",datum:""},
+  {tag:"Technik",relevanz:"niedrig",headline:"Neue Schnittstellenversion reduziert Synchronisationszeiten",warum:"Mögliche Optimierung für wiederkehrende Datenabgleiche.",detail:"Kürzere Synchronisationszeiten erhöhen die Aktualität der Cockpit-Daten.",quelle:"Quelle D · Demo",link:"",datum:""},
+];
+
+let NEWS_STATE = {
+  news: NEWS_FALLBACK,
+  key_insight: "Aktuell sind vor allem die neue Freigabelogik und schnellere Statusabgleiche relevant. Daraus ergeben sich Ansatzpunkte für kürzere Durchlaufzeiten, klarere Zuständigkeiten und eine konsistente Dokumentation.",
+  generatedAt: null,
+  trigger: null,
+  modelUsed: null
+};
+let newsTab = "all";
+
+const FAV_KEY = "cockpitdemo_neutral_hints_favs_v2";
+function loadFavs(){ try { return JSON.parse(localStorage.getItem(FAV_KEY)) || []; } catch { return []; } }
+function saveFavs(f){ try { localStorage.setItem(FAV_KEY, JSON.stringify(f)); } catch(e){} }
+function favKey(n){ return String(n.link || n.headline || "").toLowerCase(); }
+function isFav(n){ const k=favKey(n); return loadFavs().some(x=>favKey(x)===k); }
+function toggleFav(n){ const k=favKey(n); let f=loadFavs();
+  if(f.some(x=>favKey(x)===k)) f=f.filter(x=>favKey(x)!==k);
+  else f.unshift(Object.assign({}, n, {savedAt:new Date().toISOString()}));
+  saveFavs(f); }
+function updateFavCount(){ const n=loadFavs().length; ["favCount","favCount2"].forEach(id=>{ const e=document.getElementById(id); if(e) e.textContent=n; }); }
+
+function nesc(s){ return String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+function relCls(r){ r=String(r||"").toLowerCase(); return (r==="hoch"||r==="mittel"||r==="niedrig")?r:"niedrig"; }
+function relLabel(r){ r=String(r||"").toLowerCase(); return r==="hoch"?"Hohe Relevanz":r==="mittel"?"Mittlere Relevanz":"Beobachten"; }
+function fmtDate(s){ if(!s) return ""; const d=new Date(s); return isNaN(d)?String(s):d.toLocaleDateString("de-DE"); }
+function fmtDateTime(s){ if(!s) return ""; const d=new Date(s); return isNaN(d)?String(s):d.toLocaleString("de-DE"); }
+const BULB='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.3h6c0-1 .4-1.8 1-2.3A7 7 0 0 0 12 2z"/></svg>';
+
+function newsCardHtml(n, i, withDetail){
+  const on = isFav(n) ? "on" : "";
+  return `<div class="news">
+    <div class="top">
+      <div class="tag"><span>${nesc(n.tag||"News")}</span><span class="rel ${relCls(n.relevanz)}">${nesc(relLabel(n.relevanz))}</span></div>
+      <button class="fav-btn ${on}" data-i="${i}" title="Merken">${on?"&#9733;":"&#9734;"}</button>
+    </div>
+    <div class="h">${nesc(n.headline)}</div>
+    ${n.warum?`<div class="why"><b>Warum relevant:</b> ${nesc(n.warum)}</div>`:""}
+    ${withDetail ? (n.detail
+      ? `<div class="news-detail">${nesc(n.detail)}</div>`
+      : `<div class="news-source-note">Kein Anriss verfügbar.${n.link?` <a href="${nesc(n.link)}" target="_blank" rel="noopener">Vollständige Meldung bei der Quelle öffnen &#8599;</a>`:""}</div>`) : ""}
+    <div class="src-line">${n.link?`<a href="${nesc(n.link)}" target="_blank" rel="noopener">Quelle öffnen &#8599;</a> · `:""}${nesc(n.quelle||"")}${n.datum?" · "+nesc(fmtDate(n.datum)):""}</div>
+  </div>`;
+}
+
+function renderNewsInto(container, items, withDetail){
+  if(!container) return;
+  container.innerHTML = items.length
+    ? items.map((n,i)=>newsCardHtml(n,i,withDetail)).join("")
+    : `<div class="sub" style="padding:8px 4px">Noch keine gemerkten Meldungen.</div>`;
+  container.querySelectorAll(".fav-btn").forEach(btn=>{
+    btn.onclick = ()=>{ toggleFav(items[+btn.dataset.i]); refreshNewsViews(); };
+  });
+}
+
+function renderNewsCard(){
+  const body=document.getElementById("newsBody");
+  const st=NEWS_STATE;
+  let html="";
+  if(st.key_insight) html+=`<div class="news-insight"><span class="ic">${BULB}</span><span class="tx"><b>Kernaussage:</b> ${nesc(st.key_insight)}</span></div>`;
+  html+=`<div id="newsCardList"></div>`;
+  if(st.news.length>3) html+=`<button class="news-more" onclick="openNews('all')">Alle ${st.news.length} Meldungen ansehen</button>`;
+  html+=`<div class="news-stamp">${st.generatedAt?((st.trigger==="automatisch"?"Automatischer Lauf: ":"Aktualisiert: ")+nesc(fmtDateTime(st.generatedAt))+(st.modelUsed?" · "+nesc(st.modelUsed):"")):"Neutrale Demonstrationsdaten · im produktiven Betrieb kann ein KI-Agent freigegebene Quellen auswerten"}</div>`;
+  body.innerHTML=html;
+  renderNewsInto(document.getElementById("newsCardList"), st.news.slice(0,3), false);
+}
+
+function showNewsTab(tab){
+  newsTab=tab;
+  document.getElementById("tabAll").classList.toggle("active", tab==="all");
+  document.getElementById("tabFav").classList.toggle("active", tab==="fav");
+  const body=document.getElementById("newsModalBody");
+  if(tab==="fav") renderNewsInto(body, loadFavs(), true);
+  else renderNewsInto(body, NEWS_STATE.news, true);
+}
+function openNews(tab){ document.getElementById("newsOverlay").classList.add("open"); showNewsTab(tab||"all"); }
+function closeNews(){ document.getElementById("newsOverlay").classList.remove("open"); }
+
+function refreshNewsViews(){
+  updateFavCount();
+  renderNewsCard();
+  if(document.getElementById("newsOverlay").classList.contains("open")) showNewsTab(newsTab);
+}
+
+function loadNews(){
+/* Demo: statische, neutrale Beispieldaten – kein Backend-Aufruf */
+  refreshNewsViews();
+  if(/^#(news|alle)$/i.test(location.hash)) openNews("all");
+}
+
+function runNews(){
+  const btn=document.getElementById("newsRefresh");
+  btn.classList.add("busy"); btn.disabled=true;
+  setTimeout(function(){
+    btn.classList.remove("busy"); btn.disabled=false;
+    alert("Demo: Die Meldungen sind neutrale Beispieldaten. Im produktiven Betrieb kann ein KI-Agent freigegebene Quellen auswerten, relevante Meldungen auswählen und eine Kernaussage ableiten.");
+  },900);
+}
+
+document.getElementById("newsRefresh").onclick=runNews;
+document.getElementById("newsFav").onclick=()=>openNews("fav");
+document.getElementById("newsClose").onclick=closeNews;
+document.getElementById("newsOverlay").onclick=(e)=>{ if(e.target.id==="newsOverlay") closeNews(); };
+
+updateFavCount();
+renderNewsCard();
+loadNews();
+
+/* ---------------- Live-Uhr (Topbar) ---------------- */
+(function(){
+  const el=document.getElementById("clock"); if(!el) return;
+  function tick(){
+    const now=new Date();
+    el.innerHTML=now.toLocaleDateString("de-DE",{weekday:"long",day:"numeric",month:"long",year:"numeric"})
+      +" · <b>"+now.toLocaleTimeString("de-DE")+"</b>";
+  }
+  tick(); setInterval(tick,1000);
+})();
+
+const REDUCED_MOTION = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ---------------- Finanz-KPIs: Count-up ---------------- */
+(function(){
+  document.querySelectorAll(".fin-kpis .val").forEach(el=>{
+    const raw=el.textContent, m=raw.match(/([\d.]+)/);
+    if(!m || REDUCED_MOTION) return;
+    const target=parseInt(m[1].replace(/\./g,""),10);
+    if(!target) return;
+    const prefix=raw.slice(0,m.index), suffix=raw.slice(m.index+m[1].length);
+    let start=null; const dur=1400;
+    function frame(t){
+      if(start===null) start=t;
+      const p=Math.min(1,(t-start)/dur), e=1-Math.pow(1-p,3);
+      el.textContent=prefix+Math.round(target*e).toLocaleString("de-DE")+suffix;
+      if(p<1) requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  });
+})();
+
+/* ---------------- Finanz-KPIs: Sparklines (30-Tage-Demo-Trend) ---------------- */
+(function(){
+  function trend(startVal,drift,vol,seed){
+    let s=seed; const rnd=()=>{ s=(s*9301+49297)%233280; return s/233280; };
+    const a=[startVal]; for(let i=1;i<30;i++) a.push(Math.max(5,a[i-1]+drift+(rnd()-0.5)*vol));
+    return a;
+  }
+  function spark(host,data,color){
+    const w=120,h=24,min=Math.min(...data),max=Math.max(...data);
+    const pts=data.map((v,i)=>[(i/(data.length-1))*w, h-2-((v-min)/((max-min)||1))*(h-5)]);
+    const d="M"+pts.map(p=>p[0].toFixed(1)+","+p[1].toFixed(1)).join(" L");
+    const div=document.createElement("div"); div.className="spark";
+    div.innerHTML='<svg viewBox="0 0 '+w+' '+h+'" preserveAspectRatio="none">'
+      +'<path class="area" d="'+d+' L'+w+','+h+' L0,'+h+' Z" fill="'+color+'"></path>'
+      +'<path class="line" d="'+d+'" stroke="'+color+'"></path></svg>';
+    host.appendChild(div);
+    if(!REDUCED_MOTION){
+      const line=div.querySelector(".line"), len=line.getTotalLength();
+      line.style.setProperty("--len",len); line.classList.add("spark-draw");
+    }
+  }
+  const kpis=document.querySelectorAll(".card.center .fin-kpis .kpi");
+  if(kpis.length>=3){
+    spark(kpis[0],trend(380,4,60,7),  "#3fb950");
+    spark(kpis[1],trend(300,1,45,13), "#f0644b");
+    spark(kpis[2],trend(90,3,50,29),  "#4a86c8");
+  }
+})();
+
+/* ---------------- Auslastungs-Ring (Ressourcen-Karte) ---------------- */
+(function(){
+  const a=STAFF.filter(e=>e.status==="aktiv").length,
+        u=STAFF.filter(e=>e.status==="unterwegs").length,
+        i=STAFF.filter(e=>e.status==="inaktiv").length,
+        total=STAFF.length, r=15.5, C=2*Math.PI*r;
+  const head=document.querySelectorAll(".grid > .card")[0].querySelector(".card-head");
+  const src=head.querySelector(".src");
+  const ring=document.createElement("div"); ring.className="util-ring";
+  ring.title=a+" aktiv · "+u+" unterwegs · "+i+" inaktiv";
+  const segs=[[a,"#3fb950"],[u,"#e3b341"],[i,"#f0644b"]];
+  let off=0, circ="";
+  segs.forEach(s=>{
+    circ+='<circle cx="21" cy="21" r="'+r+'" stroke="'+s[1]+'" data-len="'+(s[0]/total*C)
+        +'" stroke-dasharray="0 '+C+'" stroke-dashoffset="'+(-off)+'"></circle>';
+    off+=s[0]/total*C;
+  });
+  ring.innerHTML='<svg width="42" height="42" viewBox="0 0 42 42">'
+    +'<circle cx="21" cy="21" r="'+r+'" stroke="rgba(255,255,255,.08)"></circle>'+circ+'</svg>'
+    +'<div class="num">'+Math.round((a+u)/total*100)+'%</div>';
+  const right=document.createElement("div");
+  right.style.cssText="display:flex;align-items:center;gap:10px";
+  head.appendChild(right); right.appendChild(ring); right.appendChild(src);
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    ring.querySelectorAll("circle[data-len]").forEach(c=>{ c.style.strokeDasharray=c.dataset.len+" "+C; });
+  }));
+})();
+
+/* ---------------- Prozesskarte (abstrakte Bereiche) ---------------- */
+function buildOpsMap(onEmpClick){
+  const CITIES={ Bereich_A:[52,66], Bereich_B:[128,74], Bereich_C:[148,42], Bereich_D:[184,66],
+    Bereich_E:[244,50], Bereich_F:[188,122], Bereich_G:[92,128], Bereich_H:[38,98] };
+  const wrap=document.createElement("div"); wrap.className="ops-map";
+
+  let gridLines="";
+  for(let x=20;x<400;x+=38) gridLines+='<line x1="'+x+'" y1="0" x2="'+x+'" y2="170"/>';
+  for(let y=20;y<170;y+=34) gridLines+='<line x1="0" y1="'+y+'" x2="400" y2="'+y+'"/>';
+  const roads='<path class="road" d="M30,72 C60,70 100,78 128,74 S180,64 244,50"/>'
+    +'<path class="road" d="M92,128 C110,105 120,90 128,74"/>'
+    +'<path class="road" d="M244,50 C230,80 205,105 188,122"/>';
+  let cities="";
+  Object.entries(CITIES).forEach(([n,c])=>{
+    cities+='<circle class="city-dot" cx="'+c[0]+'" cy="'+c[1]+'" r="2.4"/>'
+      +'<text class="city-label" x="'+(c[0]+5)+'" y="'+(c[1]+3)+'">'+n+'</text>';
+  });
+  const home='<circle class="home-ring" cx="'+CITIES.Bereich_B[0]+'" cy="'+CITIES.Bereich_B[1]+'" r="8"/>';
+
+  const COLOR={aktiv:"#3fb950",unterwegs:"#e3b341",inaktiv:"#f0644b"};
+  const hubs=Object.keys(CITIES);
+  let dots="";
+  STAFF.forEach((e,idx)=>{
+    const c=CITIES[hubs[(idx*7)%hubs.length]];
+    const ang=idx*2.399, rad=7+(idx*13)%22;
+    const x=Math.max(8,Math.min(392,c[0]+Math.cos(ang)*rad)).toFixed(1);
+    const y=Math.max(8,Math.min(160,c[1]+Math.sin(ang)*rad)).toFixed(1);
+    const col=COLOR[e.status];
+    const halo=e.status!=="inaktiv"
+      ? '<circle class="halo" cx="'+x+'" cy="'+y+'" r="6" fill="'+col+'" style="animation-delay:'+((idx%10)*0.24)+'s"/>' : "";
+    dots+='<g class="m-dot" data-id="'+e.id+'"><title>'+e.name+' · '+e.status+'</title>'+halo
+      +'<circle class="core" cx="'+x+'" cy="'+y+'" r="'+(e.status==="inaktiv"?2.4:3.2)+'" fill="'+col
+      +'" opacity="'+(e.status==="inaktiv"?0.55:1)+'"/></g>';
+  });
+
+  wrap.innerHTML='<svg viewBox="0 0 400 170"><g class="grid">'+gridLines+'</g>'+roads+home+cities+dots+'</svg>'
+    +'<div class="map-foot"><span>Abstrakte Prozessübersicht</span><span>'
+    +STAFF.length+' Einheiten · Koordination zentral</span></div>';
+  wrap.querySelectorAll(".m-dot").forEach(g=>g.addEventListener("click",()=>onEmpClick(+g.dataset.id)));
+  return wrap;
+}
+(function(){
+  const card=document.querySelectorAll(".grid > .card")[0];
+  const legend=card.querySelector(".legend");
+  legend.parentNode.insertBefore(buildOpsMap(showEmp),legend);
+})();
+
+/* ---------------- Prozessressourcen · Vollansicht ---------------- */
+let empModalReady=false, selectedEmpModal=null;
+function openEmpOverlay(){
+  if(!empModalReady){
+    document.getElementById("empModalMap").appendChild(buildOpsMap(showEmpModal));
+    empModalReady=true;
+  }
+  renderEmpModalList();
+  document.getElementById("empModalSub").textContent=document.getElementById("empCount").textContent;
+  document.getElementById("empOverlay").classList.add("open");
+}
+function renderEmpModalList(){
+  const host=document.getElementById("empModalList");
+  const groups=[["aktiv","Aktiv"],["unterwegs","Unterwegs"],["inaktiv","Inaktiv"]];
+  host.innerHTML=groups.map(function(g){
+    const items=sorted.filter(e=>e.status===g[0]);
+    if(!items.length) return "";
+    return '<div class="emp-group-h"><i class="sdot s-'+g[0]+'"></i>'+g[1]+' · '+items.length+'</div>'
+      +items.map(empRowHtml).join("");
+  }).join("");
+  host.querySelectorAll(".emp").forEach(el=>el.onclick=()=>showEmpModal(+el.dataset.id));
+}
+function showEmpModal(id){
+  const e=STAFF.find(x=>x.id===id);
+  const d=document.getElementById("empModalDetail");
+  if(selectedEmpModal===id && d.classList.contains("open")){ d.classList.remove("open"); selectedEmpModal=null; return; }
+  selectedEmpModal=id;
+  d.innerHTML=empDetailHtml(e);
+  d.classList.add("open");
+}
+document.getElementById("empClose").onclick=function(){ document.getElementById("empOverlay").classList.remove("open"); };
+document.getElementById("empOverlay").onclick=function(e){ if(e.target.id==="empOverlay") e.currentTarget.classList.remove("open"); };
+
+/* ---------------- Cockpit-Assistent (Chat + Voice, Browser) ---------------- */
+(function(){
+  const fab=document.getElementById("vaFab"), panel=document.getElementById("vaPanel"),
+        log=document.getElementById("vaLog"), input=document.getElementById("vaText"),
+        sendBtn=document.getElementById("vaSend"), micBtn=document.getElementById("vaMic"),
+        voiceBtn=document.getElementById("vaVoice"), voiceSel=document.getElementById("vaVoiceSel"),
+        statusEl=document.getElementById("vaStatus");
+  if(!fab) return;
+  const synth=window.speechSynthesis;
+  const K_ON="cockpitdemo_va_on", K_VOICE="cockpitdemo_va_voiceout", K_VNAME="cockpitdemo_va_vname";
+  const FIXED_DEFAULT_VOICE = "Microsoft Amala Online (Natural) - German (Germany)";
+  const DEFAULT_VOICE_VERSION = "2026-07-amala-natural";
+  const K_VOICE_DEFAULT_VERSION = "cockpitdemo_va_voice_default_version";
+  const VOICE_PREFERENCE = [
+    FIXED_DEFAULT_VOICE,
+    "Microsoft Amala Online",
+    "Amala Online",
+    "Microsoft Amala",
+    "Amala",
+    "Microsoft Katja Online",
+    "Katja Online",
+    "Microsoft Katja",
+    "Katja",
+    "Microsoft Seraphina Online",
+    "Seraphina Online",
+    "Microsoft Conrad Online"
+  ];
+  let history=[], voices=[], greeted=false, listening=false, rec=null;
+  let voiceOut = localStorage.getItem(K_VOICE)!=="0";
+  function vesc(s){ return String(s==null?"":s).replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c])); }
+
+  function voiceRank(v){
+    const name=String(v&&v.name||"");
+    const lang=String(v&&v.lang||"");
+    for(let i=0;i<VOICE_PREFERENCE.length;i++){
+      if(name.toLowerCase().includes(VOICE_PREFERENCE[i].toLowerCase())) return 100-i;
+    }
+    if(/natural|online/i.test(name) && /^de-DE/i.test(lang)) return 70;
+    if(/natural|online/i.test(name) && /^de/i.test(lang)) return 60;
+    if(/^de-DE/i.test(lang)) return 40;
+    if(/^de/i.test(lang)) return 30;
+    return 0;
+  }
+
+  function pickDefault(){
+    const saved=localStorage.getItem(K_VNAME);
+    const defaultApplied=localStorage.getItem(K_VOICE_DEFAULT_VERSION)===DEFAULT_VOICE_VERSION;
+    if(defaultApplied && saved&&voices.some(v=>v.name===saved)) return saved;
+    const v=[...voices].sort((a,b)=>voiceRank(b)-voiceRank(a))[0];
+    if(v){
+      localStorage.setItem(K_VNAME,v.name);
+      localStorage.setItem(K_VOICE_DEFAULT_VERSION,DEFAULT_VOICE_VERSION);
+    }
+    return v?v.name:"";
+  }
+  function loadVoices(){
+    if(!synth) return;
+    voices=synth.getVoices().filter(v=>/^de([-_]|$)/i.test(v.lang)).sort((a,b)=>voiceRank(b)-voiceRank(a));   // natuerliche deutsche Stimmen zuerst
+    voiceSel.innerHTML=voices.map(v=>'<option value="'+vesc(v.name)+'">'+vesc(v.name.replace(/Microsoft |Online \(Natural\) - /g,""))+' · '+v.lang+'</option>').join("");
+    voiceSel.value=pickDefault();
+  }
+  if(synth){ loadVoices(); synth.onvoiceschanged=loadVoices; voiceSel.onchange=()=>{ localStorage.setItem(K_VNAME,voiceSel.value); localStorage.setItem(K_VOICE_DEFAULT_VERSION,DEFAULT_VOICE_VERSION); }; }
+  else { voiceBtn.style.display="none"; if(voiceSel.parentElement) voiceSel.parentElement.style.display="none"; }
+
+  function speak(text){
+    if(!synth||!voiceOut) return;
+    synth.cancel();
+    const u=new SpeechSynthesisUtterance(text);
+    const v=voices.find(x=>x.name===voiceSel.value); if(v){ u.voice=v; u.lang=v.lang; }
+    u.rate=1.03; u.pitch=0.98; u.volume=1;
+    if(listening && rec){ try{ rec.stop(); }catch(e){} }   // Mikro pausieren, damit er sich nicht selbst hoert
+    u.onend=()=>{ if(listening && rec){ try{ rec.start(); }catch(e){} } };
+    synth.speak(u);
+  }
+  function buildVoiceTestText(){
+    const active=STAFF.filter(e=>e.status==="aktiv").length;
+    const unterwegs=STAFF.filter(e=>e.status==="unterwegs").length;
+    return "Alle Systeme sind online und bereit. Es sind aktuell "+active+" Einheiten aktiv und "+unterwegs+" im Übergang. Der KI-Agent im Informationsradar hat heute einen relevanten Hinweis zur Prozesssteuerung markiert.";
+  }
+  const testBtn=document.getElementById("vaTest");
+  if(testBtn) testBtn.onclick=()=>speak(buildVoiceTestText());
+  function updateVoiceBtn(){ voiceBtn.innerHTML= voiceOut? "&#128266; An":"&#128263; Stumm"; }
+  updateVoiceBtn();
+  voiceBtn.onclick=()=>{ voiceOut=!voiceOut; localStorage.setItem(K_VOICE,voiceOut?"1":"0"); updateVoiceBtn(); if(!voiceOut&&synth) synth.cancel(); };
+
+  function addMsg(role,text,cls){
+    const d=document.createElement("div"); d.className="va-msg "+(role==="user"?"u":"a")+(cls?" "+cls:"");
+    d.innerHTML='<span class="b">'+vesc(text)+'</span>'; log.appendChild(d); log.scrollTop=log.scrollHeight; return d;
+  }
+
+  const DEMO_REPLIES=[
+    "In dieser Demo antworte ich mit neutralen Beispieltexten. In einer produktiven Konfiguration kann das Cockpit freigegebene Daten auswerten, etwa zur Prozesslage, zu offenen Vorgängen oder zu auffälligen Buchungen.",
+    "Ein abstraktes Beispiel: Ich fasse zusammen, welche Einheiten aktiv sind, welche Vorgänge einen Zieltermin überschreiten und welcher Hinweis heute relevant ist. Auf Wunsch lese ich die Zusammenfassung vor.",
+    "Jedes Cockpit wird maßgeschneidert: andere Datenquellen, andere Kacheln, andere Freigaberegeln. Oben rechts können Sie die Sicherheitsfreigabe-Logik testen. Wechseln Sie die Rolle, und Bereiche ohne Freigabe werden gesperrt.",
+    "Weitere Informationen zu modularen KI-Cockpits erhalten Sie unter info@tm-ki-consulting.de. Wir zeigen, wie freigegebene Daten in einer Schaltzentrale zusammenlaufen."
+  ];
+  let demoIdx=0;
+  function send(text){
+    text=(text||input.value).trim(); if(!text) return;
+    input.value=""; addMsg("user",text); history.push({role:"user",content:text});
+    const thinking=addMsg("assistant","denkt nach ...","think");
+    setTimeout(function(){
+      const reply=DEMO_REPLIES[demoIdx++ % DEMO_REPLIES.length];
+      thinking.remove(); addMsg("assistant",reply); history.push({role:"assistant",content:reply});
+      speak(reply);
+    },800);
+  }
+  sendBtn.onclick=()=>send();
+  input.addEventListener("keydown",e=>{ if(e.key==="Enter") send(); });
+
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  function updateMic(){ micBtn.classList.toggle("rec",listening); micBtn.title= listening?"Sprachmodus aktiv - klicken zum Beenden":"Sprachmodus dauerhaft aktivieren"; }
+  if(SR){
+    rec=new SR(); rec.lang="de-DE"; rec.interimResults=false; rec.continuous=true; rec.maxAlternatives=1;
+    rec.onresult=e=>{ const r=e.results[e.results.length-1]; if(r.isFinal){ const t=r[0].transcript.trim(); if(t) send(t); } };
+    rec.onend=()=>{ if(listening){ try{ rec.start(); }catch(e){} } };   // Dauerbetrieb: automatisch neu starten
+    rec.onerror=e=>{ if(e.error==="not-allowed"||e.error==="service-not-allowed"){ listening=false; updateMic(); } };
+    micBtn.onclick=()=>{
+      listening=!listening;
+      if(listening){ if(!fab.classList.contains("on")) setOn(true); try{ rec.start(); }catch(e){} }
+      else { try{ rec.stop(); }catch(e){} }
+      updateMic();
+    };
+  } else { micBtn.style.display="none"; }
+
+  function setOn(on){
+    fab.classList.toggle("on",on); panel.classList.toggle("show",on);
+    localStorage.setItem(K_ON,on?"1":"0");
+    if(on){
+      statusEl.innerHTML="Status: <b>aktiv</b> · Demo-Modus";
+      if(!greeted){ greeted=true; const g="Guten Tag. Dies ist die Demo des Cockpit-Assistenten. In einer produktiven Konfiguration beantworte ich Fragen auf Basis freigegebener Prozessdaten. Probieren Sie es aus."; addMsg("assistant",g); speak(g); }
+      setTimeout(()=>input.focus(),50);
+    } else { statusEl.textContent="Aus"; if(synth) synth.cancel(); }
+  }
+  fab.onclick=()=>setOn(!fab.classList.contains("on"));
+  /* Kein Autostart: Begruessung und Sprachausgabe erst nach Klick auf den Knopf. */
+  localStorage.removeItem(K_ON);
+})();
+
+renderEmp();
+
+/* ---------------- Sicherheitsfreigabe-Demo: Rollenlogik ---------------- */
+(function(){
+  const sel=document.getElementById("roleSel"); if(!sel) return;
+  const cards=document.querySelectorAll(".grid > .card");
+  const NAMES=["Prozesslage","Finanzdaten","Terminkalender","Posteingang","Informationsradar"];
+  const LOCK='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>';
+  /* Kachel-Reihenfolge: 0 Mitarbeiter, 1 Finanzen, 2 Kalender, 3 Posteingang, 4 News */
+  const RULES={ gf:[], dispo:[1,3], buha:[0,2] };
+  cards.forEach(function(c,i){
+    const v=document.createElement("div"); v.className="lock-veil";
+    v.innerHTML='<div class="lk">'+LOCK+'</div><b>Keine Freigabe für diese Rolle</b>'
+      +'<span>Die Sicherheitsfreigabe-Logik steuert pro Rolle, welche Datenbereiche sichtbar sind. „'
+      +NAMES[i]+'" ist für die gewählte Rolle gesperrt.</span>';
+    c.appendChild(v);
+  });
+  function apply(){
+    const locked=RULES[sel.value]||[];
+    cards.forEach(function(c,i){ c.classList.toggle("locked", locked.indexOf(i)!==-1); });
+  }
+  sel.onchange=apply; apply();
+})();
+
+/* ---------------- Wisch-Weiterleitung an den Cockpit-Slider (cockpit-demo.html) ---------------- */
+(function(){
+  if (window.parent === window) return; /* nur eingebettet aktiv */
+  let sx=0, sy=0, st=0;
+  addEventListener("touchstart", function(e){
+    const t=e.touches[0]; sx=t.clientX; sy=t.clientY; st=Date.now();
+  }, {passive:true});
+  addEventListener("touchend", function(e){
+    const t=e.changedTouches[0];
+    const dx=t.clientX-sx, dy=t.clientY-sy;
+    if (Date.now()-st < 800 && Math.abs(dx) > 70 && Math.abs(dx) > 1.8*Math.abs(dy)) {
+      window.parent.postMessage({ type:"cockpit-swipe", dir: dx < 0 ? "next" : "prev" }, "*");
+    }
+  }, {passive:true});
+})();
+</script>
+</body>
+</html>

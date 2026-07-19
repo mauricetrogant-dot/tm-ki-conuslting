@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>TM KI Consulting UG (i.G.) — KI-Agenten und KI-Beratung für den öffentlichen und privaten Sektor</title>
-<meta name="description" content="Strategische KI-Beratung und fachspezifische KI-Agenten für den öffentlichen und privaten Sektor — inklusive öffentlich testbarer Live-Demo unseres Gefahrgut-Agenten." />
+  <title>TM KI Consulting UG (i.G.) — Modulare KI-Agenten und KI-Beratung</title>
+  <meta name="description" content="Strategische KI-Beratung, modulare KI-Agenten und interaktive KI-Cockpits für Organisationen — mit neutralen, öffentlich testbaren Demonstrationen." />
 <!-- Assets wie Logos, Portraits, Projektbilder und PDF liegen extern im Ordner /assets. -->
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -242,7 +242,7 @@
     margin-top: 96px;
     padding-top: 36px;
     border-top: 1px solid var(--line);
-    display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px;
   }
   .hero-meta-item .label {
     font-size: 11px; letter-spacing: .14em;
@@ -829,12 +829,12 @@
   .project-logo img {
     width: 100%; height: 100%; object-fit: cover; display: block;
   }
-  .project-logo.gbm-logo {
+  .project-logo.symbol-logo {
     background: #ffffff;
     border-color: rgba(255,255,255,.16);
     padding: 3px;
   }
-  .project-logo.gbm-logo img {
+  .project-logo.symbol-logo img {
     object-fit: contain;
     border-radius: 8px;
   }
@@ -1435,6 +1435,30 @@
     .foot-bottom { flex-direction: column; gap: 8px; }
     .hero-meta { grid-template-columns: 1fr; gap: 20px; padding-top: 28px; margin-top: 56px; }
     .catalog-meta { grid-template-columns: 1fr; gap: 18px; }
+    .btn, .nav-toggle, .service-case-link, .project-header, .insight-readmore { min-height: 44px; }
+    .hero-cta-row, .proof-actions, .cta-row { align-items: stretch; }
+    .hero-cta-row .btn, .proof-actions .btn, .cta-row .btn { justify-content: center; text-align: center; }
+  }
+
+  @media (max-width: 480px) {
+    .nav { padding: 14px 16px; }
+    .brand-name { font-size: 13px; }
+    .brand-sub { font-size: 9px; }
+    .container { padding: 0 16px; }
+    section.block, .cta-section { padding: 64px 0; }
+    .hero { padding: 104px 0 48px; }
+    .hero h1 { font-size: clamp(36px, 12vw, 50px); overflow-wrap:anywhere; }
+    .section-head { margin-bottom: 48px; }
+    .section-head h2, .catalog-content h2 { font-size: clamp(30px, 10vw, 42px); }
+    .hero-lead, .section-head p, .catalog-content p { font-size: 16px; }
+    .hero-cta-row, .proof-actions, .cta-row { flex-direction: column; }
+    .hero-cta-row .btn, .proof-actions .btn, .cta-row .btn { width: 100%; }
+    .service, .sector, .member, .arch-path, .project-featured, .insight-body { padding: 28px 22px; }
+    .service h3, .capability-grid h3 { overflow-wrap:anywhere; }
+    .foot-grid { grid-template-columns: 1fr; }
+    .cockpit-demo-bar { padding: 14px; }
+    .cockpit-demo-bar a { width: 100%; text-align:center; white-space:normal; min-height:44px; display:grid; place-items:center; }
+    .cockpit-demo-label { line-height:1.5; }
   }
 
   /* ============ INSIGHTS ============ */
@@ -1475,6 +1499,123 @@
     .insight-body { padding: 32px 28px; }
     .insight-visual { min-height: 180px; border-left: none; border-top: 1px solid var(--line); order: -1; }
   }
+
+  /* ============ KI-COCKPITS ============ */
+  .cockpit-section { background: var(--navy-800); border-top: 1px solid var(--line-light); border-bottom: 1px solid var(--line-light); }
+  .cockpit-section .capability-grid { margin-bottom: 72px; }
+  .service-wide { grid-column: 1 / -1; }
+  .service-wide-grid {
+    display: grid; grid-template-columns: 1.5fr 1fr;
+    gap: 56px; align-items: center;
+  }
+  .service-wide-grid .service-case-link { margin: 0; }
+  .cockpit-demo-bar {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    padding: 14px 20px;
+    background: var(--navy-700); border: 1px solid var(--line); border-bottom: none;
+  }
+  .cockpit-demo-label {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 12px; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--gray-300); font-weight: 500;
+  }
+  .cockpit-live-dot {
+    width: 8px; height: 8px; border-radius: 50%; background: #3fb950;
+    box-shadow: 0 0 0 0 rgba(63,185,80,.5); animation: cockpitPulse 2s infinite;
+  }
+  @keyframes cockpitPulse {
+    0% { box-shadow: 0 0 0 0 rgba(63,185,80,.5); }
+    70% { box-shadow: 0 0 0 6px rgba(63,185,80,0); }
+    100% { box-shadow: 0 0 0 0 rgba(63,185,80,0); }
+  }
+  .cockpit-demo-bar a {
+    font-size: 13px; font-weight: 500; color: var(--white); white-space: nowrap;
+    border: 1px solid var(--line); padding: 8px 16px;
+    transition: border-color .25s, background .25s;
+  }
+  .cockpit-demo-bar a:hover { border-color: var(--white); background: rgba(255,255,255,.05); }
+  .cockpit-frame-wrap {
+    position: relative; overflow: hidden;
+    border: 1px solid var(--line); background: var(--navy-900);
+    box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.6);
+  }
+  #cockpitFrame {
+    width: 1400px; height: 880px; border: 0; display: block;
+    transform-origin: 0 0;
+  }
+  .cockpit-note {
+    margin-top: 20px; font-size: 13.5px; line-height: 1.65;
+    color: var(--gray-400); max-width: 78ch; font-weight: 300;
+  }
+  .cockpit-pricing {
+    margin-top: 48px; padding: 44px;
+    display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(320px, .75fr);
+    gap: 56px; align-items: center;
+    border: 1px solid var(--line);
+    background:
+      radial-gradient(circle at 0 0, rgba(255,255,255,.06), transparent 38%),
+      var(--navy-700);
+    box-shadow: 0 24px 54px -36px rgba(0,0,0,.72);
+  }
+  .cockpit-pricing-copy h3 {
+    margin: 14px 0 16px; color: var(--white);
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(32px, 4vw, 50px); line-height: 1.05; font-weight: 400;
+  }
+  .cockpit-pricing-copy > p {
+    max-width: 62ch; color: var(--gray-300); font-size: 15px;
+    line-height: 1.75; font-weight: 300;
+  }
+  .cockpit-pricing-scope {
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px 24px; margin: 26px 0 0; padding: 0; list-style: none;
+  }
+  .cockpit-pricing-scope li {
+    position: relative; padding-left: 19px;
+    color: var(--gray-300); font-size: 13px; line-height: 1.55;
+  }
+  .cockpit-pricing-scope li::before {
+    content: ''; position: absolute; left: 0; top: .55em;
+    width: 6px; height: 6px; border-radius: 50%; background: #3fb950;
+  }
+  .cockpit-price-card {
+    padding: 30px; border: 1px solid rgba(255,255,255,.16);
+    background: rgba(5,13,26,.42);
+  }
+  .cockpit-price-item + .cockpit-price-item {
+    margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--line);
+  }
+  .cockpit-price-label {
+    display: block; margin-bottom: 8px; color: var(--gray-300);
+    font-size: 11px; line-height: 1.4; letter-spacing: .1em;
+    text-transform: uppercase; font-weight: 600;
+  }
+  .cockpit-price-value {
+    display: block; color: var(--white); font-size: clamp(30px, 4vw, 42px);
+    line-height: 1; letter-spacing: -.035em; font-weight: 600;
+  }
+  .cockpit-price-cycle {
+    display: block; margin-top: 7px; color: var(--gray-400);
+    font-size: 12px; line-height: 1.4;
+  }
+  .cockpit-price-card .btn { width: 100%; justify-content: center; margin-top: 28px; }
+  .cockpit-price-terms {
+    margin-top: 16px; color: var(--gray-400); font-size: 11px;
+    line-height: 1.55; font-weight: 300;
+  }
+  @media (max-width: 1024px) {
+    .service-wide-grid { grid-template-columns: 1fr; gap: 28px; }
+    .cockpit-pricing { grid-template-columns: 1fr; gap: 36px; }
+  }
+  @media (max-width: 768px) {
+    .cockpit-demo-bar { flex-direction: column; align-items: flex-start; gap: 10px; }
+    .cockpit-section .capability-grid { margin-bottom: 48px; }
+    .cockpit-frame-wrap { height: 900px !important; }
+    #cockpitFrame { width:100%; height:900px; transform:none !important; }
+    .cockpit-pricing { margin-top: 32px; padding: 30px 22px; }
+    .cockpit-pricing-scope { grid-template-columns: 1fr; }
+    .cockpit-price-card { padding: 24px 20px; }
+  }
 </style>
 </head>
 
@@ -1497,8 +1638,8 @@
         <li><a href="#leistungen">Leistungen</a></li>
         <li><a href="#leistungskatalog">Katalog</a></li>
         <li><a href="#im-einsatz">Im Einsatz</a></li>
+        <li><a href="#ki-cockpits">KI-Cockpits</a></li>
         <li><a href="#ki-agenten">KI-Agenten</a></li>
-        <li><a href="#sektoren">Sektoren</a></li>
         <li><a href="#insights">Insights</a></li>
         <li><a href="#team">Team</a></li>
         <li><a href="impressum.html">Impressum</a></li>
@@ -1521,33 +1662,29 @@
     <div class="container">
       <div class="hero-eyebrow reveal">Essen · Gründungsphase 2026</div>
       <h1 class="reveal">
-        KI-Agenten für<br>
-        den öffentlichen und<br>
-        privaten Sektor.
+        KI-Agenten, die<br>
+        Ihr Fachgebiet<br>
+        beherrschen.
       </h1>
       <p class="hero-lead reveal">
-        Wir begleiten öffentliche Einrichtungen und Unternehmen bei der strategischen
+        Wir begleiten Unternehmen und Einrichtungen bei der strategischen
         und operativen Einführung Künstlicher Intelligenz, von der ersten Idee bis zur produktiven Lösung.
         Wirtschaftlich tragfähig, technisch fundiert, menschlich orientiert.
       </p>
       <div class="hero-cta-row reveal">
-        <a href="https://gefahrgutberatung-manske.de/#ki" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Live-Demo: Gefahrgut-Agent testen <span class="arrow">→</span></a>
+        <a href="cockpit-demo.html" class="btn btn-primary" target="_blank" rel="noopener">Live-Demo: KI-Cockpits testen <span class="arrow">→</span></a>
+        <a href="https://gefahrgutberatung-manske.de/#ki" class="btn btn-ghost" target="_blank" rel="noopener">Live-Demo: GB-Agent testen <span class="arrow">→</span></a>
         <a href="#kontakt" class="btn btn-ghost">Erstgespräch buchen</a>
-        <a href="#im-einsatz" class="btn btn-ghost">Referenz ansehen</a>
       </div>
       
       <div class="hero-meta reveal">
-        <div class="hero-meta-item">
-          <div class="label">Sitz</div>
-          <div class="value">Essen, Deutschland</div>
-        </div>
         <div class="hero-meta-item">
           <div class="label">Proof of Concept</div>
           <div class="value">GB-Agent live testbar</div>
         </div>
         <div class="hero-meta-item">
-          <div class="label">Sektoren</div>
-          <div class="value">Public · Private</div>
+          <div class="label">Schwerpunkt</div>
+          <div class="value">KI-Agenten · KI-Cockpits</div>
         </div>
         <div class="hero-meta-item">
           <div class="label">Sprachen</div>
@@ -1577,9 +1714,9 @@
             Wir entwickeln KI-Agenten, die exakt auf Ihre Fachprozesse zugeschnitten sind — und
             integrieren sie nahtlos in Ihre Website oder bestehende Systeme.
           </p>
-          <a class="service-case-link" href="#im-einsatz" aria-label="Referenz Gefahrgut-Agent für GBM ansehen">
+          <a class="service-case-link" href="#im-einsatz" aria-label="Modularen KI-Agenten ansehen">
             <span>In Produktion erlebbar</span>
-            <strong>Unser Gefahrgut-Agent für GBM</strong>
+            <strong>Modularer KI-Agent</strong>
             <em>Referenz ansehen →</em>
           </a>
           <div class="service-tag">Custom Agents · Web-Integration · Schnittstellen</div>
@@ -1601,6 +1738,26 @@
             dafür, dass die KI-Lösung verständlich, sicher und langfristig nutzbar bleibt.
           </p>
           <div class="service-tag">Training · Support · Qualitätssicherung</div>
+        </div>
+        <div class="service service-wide reveal">
+          <div class="service-num">04 · Zusammenführen · Neu</div>
+          <div class="service-wide-grid">
+            <div>
+              <h3>Maßgeschneiderte<br>KI-Cockpits</h3>
+              <p>
+                Wir bauen Schaltzentralen, die verstreute Unternehmensdaten an einem Ort
+                zusammenziehen: mit Inhalten, die auf Ihre Bedürfnisse zugeschnitten sind,
+                einer Sicherheitsfreigabe-Logik, die pro Rolle steuert, wer was sieht,
+                und KI-Agenten, die daraus Insights machen.
+              </p>
+              <div class="service-tag">Datenintegration · Freigabelogik · KI-Insights</div>
+            </div>
+            <a class="service-case-link" href="#ki-cockpits" aria-label="Demo-Cockpit mit neutralen Daten ansehen">
+              <span>Interaktiv erlebbar</span>
+              <strong>Demo-Cockpit mit neutralen Daten</strong>
+              <em>Demo ansehen →</em>
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -1635,7 +1792,7 @@
         <div class="agent-demo-card reveal" aria-label="Vorschau des Gefahrgut-Agenten">
           <div class="demo-topbar">
             <div class="demo-brand">
-              <img src="assets/logo-gefahrgutberatung-manske.webp" alt="GBM Logo" width="220" height="196" loading="lazy" decoding="async" />
+              <img src="assets/TM_KI_Logo.webp" alt="KI-Agent Live-Demo" width="220" height="196" loading="lazy" decoding="async" />
               <div>
                 <span>GB-Agent</span>
                 <strong>Live-Demo</strong>
@@ -1680,6 +1837,91 @@
           <h3>Experten-Eskalation</h3>
           <p>Unsicherheiten werden nicht versteckt, sondern zur fachlichen Freigabe weitergereicht.</p>
         </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- KI-COCKPITS -->
+  <section class="block cockpit-section" id="ki-cockpits">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="section-eyebrow">Neu im Portfolio</div>
+        <h2>Maßgeschneiderte<br><span class="serif">KI-Cockpits.</span></h2>
+        <p>
+          Viele Organisationen haben ihre Daten über mehrere Systeme und Fachanwendungen verteilt.
+          Wir bauen Cockpits, die freigegebene Daten zu einer Schaltzentrale zusammenziehen:
+          mit modularen Inhalten, die exakt auf den jeweiligen Prozess zugeschnitten sind,
+          und einer Sicherheitsfreigabe-Logik,
+          die pro Rolle steuert, wer welche Daten sieht. KI-Agenten werten die Lage laufend aus
+          und liefern Insights statt Rohdaten.
+        </p>
+      </div>
+
+      <div class="capability-grid reveal">
+        <article>
+          <span>01</span>
+          <h3>Inhalte nach Maß</h3>
+          <p>Prozesslage, Finanzen, Termine, Posteingang, Informationsradar: Jede Kachel wird modular für den jeweiligen Ablauf konfiguriert.</p>
+        </article>
+        <article>
+          <span>02</span>
+          <h3>Sicherheitsfreigabe-Logik</h3>
+          <p>Rollen und Freigaben bestimmen, welche Datenbereiche sichtbar sind. Rolle A, B und C erhalten jeweils nur die vorgesehenen Ansichten.</p>
+        </article>
+        <article>
+          <span>03</span>
+          <h3>Verstreute Daten vereint</h3>
+          <p>Microsoft 365, SharePoint, DATEV, Power Apps und weitere Quellen laufen in einer Oberfläche zusammen, ohne Systemwechsel im Alltag.</p>
+        </article>
+        <article>
+          <span>04</span>
+          <h3>KI-Insights</h3>
+          <p>Ein KI-Agent sichtet freigegebene Hinweise, prüft Buchungen auf Auffälligkeiten und leitet Kernaussagen ab: täglich, automatisch, nachvollziehbar.</p>
+        </article>
+      </div>
+
+      <div class="cockpit-demo reveal">
+        <div class="cockpit-demo-bar">
+          <div class="cockpit-demo-label"><span class="cockpit-live-dot"></span>Interaktive Demo · neutrale Beispieldaten</div>
+          <a href="cockpit-demo.html" target="_blank" rel="noopener">Im Vollbild öffnen ↗</a>
+        </div>
+        <div class="cockpit-frame-wrap" id="cockpitWrap">
+          <iframe src="cockpit-demo.html" id="cockpitFrame" title="Demo eines modularen KI-Cockpits mit neutralen Beispieldaten" loading="lazy"></iframe>
+        </div>
+      </div>
+
+      <div class="cockpit-pricing reveal" aria-labelledby="cockpit-pricing-title">
+        <div class="cockpit-pricing-copy">
+          <div class="section-eyebrow">Produktiver Einstieg</div>
+          <h3 id="cockpit-pricing-title">Ihr individuelles KI-Cockpit.</h3>
+          <p>
+            Von der Konzeption bis zum Go-live: Wir konfigurieren ein modulares Cockpit
+            für Ihren Prozess und binden eine standardisierte Datenquelle sicher an.
+          </p>
+          <ul class="cockpit-pricing-scope" aria-label="Enthaltener Leistungsumfang">
+            <li>Konzeption und individuelle Konfiguration</li>
+            <li>Eine standardisierte Datenquelle</li>
+            <li>Rollen- und Freigabelogik</li>
+            <li>Tests und Begleitung bis zum Go-live</li>
+          </ul>
+        </div>
+        <div class="cockpit-price-card">
+          <div class="cockpit-price-item">
+            <span class="cockpit-price-label">Einrichtung &amp; Integration</span>
+            <strong class="cockpit-price-value">ab 8.999 €</strong>
+            <span class="cockpit-price-cycle">einmalig</span>
+          </div>
+          <div class="cockpit-price-item">
+            <span class="cockpit-price-label">Betrieb, Wartung &amp; Betreuung</span>
+            <strong class="cockpit-price-value">ab 499 €</strong>
+            <span class="cockpit-price-cycle">pro Monat</span>
+          </div>
+          <a href="#kontakt" class="btn btn-primary">Projekt besprechen <span class="arrow">→</span></a>
+          <p class="cockpit-price-terms">
+            Alle Preise zzgl. gesetzlicher Umsatzsteuer. Zusätzliche Schnittstellen,
+            Fremdlizenzen und verbrauchsabhängige API-Kosten sind nicht enthalten.
+          </p>
+        </div>
       </div>
     </div>
   </section>
@@ -1846,7 +2088,7 @@
   <section class="block catalog-section" id="leistungskatalog">
     <div class="container">
       <div class="catalog">
-        <a href="assets/Leistungskatalog_TM-KI-Consulting_v.1.pdf" target="_blank" rel="noopener" class="catalog-cover-link reveal" aria-label="Leistungskatalog als PDF öffnen">
+        <a href="assets/Leistungskatalog_TM-KI-Consulting_v.1.pdf?v=20260715-1122" target="_blank" rel="noopener" class="catalog-cover-link reveal" aria-label="Leistungskatalog als PDF öffnen">
           <span class="catalog-cover-badge">PDF · Version 1.0</span>
           <img src="assets/leistungskatalog-cover.webp" alt="Titelseite Leistungskatalog TM KI Consulting 2026" width="720" height="1018" loading="lazy" decoding="async" />
           <div class="catalog-cover-overlay">
@@ -1865,7 +2107,7 @@
           </p>
           <p>
             Inklusive eines EU-AI-Act-orientierten Vorgehensmodells und einer beispielhaften
-            Agentenlogik aus der Gefahrgutberatung. Verbindlich, transparent und nachvollziehbar.
+            modulare Agentenlogik für abstrakte Prozessabläufe. Transparent und nachvollziehbar.
           </p>
 
           <div class="catalog-meta">
@@ -1883,56 +2125,9 @@
             </div>
           </div>
 
-          <a href="assets/Leistungskatalog_TM-KI-Consulting_v.1.pdf" target="_blank" rel="noopener" class="btn btn-primary">
+          <a href="assets/Leistungskatalog_TM-KI-Consulting_v.1.pdf?v=20260715-1122" target="_blank" rel="noopener" class="btn btn-primary">
             Leistungskatalog als PDF <span class="arrow">→</span>
           </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SEKTOREN -->
-  <section class="block sectors-section" id="sektoren">
-    <div class="container">
-      <div class="section-head reveal">
-        <div class="section-eyebrow">Für wen wir arbeiten</div>
-        <h2>Zwei Sektoren,<br><span class="serif">eine Methode.</span></h2>
-        <p>
-          Verwaltungen und Unternehmen unterscheiden sich in Rahmenbedingungen, Anforderungen
-          und Zielen. Unser Ansatz bleibt derselbe — strategisch fundiert, technisch durchdacht,
-          mit Blick auf die Menschen, die mit der Lösung arbeiten.
-        </p>
-      </div>
-
-      <div class="sectors">
-        <div class="sector reveal">
-          <div class="sector-num">01 · Public Sector</div>
-          <h3>Kommunen &<br>öffentliche Einrichtungen</h3>
-          <p>
-            Wir entwickeln KI-Lösungen für den städtischen Raum — Projekte mit direktem
-            Nutzen für Bürgerinnen, Bürger und öffentliche Aufgaben. Datenschutz- und fördermittelorientiert konzipiert.
-          </p>
-          <ul class="sector-list">
-            <li>Bürgerservices und digitale Beratungsangebote</li>
-            <li>Projekte im städtischen Raum mit gesellschaftlichem Nutzen</li>
-            <li>Berücksichtigung von DSGVO- und EU-AI-Act-Anforderungen</li>
-            <li>Förderfähige Konzepte</li>
-          </ul>
-        </div>
-
-        <div class="sector reveal">
-          <div class="sector-num">02 · Private Sector</div>
-          <h3>Mittelstand &<br>Unternehmen</h3>
-          <p>
-            Vom ersten Use Case bis zur produktiven Anwendung — wir begleiten Unternehmen
-            beim wirtschaftlich sinnvollen und nachhaltigen Einsatz von KI.
-          </p>
-          <ul class="sector-list">
-            <li>KI-Strategie und Use-Case-Bewertung</li>
-            <li>Custom AI · Retrieval-Augmented Generation · Agents</li>
-            <li>Integration in bestehende Systemlandschaften</li>
-            <li>Change Management und SKILL Dateien</li>
-          </ul>
         </div>
       </div>
     </div>
@@ -2097,7 +2292,7 @@
         <a href="mailto:info@tm-ki-consulting.de" class="btn btn-primary">
           Erstgespräch vereinbaren <span class="arrow">→</span>
         </a>
-        <a href="https://gefahrgutberatung-manske.de/#ki" class="btn btn-ghost" target="_blank" rel="noopener noreferrer">Live-Demo ansehen</a>
+        <a href="cockpit-demo.html" class="btn btn-ghost" target="_blank" rel="noopener">Live-Demo ansehen</a>
       </div>
       <div class="cta-trust reveal">
         <span>Antwort innerhalb von 24 Stunden</span>
@@ -2118,16 +2313,9 @@
         <div class="foot-name">TM KI Consulting </div>
         <div class="foot-sub">Beratung · Strategie · Umsetzung</div>
         <p>
-          KI-Beratung für den öffentlichen und privaten Sektor.
+          Fachspezifische KI-Agenten und KI-Beratung.
           Strategisch, technisch, menschlich.
         </p>
-      </div>
-      <div>
-        <h5>Sektoren</h5>
-        <ul>
-          <li><a href="#sektoren">Public Sector</a></li>
-          <li><a href="#sektoren">Private Sector</a></li>
-        </ul>
       </div>
       <div>
         <h5>Unternehmen</h5>
@@ -2231,7 +2419,7 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
 
 <script>
 // ============================================================
-// Live-Typing-Demo (GB-Agent-Vorschaukarte)
+// Live-Typing-Demo (modulare KI-Agent-Vorschaukarte)
 // Progressive Enhancement: ohne JS bleibt der statische Text.
 // Läuft nur im Sichtbereich, pausiert bei Hover, respektiert
 // prefers-reduced-motion. Kein externer Code, minimaler Aufwand.
@@ -2361,6 +2549,30 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
   window.addEventListener('resize', () => {
     if (window.innerWidth > 768) closeMenu();
   });
+})();
+</script>
+<script>
+// ============================================================
+// KI-Cockpit-Demo: iframe auf Containerbreite skalieren
+// ============================================================
+(function () {
+  const wrap = document.getElementById('cockpitWrap');
+  const frame = document.getElementById('cockpitFrame');
+  if (!wrap || !frame) return;
+  const W = 1400, H = 880; // native Cockpit-Größe (Desktop-Layout)
+
+  function fit() {
+    if (window.matchMedia('(max-width: 768px)').matches) {
+      frame.style.transform = 'none';
+      wrap.style.height = '900px';
+      return;
+    }
+    const scale = wrap.clientWidth / W;
+    frame.style.transform = 'scale(' + scale + ')';
+    wrap.style.height = (H * scale) + 'px';
+  }
+  fit();
+  window.addEventListener('resize', fit);
 })();
 </script>
 </body>

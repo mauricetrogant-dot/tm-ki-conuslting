@@ -1,0 +1,1365 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Modulares KI-Cockpit · Prozesssteuerung · TM KI Consulting</title>
+<style>
+  :root {
+    --bg: #0e1116;
+    --bg-2: #121722;
+    --panel: #171d29;
+    --panel-2: #1e2532;
+    --border: #2a3342;
+    --border-soft: #222a37;
+    --text: #eef2f8;
+    --muted: #93a1b5;
+    --accent: #ffab2e;
+    --accent-2: #ff7a3d;
+    --accent-soft: #ffd166;
+    --green: #45d19a;
+    --red: #ff5c6c;
+    --amber: #ffc247;
+    --shadow: 0 12px 34px rgba(0,0,0,0.38);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background:
+      radial-gradient(900px 520px at 12% -10%, rgba(255,171,46,0.13), transparent 62%),
+      radial-gradient(860px 560px at 88% 4%, rgba(69,209,154,0.09), transparent 58%),
+      linear-gradient(145deg, rgba(255,255,255,0.035), transparent 28%),
+      linear-gradient(180deg, #1a1f28 0%, #151a22 48%, #10141b 100%);
+    padding: 0;
+  }
+  body::before {
+    content: "";
+    position: fixed; inset: 0; pointer-events: none;
+    background:
+      linear-gradient(90deg, rgba(255,255,255,0.028) 1px, transparent 1px),
+      linear-gradient(180deg, rgba(255,255,255,0.022) 1px, transparent 1px);
+    background-size: 44px 44px;
+    mask-image: linear-gradient(180deg, rgba(0,0,0,0.55), transparent 72%);
+  }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  .sub { color: var(--muted); font-size: 13px; margin-bottom: 24px; }
+  .row { display: flex; flex-wrap: wrap; gap: 16px; }
+  .filters {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: flex-end;
+    margin-bottom: 24px;
+  }
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  .field label { font-size: 12px; color: var(--muted); }
+  input, select {
+    background: var(--panel-2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 8px 10px;
+    border-radius: 8px;
+    font-size: 14px;
+  }
+  button {
+    background: var(--accent);
+    color: #1a1108;
+    border: none;
+    padding: 9px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  button.ghost { background: var(--panel-2); color: var(--text); border: 1px solid var(--border); }
+  .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 24px; }
+  .kpi {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+  }
+  .kpi .label { font-size: 12px; color: var(--muted); margin-bottom: 8px; }
+  .kpi .value { font-size: 26px; font-weight: 700; }
+  .kpi .value.accent { color: var(--accent); }
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+    margin-bottom: 24px;
+  }
+  .panel h2 { font-size: 15px; margin: 0 0 16px; }
+  .chart-wrap { position: relative; height: 300px; }
+  .half { flex: 1 1 360px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { text-align: left; padding: 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; font-size: 12px; }
+  td.q, td.a { max-width: 320px; }
+  .pill { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 11px; background: var(--panel-2); border: 1px solid var(--border); }
+  .pill.ok { color: var(--green); }
+  .pill.err { color: var(--red); }
+  .pill.channel-public { color: #9aa4b2; }
+  .pill.channel-internal { color: #6ea8fe; border-color: #6ea8fe; }
+  .pager { display: flex; gap: 8px; align-items: center; margin-top: 16px; }
+  .hidden { display: none; }
+  .note { font-size: 11px; color: var(--muted); margin-top: 6px; }
+
+  /* --- Fachanalyse-Detailansicht (Modal) --- */
+  .modal-backdrop {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.65);
+    display: flex; align-items: flex-start; justify-content: center;
+    padding: 40px 16px; z-index: 100; overflow-y: auto;
+  }
+  .modal-backdrop.hidden { display: none !important; }
+  #advisoryModal { z-index: 120; }
+  .modal {
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: 14px; max-width: 980px; width: 100%;
+    padding: 24px; position: relative;
+  }
+  .modal h2 { margin: 0 0 4px; font-size: 18px; }
+  .modal .close-btn {
+    position: absolute; top: 14px; right: 14px;
+    background: var(--panel-2); color: var(--text);
+    border: 1px solid var(--border); border-radius: 8px;
+    padding: 4px 10px; cursor: pointer; font-size: 14px;
+  }
+  .pair-grid { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 16px; }
+  @media (min-width: 860px) { .pair-grid.two { grid-template-columns: 1fr 1fr; } }
+  .pair-col {
+    background: var(--panel-2); border: 1px solid var(--border);
+    border-radius: 10px; padding: 14px;
+  }
+  .pair-col h3 { margin: 0 0 8px; font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+  .pair-col .body { font-size: 13px; line-height: 1.55; white-space: pre-wrap; word-break: break-word; }
+  .adv-section { margin-top: 16px; }
+  .adv-section h3 {
+    font-size: 13px; margin: 0 0 8px; color: var(--accent-soft);
+    border-bottom: 1px solid var(--border); padding-bottom: 6px;
+  }
+  .adv-kv { display: grid; grid-template-columns: 220px 1fr; gap: 4px 12px; font-size: 13px; }
+  .adv-kv .k { color: var(--muted); }
+  .adv-list { margin: 0; padding-left: 18px; font-size: 13px; line-height: 1.6; }
+  .offer-card {
+    background: var(--panel-2); border: 1px solid var(--border);
+    border-radius: 10px; padding: 12px; margin-bottom: 8px;
+  }
+  .offer-card .title { font-weight: 600; font-size: 13px; }
+  .offer-card .rationale { font-size: 12px; color: var(--muted); margin-top: 4px; }
+  .fit-hoch { color: var(--green); }
+  .fit-mittel { color: var(--accent-soft); }
+  .fit-niedrig { color: var(--muted); }
+  .badge-pending { color: var(--accent-soft); }
+  .mini-btn {
+    background: var(--panel-2); color: var(--accent-soft);
+    border: 1px solid var(--border); border-radius: 8px;
+    padding: 3px 10px; cursor: pointer; font-size: 12px;
+  }
+  .process-section { margin-bottom: 10px; }
+  .process-section .sec-title { font-weight: 600; font-size: 12.5px; color: var(--text); }
+  .process-section .sec-body { font-size: 12.5px; color: var(--muted); white-space: pre-wrap; margin-top: 2px; }
+
+  /* --- Interner Dashboard-Chat --- */
+  .dash-chat-msgs {
+    display: flex; flex-direction: column; gap: 8px;
+    max-height: 340px; overflow-y: auto; margin-bottom: 10px;
+  }
+  .dash-chat-msgs:empty { display: none; }
+  .chat-msg {
+    border: 1px solid var(--border); border-radius: 10px;
+    background: var(--panel-2); padding: 10px 12px;
+    font-size: 13px; line-height: 1.55;
+    white-space: pre-wrap; word-break: break-word; max-width: 88%;
+  }
+  .chat-msg.user { align-self: flex-end; border-color: var(--accent-soft); }
+  .chat-msg.ai { align-self: flex-start; border-left: 3px solid var(--accent-soft); }
+  .chat-msg.pending { color: var(--muted); font-style: italic; }
+  .dash-chat-inputrow { display: flex; gap: 8px; align-items: flex-end; }
+  .dash-chat-inputrow textarea {
+    flex: 1; resize: vertical; min-height: 44px;
+    background: var(--panel-2); color: var(--text);
+    border: 1px solid var(--border); border-radius: 10px;
+    padding: 10px 12px; font-size: 13px; font-family: inherit;
+  }
+  .dash-chat-inputrow textarea:focus { outline: none; border-color: var(--accent-soft); }
+  .chat-hero { padding: 22px 26px 20px; }
+  .chat-hero .hero-title { font-size: 20px; }
+  .chat-hero .hero-tagline { font-size: 12.5px; margin-top: 4px; }
+  .chat-hero .hero-head { margin-bottom: 14px; }
+  .chat-hero .dash-chat-msgs { max-height: 380px; }
+
+  #app { max-width: 1180px; margin: 0 auto; padding: 26px 24px 64px; }
+
+  .topbar {
+    display: flex; align-items: center; gap: 16px;
+    padding: 6px 0 22px; margin-bottom: 26px;
+    border-bottom: 1px solid var(--border-soft);
+  }
+  .topbar .brandmark {
+    height: 46px; width: 46px; border-radius: 9px; background: #fff;
+    display: flex; align-items: center; justify-content: center;
+    color: #1a1108; font-weight: 800; font-size: 17px; letter-spacing: 0.02em;
+    flex: none;
+  }
+  .brandtitle { font-size: 20px; font-weight: 700; letter-spacing: -0.01em; }
+  .brandsub { font-size: 12.5px; color: var(--muted); margin-top: 3px; }
+  .brandspacer { flex: 1; }
+  .live-status {
+    display: flex; align-items: center; gap: 10px;
+    min-width: 178px; justify-content: flex-end;
+    color: var(--muted); font-size: 12px; text-align: right;
+    background: rgba(30,37,50,0.68);
+    border: 1px solid rgba(255,255,255,0.09);
+    border-radius: 12px;
+    padding: 10px 12px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.04), 0 10px 24px rgba(0,0,0,0.18);
+  }
+  .online-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--green); box-shadow: 0 0 0 0 rgba(69,209,154,0.58);
+    animation: onlinePulse 1.45s ease-in-out infinite;
+  }
+  .live-day { color: var(--text); font-weight: 650; font-size: 13px; }
+  .live-time { margin-top: 2px; font-variant-numeric: tabular-nums; }
+
+  /* Hero */
+  .radar-hero {
+    position: relative; overflow: hidden;
+    background: linear-gradient(180deg, var(--panel) 0%, var(--bg-2) 100%);
+    border: 1px solid var(--border); border-radius: 18px;
+    padding: 26px 26px 24px; box-shadow: var(--shadow); margin-bottom: 26px;
+  }
+  .radar-hero::before {
+    content: ""; position: absolute; inset: 0 0 auto 0; height: 4px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  }
+  .hero-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 10px; }
+  .hero-title { font-size: 26px; margin: 0; letter-spacing: -0.02em; }
+  .hero-tagline { color: var(--muted); font-size: 14px; margin-top: 6px; max-width: 640px; line-height: 1.5; }
+  .hero-actions { display: flex; gap: 10px; }
+  #radarBtn {
+    background: linear-gradient(180deg, var(--accent), var(--accent-2));
+    color: #241300; font-weight: 700; font-size: 15px; padding: 12px 22px;
+    border-radius: 10px; box-shadow: 0 6px 18px rgba(255,122,61,0.28);
+  }
+  #radarBtn:disabled { opacity: 0.6; cursor: default; box-shadow: none; }
+  .hero-status { color: var(--muted); font-size: 12.5px; margin: 2px 0 16px; }
+
+  .radar-grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); }
+  .radar-card {
+    background: var(--panel-2); border: 1px solid var(--border);
+    border-left: 4px solid var(--border); border-radius: 12px; padding: 16px;
+    transition: transform .12s ease, box-shadow .12s ease;
+  }
+  .radar-card:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+  .radar-card.card-hoch   { border-left-color: var(--accent-2); }
+  .radar-card.card-mittel { border-left-color: var(--amber); }
+  .radar-card.card-niedrig{ border-left-color: var(--border); }
+  .radar-card .title { font-size: 14.5px; font-weight: 650; line-height: 1.4; display: flex; gap: 10px; justify-content: space-between; align-items: flex-start; }
+  .radar-card .rationale { font-size: 12.8px; line-height: 1.55; margin-top: 8px; color: #d6deea; }
+  .radar-card .rationale strong { color: #fff; font-weight: 600; }
+  .radar-card .rationale.decision { color: var(--accent); }
+  .radar-card .rationale.decision strong { color: var(--accent); }
+  .radar-card .src { margin-top: 11px; font-size: 11.5px; color: var(--muted); }
+  .radar-card .src a { color: #7db3ff; text-decoration: none; }
+  .radar-card .src a:hover { text-decoration: underline; }
+  .radar-summary-box {
+    background: rgba(255,171,46,0.08); border: 1px solid rgba(255,171,46,0.22);
+    border-radius: 12px; padding: 14px 16px; margin-bottom: 18px;
+    font-size: 13.5px; line-height: 1.55; color: #ffe4bd;
+  }
+  .radar-feeds { margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--border-soft); }
+
+  /* Relevanz-Pills */
+  .pill.fit-hoch   { color: #fff; background: var(--accent-2); border-color: transparent; }
+  .pill.fit-mittel { color: #241300; background: var(--amber); border-color: transparent; }
+  .pill.fit-niedrig{ color: var(--muted); }
+
+  /* Zwei-Spalten-Cockpit */
+  .cockpit-grid { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: 24px; align-items: start; }
+  .col-left { margin-bottom: 0; }
+  .col-right { display: block; }
+  .col-right .side-panel {
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: 18px; padding: 22px; box-shadow: var(--shadow);
+  }
+  .side-title { font-size: 18px; margin: 0 0 4px; letter-spacing: -0.01em; }
+
+  .radar-top { margin-bottom: 0; }
+  .radar-rest { display: grid; gap: 14px; margin-top: 14px; }
+  .radar-rest.hidden { display: none; }
+  .linkbtn {
+    background: transparent; border: 1px solid var(--border); color: var(--text);
+    padding: 9px 15px; border-radius: 9px; font-size: 13px; font-weight: 600; margin-top: 14px;
+  }
+  .linkbtn:hover { border-color: var(--accent); color: var(--accent); }
+  .linkbtn.hidden { display: none; }
+
+  .stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 14px 0 4px; }
+  .stat { background: var(--panel-2); border: 1px solid var(--border); border-radius: 12px; padding: 14px 12px; }
+  .stat .label { font-size: 11px; color: var(--muted); margin-bottom: 7px; line-height: 1.3; }
+  .stat .value { font-size: 22px; font-weight: 700; }
+  .stat .value.accent { color: var(--accent); }
+  .side-actions { margin-top: 16px; }
+  button.ghost.wide {
+    width: 100%; padding: 11px; font-weight: 600;
+    transition: transform .14s ease, border-color .14s ease, color .14s ease, box-shadow .14s ease, background .14s ease;
+  }
+  button.ghost.wide:hover {
+    background: rgba(255,171,46,0.10);
+    border-color: rgba(255,171,46,0.72);
+    color: var(--accent-soft);
+    box-shadow: 0 0 0 1px rgba(255,171,46,0.16), 0 8px 22px rgba(255,171,46,0.12);
+    transform: translateY(-1px);
+  }
+  .side-mini { margin-top: 10px; }
+  .ops-card {
+    background: linear-gradient(180deg, rgba(30,37,50,0.96), rgba(23,29,41,0.96));
+    border: 1px solid var(--border); border-radius: 18px;
+    padding: 20px 22px; margin-top: 18px; box-shadow: var(--shadow);
+  }
+  .ops-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .ops-title { font-size: 17px; font-weight: 700; letter-spacing: -0.01em; }
+  .ops-badge {
+    color: #09150f; background: var(--green); border: 0;
+    font-weight: 700; font-size: 10.5px; letter-spacing: 0.04em;
+  }
+  .ops-copy { color: #d8e0eb; font-size: 12.8px; line-height: 1.55; margin: 12px 0 14px; }
+  .ops-list { display: grid; gap: 9px; margin: 0; padding: 0; list-style: none; }
+  .ops-list li {
+    display: flex; justify-content: space-between; gap: 14px;
+    border-top: 1px solid var(--border-soft); padding-top: 9px;
+    font-size: 12.5px; color: var(--muted);
+  }
+  .ops-list strong { color: var(--text); font-weight: 650; }
+  .context-card {
+    background: linear-gradient(180deg, rgba(30,37,50,0.96), rgba(18,23,34,0.98));
+    border: 1px solid var(--border); border-radius: 18px;
+    padding: 20px 22px; margin-top: 18px; box-shadow: var(--shadow);
+  }
+  .context-title { font-size: 17px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 4px; }
+  .context-sub { color: var(--muted); font-size: 12px; line-height: 1.45; }
+  .context-block {
+    margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border-soft);
+  }
+  .context-label {
+    color: var(--accent-soft); font-size: 10.5px; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 5px;
+  }
+  .context-text { color: #d8e0eb; font-size: 12.8px; line-height: 1.5; }
+  .context-text strong { color: var(--text); }
+  .context-suggestion {
+    margin-top: 14px; padding: 12px;
+    border: 1px solid rgba(255,171,46,0.24); border-radius: 12px;
+    background: rgba(255,171,46,0.08);
+    color: #ffe4bd; font-size: 12.8px; line-height: 1.5;
+  }
+  .kpis.two { grid-template-columns: 1fr 1fr; }
+  .chart-block { margin-top: 18px; }
+  .chart-block h2, .table-block h2 { font-size: 14px; margin: 0 0 10px; }
+  .table-block { margin-top: 20px; }
+  .table-scroll { overflow-x: auto; }
+  .col-right .chart-wrap { height: 220px; }
+  .col-right .filters { padding: 12px; gap: 12px; }
+
+  .radar-hero, .radar-card, .col-right .side-panel, .ops-card, .context-card, .stat, .panel {
+    position: relative;
+    overflow: hidden;
+  }
+  .radar-hero::after, .radar-card::after, .col-right .side-panel::after, .ops-card::after, .context-card::after,
+  .stat::after, .panel::after {
+    content: "";
+    position: absolute; inset: 0; border-radius: inherit; padding: 1.5px;
+    background: conic-gradient(
+      from var(--glow-angle, 0deg),
+      transparent 0 58%,
+      rgba(255,171,46,0.52) 70%,
+      rgba(69,209,154,0.36) 78%,
+      rgba(255,122,61,0.42) 84%,
+      transparent 94% 100%
+    );
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0.92;
+    animation: glowFlow 8s linear infinite;
+  }
+  .radar-card::after, .stat::after { opacity: 0.72; animation-duration: 10s; }
+  @property --glow-angle {
+    syntax: "<angle>";
+    inherits: false;
+    initial-value: 0deg;
+  }
+  @keyframes glowFlow { to { --glow-angle: 360deg; } }
+  @keyframes onlinePulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(69,209,154,0.5), 0 0 12px rgba(69,209,154,0.45); }
+    50% { opacity: 0.48; box-shadow: 0 0 0 7px rgba(69,209,154,0.0), 0 0 18px rgba(69,209,154,0.35); }
+  }
+
+  /* --- Selbst gehostete Charts (SVG / CSS statt externer Chart-Bibliothek) --- */
+  .svg-chart { width: 100%; height: 100%; display: block; }
+  .svg-chart .grid-line { stroke: #3a3d43; stroke-width: 1; }
+  .svg-chart .axis-label { fill: #94a0ae; font-size: 11px; }
+  .svg-chart .tl-line { fill: none; stroke: #ffb000; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+  .svg-chart .tl-area { fill: rgba(255,176,0,0.12); stroke: none; }
+  .svg-chart .tl-dot { fill: #ffb000; }
+  .donut-wrap { display: flex; align-items: center; justify-content: center; gap: 26px; height: 100%; flex-wrap: wrap; }
+  .donut {
+    width: 190px; height: 190px; border-radius: 50%;
+    position: relative; flex: none;
+  }
+  .donut::after {
+    content: ""; position: absolute; inset: 26%; border-radius: 50%;
+    background: var(--panel);
+  }
+  .donut .center-num {
+    position: absolute; inset: 0; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; z-index: 1;
+  }
+  .donut .center-num b { font-size: 24px; }
+  .donut .center-num span { font-size: 10.5px; color: var(--muted); }
+  .donut-legend { display: grid; gap: 8px; font-size: 12.5px; }
+  .donut-legend .lg { display: flex; align-items: center; gap: 8px; color: var(--text); }
+  .donut-legend .dot { width: 10px; height: 10px; border-radius: 3px; flex: none; }
+  .donut-legend .n { color: var(--muted); }
+
+  .foot { font-size: 10px; color: var(--muted); text-align: center; padding: 18px 24px 10px; }
+
+  @media (max-width: 1000px) {
+    .cockpit-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 768px) {
+    html, body { overflow-x: hidden; }
+    #app { padding: 20px 18px 56px; }
+    .radar-grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+    .filters { align-items: stretch; }
+    .field { min-width: min(100%, 180px); flex: 1 1 180px; }
+    button, select, input, textarea, .close-btn, .linkbtn { min-height: 44px; }
+    .hero-head { align-items: flex-start; }
+    .pair-grid.two, .row { grid-template-columns: 1fr; display: grid; }
+    .panel.half { width: 100%; }
+    .modal-backdrop { padding: 14px; }
+    .modal { padding: 20px; max-height: calc(100dvh - 28px); overflow-y: auto; }
+    .adv-kv { grid-template-columns: minmax(110px, .7fr) 1fr; }
+  }
+  @media (max-width: 560px) {
+    #app { padding: 18px 14px 48px; }
+    .topbar { align-items: flex-start; flex-wrap: wrap; }
+    .brandspacer { display: none; }
+    .live-status { width: 100%; justify-content: flex-start; text-align: left; }
+    .hero-title { font-size: 22px; }
+    .stat-row { grid-template-columns: 1fr; }
+    .ops-list li { flex-direction: column; gap: 3px; }
+    .brandmark { width: 44px; height: 44px; }
+    .brandtitle { font-size: 17px; }
+    .brandsub, .hero-tagline { font-size: 12px; }
+    .hero-head { flex-direction: column; gap: 14px; }
+    .hero-actions, .hero-actions button { width: 100%; }
+    .dash-chat-inputrow { flex-direction: column; }
+    .dash-chat-inputrow button { width: 100%; }
+    .kpis.two { grid-template-columns: 1fr; }
+    .donut-wrap { flex-direction: column; }
+    .adv-kv { grid-template-columns: 1fr; }
+    .pager { flex-wrap: wrap; justify-content: center; }
+    .table-scroll { margin-inline: -8px; padding-inline: 8px; }
+    table { min-width: 760px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div id="app">
+  <header class="topbar">
+    <div class="brandmark" aria-hidden="true">KI</div>
+    <div class="brandtext">
+      <div class="brandtitle">Modulares KI-Cockpit · Prozesssteuerung</div>
+      <div class="brandsub">Informationsradar und Assistenz-Auswertung · neutrale Demonstrationsdaten</div>
+    </div>
+    <div class="brandspacer"></div>
+    <div class="live-status" aria-label="Dashboard online">
+      <span class="online-dot" aria-hidden="true"></span>
+      <div>
+        <div class="live-day" id="liveDay">--</div>
+        <div class="live-time" id="liveTime">--:--:--</div>
+      </div>
+    </div>
+  </header>
+
+  <div class="cockpit-grid">
+
+    <!-- Linke Spalte: interner KI-Chat + Informationsradar -->
+    <div class="col-left">
+
+    <section class="radar-hero chat-hero" id="internalChatPanel">
+      <div class="hero-head">
+        <div>
+          <h2 class="hero-title">Interner KI-Chat</h2>
+          <div class="hero-tagline">
+            Sprachmodell mit Zugriff auf freigegebene Wissensmodule und Prozessregeln.
+            Antworten sind KI-Entwürfe und werden transparent als solche gekennzeichnet.
+            <span id="chatModel-main"></span>
+          </div>
+        </div>
+      </div>
+      <div class="dash-chat-msgs" id="chatMsgs-main"></div>
+      <div class="dash-chat-inputrow">
+        <textarea id="chatInput-main" rows="2"
+            placeholder="Frage an die interne KI stellen … (Enter = Senden)"></textarea>
+        <button id="chatSend-main" onclick="sendChat('main')">Senden</button>
+      </div>
+    </section>
+
+    <section class="radar-hero" id="radarPanel">
+      <div class="hero-head">
+        <div>
+          <h2 class="hero-title">Informationsradar</h2>
+          <div class="hero-tagline">
+            Aktuelle Hinweise, automatisch gegen die Prozesskonfiguration gefiltert,
+            jeweils mit konkreter Handlungsempfehlung. Läuft täglich automatisch.
+          </div>
+        </div>
+        <div class="hero-actions">
+          <button id="radarBtn" onclick="runRadar()">Jetzt aktualisieren</button>
+        </div>
+      </div>
+      <div id="radarStatus" class="hero-status"></div>
+      <div id="radarSummary"></div>
+      <div id="radarTop" class="radar-top"></div>
+      <div id="radarRest" class="radar-rest hidden"></div>
+      <button id="radarToggle" class="linkbtn hidden" onclick="toggleRadarRest()"></button>
+      <div id="radarFeeds" class="note radar-feeds"></div>
+    </section>
+
+    </div><!-- /col-left -->
+
+    <!-- Rechte Spalte: Kernkennzahlen, Aktualitätsabgleich, Betriebsstatus -->
+    <aside class="col-right">
+      <div class="side-panel">
+        <h2 class="side-title">Verbrauch &amp; Technik</h2>
+        <div class="note">Nutzung des KI-Assistenten. Intern, für den Überblick.</div>
+
+        <div class="stat-row">
+          <div class="stat"><div class="label">Anfragen gesamt</div><div class="value accent" id="kpiRequests">–</div></div>
+          <div class="stat"><div class="label">Erfolgsquote</div><div class="value" id="kpiSuccess">–</div></div>
+          <div class="stat"><div class="label">Kosten (geschätzt)</div><div class="value" id="kpiCost">–</div></div>
+        </div>
+
+        <div class="side-actions">
+          <button class="ghost wide" onclick="openTech()">Details ansehen</button>
+        </div>
+        <div class="note side-mini">Token, Wissensmodule, Tagesverlauf und Anfragetabelle im Detailfenster.</div>
+      </div>
+
+      <div class="context-card" id="contextCard">
+        <div class="context-title">Aktualitätsabgleich</div>
+        <div class="context-sub">Verknüpft eine aktuelle Assistenz-Anfrage mit gefilterten Hinweisen.</div>
+        <div class="context-block">
+          <div class="context-label">Anfrage</div>
+          <div class="context-text" id="contextQuestion">Lade aktuelle Anfrage ...</div>
+        </div>
+        <div class="context-block">
+          <div class="context-label">Passende Hinweise</div>
+          <div class="context-text" id="contextNews">Lade Informationsradar ...</div>
+        </div>
+        <div class="context-suggestion" id="contextSuggestion">
+          Aktualitätsbezogener Vorschlag wird geladen.
+        </div>
+      </div>
+
+      <div class="ops-card">
+        <div class="ops-head">
+          <div class="ops-title">Betriebsstatus</div>
+          <span class="pill ops-badge">ONLINE</span>
+        </div>
+        <div class="ops-copy">
+          Schneller Blick auf Verfügbarkeit, Datenpflege und den automatischen Radar-Lauf.
+        </div>
+        <ul class="ops-list">
+          <li><span>KI-Assistent</span><strong>bereit</strong></li>
+          <li><span>Radar-Aktualisierung</span><strong>täglich</strong></li>
+          <li><span>Detailauswertung</span><strong>aktiv</strong></li>
+        </ul>
+      </div>
+    </aside>
+
+  </div>
+
+</div>
+
+<!-- Detailansicht: öffentliche Antwort + interne Fachanalyse als Paar -->
+<div id="advisoryModal" class="modal-backdrop hidden" onclick="if(event.target===this) closeAdvisory()">
+  <div class="modal">
+    <button class="close-btn" onclick="closeAdvisory()">✕ Schließen</button>
+    <h2>Fachanalyse zur Anfrage</h2>
+    <div class="sub" id="advMeta"></div>
+    <div id="advContent">Lade …</div>
+
+    <div class="adv-section">
+      <h3>Rückfragen an die interne KI</h3>
+      <div class="note" style="margin:0 0 10px">
+        Interner Kanal mit Zugriff auf die Knowledge Base: Fachwissen, Regelwerk,
+        freigegebene Wissensmodule und Prozessregeln. Die geöffnete Analyse wird als Kontext
+        mitgegeben. Antworten sind transparent gekennzeichnete KI-Entwürfe.
+        <span id="chatModel-adv"></span>
+      </div>
+      <div class="dash-chat-msgs" id="chatMsgs-adv"></div>
+      <div class="dash-chat-inputrow">
+        <textarea id="chatInput-adv" rows="2"
+          placeholder="Rückfrage zur Analyse oder neue Fachfrage stellen … (Enter = Senden)"></textarea>
+        <button id="chatSend-adv" onclick="sendChat('adv')">Senden</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Technik-Detail: breites Overlay -->
+<div id="techModal" class="modal-backdrop hidden" onclick="if(event.target===this) closeTech()">
+  <div class="modal">
+    <button class="close-btn" onclick="closeTech()">✕ Schließen</button>
+    <h2>Verbrauch &amp; Technik</h2>
+    <div class="sub">Nutzung, Token, Kosten und Anfrageverlauf des KI-Assistenten. Interner Blick.</div>
+
+    <div class="filters" style="margin-top:16px">
+      <div class="field">
+        <label>Von (Tag)</label>
+        <input type="date" id="from" />
+      </div>
+      <div class="field">
+        <label>Bis (Tag)</label>
+        <input type="date" id="to" />
+      </div>
+      <div class="field">
+        <label>Modell</label>
+        <select id="model"><option value="">Alle</option></select>
+      </div>
+      <div class="field">
+        <label>Kanal</label>
+        <select id="channel">
+          <option value="">Alle</option>
+          <option value="public">Public (Website)</option>
+          <option value="internal">Intern (Fachanalyse)</option>
+        </select>
+      </div>
+      <button onclick="loadAll()">Filtern</button>
+      <button class="ghost" onclick="resetFilters()">Zurücksetzen</button>
+      <button class="ghost" onclick="exportCsv()">CSV-Export</button>
+    </div>
+
+    <div class="kpis two" style="margin-bottom:20px">
+      <div class="kpi"><div class="label">Token gesamt (geschätzt)</div><div class="value" id="kpiTokens">–</div></div>
+      <div class="kpi"><div class="label">Mit Wissensmodul</div><div class="value" id="kpiDb">–</div></div>
+    </div>
+
+    <div class="row">
+      <div class="panel half">
+        <h2>Anfragen pro Tag</h2>
+        <div class="chart-wrap" id="timelineChart"></div>
+      </div>
+      <div class="panel half">
+        <h2>Anfragen nach Modell</h2>
+        <div class="chart-wrap" id="modelChart"></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>Anfragen-Verlauf (Frage &amp; Antwort)</h2>
+      <div class="note" style="margin-bottom:10px">
+        Jede Website-Anfrage erscheint hier einmal (interne Fachanalyse). Über
+        „Analyse öffnen“ siehst du öffentliche Antwort und Fachanalyse nebeneinander.
+      </div>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Zeitpunkt</th><th>Modell</th><th>Kanal</th><th>Frage</th><th>Antwort</th>
+              <th>Token (E/A)</th><th>Kosten</th><th>DB</th><th>Status</th><th>Fachanalyse</th>
+            </tr>
+          </thead>
+          <tbody id="entriesBody"></tbody>
+        </table>
+      </div>
+      <div class="pager">
+        <button class="ghost" onclick="prevPage()">‹ Zurück</button>
+        <span id="pageInfo" class="sub" style="margin:0"></span>
+        <button class="ghost" onclick="nextPage()">Weiter ›</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* =====================================================================
+   Demo-Modus: alle Daten sind statisch und neutral.
+   Keine Server-Anbindung, keine externen Bibliotheken.
+   ===================================================================== */
+
+let offset = 0;
+const LIMIT = 25;
+let totalEntries = 0;
+
+function updateLiveClock() {
+  const now = new Date();
+  const dayEl = document.getElementById("liveDay");
+  const timeEl = document.getElementById("liveTime");
+  if (!dayEl || !timeEl) return;
+  dayEl.textContent = new Intl.DateTimeFormat("de-DE", {
+    weekday: "long", day: "2-digit", month: "2-digit", year: "numeric"
+  }).format(now);
+  timeEl.textContent = new Intl.DateTimeFormat("de-DE", {
+    hour: "2-digit", minute: "2-digit", second: "2-digit"
+  }).format(now);
+}
+updateLiveClock();
+setInterval(updateLiveClock, 1000);
+
+function fmtNum(n) { return Number(n || 0).toLocaleString("de-DE"); }
+function fmtCost(n) { return "$" + Number(n || 0).toFixed(4); }
+function esc(s) { return String(s || "").replace(/[&<>]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;"}[c])); }
+function truncateText(s, max = 170) {
+  const text = String(s || "").replace(/\s+/g, " ").trim();
+  return text.length > max ? text.slice(0, max - 1).trim() + "…" : text;
+}
+function channelPill(ch) {
+  const isInternal = ch === "internal";
+  const cls = isInternal ? "channel-internal" : "channel-public";
+  const label = isInternal ? "Intern" : "Public";
+  return `<span class="pill ${cls}">${label}</span>`;
+}
+
+/* Tage relativ zu heute, damit die Demo immer aktuell wirkt */
+function daysAgo(d, h, m) {
+  const t = new Date();
+  t.setDate(t.getDate() - d);
+  t.setHours(h, m, 0, 0);
+  return t.toISOString();
+}
+function dayKey(iso) { return iso.slice(0, 10); }
+
+/* ---------------- Statische, neutrale Demo-Daten ---------------- */
+
+const DEMO = {
+  totals: { total_requests: 312, tokens: 1842310, cost_usd: 3.87, success_rate: 98, used_db_count: 247 },
+  models: [
+    { name: "Assistenz-Modell", requests: 214, color: "#ffb000" },
+    { name: "Analyse-Modell",   requests: 86,  color: "#3ddc97" },
+    { name: "Radar-Modell",     requests: 12,  color: "#7db3ff" },
+  ],
+  timeline: [9, 14, 11, 18, 22, 8, 5, 17, 24, 19, 26, 21, 12, 23],
+};
+
+const ENTRIES = [
+  { created_at: daysAgo(0, 9, 41), model: "Analyse-Modell", channel: "internal",
+    question: "Welche Freigabestufe gilt für Vorgang A-104 nach der aktuellen Prozessregel?",
+    answer: "Für Vorgang A-104 ist nach Regelmodul R-3 die Freigabestufe 2 vorgesehen. Vor Abschluss sind Statusfeld 4 und die dokumentierte Zweitprüfung abzugleichen.",
+    tokens_in: 4820, tokens_out: 1130, cost: 0.0092, used_db: true, success: true, group: "g-001" },
+  { created_at: daysAgo(0, 8, 12), model: "Assistenz-Modell", channel: "public",
+    question: "Können Modul B und Modul C im selben Zeitfenster ausgeführt werden?",
+    answer: "Die parallele Ausführung ist grundsätzlich möglich. Maßgeblich sind die verfügbaren Ressourcen und die Abhängigkeit in Prüfschritt 3; ein automatischer Konfliktcheck wird empfohlen.",
+    tokens_in: 3610, tokens_out: 940, cost: 0.0071, used_db: true, success: true, group: "g-002" },
+  { created_at: daysAgo(1, 16, 55), model: "Analyse-Modell", channel: "internal",
+    question: "Ab wann ist für wiederkehrende Vorgänge eine zusätzliche Prüfung erforderlich?",
+    answer: "Eine zusätzliche Prüfung ist vorgesehen, sobald Schwellenwert S-2 überschritten wird oder die Datenvollständigkeit unter 95 Prozent liegt. Eine Einzelfallbewertung bleibt möglich.",
+    tokens_in: 5240, tokens_out: 1480, cost: 0.0104, used_db: true, success: true, group: "g-003" },
+  { created_at: daysAgo(1, 11, 20), model: "Assistenz-Modell", channel: "public",
+    question: "Welche Priorität gilt für Vorgang D-208?",
+    answer: "Für Vorgang D-208 gilt derzeit Priorität hoch. Ausschlaggebend sind der nahende Zieltermin und eine offene Abhängigkeit zu Modul F.",
+    tokens_in: 2980, tokens_out: 620, cost: 0.0055, used_db: true, success: true, group: null },
+  { created_at: daysAgo(2, 14, 5), model: "Assistenz-Modell", channel: "public",
+    question: "Gilt für Modul E die vereinfachte Prüfroutine?",
+    answer: "Die vereinfachte Prüfroutine kann genutzt werden, wenn alle Pflichtfelder vollständig sind und keine Abweichungsmarkierung vorliegt.",
+    tokens_in: 3120, tokens_out: 780, cost: 0.0060, used_db: true, success: true, group: null },
+  { created_at: daysAgo(2, 9, 48), model: "Analyse-Modell", channel: "internal",
+    question: "Im Datensatz zu Vorgang F-311 fehlt das Abschlussfeld. Was ist zu tun?",
+    answer: "Der Datensatz ist unvollständig. Empfehlung: Status auf Prüfung setzen, die fehlende Angabe anfordern und bis dahin keine automatische Abschlussfreigabe erteilen.",
+    tokens_in: 4470, tokens_out: 1210, cost: 0.0089, used_db: false, success: true, group: null },
+  { created_at: daysAgo(3, 15, 33), model: "Assistenz-Modell", channel: "public",
+    question: "Wie muss eine Abweichung im Vorgang gekennzeichnet werden?",
+    answer: "Abweichungen erhalten den Status Prüfung, eine Prioritätsstufe und einen kurzen Begründungstext. Die Markierung bleibt bis zur dokumentierten Freigabe sichtbar.",
+    tokens_in: 2870, tokens_out: 690, cost: 0.0054, used_db: true, success: true, group: null },
+  { created_at: daysAgo(3, 10, 2), model: "Assistenz-Modell", channel: "public",
+    question: "Wie lautet der standardisierte Abschlussvermerk für Vorgang G-120?",
+    answer: "Beispiel: Vorgang G-120 · Prüfstufe 2 · vollständig · freigegeben. Ergänzende Hinweise werden im separaten Kommentarfeld dokumentiert.",
+    tokens_in: 3050, tokens_out: 720, cost: 0.0058, used_db: true, success: false, group: null },
+];
+
+const ADVISORIES = {
+  "g-001": {
+    meta: "Analyse-Modell · Demo-Prozessanalyse",
+    question: "Welche Freigabestufe gilt für Vorgang A-104 nach der aktuellen Prozessregel?",
+    publicAnswer: "Für Vorgang A-104 ist Freigabestufe 2 vorgesehen. Bitte prüfen Sie Statusfeld 4 und die dokumentierte Zweitprüfung vor dem Abschluss.",
+    summary: "Freigabestufe 2 plausibel; Vollständigkeitsabgleich und Zweitprüfung sind noch offen.",
+    expert: "Die vorhandenen Angaben sprechen für Freigabestufe 2. Zusätzlich sind die aktuelle Regelversion, Statusfeld 4 und die protokollierte Zweitprüfung abzugleichen. Ohne diese Angaben bleibt die Einstufung ein Entwurf.",
+    classification: [
+      ["Vorgangs-ID", "A-104"],
+      ["Prozessmodul", "Modul A"],
+      ["Freigabestufe", "2"],
+      ["Regelversion", "R-3"],
+      ["Status", "Prüfung offen"],
+      ["Priorität", "mittel"],
+      ["Zuordnungssicherheit", "mittel – Pflichtfeld offen"],
+    ],
+    transportDoc: "Vorgang A-104 · Freigabestufe 2 · Regelversion R-3",
+    checklist: [
+      "Statusfeld 4 vervollständigen",
+      "Aktuelle Regelversion bestätigen",
+      "Zweitprüfung dokumentieren",
+      "Abschlussstatus gegen den tatsächlichen Vorgang halten",
+    ],
+    missing: ["Statusfeld 4", "Prüfzeitpunkt", "Freigabevermerk"],
+    risks: ["Bei unvollständiger Zweitprüfung darf der automatische Abschluss nicht ausgelöst werden."],
+    offers: [
+      { title: "Vollständigkeitsprüfung", fit: "hoch", rationale: "Die Anfrage betrifft einen klar abgrenzbaren Vorgang mit offenen Pflichtfeldern." },
+      { title: "Regelmodul-Abgleich", fit: "mittel", rationale: "Wiederkehrende Fragen deuten auf Optimierungspotenzial in der Prozessregel hin." },
+    ],
+    lead: [
+      ["Vermutetes Anliegen", "Freigabe vor geplantem Abschluss"],
+      ["Dringlichkeit", "mittel"],
+      ["Vorgangsqualität", "hoch"],
+      ["Empfohlener nächster Schritt", "Pflichtfelder vervollständigen"],
+    ],
+  },
+  "g-002": {
+    meta: "Analyse-Modell · Demo-Prozessanalyse",
+    question: "Können Modul B und Modul C im selben Zeitfenster ausgeführt werden?",
+    publicAnswer: "Die parallele Ausführung ist grundsätzlich möglich. Maßgeblich sind die verfügbaren Ressourcen und die Abhängigkeit in Prüfschritt 3.",
+    summary: "Parallele Ausführung grundsätzlich möglich; Ressourcenkonflikt und Prüfschritt 3 kontrollieren.",
+    expert: "Die Prozessmatrix enthält kein generelles Parallelverbot. Praktisch entscheidend sind die aktuelle Ressourcenzuordnung, der Status von Prüfschritt 3 und mögliche Sperrzeiten.",
+    classification: [
+      ["Modulkombination", "B + C"],
+      ["Ausführungsart", "parallel"],
+      ["Prüfschritt", "3"],
+      ["Konfliktstatus", "kein direkter Konflikt"],
+      ["Zuordnungssicherheit", "hoch"],
+    ],
+    transportDoc: "Module B + C · paralleles Zeitfenster · Konfliktcheck erforderlich",
+    checklist: [
+      "Ressourcenbelegung abgleichen",
+      "Status von Prüfschritt 3 bestätigen",
+      "Sperrzeiten dokumentieren",
+    ],
+    missing: ["Aktuelles Ressourcenfenster", "Bestätigung Prüfschritt 3"],
+    risks: ["Eine nachträgliche Sperrzeit kann die parallele Ausführung blockieren."],
+    offers: [
+      { title: "Konfliktprüfung automatisieren", fit: "hoch", rationale: "Die konkrete Planungsfrage lässt sich als dokumentierte Regel abbilden." },
+    ],
+    lead: [
+      ["Vermutetes Anliegen", "Absicherung der Ablaufplanung"],
+      ["Dringlichkeit", "hoch"],
+      ["Vorgangsqualität", "mittel"],
+      ["Empfohlener nächster Schritt", "Aktuelle Belegung prüfen"],
+    ],
+  },
+  "g-003": {
+    meta: "Analyse-Modell · Demo-Prozessanalyse",
+    question: "Ab wann ist für wiederkehrende Vorgänge eine zusätzliche Prüfung erforderlich?",
+    publicAnswer: "Eine zusätzliche Prüfung ist vorgesehen, wenn Schwellenwert S-2 überschritten wird oder die Datenvollständigkeit unter 95 Prozent liegt.",
+    summary: "Zusätzliche Prüfung hängt von Schwellenwert S-2 und Datenvollständigkeit ab.",
+    expert: "Entscheidend sind die im Regelmodul hinterlegten Schwellenwerte. Auch bei vereinfachten Abläufen bleibt die dokumentierte Vollständigkeitsprüfung erforderlich.",
+    classification: [],
+    transportDoc: "",
+    checklist: [
+      "Vorgangstyp und Häufigkeit erfassen",
+      "Schwellenwert S-2 für typische Fälle berechnen",
+      "Vollständigkeitsnachweise prüfen",
+    ],
+    missing: ["Konkreter Vorgangstyp", "Häufigkeit pro Periode"],
+    risks: ["Ohne dokumentierte Schwellenwertprüfung kann eine notwendige Zusatzprüfung übersehen werden."],
+    offers: [
+      { title: "Schwellenwert-Check", fit: "hoch", rationale: "Genau die angefragte Prüfung, klar abgrenzbarer Vorgang." },
+      { title: "Automatisierte Zusatzprüfung", fit: "mittel", rationale: "Bei wiederkehrenden Fällen direkt anschlussfähig." },
+    ],
+    lead: [
+      ["Vermutetes Anliegen", "Nachvollziehbare Organisation wiederkehrender Vorgänge"],
+      ["Dringlichkeit", "mittel"],
+      ["Vorgangsqualität", "hoch"],
+      ["Empfohlener nächster Schritt", "Schwellenwert-Check durchführen"],
+    ],
+  },
+};
+
+const RADAR = {
+  gesamteinschaetzung: "Ruhige Informationslage mit einer wichtigen Ausnahme: Die angekündigte Änderung an Regelmodul R-3 betrifft mehrere wiederkehrende Abläufe. Empfehlung: betroffene Prozessschritte vor der nächsten Aktualisierung prüfen.",
+  treffer: [
+    { relevanz: "hoch",
+      titel: "Regelmodul R-3: Neue Übergangsfrist für mehrstufige Freigaben angekündigt",
+      begruendung: "Mehrere wiederkehrende Abläufe nutzen das Regelmodul; die Änderung betrifft deren Standardprozess direkt.",
+      bedeutung: "Freigabe- und Dokumentationsschritte müssen vor Ablauf der Übergangsfrist angepasst werden.",
+      entscheidung: "Betroffene Prozessvorlagen prüfen und die Anpassung für den nächsten Zyklus vorbereiten.",
+      quelle: "Quelle A · Demo", datum: "diese Woche" },
+    { relevanz: "mittel",
+      titel: "Aktualisierter Prozesshinweis präzisiert Schwellenwert S-2",
+      begruendung: "Betrifft eine häufige Assistenz-Anfrage zur zusätzlichen Prüfung.",
+      bedeutung: "Die Grundlage für laufende Schwellenwert-Checks ändert sich leicht; Textbausteine sollten aktualisiert werden.",
+      entscheidung: "Internes Wissensmodul und Prozessvorlagen aktualisieren.",
+      quelle: "Quelle B · Demo", datum: "vor 3 Tagen" },
+    { relevanz: "mittel",
+      titel: "Schnittstellen-Update verändert Synchronisationsfenster für Modul C",
+      begruendung: "Zwei konfigurierte Abläufe nutzen das betroffene Zeitfenster.",
+      bedeutung: "Relevanz auf einzelne Prozessmodule begrenzt, dort aber operativ spürbar.",
+      entscheidung: "Betroffene Ablaufpläne im nächsten Regeltermin prüfen.",
+      quelle: "Quelle C · Demo", datum: "vor 5 Tagen" },
+    { relevanz: "niedrig",
+      titel: "Neues Demonstrationsmodul für visuelle Prozesskarten verfügbar",
+      begruendung: "Optionale Erweiterung ohne unmittelbaren Handlungsdruck.",
+      bedeutung: "Gelegenheit zur übersichtlicheren Darstellung komplexer Abläufe.",
+      entscheidung: "Teilnahme prüfen, kein akuter Handlungsbedarf.",
+      quelle: "Quelle D · Demo", datum: "vor 6 Tagen" },
+  ],
+  feeds: [
+    { name: "Quelle A", ok: true, anzahl: 9 },
+    { name: "Quelle B", ok: true, anzahl: 12 },
+    { name: "Quelle C", ok: true, anzahl: 5 },
+  ],
+  gesammelt: 26,
+};
+
+/* ---------------- Kennzahlen und Filter ---------------- */
+
+let filtered = ENTRIES.slice();
+
+function filterEntries() {
+  const from = document.getElementById("from").value;
+  const to = document.getElementById("to").value;
+  const model = document.getElementById("model").value;
+  const channel = document.getElementById("channel").value;
+  filtered = ENTRIES.filter(e => {
+    const day = dayKey(e.created_at);
+    if (from && day < from) return false;
+    if (to && day > to) return false;
+    if (model && e.model !== model) return false;
+    if (channel && e.channel !== channel) return false;
+    return true;
+  });
+}
+
+function resetFilters() {
+  document.getElementById("from").value = "";
+  document.getElementById("to").value = "";
+  document.getElementById("model").value = "";
+  document.getElementById("channel").value = "";
+  offset = 0;
+  loadAll();
+}
+
+function loadModels() {
+  const sel = document.getElementById("model");
+  const current = sel.value;
+  sel.innerHTML = '<option value="">Alle</option>' +
+    DEMO.models.map(m => `<option value="${esc(m.name)}">${esc(m.name)}</option>`).join("");
+  sel.value = current;
+}
+
+function loadSummary() {
+  const t = DEMO.totals;
+  document.getElementById("kpiRequests").textContent = fmtNum(t.total_requests);
+  document.getElementById("kpiTokens").textContent = fmtNum(t.tokens);
+  document.getElementById("kpiCost").textContent = fmtCost(t.cost_usd);
+  document.getElementById("kpiSuccess").textContent = t.success_rate + "%";
+  document.getElementById("kpiDb").textContent = fmtNum(t.used_db_count);
+  renderModelChart();
+}
+
+/* ---------------- Charts: selbst gerendert (SVG / conic-gradient) ---------------- */
+
+function renderTimeline() {
+  const el = document.getElementById("timelineChart");
+  const data = DEMO.timeline;
+  const W = 560, H = 280, padL = 34, padR = 12, padT = 14, padB = 28;
+  const maxV = Math.max(...data) * 1.15;
+  const iw = W - padL - padR, ih = H - padT - padB;
+  const x = i => padL + (i / (data.length - 1)) * iw;
+  const y = v => padT + ih - (v / maxV) * ih;
+
+  const labels = data.map((_, i) => {
+    const d = new Date();
+    d.setDate(d.getDate() - (data.length - 1 - i));
+    return d.toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit" });
+  });
+
+  let grid = "", axis = "";
+  for (let g = 0; g <= 4; g++) {
+    const gy = padT + (ih / 4) * g;
+    const val = Math.round(maxV - (maxV / 4) * g);
+    grid += `<line class="grid-line" x1="${padL}" y1="${gy}" x2="${W - padR}" y2="${gy}"/>`;
+    axis += `<text class="axis-label" x="${padL - 6}" y="${gy + 4}" text-anchor="end">${val}</text>`;
+  }
+  let xlabels = "";
+  for (let i = 0; i < data.length; i += 3) {
+    xlabels += `<text class="axis-label" x="${x(i)}" y="${H - 8}" text-anchor="middle">${labels[i]}</text>`;
+  }
+  const pts = data.map((v, i) => `${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(" ");
+  const area = `M ${x(0)},${y(data[0])} ` + data.map((v, i) => `L ${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(" ") +
+    ` L ${x(data.length - 1)},${padT + ih} L ${x(0)},${padT + ih} Z`;
+  const dots = data.map((v, i) => `<circle class="tl-dot" cx="${x(i).toFixed(1)}" cy="${y(v).toFixed(1)}" r="3"/>`).join("");
+
+  el.innerHTML = `<svg class="svg-chart" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img"
+      aria-label="Liniendiagramm: Anfragen pro Tag der letzten 14 Tage">
+    ${grid}${axis}${xlabels}
+    <path class="tl-area" d="${area}"/>
+    <polyline class="tl-line" points="${pts}"/>
+    ${dots}
+  </svg>`;
+}
+
+function renderModelChart() {
+  const el = document.getElementById("modelChart");
+  const total = DEMO.models.reduce((s, m) => s + m.requests, 0);
+  let acc = 0;
+  const stops = DEMO.models.map(m => {
+    const from = (acc / total) * 360;
+    acc += m.requests;
+    const to = (acc / total) * 360;
+    return `${m.color} ${from.toFixed(1)}deg ${to.toFixed(1)}deg`;
+  }).join(", ");
+  el.innerHTML = `
+    <div class="donut-wrap">
+      <div class="donut" style="background: conic-gradient(${stops})" role="img" aria-label="Anfragen nach Modell">
+        <div class="center-num"><b>${fmtNum(total)}</b><span>Anfragen</span></div>
+      </div>
+      <div class="donut-legend">
+        ${DEMO.models.map(m =>
+          `<div class="lg"><span class="dot" style="background:${m.color}"></span>${esc(m.name)}
+           <span class="n">· ${fmtNum(m.requests)}</span></div>`).join("")}
+      </div>
+    </div>`;
+}
+
+/* ---------------- Anfragen-Tabelle ---------------- */
+
+function loadEntries() {
+  totalEntries = filtered.length;
+  const rows = filtered.slice(offset, offset + LIMIT);
+  const body = document.getElementById("entriesBody");
+  body.innerHTML = rows.map(r => {
+    const dt = new Date(r.created_at).toLocaleString("de-DE");
+    const status = r.success
+      ? '<span class="pill ok">OK</span>'
+      : '<span class="pill err">Fehler</span>';
+    let advCell = "–";
+    if (r.group && ADVISORIES[r.group]) {
+      advCell = `<button class="mini-btn" onclick="openAdvisory('${r.group}')">Analyse öffnen</button>`;
+    } else if (r.channel === "internal") {
+      advCell = '<span class="pill badge-pending">in Bearbeitung</span>';
+    }
+    return `<tr>
+      <td>${esc(dt)}</td>
+      <td><span class="pill">${esc(r.model)}</span></td>
+      <td>${channelPill(r.channel)}</td>
+      <td class="q">${esc(r.question)}</td>
+      <td class="a">${esc(r.answer.slice(0, 240))}${r.answer.length > 240 ? "…" : ""}</td>
+      <td>${fmtNum(r.tokens_in)} / ${fmtNum(r.tokens_out)}</td>
+      <td>${fmtCost(r.cost)}</td>
+      <td>${r.used_db ? "✓" : "–"}</td>
+      <td>${status}</td>
+      <td>${advCell}</td>
+    </tr>`;
+  }).join("") || `<tr><td colspan="10" class="sub">Keine Einträge im gewählten Zeitraum.</td></tr>`;
+  const page = Math.floor(offset / LIMIT) + 1;
+  const pages = Math.max(1, Math.ceil(totalEntries / LIMIT));
+  document.getElementById("pageInfo").textContent = `Seite ${page} / ${pages} · ${fmtNum(totalEntries)} Einträge`;
+}
+
+function nextPage() { if (offset + LIMIT < totalEntries) { offset += LIMIT; loadEntries(); } }
+function prevPage() { if (offset >= LIMIT) { offset -= LIMIT; loadEntries(); } }
+
+function exportCsv() {
+  const header = ["Zeitpunkt","Modell","Kanal","Frage","Antwort","TokenEin","TokenAus","KostenUSD","DB","Status"];
+  const lines = filtered.map(r => [
+    r.created_at, r.model, r.channel === "internal" ? "Intern" : "Public",
+    r.question.replace(/"/g,'""'), r.answer.replace(/"/g,'""'),
+    r.tokens_in, r.tokens_out, Number(r.cost).toFixed(6),
+    r.used_db ? "ja" : "nein", r.success ? "OK" : "Fehler"
+  ].map(v => `"${v}"`).join(","));
+  const csv = [header.join(","), ...lines].join("\n");
+  const blob = new Blob(["﻿" + csv], { type: "text/csv;charset=utf-8;" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "ki_cockpit_demo_verbrauch.csv";
+  a.click();
+}
+
+/* ---------------- Informationsradar (Demo-Lauf) ---------------- */
+
+function runRadar() {
+  const btn = document.getElementById("radarBtn");
+  const status = document.getElementById("radarStatus");
+  btn.disabled = true;
+  status.textContent = "Suche läuft … Feeds werden abgerufen und vom KI-Agenten bewertet.";
+  document.getElementById("radarTop").innerHTML = "";
+  document.getElementById("radarRest").innerHTML = "";
+  document.getElementById("radarSummary").innerHTML = "";
+  document.getElementById("radarFeeds").innerHTML = "";
+  document.getElementById("radarToggle").classList.add("hidden");
+  setTimeout(() => {
+    renderRadar();
+    status.textContent = "Fertig · Letzter Lauf: " + new Date().toLocaleString("de-DE") +
+      ` · ${RADAR.treffer.length} relevant · Demo-Daten`;
+    btn.disabled = false;
+    loadContextCard();
+  }, 1100);
+}
+
+function relevanzPill(r) {
+  const cls = r === "hoch" ? "fit-hoch" : r === "mittel" ? "fit-mittel" : "fit-niedrig";
+  return `<span class="pill ${cls}">${esc(r || "unbestimmt")}</span>`;
+}
+
+function radarCardHtml(t) {
+  const rel = String(t.relevanz || "").toLowerCase();
+  const cardCls = rel === "hoch" ? "card-hoch" : rel === "mittel" ? "card-mittel" : "card-niedrig";
+  return `
+    <div class="radar-card ${cardCls}">
+      <div class="title"><span>${esc(t.titel)}</span> ${relevanzPill(rel)}</div>
+      ${t.begruendung ? `<div class="rationale"><strong>Relevanz:</strong> ${esc(t.begruendung)}</div>` : ""}
+          ${t.bedeutung ? `<div class="rationale"><strong>Bedeutung für den Prozess:</strong> ${esc(t.bedeutung)}</div>` : ""}
+      ${t.entscheidung ? `<div class="rationale decision"><strong>Mögliche Entscheidung:</strong> ${esc(t.entscheidung)}</div>` : ""}
+      <div class="src">${esc(t.quelle || "")}${t.datum ? " · " + esc(t.datum) : ""}</div>
+    </div>`;
+}
+
+function toggleRadarRest() {
+  const rest = document.getElementById("radarRest");
+  const btn = document.getElementById("radarToggle");
+  const open = rest.classList.toggle("hidden") === false;
+  const n = rest.childElementCount;
+  btn.textContent = open ? "▴ Weniger anzeigen" : `▾ Weitere ${n} Meldungen anzeigen`;
+}
+
+function renderRadar() {
+  document.getElementById("radarSummary").innerHTML =
+    `<div class="radar-summary-box">${esc(RADAR.gesamteinschaetzung)}</div>`;
+  const treffer = RADAR.treffer;
+  const top = document.getElementById("radarTop");
+  const rest = document.getElementById("radarRest");
+  const toggle = document.getElementById("radarToggle");
+  rest.classList.add("hidden");
+  top.innerHTML = radarCardHtml(treffer[0]);
+  const others = treffer.slice(1);
+  rest.innerHTML = others.map(radarCardHtml).join("");
+  if (others.length) {
+    toggle.classList.remove("hidden");
+    toggle.textContent = `▾ Weitere ${others.length} Meldungen anzeigen`;
+  } else {
+    toggle.classList.add("hidden");
+  }
+  document.getElementById("radarFeeds").innerHTML =
+    "Feeds: " + RADAR.feeds.map(f => `${esc(f.name)} ✓ (${f.anzahl})`).join(" · ") +
+    ` · ${RADAR.gesammelt} Meldungen gesammelt · Demo-Daten`;
+}
+
+/* ---------------- Aktualitätsabgleich ---------------- */
+
+function loadContextCard() {
+  const entry = ENTRIES.find(e => e.channel === "public") || ENTRIES[0];
+  const when = new Date(entry.created_at).toLocaleString("de-DE");
+  document.getElementById("contextQuestion").innerHTML =
+    `<strong>${esc(when)}:</strong> ${esc(truncateText(entry.question, 190))}`;
+  const match = RADAR.treffer[0];
+  document.getElementById("contextNews").innerHTML =
+    `<strong>${esc(match.titel)}</strong> · ${esc(match.quelle)}`;
+  document.getElementById("contextSuggestion").innerHTML =
+    `<strong>Vorschlag:</strong> Die Antwort auf diese Anfrage sollte mit dem aktuellen Radar-Hinweis abgeglichen werden. ` +
+    esc(truncateText(match.entscheidung, 210));
+}
+
+/* ---------------- Fachanalyse-Detailansicht ---------------- */
+
+function kvRows(pairs) {
+  return pairs.map(([k, v]) =>
+    `<div class="k">${esc(k)}</div><div>${esc(v)}</div>`).join("");
+}
+function listBlock(title, items) {
+  if (!items || !items.length) return "";
+  return `<div class="adv-section"><h3>${esc(title)}</h3>
+    <ul class="adv-list">${items.map(i => `<li>${esc(i)}</li>`).join("")}</ul></div>`;
+}
+
+function openAdvisory(groupId) {
+  const adv = ADVISORIES[groupId];
+  if (!adv) return;
+  resetChat("adv");
+  document.getElementById("advisoryModal").classList.remove("hidden");
+  document.getElementById("advMeta").textContent = adv.meta;
+
+  let html = `<div class="adv-section"><h3>Nutzerfrage</h3>
+    <div class="pair-col"><div class="body">${esc(adv.question)}</div></div></div>`;
+
+  html += `<div class="pair-grid two">
+    <div class="pair-col">
+      <h3>Öffentliche Antwort (Website)</h3>
+      <div class="body">${esc(adv.publicAnswer)}</div>
+    </div>
+    <div class="pair-col">
+      <h3>Interne Expertenantwort</h3>
+      <div class="body" style="color:var(--accent-soft);margin-bottom:8px">${esc(adv.summary)}</div>
+      <div class="body">${esc(adv.expert)}</div>
+    </div>
+  </div>`;
+
+  if (adv.classification.length) {
+    html += `<div class="adv-section"><h3>Klassifizierung (Entwurf)</h3>
+      <div class="adv-kv">${kvRows(adv.classification)}</div></div>`;
+  }
+  if (adv.transportDoc) {
+    html += `<div class="adv-section"><h3>Standardisierter Prozessvermerk (Entwurf)</h3>
+      <div class="pair-col"><div class="body">${esc(adv.transportDoc)}</div></div></div>`;
+  }
+  html += listBlock("Prüfpfad / Checkliste", adv.checklist);
+  html += listBlock("Fehlende Angaben", adv.missing);
+  html += listBlock("Risiko-Hinweise", adv.risks);
+
+  if (adv.offers && adv.offers.length) {
+    html += `<div class="adv-section"><h3>Optionale nächste Schritte</h3>` +
+      adv.offers.map(o => {
+        const fitCls = o.fit === "hoch" ? "fit-hoch" : o.fit === "mittel" ? "fit-mittel" : "fit-niedrig";
+        return `<div class="offer-card">
+          <div class="title">${esc(o.title)} <span class="pill ${fitCls}">Passung: ${esc(o.fit)}</span></div>
+          <div class="rationale">${esc(o.rationale)}</div>
+        </div>`;
+      }).join("") + `</div>`;
+  }
+  if (adv.lead && adv.lead.length) {
+    html += `<div class="adv-section"><h3>Lead-Einschätzung</h3>
+      <div class="adv-kv">${kvRows(adv.lead)}</div></div>`;
+  }
+
+  html += `<div class="note" style="margin-top:18px">
+    Alle internen Angaben sind KI-generierte Entwürfe zur Vorbereitung und müssen
+    vor jeder Verwendung anhand der freigegebenen Regelversion, der vollständigen
+    Ausgangsdaten und des konkreten Vorgangs geprüft werden.
+  </div>`;
+
+  document.getElementById("advContent").innerHTML = html;
+}
+
+function closeAdvisory() {
+  document.getElementById("advisoryModal").classList.add("hidden");
+}
+
+/* ---------------- Interner Chat (Demo mit Beispielantworten) ---------------- */
+
+const CHAT_REPLIES = [
+  "In dieser Demo antworte ich mit neutralen Beispieltexten. In einer produktiven Konfiguration greife ich auf freigegebene Wissensmodule und Prozessregeln zu und beantworte Fragen mit Quellenbezug.",
+  "Abstraktes Beispiel: Zu Vorgang A-104 würde ich Freigabestufe, Regelversion und offene Pflichtfelder aus dem Wissensmodul ableiten. Jede Antwort bleibt ein KI-Entwurf zur Prüfung.",
+  "Im Analyse-Fenster nehme ich die geöffnete Prozessanalyse als Kontext mit. So können Sie Rückfragen stellen, ohne die Vorgangsdaten erneut einzugeben.",
+  "Weitere Informationen zu modularen KI-Cockpits erhalten Sie unter info@tm-ki-consulting.de. Alle hier gezeigten Inhalte sind neutral und frei von realen Projektdaten.",
+];
+
+const chatInstances = {
+  main: { history: [], busy: false, replyIdx: 0 },
+  adv:  { history: [], busy: false, replyIdx: 0 },
+};
+
+function chatEl(key, part) {
+  return document.getElementById("chat" + part + "-" + key);
+}
+
+function resetChat(key) {
+  const chat = chatInstances[key];
+  chat.history = [];
+  chat.busy = false;
+  chat.replyIdx = 0;
+  const msgs = chatEl(key, "Msgs");
+  if (msgs) msgs.innerHTML = "";
+  const input = chatEl(key, "Input");
+  if (input) input.value = "";
+  const btn = chatEl(key, "Send");
+  if (btn) btn.disabled = false;
+}
+
+function addChatMsg(key, role, text, pending) {
+  const msgs = chatEl(key, "Msgs");
+  const div = document.createElement("div");
+  div.className = "chat-msg " + role + (pending ? " pending" : "");
+  div.textContent = text;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  return div;
+}
+
+function sendChat(key) {
+  const chat = chatInstances[key];
+  if (chat.busy) return;
+  const input = chatEl(key, "Input");
+  const message = input.value.trim();
+  if (!message) return;
+  input.value = "";
+  chat.busy = true;
+  chatEl(key, "Send").disabled = true;
+  addChatMsg(key, "user", message);
+  const pendingEl = addChatMsg(key, "ai", "Die interne KI denkt nach …", true);
+  setTimeout(() => {
+    pendingEl.classList.remove("pending");
+    pendingEl.textContent = CHAT_REPLIES[chat.replyIdx % CHAT_REPLIES.length];
+    chat.replyIdx++;
+    chatEl(key, "Model").textContent = "Demo-Modus · Beispielantworten";
+    chat.busy = false;
+    chatEl(key, "Send").disabled = false;
+    const msgs = chatEl(key, "Msgs");
+    msgs.scrollTop = msgs.scrollHeight;
+  }, 900);
+}
+
+for (const key of Object.keys(chatInstances)) {
+  chatEl(key, "Input").addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendChat(key); }
+  });
+}
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") { closeAdvisory(); closeTech(); }
+});
+
+function openTech() {
+  document.getElementById("techModal").classList.remove("hidden");
+}
+function closeTech() {
+  document.getElementById("techModal").classList.add("hidden");
+}
+
+function loadAll() {
+  offset = 0;
+  filterEntries();
+  loadSummary();
+  renderTimeline();
+  loadEntries();
+}
+
+/* ---------------- Start ---------------- */
+loadModels();
+loadAll();
+renderRadar();
+document.getElementById("radarStatus").textContent =
+  "Automatischer Lauf: heute, 06:00 Uhr · " + RADAR.treffer.length + " relevant · Demo-Daten";
+loadContextCard();
+
+/* ---------------- Wisch-Weiterleitung an den Cockpit-Slider (cockpit-demo.html) ---------------- */
+(function(){
+  if (window.parent === window) return; /* nur eingebettet aktiv */
+  let sx=0, sy=0, st=0;
+  addEventListener("touchstart", function(e){
+    const t=e.touches[0]; sx=t.clientX; sy=t.clientY; st=Date.now();
+  }, {passive:true});
+  addEventListener("touchend", function(e){
+    const t=e.changedTouches[0];
+    const dx=t.clientX-sx, dy=t.clientY-sy;
+    if (Date.now()-st < 800 && Math.abs(dx) > 70 && Math.abs(dx) > 1.8*Math.abs(dy)) {
+      window.parent.postMessage({ type:"cockpit-swipe", dir: dx < 0 ? "next" : "prev" }, "*");
+    }
+  }, {passive:true});
+})();
+</script>
+</body>
+</html>

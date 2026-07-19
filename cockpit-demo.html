@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Modulare KI-Cockpits · Neutrale Demo · TM KI Consulting</title>
+<style>
+  :root{
+    --navy-900:#0a1628; --navy-800:#0f1d33; --navy-700:#152540; --navy-600:#1c3050;
+    --white:#ffffff; --gray-2:#b8c2d0; --gray-3:#8a96a8;
+    --line:rgba(255,255,255,.10); --line-strong:rgba(255,255,255,.16);
+    --accent:#4a86c8;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;height:100%;overflow:hidden;background:var(--navy-900);
+    font-family:'Inter','Segoe UI',Arial,sans-serif;}
+
+  .slider{position:relative;width:100%;height:100%;overflow:hidden;}
+  .track{
+    display:flex;width:200%;height:100%;
+    transition:transform .5s cubic-bezier(.22,.9,.3,1);
+    will-change:transform;
+  }
+  .slide{width:50%;height:100%;flex:none;position:relative;}
+  .slide iframe{width:100%;height:100%;border:0;display:block;background:var(--navy-900);}
+
+  /* Pfeile */
+  .nav-arrow{
+    position:absolute; top:50%; transform:translateY(-50%); z-index:20;
+    width:48px; height:64px; border-radius:12px; cursor:pointer;
+    background:rgba(12,26,48,.72); border:1px solid var(--line-strong);
+    color:var(--gray-2); backdrop-filter:blur(8px);
+    display:flex; align-items:center; justify-content:center;
+    transition:background .15s, color .15s, transform .15s, opacity .25s;
+  }
+  .nav-arrow:hover{ background:rgba(28,48,80,.9); color:#fff; }
+  .nav-arrow.prev{ left:10px; }
+  .nav-arrow.next{ right:10px; }
+  .nav-arrow.hidden{ opacity:0; pointer-events:none; }
+
+  /* Punkte + Beschriftung */
+  .dots{
+    position:absolute; left:50%; bottom:12px; transform:translateX(-50%); z-index:20;
+    display:flex; gap:8px; align-items:center;
+    background:rgba(12,26,48,.72); border:1px solid var(--line-strong);
+    border-radius:999px; padding:7px 12px; backdrop-filter:blur(8px);
+  }
+  .dot-btn{
+    display:flex; align-items:center; gap:7px; cursor:pointer;
+    min-height:44px; background:transparent; border:0; padding:8px 10px; border-radius:999px;
+    color:var(--gray-3); font-family:inherit; font-size:10.5px; letter-spacing:.04em;
+    transition:color .15s, background .15s;
+  }
+  .dot-btn .d{ width:8px; height:8px; border-radius:50%; background:var(--gray-3); flex:none; transition:background .15s, box-shadow .15s; }
+  .dot-btn.active{ color:#fff; background:rgba(74,134,200,.14); }
+  .dot-btn.active .d{ background:var(--accent); box-shadow:0 0 8px rgba(74,134,200,.7); }
+  .dot-btn:hover{ color:#fff; }
+
+  /* Einmaliger Wisch-Hinweis */
+  .swipe-hint{
+    position:absolute; right:64px; top:50%; transform:translateY(-50%); z-index:19;
+    background:rgba(12,26,48,.82); border:1px solid var(--line-strong);
+    color:var(--gray-2); font-size:11.5px; border-radius:10px; padding:9px 13px;
+    backdrop-filter:blur(8px); pointer-events:none;
+    animation:hintFloat 2.2s ease-in-out infinite, hintFade .6s 7s ease forwards;
+  }
+  .swipe-hint b{ color:#fff; font-weight:600; }
+  @keyframes hintFloat{ 0%,100%{ transform:translateY(-50%) translateX(0);} 50%{ transform:translateY(-50%) translateX(-6px);} }
+  @keyframes hintFade{ to{ opacity:0; } }
+
+  @media (max-width:640px){
+    .nav-arrow{ width:44px; height:52px; }
+    .nav-arrow.prev{ left:4px; }
+    .nav-arrow.next{ right:4px; }
+    .dots{ bottom:8px; padding:3px 8px; }
+    .swipe-hint{ display:none; }
+    .dot-btn span.lbl{ display:none; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .track{ transition:none; }
+    .swipe-hint{ animation:none; opacity:0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="slider" id="slider">
+  <div class="track" id="track">
+    <div class="slide">
+      <iframe src="cockpit-anwendungsbereich-a.html" title="Modulares KI-Cockpit · Anwendungsbereich A" allow="microphone"></iframe>
+    </div>
+    <div class="slide">
+      <iframe src="cockpit-prozesssteuerung.html" title="Modulares KI-Cockpit · Prozesssteuerung" loading="lazy"></iframe>
+    </div>
+  </div>
+
+  <button class="nav-arrow prev hidden" id="btnPrev" aria-label="Voriges Cockpit">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+  </button>
+  <button class="nav-arrow next" id="btnNext" aria-label="Nächstes Cockpit">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+  </button>
+
+  <div class="swipe-hint" id="swipeHint">Wischen oder Pfeil: <b>zweites KI-Cockpit</b> ansehen →</div>
+
+  <div class="dots" role="tablist" aria-label="Cockpit wählen">
+    <button class="dot-btn active" id="dot0" onclick="goTo(0)" role="tab" aria-selected="true">
+      <span class="d"></span><span class="lbl">KI-Cockpit · Anwendungsbereich A</span>
+    </button>
+    <button class="dot-btn" id="dot1" onclick="goTo(1)" role="tab" aria-selected="false">
+      <span class="d"></span><span class="lbl">KI-Cockpit · Prozesssteuerung</span>
+    </button>
+  </div>
+</div>
+
+<script>
+(function(){
+  let current = 0;
+  const track = document.getElementById("track");
+  const btnPrev = document.getElementById("btnPrev");
+  const btnNext = document.getElementById("btnNext");
+  const hint = document.getElementById("swipeHint");
+
+  window.goTo = function(i){
+    current = Math.max(0, Math.min(1, i));
+    track.style.transform = "translateX(" + (current * -50) + "%)";
+    btnPrev.classList.toggle("hidden", current === 0);
+    btnNext.classList.toggle("hidden", current === 1);
+    for (const n of [0,1]) {
+      const d = document.getElementById("dot" + n);
+      d.classList.toggle("active", n === current);
+      d.setAttribute("aria-selected", n === current ? "true" : "false");
+    }
+    if (hint) hint.style.display = "none";
+  };
+
+  btnPrev.addEventListener("click", function(){ goTo(current - 1); });
+  btnNext.addEventListener("click", function(){ goTo(current + 1); });
+
+  document.addEventListener("keydown", function(e){
+    if (e.key === "ArrowRight") goTo(current + 1);
+    if (e.key === "ArrowLeft") goTo(current - 1);
+  });
+
+  /* Wischgesten aus den eingebetteten Cockpits (postMessage) */
+  window.addEventListener("message", function(e){
+    const d = e.data;
+    if (!d || d.type !== "cockpit-swipe") return;
+    goTo(current + (d.dir === "next" ? 1 : -1));
+  });
+
+  /* Wischgesten direkt auf dem Wrapper (Raender, Pfeile, Punkte) */
+  let sx=0, sy=0, st=0;
+  document.addEventListener("touchstart", function(e){
+    const t=e.touches[0]; sx=t.clientX; sy=t.clientY; st=Date.now();
+  }, {passive:true});
+  document.addEventListener("touchend", function(e){
+    const t=e.changedTouches[0];
+    const dx=t.clientX-sx, dy=t.clientY-sy;
+    if (Date.now()-st < 800 && Math.abs(dx) > 70 && Math.abs(dx) > 1.8*Math.abs(dy)) {
+      goTo(current + (dx < 0 ? 1 : -1));
+    }
+  }, {passive:true});
+})();
+</script>
+</body>
+</html>

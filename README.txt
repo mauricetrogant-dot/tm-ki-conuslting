@@ -5,7 +5,6 @@ TM-KI-Consulting.v.0.2.html
 assets/
   TM_KI_Logo.png
   leistungskatalog-cover.png
-  logo-gefahrgutberatung-manske.png
   julian-manske.png
   maurice-trogant.jpg
   Leistungskatalog_TM-KI-Consulting_v.1.pdf

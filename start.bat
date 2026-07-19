@@ -40,8 +40,15 @@ if %ERRORLEVEL%==0 (
     goto :end
 )
 
-echo Python wurde nicht gefunden.
-echo Bitte installiere Python oder starte die Website ueber VS Code mit Live Server.
+where node >nul 2>nul
+if %ERRORLEVEL%==0 (
+    start "" "%URL%"
+    node local-server.js %PORT%
+    goto :end
+)
+
+echo Weder Python noch Node.js wurden gefunden.
+echo Bitte installiere Python oder Node.js oder starte die Website ueber VS Code mit Live Server.
 echo.
 echo Alternative in VS Code:
 echo 1. Ordner oeffnen
