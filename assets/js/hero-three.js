@@ -27,10 +27,7 @@ if (!canvas || prefersReducedMotion) {
 async function initHeroField(canvas) {
   let THREE;
   try {
-    // Three.js wird lokal ausgeliefert (Self-Hosting, DSGVO-konform).
-    // Hinweis: three.module.min.js importiert intern three.core.min.js —
-    // beide Dateien müssen gemeinsam unter assets/js/vendor/ liegen.
-    THREE = await import('./assets/js/vendor/three.module.min.js');
+    THREE = await import('https://cdn.jsdelivr.net/npm/three@0.184.0/build/three.module.js');
   } catch (error) {
     document.documentElement.classList.add('no-webgl');
     return;
