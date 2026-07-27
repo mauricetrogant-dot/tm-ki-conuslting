@@ -8,16 +8,20 @@
 <meta property="og:title" content="Wie aktuelle Top-KI-Modelle in der Spielentwicklung eingesetzt werden" />
 <meta property="og:description" content="Fable 5.0 entwickelt in Roblox Studio ein Tycoon-Spiel in rund vier Stunden, mit Human in the Loop. Praxisbericht mit gemessenen Zahlen." />
 <meta property="og:type" content="article" />
-<meta property="og:image" content="og-image.png" />
+<meta property="og:image" content="https://www.tm-ki-consulting.de/og-image.png" />
+<meta property="og:url" content="https://www.tm-ki-consulting.de/ki-spieleentwicklung-artikel.html" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="canonical" href="https://www.tm-ki-consulting.de/ki-spieleentwicklung-artikel.html" />
 
 <link rel="icon" href="favicon.ico" />
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
 <link rel="apple-touch-icon" href="apple-touch-icon.png" />
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<!-- Schriften werden lokal ausgeliefert (Self-Hosting, DSGVO-konform) -->
+<link rel="preload" as="font" type="font/woff2" href="assets/fonts/inter-latin-400-normal.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="assets/fonts/playfair-display-latin-400-normal.woff2" crossorigin>
+<link rel="stylesheet" href="assets/fonts/fonts.css">
 
 <style>
   :root {
@@ -348,7 +352,8 @@
         </table>
       </div>
       <p>Bemerkenswert ist weniger die absolute Zahl als das Muster: Ein komplettes, dreiteiliges Waffensystem inklusive Fehlersuche kostete gut 350.000 Tokens Rechenaufwand eines Mittelklasse-Modells; beim aktuellen Preisniveau entspricht das einem Betrag im niedrigen einstelligen Euro-Bereich.</p>
-      
+      <p>Der Tokenverbrauch von Fable 5.0 selbst wurde in dieser Session nicht separat protokolliert. Nach Erinnerung des Projektverantwortlichen, als Schätzwert und nicht auf dem Genauigkeitsniveau der Tabelle oben: rund 109.341 Tokens in der rund dreistündigen Kernsession.</p>
+
       <h2>Einordnung: „Schneller als ein Senior-Entwickler"?</h2>
       <p>Man könnte die 5.400 Zeilen in drei Stunden nun gegen die Tagesleistung menschlicher Entwickler stellen. In der Software-Literatur kursieren als grobe Richtwerte für nachhaltige Produktivität einige Dutzend bis wenige Hundert Netto-Codezeilen pro Tag und Person in Produktionsqualität. Die Quellenlage dazu ist allerdings heterogen, und Codezeilen sind als Produktivitätsmaß zu Recht umstritten, weil sie Ausstoß messen und nicht Wert.</p>
       <p>Wir lesen die Zahlen deshalb anders. Zwischen „Idee ausgesprochen" und „im Spiel testbar" lagen in diesem Projekt regelmäßig Minuten, nicht Tage. Dieselbe Session deckte außerdem ein Spektrum ab, das sonst mehrere Rollen füllt: Architektur, Gameplay-Code, Physik-Debugging, UI, Testautomatisierung und Projektorganisation. Am wichtigsten aber: Der Engpass verschiebt sich. Das Tempo begrenzte am Ende nicht das Schreiben von Code, sondern die menschliche Kapazität, Stände zu testen und Entscheidungen zu treffen. Der Mensch im Loop bremst diesen Prozess also nicht, er taktet ihn.</p>
@@ -425,7 +430,7 @@
       </div>
     </div>
     <div class="foot-bottom">
-      <span>© 2026 TM KI Consulting </span>
+      <span>© 2026 TM KI Consulting UG (haftungsbeschränkt)</span>
       <span>Ernst-Tengelmann-Ring 22 · 45259 Essen</span>
     </div>
   </div>

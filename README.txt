@@ -1,26 +1,43 @@
-TM KI Consulting Website - geordnete Struktur
+TM KI Consulting Website — Live-Paket (v3.1, korrigiert)
 
-index.html
-TM-KI-Consulting.v.0.2.html
+Struktur:
+index.html                          Startseite
+agi-artikel.html                    Insight-Artikel
+fable5-sperre-artikel.html          Insight-Artikel
+ki-spieleentwicklung-artikel.html   Insight-Artikel
+cockpit-demo.html                   Cockpit-Demo (Slider, laedt die beiden Cockpit-Seiten als iframes)
+cockpit-prozesssteuerung.html
+cockpit-anwendungsbereich-a.html
+impressum.html                      Impressum (auch als Popup auf der Startseite)
+datenschutz.html                    Datenschutzerklaerung
+404.html                            Fehlerseite (wird von GitHub Pages automatisch genutzt)
+robots.txt / sitemap.xml            Suchmaschinen-Steuerung
+CNAME                               Domain fuer GitHub Pages (www.tm-ki-consulting.de)
 assets/
-  TM_KI_Logo.png
-  leistungskatalog-cover.png
-  julian-manske.png
-  maurice-trogant.jpg
+  TM_KI_Logo.png/.webp
+  julian-manske.png/.webp
+  maurice-trogant.jpg/.webp
+  leistungskatalog-cover.png/.webp
   Leistungskatalog_TM-KI-Consulting_v.1.pdf
+  fonts/                            Lokal gehostete Schriften (Inter, Playfair Display) + fonts.css
+  js/hero-three.js                  Hero-Animation (Three.js-Agentenfeld)
+  js/vendor/lenis.min.js            Scroll-Bibliothek
+  js/vendor/three.module.min.js     Three.js (lokal, kein CDN)
+  js/vendor/three.core.min.js       Wird von three.module.min.js intern importiert — beide Dateien gehoeren zusammen!
 
-Wichtig: index.html bzw. die HTML-Datei und der Ordner assets muessen gemeinsam auf den Webserver geladen werden.
-Die relativen Pfade sind bereits korrekt gesetzt: assets/dateiname.
-Das Impressum oeffnet sich als Popup/Modal.
-Der Stadt-Essen-Eintrag wurde rechtlich vorsichtiger formuliert: Es wird nur noch genannt, dass ein mögliches Projektvorhaben mit Bezug zur Stadt Essen vorbereitet beziehungsweise vorgestellt werden soll.
-
-Aktualisierung: Anbieterangabe auf TM KI Consulting GbR mit ladungsfähiger Anschrift Ernst-Tengelmann-Ring 22, 45259 Essen geändert. Das Impressum ist als Popup und zusätzlich als impressum.html-Fallback vorhanden.
-
-Update v0.4 Hero Three.js:
-- Im Hero wurde ein dezentes Three.js-Agentenfeld ergänzt.
-- Script: assets/js/hero-three.js
-- Hinweis: Three.js wird aktuell per CDN geladen (cdn.jsdelivr.net/npm/three@0.184.0). Für produktiven Betrieb kann die three.module.js lokal unter assets/vendor/ abgelegt und der Import im Script angepasst werden.
-- Bei reduzierter Bewegung oder fehlender WebGL-Unterstützung greift ein statischer CSS-Fallback.
+Wichtig:
+- Alle HTML-Dateien und der Ordner assets muessen gemeinsam auf den Webserver geladen werden.
+- Saemtliche Ressourcen (Schriften, Three.js, Lenis) werden lokal ausgeliefert (Self-Hosting).
+  Es werden KEINE Verbindungen zu Google Fonts oder CDNs aufgebaut — das entspricht der
+  Aussage in der Datenschutzerklaerung und ist DSGVO-konform. Bitte kuenftig keine
+  externen Font-/CDN-Einbindungen ergaenzen, ohne die Datenschutzerklaerung anzupassen.
+- Anbieter: TM KI Consulting UG (haftungsbeschränkt), Ernst-Tengelmann-Ring 22, 45259 Essen.
+  Nach Eintragung ins Handelsregister bitte Impressum (Registernummer) aktualisieren
+  und die Rechtsform-Angaben auf allen Seiten pruefen.
+- Das Impressum oeffnet sich als Popup/Modal und ist zusaetzlich als impressum.html vorhanden.
+- Der Stadt-Essen-Eintrag ist rechtlich vorsichtig formuliert (nur "moegliches Projektvorhaben").
+- Die Cockpit-Demo nutzt localStorage fuer Favoriten und Sprachausgabe-Einstellung;
+  das ist in der Datenschutzerklaerung (Abschnitt 4) beschrieben.
 
 Lokaler Start unter Windows:
 1. ZIP entpacken.
@@ -28,5 +45,9 @@ Lokaler Start unter Windows:
 3. start.bat doppelklicken.
 4. Das schwarze Fenster offen lassen, solange die Website genutzt wird.
 
-Die Website wird dann ueber http://localhost:8000/index.html gestartet.
-Falls Python nicht installiert ist, bitte VS Code mit Live Server verwenden.
+Die Website laeuft dann unter http://localhost:8000/index.html
+Falls weder Python noch Node.js installiert ist, bitte VS Code mit Live Server verwenden.
+
+Hinweis: Ein Start per Doppelklick auf index.html (file://) funktioniert fuer die
+Hero-Animation nicht, da Browser dynamische Modul-Imports ueber file:// blockieren.
+Immer ueber start.bat bzw. einen lokalen Server oeffnen.
