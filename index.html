@@ -355,6 +355,24 @@
     opacity: .55;
   }
 
+  /* ============ INTERAKTIVES PUNKTFELD (Canvas, selbst gehostet) ============ */
+  .has-field { position: relative; overflow: hidden; isolation: isolate; }
+  .field-layer { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+  .field-layer canvas { display: block; width: 100%; height: 100%; }
+  .has-field > .container { position: relative; z-index: 1; }
+  .field-continuum {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .field-continuum > .field-layer {
+    z-index: 0;
+  }
+  .field-continuum > section {
+    position: relative;
+    z-index: 1;
+  }
+
   /* ============ SECTION BASIS ============ */
   section.block {
     padding: 140px 0;
@@ -497,93 +515,122 @@
     font-style: normal;
   }
 
-  /* ============ KI-AGENTEN / ARCHITEKTUR ============ */
-  .agents-section {
+  /* ============ KI-AGENTEN — PORTFOLIO (aufklappbare Kacheln) ============ */
+  .agent-head { margin-bottom: 40px; }
+  .agent-head .section-eyebrow { margin-bottom: 0; }
+  .agent-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+    align-items: start;
+  }
+  .agent-card {
     background: var(--navy-800);
-    border-top: 1px solid var(--line-light);
-    border-bottom: 1px solid var(--line-light);
-  }
-  .arch-sub {
-    margin: 0 0 40px;
-    max-width: 760px;
-  }
-  .arch-sub .arch-kicker {
-    font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
-    color: var(--gray-400); margin-bottom: 20px;
-  }
-  .arch-sub h3 {
-    font-size: clamp(26px, 3vw, 38px);
-    font-weight: 300; letter-spacing: -.02em; line-height: 1.15;
-    margin-bottom: 18px;
-  }
-  .arch-sub p {
-    color: var(--gray-300); font-size: 16px; line-height: 1.65; font-weight: 300;
-  }
-  .arch-paths {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 32px;
-    margin-bottom: 28px;
-  }
-  .arch-path {
-    background: var(--navy-700);
     border: 1px solid var(--line);
-    padding: 48px 44px;
-    position: relative;
     transition: border-color .25s, background .25s;
   }
-  .arch-path:hover { border-color: rgba(255,255,255,.25); background: var(--navy-600); }
-  .arch-path .pt {
+  .agent-card:hover { border-color: rgba(255,255,255,.25); }
+  .agent-card[open] { border-color: rgba(255,255,255,.28); background: var(--navy-700); }
+  .agent-card > summary {
+    display: block; list-style: none; cursor: pointer;
+    padding: 32px 30px; position: relative;
+  }
+  .agent-card > summary::-webkit-details-marker { display: none; }
+  .agent-card > summary::marker { content: ""; }
+  .agent-card > summary:focus-visible { outline: 2px solid var(--white); outline-offset: -4px; }
+  .agent-num {
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
     font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
-    color: var(--gray-400); margin-bottom: 20px;
+    color: var(--gray-400); margin-bottom: 22px; min-height: 22px;
+    padding-right: 36px;
   }
-  .arch-path h4 {
-    font-size: 23px; font-weight: 400; letter-spacing: -.02em;
-    line-height: 1.2; margin-bottom: 16px;
+  .agent-card h3 {
+    font-size: 22px; font-weight: 400; letter-spacing: -.02em;
+    line-height: 1.2; margin-bottom: 12px; padding-right: 36px;
   }
-  .arch-path > p {
-    color: var(--gray-300); font-size: 15px; line-height: 1.6;
-    font-weight: 300; margin-bottom: 24px;
+  .agent-claim {
+    color: var(--gray-300); font-size: 14.5px; line-height: 1.6; font-weight: 300;
   }
-  .arch-list { list-style: none; padding-top: 22px; border-top: 1px solid var(--line); }
-  .arch-list li {
-    padding: 11px 0; font-size: 14px; color: var(--off-white);
-    display: flex; gap: 14px; align-items: start;
-    border-bottom: 1px solid var(--line-light);
+  .agent-status {
+    font-size: 10px; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--gray-300); border: 1px solid var(--line); padding: 3px 9px;
   }
-  .arch-list li:last-child { border-bottom: 0; }
-  .arch-list li::before {
-    content: ""; width: 14px; height: 1px; background: var(--gray-400);
-    margin-top: 11px; flex-shrink: 0;
+  .agent-toggle {
+    position: absolute; top: 30px; right: 28px;
+    width: 20px; height: 20px; flex-shrink: 0;
   }
-  .arch-list li strong { color: var(--white); font-weight: 500; }
-  .arch-note {
+  .agent-toggle::before, .agent-toggle::after {
+    content: ""; position: absolute; background: var(--gray-300);
+    transition: transform .25s ease, background .25s ease;
+  }
+  .agent-toggle::before { top: 50%; left: 0; width: 100%; height: 1px; transform: translateY(-50%); }
+  .agent-toggle::after { left: 50%; top: 0; width: 1px; height: 100%; transform: translateX(-50%); }
+  .agent-card[open] .agent-toggle::after { transform: translateX(-50%) scaleY(0); }
+  .agent-card[open] .agent-toggle::before { background: var(--white); }
+  .agent-body { padding: 0 30px 32px; }
+  .agent-body-inner { padding-top: 24px; border-top: 1px solid var(--line); }
+  .agent-body p {
+    color: var(--gray-300); font-size: 15px; line-height: 1.65;
+    font-weight: 300; margin-bottom: 18px;
+  }
+  .agent-body p:last-of-type { margin-bottom: 0; }
+  .agent-body a {
+    color: var(--white); border-bottom: 1px solid rgba(255,255,255,.35);
+    transition: border-color .2s;
+  }
+  .agent-body a:hover { border-color: var(--white); }
+  .agent-tag {
+    margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--line-light);
+    font-size: 12px; color: var(--gray-400); letter-spacing: .04em;
+  }
+
+  .agent-arch-link {
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 18px;
+    margin-top: 28px; padding: 24px 30px;
+    border: 1px solid var(--line); background: rgba(255,255,255,.035);
+    transition: border-color .25s, background .25s, transform .25s;
+  }
+  .agent-arch-link:hover {
+    border-color: rgba(255,255,255,.25); background: rgba(255,255,255,.06);
+    transform: translateY(-2px);
+  }
+  .agent-arch-link .aal-text { max-width: 68ch; }
+  .agent-arch-link .aal-k {
+    display: block; font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--gray-400); margin-bottom: 8px;
+  }
+  .agent-arch-link .aal-t {
+    display: block; color: var(--white); font-size: 16px; font-weight: 500; margin-bottom: 6px;
+  }
+  .agent-arch-link .aal-d { display: block; color: var(--gray-300); font-size: 14px; font-weight: 300; line-height: 1.6; }
+  .agent-arch-link .aal-a { color: var(--gray-300); font-size: 14px; white-space: nowrap; }
+
+  /* Preisblock */
+  .agent-pricing {
+    margin-top: 24px;
     border: 1px solid var(--line);
-    background: rgba(255,255,255,.035);
-    padding: 26px 30px;
-    font-size: 15px; line-height: 1.65; color: var(--gray-300); font-weight: 300;
+    background: var(--navy-800);
+    padding: 44px 44px 36px;
   }
-  .arch-note strong { color: var(--white); font-weight: 500; }
-  .arch-diagram {
-    margin: 0 0 28px;
-    background: var(--navy-700);
-    border: 1px solid var(--line);
-    padding: 30px 30px 26px;
+  .agent-pricing-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px;
   }
-  .arch-diagram .ad-ttl { color: var(--white); font-weight: 500; font-size: 16px; margin-bottom: 5px; }
-  .arch-diagram .ad-sub { color: var(--gray-400); font-size: 13.5px; line-height: 1.55; margin-bottom: 20px; max-width: 78ch; }
-  .arch-diagram svg { width: 100%; height: auto; display: block; }
-  .eff-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;
-  }
-  .eff { border-top: 1px solid var(--white); padding-top: 34px; }
-  .eff-num {
+  .agent-price .apk {
     font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
-    color: var(--gray-400); margin-bottom: 26px;
+    color: var(--gray-400); margin-bottom: 18px;
   }
-  .eff h4 {
-    font-size: 22px; font-weight: 400; margin-bottom: 16px;
-    line-height: 1.2; letter-spacing: -.02em;
+  .agent-price .apv {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 38px; line-height: 1.1; color: var(--white); margin-bottom: 14px;
   }
-  .eff p { color: var(--gray-300); font-size: 15px; line-height: 1.6; font-weight: 300; }
+  .agent-price .apv small {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 15px; color: var(--gray-400);
+  }
+  .agent-price p { color: var(--gray-300); font-size: 14.5px; line-height: 1.6; font-weight: 300; }
+  .agent-pricing-note {
+    margin-top: 32px; padding-top: 22px; border-top: 1px solid var(--line);
+    font-size: 13px; color: var(--gray-400); line-height: 1.65; font-weight: 300;
+  }
 
   /* ============ IM EINSATZ / LIVE-BEWEIS ============ */
   .proof-section {
@@ -807,6 +854,142 @@
     font-size: 14px;
     line-height: 1.6;
     font-weight: 300;
+  }
+
+  /* ---- Data-Scan-Hover für die 01–04-Kacheln ---- */
+  .capability-scan article {
+    --scan-x: 50%;
+    --scan-y: 38%;
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    transition:
+      border-color .28s ease,
+      background-color .28s ease,
+      box-shadow .28s ease;
+  }
+  .capability-scan article::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0;
+    background:
+      radial-gradient(
+        circle 170px at var(--scan-x) var(--scan-y),
+        rgba(126, 167, 216, .20) 0,
+        rgba(74, 111, 157, .10) 36%,
+        rgba(28, 48, 80, .035) 58%,
+        transparent 76%
+      ),
+      linear-gradient(rgba(184, 194, 208, .045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(184, 194, 208, .045) 1px, transparent 1px);
+    background-size: auto, 28px 28px, 28px 28px;
+    transition: opacity .24s ease;
+  }
+  .capability-scan article::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    pointer-events: none;
+    opacity: 0;
+    transform: scaleX(.12);
+    transform-origin: left center;
+    background: linear-gradient(
+      90deg,
+      transparent 0,
+      rgba(126, 167, 216, .28) 14%,
+      rgba(214, 230, 249, .92) 50%,
+      rgba(126, 167, 216, .28) 86%,
+      transparent 100%
+    );
+    transition: opacity .2s ease, transform .48s cubic-bezier(.22, 1, .36, 1);
+  }
+  .capability-scan article > span,
+  .capability-scan article > h3,
+  .capability-scan article > p {
+    position: relative;
+    z-index: 1;
+  }
+  .capability-scan article > span {
+    transition: color .24s ease, letter-spacing .32s ease;
+  }
+  .capability-scan article > span::before {
+    content: "";
+    position: absolute;
+    top: calc(50% - 2px);
+    left: 74px;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    opacity: 0;
+    background: rgba(214, 230, 249, .95);
+    box-shadow:
+      24px 0 0 rgba(126, 167, 216, .72),
+      48px 0 0 rgba(126, 167, 216, .34);
+    transform: translateX(-12px);
+    transition: opacity .2s ease, transform .42s cubic-bezier(.22, 1, .36, 1);
+  }
+  .capability-scan article > span::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 28px;
+    width: 92px;
+    height: 1px;
+    opacity: 0;
+    background: linear-gradient(90deg, rgba(126, 167, 216, .8), rgba(126, 167, 216, .08));
+    transform: scaleX(.15);
+    transform-origin: left center;
+    transition: opacity .2s ease, transform .42s cubic-bezier(.22, 1, .36, 1);
+  }
+  .capability-scan article > h3 {
+    transition: color .24s ease, transform .32s cubic-bezier(.22, 1, .36, 1);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .capability-scan article:hover {
+      border-color: rgba(178, 204, 235, .34);
+      background-color: rgba(255,255,255,.052);
+      box-shadow:
+        inset 0 0 0 1px rgba(126, 167, 216, .045),
+        0 18px 44px rgba(2, 9, 20, .14);
+    }
+    .capability-scan article:hover::before { opacity: 1; }
+    .capability-scan article:hover::after {
+      opacity: 1;
+      transform: scaleX(1);
+    }
+    .capability-scan article:hover > span {
+      color: var(--white);
+      letter-spacing: .18em;
+    }
+    .capability-scan article:hover > span::before,
+    .capability-scan article:hover > span::after {
+      opacity: 1;
+      transform: translateX(0) scaleX(1);
+    }
+    .capability-scan article:hover > h3 {
+      color: #f7fbff;
+      transform: translateX(3px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .capability-scan article,
+    .capability-scan article::before,
+    .capability-scan article::after,
+    .capability-scan article > span,
+    .capability-scan article > span::before,
+    .capability-scan article > span::after,
+    .capability-scan article > h3 {
+      transition: none;
+    }
+    .capability-scan article:hover > h3 { transform: none; }
   }
 
   /* ============ PROJEKTE ============ */
@@ -1149,6 +1332,58 @@
     border-top: 1px solid var(--line-light);
     text-align: center;
   }
+  .cta-section > .container {
+    perspective: 1400px;
+  }
+
+  /* Abgerundete Liquid-Glass-Scheibe */
+  .cta-glass {
+    position: relative;
+    padding: 84px 64px 72px;
+    border-radius: 34px;
+    background:
+      radial-gradient(circle at 12% -8%, rgba(126,167,216,.18), transparent 36%),
+      radial-gradient(circle at 92% 112%, rgba(255,255,255,.09), transparent 38%),
+      linear-gradient(
+        145deg,
+        rgba(255,255,255,.105) 0%,
+        rgba(255,255,255,.045) 38%,
+        rgba(10,22,40,.30) 100%
+      );
+    border: 1px solid rgba(214,230,249,.28);
+    backdrop-filter: blur(28px) saturate(150%);
+    -webkit-backdrop-filter: blur(28px) saturate(150%);
+    box-shadow:
+      0 58px 110px -42px rgba(0,0,0,.92),
+      0 22px 48px -30px rgba(126,167,216,.46),
+      inset 0 1px 0 rgba(255,255,255,.34),
+      inset 0 -1px 0 rgba(255,255,255,.055);
+    transform: translate3d(0, -6px, 18px);
+    overflow: hidden;
+  }
+  /* Flüssige Lichtbrechung innerhalb der Scheibe */
+  .cta-glass::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse 52% 38% at 18% 0%, rgba(255,255,255,.13), transparent 72%),
+      radial-gradient(ellipse 40% 48% at 100% 100%, rgba(126,167,216,.08), transparent 72%),
+      linear-gradient(180deg, rgba(255,255,255,.07) 0%, rgba(255,255,255,0) 42%);
+  }
+  /* Innere Glaskante gibt der Fläche Materialstärke */
+  .cta-glass::after {
+    content: "";
+    position: absolute;
+    inset: 1px;
+    z-index: 0;
+    border: 1px solid rgba(255,255,255,.065);
+    border-radius: 32px;
+    pointer-events: none;
+  }
+  .cta-glass > * { position: relative; z-index: 1; }
   .cta-section h2 {
     font-size: clamp(40px, 5.5vw, 76px);
     line-height: 1.1;
@@ -1372,7 +1607,8 @@
     .nav { padding-left: 32px; padding-right: 32px; }
     .container { padding: 0 32px; }
     .services { grid-template-columns: 1fr; gap: 40px; }
-    .eff-grid { grid-template-columns: 1fr; gap: 40px; }
+    .agent-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .agent-pricing-grid { grid-template-columns: 1fr; gap: 32px; }
     .hero-meta { grid-template-columns: 1fr 1fr; gap: 28px; }
     .catalog { grid-template-columns: 1fr; gap: 48px; }
     .proof-grid { gap: 48px; }
@@ -1422,12 +1658,23 @@
     .nav { padding: 18px 24px; }
     .container { padding: 0 24px; }
     section.block, .cta-section { padding: 80px 0; }
+    .cta-glass {
+      padding: 48px 28px 44px;
+      border-radius: 26px;
+      transform: translate3d(0, -4px, 12px);
+    }
+    .cta-glass::after { border-radius: 24px; }
     .hero { padding: 120px 0 60px; }
     .hero-3d { opacity: .42; }
     .hero-3d::before { top: 4%; right: -22%; width: min(120vw, 560px); height: min(120vw, 560px); }
     .sectors, .team { grid-template-columns: 1fr; gap: 24px; }
-    .arch-paths { grid-template-columns: 1fr; gap: 24px; }
-    .sector, .member, .arch-path { padding: 36px 28px; }
+    .agent-grid { grid-template-columns: 1fr; gap: 18px; }
+    .agent-card > summary { padding: 28px 24px; }
+    .agent-toggle { top: 26px; right: 22px; }
+    .agent-body { padding: 0 24px 28px; }
+    .agent-pricing { padding: 32px 24px 28px; }
+    .agent-arch-link { padding: 22px 24px; }
+    .sector, .member { padding: 36px 28px; }
     .impressum-card { padding: 36px 28px; }
     .project { grid-template-columns: 56px 1fr; gap: 16px; padding: 24px 0; }
     .hero-proof { align-items: flex-start; flex-direction: column; gap: 6px; }
@@ -1446,7 +1693,8 @@
     .foot-bottom { flex-direction: column; gap: 8px; }
     .hero-meta { grid-template-columns: 1fr; gap: 20px; padding-top: 28px; margin-top: 56px; }
     .catalog-meta { grid-template-columns: 1fr; gap: 18px; }
-    .btn, .nav-toggle, .service-case-link, .project-header, .insight-readmore { min-height: 44px; }
+    .btn, .nav-toggle, .service-case-link, .project-header, .insight-readmore,
+    .agent-card > summary, .agent-arch-link { min-height: 44px; }
     .hero-cta-row, .proof-actions, .cta-row { align-items: stretch; }
     .hero-cta-row .btn, .proof-actions .btn, .cta-row .btn { justify-content: center; text-align: center; }
   }
@@ -1457,6 +1705,12 @@
     .brand-sub { font-size: 9px; }
     .container { padding: 0 16px; }
     section.block, .cta-section { padding: 64px 0; }
+    .cta-glass {
+      padding: 36px 20px 32px;
+      border-radius: 22px;
+      transform: translate3d(0, -2px, 8px);
+    }
+    .cta-glass::after { border-radius: 20px; }
     .hero { padding: 104px 0 48px; }
     .hero h1 { font-size: clamp(36px, 12vw, 50px); overflow-wrap:anywhere; }
     .section-head { margin-bottom: 48px; }
@@ -1464,8 +1718,9 @@
     .hero-lead, .section-head p, .catalog-content p { font-size: 16px; }
     .hero-cta-row, .proof-actions, .cta-row { flex-direction: column; }
     .hero-cta-row .btn, .proof-actions .btn, .cta-row .btn { width: 100%; }
-    .service, .sector, .member, .arch-path, .project-featured, .insight-body { padding: 28px 22px; }
-    .service h3, .capability-grid h3 { overflow-wrap:anywhere; }
+    .service, .sector, .member, .project-featured, .insight-body { padding: 28px 22px; }
+    .service h3, .capability-grid h3, .agent-card h3 { overflow-wrap:anywhere; }
+    .agent-price .apv { font-size: 32px; }
     .foot-grid { grid-template-columns: 1fr; }
     .cockpit-demo-bar { padding: 14px; }
     .cockpit-demo-bar a { width: 100%; text-align:center; white-space:normal; min-height:44px; display:grid; place-items:center; }
@@ -1648,9 +1903,9 @@
       <ul>
         <li><a href="#leistungen">Leistungen</a></li>
         <li><a href="#leistungskatalog">Katalog</a></li>
+        <li><a href="#ki-agenten">KI-Agenten</a></li>
         <li><a href="#im-einsatz">Im Einsatz</a></li>
         <li><a href="#ki-cockpits">KI-Cockpits</a></li>
-        <li><a href="#ki-agenten">KI-Agenten</a></li>
         <li><a href="#insights">Insights</a></li>
         <li><a href="#team">Team</a></li>
         <li><a href="impressum.html">Impressum</a></li>
@@ -1704,6 +1959,20 @@
       </div>
     </div>
   </section>
+
+  <!-- GEMEINSAMES PARTIKELFELD: LEISTUNGEN → KI-AGENTEN -->
+  <div class="field-continuum has-field" id="solutions-continuum">
+    <div class="field-layer" aria-hidden="true">
+      <canvas
+        data-field
+        data-field-mode="continuum"
+        data-field-transition="#ki-agenten"
+        data-field-alpha=".062"
+        data-field-glow=".65"
+        data-field-peak=".78"
+        data-field-cell="24"
+      ></canvas>
+    </div>
 
   <!-- LEISTUNGEN -->
   <section class="block" id="leistungen">
@@ -1774,6 +2043,220 @@
     </div>
   </section>
 
+  <!-- UNSERE KI-AGENTEN (aufklappbar) -->
+  <section class="block" id="ki-agenten">
+    <div class="container">
+      <div class="section-head agent-head reveal">
+        <div class="section-eyebrow">Unsere KI-Agenten</div>
+      </div>
+
+      <div class="agent-grid">
+
+        <details class="agent-card reveal">
+          <summary>
+            <span class="agent-toggle" aria-hidden="true"></span>
+            <div class="agent-num">Agent 01</div>
+            <h3>Akquise-Agent</h3>
+            <div class="agent-claim">Findet passende Kunden, bevor der Wettbewerb sie anspricht.</div>
+          </summary>
+          <div class="agent-body">
+            <div class="agent-body-inner">
+              <p>
+                Der Akquise-Agent durchsucht öffentlich zugängliche Quellen nach Organisationen,
+                die zu Ihrem Idealkundenprofil passen, und bewertet jeden Treffer nach
+                nachvollziehbaren Kriterien statt nach Bauchgefühl.
+              </p>
+              <p>
+                Zu jedem Treffer entsteht ein Ansprache-Entwurf mit Bezug auf den konkreten
+                Anlass. Versendet wird nichts ohne Ihre Freigabe. Kontakt- und Personendaten
+                laufen dabei über den geschützten Pfad unserer
+                <a href="sicherheitsarchitektur.html">Zwei-Pfad-Sicherheitsarchitektur</a>
+                und erreichen die KI-Verarbeitung gar nicht erst.
+              </p>
+              <div class="agent-tag">Lead-Recherche · Fit-Bewertung · Ansprache-Entwürfe</div>
+            </div>
+          </div>
+        </details>
+
+        <details class="agent-card reveal">
+          <summary>
+            <span class="agent-toggle" aria-hidden="true"></span>
+            <div class="agent-num">Agent 02</div>
+            <h3>Webdesign-Agent</h3>
+            <div class="agent-claim">Baut und pflegt Webauftritte nach Ihren Vorgaben statt nach Baukasten.</div>
+          </summary>
+          <div class="agent-body">
+            <div class="agent-body-inner">
+              <p>
+                Der Webdesign-Agent setzt Seiten, Komponenten und Änderungen direkt in Code um —
+                auf Grundlage Ihres Designsystems, nicht auf Basis generischer Templates.
+              </p>
+              <p>
+                Barrierefreiheit nach WCAG 2.1 AA, kurze Ladezeiten und selbst gehostete
+                Schriften und Skripte sind dabei Vorgabe, nicht Zusatzoption. Redaktions- und
+                Kundendaten bleiben im geschützten Pfad der
+                <a href="sicherheitsarchitektur.html">Zwei-Pfad-Sicherheitsarchitektur</a>.
+              </p>
+              <div class="agent-tag">HTML/CSS/JS · Next.js · WCAG 2.1 AA · DSGVO-konformes Hosting</div>
+            </div>
+          </div>
+        </details>
+
+        <details class="agent-card reveal">
+          <summary>
+            <span class="agent-toggle" aria-hidden="true"></span>
+            <div class="agent-num">Agent 03 <span class="agent-status">Live testbar</span></div>
+            <h3>Gefahrgut-Berater-Agent</h3>
+            <div class="agent-claim">Beantwortet Gefahrgutfragen aus dem Regelwerk — belegt, nicht geraten.</div>
+          </summary>
+          <div class="agent-body">
+            <div class="agent-body-inner">
+              <p>
+                Der Gefahrgut-Agent recherchiert UN-Nummern, prüft Sicherheitsdatenblätter und
+                Beförderungspapiere auf fehlende Angaben und lotst durch ADR, RID und IMDG-Code.
+              </p>
+              <p>
+                Er antwortet ausschließlich aus geprüften Quellen. Was er nicht sicher belegen kann,
+                reicht er an einen zertifizierten Gefahrgutbeauftragten weiter. Hochgeladene
+                Dokumente laufen über den geschützten Kanal der
+                <a href="sicherheitsarchitektur.html">Zwei-Pfad-Sicherheitsarchitektur</a>.
+                Öffentlich testbar bei der
+                <a href="https://gefahrgutberatung-manske.de/#ki" target="_blank" rel="noopener noreferrer">Gefahrgutberatung Manske ↗</a>.
+              </p>
+              <div class="agent-tag">ADR/RID/IMDG · SDB-Check · Human-in-the-Loop</div>
+            </div>
+          </div>
+        </details>
+
+        <details class="agent-card reveal">
+          <summary>
+            <span class="agent-toggle" aria-hidden="true"></span>
+            <div class="agent-num">Agent 04</div>
+            <h3>News-Radar-Agent</h3>
+            <div class="agent-claim">Meldet, was in Ihrem Fachgebiet wirklich neu ist.</div>
+          </summary>
+          <div class="agent-body">
+            <div class="agent-body-inner">
+              <p>
+                Der News-Radar beobachtet die Quellen, die für Ihre Organisation zählen —
+                Rechtsänderungen, Förderprogramme, Ausschreibungen, Branchenmeldungen — und
+                filtert das Rauschen heraus.
+              </p>
+              <p>
+                Statt Linklisten liefert er kurze Einordnungen: was sich geändert hat, wen es
+                betrifft, was zu tun ist, jeweils mit Quellenangabe zum Nachlesen. Interne
+                Unterlagen, die er zum Abgleich heranzieht, bleiben im geschützten Pfad der
+                <a href="sicherheitsarchitektur.html">Zwei-Pfad-Sicherheitsarchitektur</a>.
+              </p>
+              <div class="agent-tag">Quellen-Monitoring · Relevanzfilter · Digest im eigenen Takt</div>
+            </div>
+          </div>
+        </details>
+
+        <details class="agent-card reveal">
+          <summary>
+            <span class="agent-toggle" aria-hidden="true"></span>
+            <div class="agent-num">Agent 05</div>
+            <h3>Betrugsmaschen-Agent</h3>
+            <div class="agent-claim">Prüft verdächtige Nachrichten und Anrufe in Sekunden.</div>
+          </summary>
+          <div class="agent-body">
+            <div class="agent-body-inner">
+              <p>
+                Der Betrugsmaschen-Agent bewertet verdächtige Nachrichten, Anrufe und Webseiten
+                nach einer klaren Ampellogik und erklärt in einfacher Sprache, woran die Masche
+                zu erkennen ist.
+              </p>
+              <p>
+                Entwickelt für Kommunen und öffentliche Einrichtungen, die Bürgerinnen und Bürger
+                vor Enkeltrick, Schockanruf und Phishing schützen wollen. Er warnt und erklärt,
+                ersetzt aber weder Anzeige noch Polizei. Eingereichte Screenshots und
+                Originalnachrichten bleiben im geschützten Kanal der
+                <a href="sicherheitsarchitektur.html">Zwei-Pfad-Sicherheitsarchitektur</a>.
+              </p>
+              <div class="agent-tag">Ampellogik · Einfache Sprache · Kommunen &amp; Zielgruppe 60+</div>
+            </div>
+          </div>
+        </details>
+
+        <details class="agent-card reveal">
+          <summary>
+            <span class="agent-toggle" aria-hidden="true"></span>
+            <div class="agent-num">Agent 06</div>
+            <h3>Wissens-Agent</h3>
+            <div class="agent-claim">Macht das Wissen Ihres Hauses durchsuchbar — mit Fundstelle.</div>
+          </summary>
+          <div class="agent-body">
+            <div class="agent-body-inner">
+              <p>
+                Handbücher, Schaltpläne, Protokolle, Servicehistorien: Der Wissens-Agent
+                beantwortet Fragen aus Ihren eigenen Dokumenten und nennt zu jeder Antwort die
+                Fundstelle, damit Mitarbeitende sie prüfen können.
+              </p>
+              <p>
+                Reicht die Quellenlage nicht, sagt er das, statt zu raten. Eine Rollen- und
+                Freigabelogik steuert, wer welche Inhalte sieht; die Trennung dahinter beschreibt
+                unsere <a href="sicherheitsarchitektur.html">Zwei-Pfad-Sicherheitsarchitektur</a>.
+              </p>
+              <div class="agent-tag">RAG · Quellenangabe zu jeder Antwort · Rollen &amp; Freigaben</div>
+            </div>
+          </div>
+        </details>
+
+      </div>
+
+      <a class="agent-arch-link reveal" href="sicherheitsarchitektur.html">
+        <span class="aal-text">
+          <span class="aal-k">Wie wir KI-Agenten bauen</span>
+          <span class="aal-t">Zwei-Pfad-Sicherheitsarchitektur und tokenminimaler Bau</span>
+          <span class="aal-d">
+            Sensible Rohdaten und KI-Verarbeitung sind in jedem unserer Agenten strukturell
+            getrennt, jede kritische Entscheidung bleibt beim Menschen. Wie das technisch
+            aussieht und warum unsere Agenten auf schlanker Hardware laufen, steht auf der
+            eigenen Seite.
+          </span>
+        </span>
+        <span class="aal-a">Architektur ansehen →</span>
+      </a>
+
+      <div class="agent-pricing reveal">
+        <div class="agent-pricing-grid">
+          <div class="agent-price">
+            <div class="apk">Startpreis pro Agent</div>
+            <div class="apv">4.999 €</div>
+            <p>
+              Einmalig, mit vollständiger Übergabe: Sie erhalten den fertigen Agenten samt
+              Konfiguration und Wissensbasis und betreiben ihn eigenständig weiter.
+            </p>
+          </div>
+          <div class="agent-price">
+            <div class="apk">Betreuung optional</div>
+            <div class="apv">249 € <small>/ Monat</small></div>
+            <p>
+              Laufende Pflege der Wissensbasis, Updates, Monitoring und Support.
+              Die Tokenkosten des Foundation-Modells trägt der Auftraggeber.
+            </p>
+          </div>
+          <div class="agent-price">
+            <div class="apk">Modellwahl</div>
+            <div class="apv">Ihr Modell</div>
+            <p>
+              Alle Agenten sind auf dem Foundation-Modell Ihrer Wahl lauffähig. Welches
+              fachlich, wirtschaftlich und datenschutzrechtlich zu Ihnen passt, klären
+              wir gemeinsam vorab.
+            </p>
+          </div>
+        </div>
+        <div class="agent-pricing-note">
+          Alle Preise netto zzgl. gesetzlicher Umsatzsteuer. Der Startpreis gilt für einen
+          Agenten im beschriebenen Leistungsumfang; Umfang von Wissensbasis, Schnittstellen
+          und Integrationstiefe legen wir vor Projektstart gemeinsam fest.
+        </div>
+      </div>
+    </div>
+  </section>
+  </div>
+
   <!-- IM EINSATZ -->
   <section class="block proof-section" id="im-einsatz">
     <div class="container">
@@ -1782,9 +2265,8 @@
           <div class="section-eyebrow">Im Einsatz</div>
           <h2>Gefahrgut-Agent<br><span class="serif">für GBM.</span></h2>
           <p>
-            Unser stärkster Proof of Concept ist kein Konzeptpapier, sondern ein öffentlich testbarer
-            KI-Agent für die Gefahrgutberatung. Er zeigt, wie fachspezifisches Wissen, Regelwerke,
-            Dokumentenprüfung und Eskalationslogik in eine nutzbare Anwendung übersetzt werden.
+            Ein öffentlich testbarer KI-Agent für die Gefahrgutberatung: Fachwissen, Regelwerke,
+            Dokumentenprüfung und Eskalationslogik in einer nutzbaren Anwendung.
           </p>
           <div class="proof-actions">
             <a href="https://gefahrgutberatung-manske.de/#ki" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
@@ -1827,7 +2309,7 @@
         </div>
       </div>
 
-      <div class="capability-grid reveal">
+      <div class="capability-grid capability-scan reveal">
         <article>
           <span>01</span>
           <h3>UN-Nummern-Suche</h3>
@@ -1868,7 +2350,7 @@
         </p>
       </div>
 
-      <div class="capability-grid reveal">
+      <div class="capability-grid capability-scan reveal">
         <article>
           <span>01</span>
           <h3>Inhalte nach Maß</h3>
@@ -1907,11 +2389,11 @@
           <h3 id="cockpit-pricing-title">Ihr individuelles KI-Cockpit.</h3>
           <p>
             Von der Konzeption bis zum Go-live: Wir konfigurieren ein modulares Cockpit
-            für Ihren Prozess und binden eine standardisierte Datenquelle sicher an.
+            für Ihren Prozess und binden Ihre Datenquellen sicher an.
           </p>
           <ul class="cockpit-pricing-scope" aria-label="Enthaltener Leistungsumfang">
             <li>Konzeption und individuelle Konfiguration</li>
-            <li>Eine standardisierte Datenquelle</li>
+            <li>Wir binden Ihre Datenquellen an</li>
             <li>Rollen- und Freigabelogik</li>
             <li>Tests und Begleitung bis zum Go-live</li>
           </ul>
@@ -1929,166 +2411,9 @@
           </div>
           <a href="#kontakt" class="btn btn-primary">Projekt besprechen <span class="arrow">→</span></a>
           <p class="cockpit-price-terms">
-            Alle Preise zzgl. gesetzlicher Umsatzsteuer. Zusätzliche Schnittstellen,
-            Fremdlizenzen und verbrauchsabhängige API-Kosten sind nicht enthalten.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- KI-AGENTEN / ARCHITEKTUR -->
-  <section class="block agents-section" id="ki-agenten">
-    <div class="container">
-      <div class="section-head reveal">
-        <div class="section-eyebrow">Wie wir KI-Agenten bauen</div>
-        <h2>Sichere Agenten,<br><span class="serif">sparsam gebaut.</span></h2>
-        <p>
-          Unsere KI-Agenten folgen zwei Grundsätzen, die wir in jedem Projekt anwenden:
-          eine Sicherheitsarchitektur, die sensible Daten strukturell von der KI trennt,
-          und ein effizienter Bau auf schlanken Modellen, der mit wenig Rechenleistung
-          und planbaren Kosten auskommt.
-        </p>
-      </div>
-
-      <div class="arch-sub reveal">
-        <div class="arch-kicker">01 · Sicherheit</div>
-        <h3>Die Zwei-Pfad-Sicherheitsarchitektur</h3>
-        <p>
-          Jeder Agent ist strukturell in zwei getrennte Pfade aufgeteilt. So gelangt
-          kein sensibler Rohinhalt in die KI-Verarbeitung, und die Verantwortung über
-          schützenswerte Daten bleibt beim Menschen.
-        </p>
-      </div>
-
-      <figure class="arch-diagram reveal">
-        <div class="ad-ttl">Die Zwei-Pfad-Architektur im Überblick</div>
-        <div class="ad-sub">Sensible Rohdaten und KI-Verarbeitung sind strukturell getrennt. Die KI arbeitet ausschließlich auf abstrahierten Daten (Pfad A). Originalinhalte bleiben im geschützten Kanal (Pfad B) und erreichen nur befugte Menschen nach Freigabe. Beide Wege münden in eine Entscheidung, die beim Menschen liegt.</div>
-        <svg viewBox="0 0 820 380" role="img" aria-label="Schema der Zwei-Pfad-Sicherheitsarchitektur: Eingangsdaten teilen sich in den KI-Pfad mit abstrahierten Daten und den geschützten Kanal mit sensiblen Rohdaten, der nur Menschen nach Freigabe zugänglich ist. Beide münden in eine menschliche Entscheidung." font-family="Inter, system-ui, sans-serif">
-          <defs>
-            <marker id="adArrow" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto" markerUnits="userSpaceOnUse">
-              <path d="M0,0 L7,3 L0,6 Z" fill="#8a96a8"/>
-            </marker>
-          </defs>
-
-          <text x="300" y="26" text-anchor="middle" fill="#8a96a8" font-size="11" letter-spacing="1.5">PFAD A · KI-PFAD</text>
-          <text x="300" y="368" text-anchor="middle" fill="#8a96a8" font-size="11" letter-spacing="1.5">PFAD B · GESCHÜTZTER KANAL</text>
-
-          <g fill="none" stroke="#8a96a8" stroke-width="1.5">
-            <path d="M160,190 L185,190 L185,81 L206,81" marker-end="url(#adArrow)"/>
-            <path d="M160,190 L185,190 L185,299 L206,299" marker-end="url(#adArrow)"/>
-            <path d="M390,81 L416,81" marker-end="url(#adArrow)"/>
-            <path d="M390,299 L416,299" marker-end="url(#adArrow)"/>
-            <path d="M600,81 L624,81 L624,176 L640,176" marker-end="url(#adArrow)"/>
-            <path d="M600,299 L624,299 L624,204 L640,204" marker-end="url(#adArrow)"/>
-          </g>
-
-          <line x1="196" y1="190" x2="624" y2="190" stroke="#5a6578" stroke-width="1" stroke-dasharray="5 5"/>
-          <rect x="336" y="178" width="148" height="24" rx="12" fill="#0f1d33" stroke="#5a6578"/>
-          <text x="410" y="194" text-anchor="middle" fill="#b8c2d0" font-size="11" letter-spacing="1">STRIKTE TRENNUNG</text>
-
-          <rect x="20" y="150" width="140" height="80" rx="8" fill="#2a4163" stroke="rgba(255,255,255,.2)"/>
-          <text x="90" y="186" text-anchor="middle" fill="#f4f6fa" font-size="14" font-weight="500">Anfrage &amp;</text>
-          <text x="90" y="206" text-anchor="middle" fill="#f4f6fa" font-size="14" font-weight="500">Eingangsdaten</text>
-
-          <rect x="210" y="46" width="180" height="70" rx="8" fill="#1c3050" stroke="rgba(255,255,255,.2)"/>
-          <text x="300" y="76" text-anchor="middle" fill="#f4f6fa" font-size="14" font-weight="500">Abstrahierte Daten</text>
-          <text x="300" y="96" text-anchor="middle" fill="#8a96a8" font-size="12">Merkmals- &amp; Sachdaten</text>
-
-          <rect x="420" y="46" width="180" height="70" rx="8" fill="#1c3050" stroke="rgba(255,255,255,.4)"/>
-          <text x="510" y="76" text-anchor="middle" fill="#f4f6fa" font-size="14" font-weight="500">KI-Pfad</text>
-          <text x="510" y="96" text-anchor="middle" fill="#8a96a8" font-size="12">RAG · lokal · datensparsam</text>
-
-          <rect x="210" y="264" width="180" height="70" rx="8" fill="#1c3050" stroke="rgba(255,255,255,.2)"/>
-          <text x="300" y="294" text-anchor="middle" fill="#f4f6fa" font-size="14" font-weight="500">Sensible Rohdaten</text>
-          <text x="300" y="314" text-anchor="middle" fill="#8a96a8" font-size="12">Roh- &amp; Originaldaten</text>
-
-          <rect x="420" y="264" width="180" height="70" rx="8" fill="#1c3050" stroke="rgba(255,255,255,.2)"/>
-          <text x="510" y="294" text-anchor="middle" fill="#f4f6fa" font-size="14" font-weight="500">Geschützter Kanal</text>
-          <text x="510" y="314" text-anchor="middle" fill="#8a96a8" font-size="12">nur nach Freigabe</text>
-
-          <rect x="644" y="148" width="156" height="84" rx="8" fill="#2a4163" stroke="rgba(255,255,255,.2)"/>
-          <text x="722" y="184" text-anchor="middle" fill="#f4f6fa" font-size="14" font-weight="500">Mensch entscheidet</text>
-          <text x="722" y="204" text-anchor="middle" fill="#8a96a8" font-size="12">Sichtung &amp; Freigabe</text>
-        </svg>
-      </figure>
-
-      <div class="arch-paths reveal">
-        <div class="arch-path">
-          <div class="pt">Pfad A · KI-Pfad</div>
-          <h4>Datensparsame Verarbeitung</h4>
-          <p>
-            Der KI-Pfad arbeitet ausschließlich auf abstrahierten, auf das Nötige
-            reduzierten Daten und beantwortet Anfragen nur aus verifizierten Quellen.
-          </p>
-          <ul class="arch-list">
-            <li>verarbeitet nur strukturierte Merkmals- und Sachdaten</li>
-            <li>kein Zugriff auf sensible Roh- oder Originalinhalte</li>
-            <li>Antworten <strong>ausschließlich</strong> aus geprüften Quellen (RAG)</li>
-            <li>läuft lokal auf eigener, kontrollierter Hardware</li>
-          </ul>
-        </div>
-        <div class="arch-path">
-          <div class="pt">Pfad B · Geschützter Kanal</div>
-          <h4>Nur menschlich, nur auf Freigabe</h4>
-          <p>
-            Sensible Rohinhalte laufen über einen getrennten, kontrollierten Kanal,
-            den ausschließlich befugte Personen einsehen, und auch das nur nach
-            ausdrücklicher Freigabe.
-          </p>
-          <ul class="arch-list">
-            <li>reiner Durchleitungskanal für schützenswerte Originaldaten</li>
-            <li>aktiv erst nach ausdrücklicher Freigabe durch befugtes Personal</li>
-            <li>wird von der KI <strong>nicht</strong> verarbeitet, ausgewertet oder gespeichert</li>
-            <li>dient allein der menschlichen Sichtung und Entscheidung</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="arch-note reveal">
-        <strong>Wirkung der Trennung:</strong> Was die KI „sieht", ist abstrahiert und
-        datensparsam (Pfad A). Was ein Mensch bei Bedarf im Original sieht, bleibt strikt
-        getrennt und ohne KI-seitige Verarbeitung (Pfad B). Sensible Daten verlassen so
-        das geschützte System nicht, und jede kritische Entscheidung bleibt nachvollziehbar
-        in menschlicher Hand.
-      </div>
-
-      <div class="arch-sub reveal">
-        <div class="arch-kicker">02 · Effizienz</div>
-        <h3>Schlanke Modelle, tokenminimal gebaut</h3>
-        <p>
-          Wir bauen unsere Agenten so effizient, dass leistungsfähige Low-Parameter-Modelle
-          lokal auf eigener Hardware in Deutschland laufen. Das senkt die nötige
-          Rechenleistung, macht Kosten planbar und hält die Daten im Haus.
-        </p>
-      </div>
-
-      <div class="eff-grid reveal">
-        <div class="eff">
-          <div class="eff-num">Methode</div>
-          <h4>Wissen in Quellen, nicht im Prompt</h4>
-          <p>
-            Fachwissen lebt in pflegbaren RAG-Quellen und Werkzeugen, nicht in
-            überladenen Anweisungen. Der System-Prompt bleibt schlank und stabil,
-            die Quellen wachsen mit.
-          </p>
-        </div>
-        <div class="eff">
-          <div class="eff-num">Wirkung</div>
-          <h4>Jedes Token kostet Rechenzeit</h4>
-          <p>
-            Knappe, klare Anweisungen belegen weniger Speicher und sparen Rechenzeit
-            bei jeder Anfrage. Das erhöht den Durchsatz und die Zahl paralleler Nutzer
-            auch bei begrenzter Hardware.
-          </p>
-        </div>
-        <div class="eff">
-          <div class="eff-num">Nutzen</div>
-          <h4>Souverän und planbar</h4>
-          <p>
-            Eigene Hardware bedeutet planbare Fixkosten statt offener API-Kosten,
-            Unabhängigkeit von US- oder China-Clouds und einen Betrieb, der dem
-            EU AI Act und der DSGVO standhält.
+            Der Preis richtet sich nach der Menge der angebundenen Datenquellen.
+            Alle Preise zzgl. gesetzlicher Umsatzsteuer. Fremdlizenzen und
+            verbrauchsabhängige API-Kosten sind nicht enthalten.
           </p>
         </div>
       </div>
@@ -2329,8 +2654,10 @@
   </section>
 
   <!-- CTA -->
-  <section class="cta-section" id="kontakt">
+  <section class="cta-section has-field" id="kontakt">
+    <div class="field-layer" aria-hidden="true"><canvas data-field data-field-alpha=".09" data-field-glow="1"></canvas></div>
     <div class="container">
+     <div class="cta-glass">
       <div class="section-eyebrow reveal" style="justify-content: center; margin-bottom: 28px;">Kostenloses Erstgespräch · 30 Minuten</div>
       <h2 class="reveal">
         KI, die <span class="serif">wirklich</span> für<br>
@@ -2354,6 +2681,7 @@
         <span class="dot-sep">·</span>
         <span>Datenschutzorientiert</span>
       </div>
+     </div>
     </div>
   </section>
 
@@ -2375,8 +2703,9 @@
         <ul>
           <li><a href="#leistungen">Leistungen</a></li>
           <li><a href="#leistungskatalog">Leistungskatalog (PDF)</a></li>
-          <li><a href="#im-einsatz">Im Einsatz</a></li>
           <li><a href="#ki-agenten">KI-Agenten</a></li>
+          <li><a href="sicherheitsarchitektur.html">Sicherheitsarchitektur</a></li>
+          <li><a href="#im-einsatz">Im Einsatz</a></li>
           <li><a href="#insights">Insights</a></li>
           <li><a href="#team">Team</a></li>
           <li><a href="impressum.html">Impressum</a></li>
@@ -2427,6 +2756,31 @@ setTimeout(() => {
     el.classList.add('is-visible');
   });
 }, 2000);
+
+// ============================================================
+// Data-Scan-Hover: Lichtpunkt folgt der Maus innerhalb der
+// 01–04-Kacheln. Auf Touch-Geräten und bei reduzierter Bewegung
+// bleibt die Darstellung bewusst statisch.
+// ============================================================
+(function initCapabilityScan() {
+  const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  if (!finePointer.matches || reduceMotion.matches) return;
+
+  document.querySelectorAll('.capability-scan article').forEach(card => {
+    card.addEventListener('pointermove', event => {
+      const bounds = card.getBoundingClientRect();
+      card.style.setProperty('--scan-x', `${event.clientX - bounds.left}px`);
+      card.style.setProperty('--scan-y', `${event.clientY - bounds.top}px`);
+    }, { passive: true });
+
+    card.addEventListener('pointerleave', () => {
+      card.style.removeProperty('--scan-x');
+      card.style.removeProperty('--scan-y');
+    }, { passive: true });
+  });
+})();
 
 // ============================================================
 // LENIS — smooth scroll (nur wenn verfügbar)
@@ -2604,6 +2958,320 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
   });
 })();
 </script>
+<script>
+// ============================================================
+// Interaktives Punktraster mit drei Modi:
+// warp, wave und continuum. Der Continuum-Modus verbindet zwei
+// Abschnitte ohne Canvas-Schnitt. In der Übergangszone werden
+// Warp und Welle weich gemischt; eine Fibonacci-Phyllotaxis nach
+// dem goldenen Winkel bildet den Swirl um den Mauszeiger.
+// Läuft nur im Sichtbereich, respektiert prefers-reduced-motion.
+// ============================================================
+function initPointerField(canvas) {
+  const section = canvas.closest('.has-field');
+  if (!section || !canvas.getContext) return;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const MODE   = canvas.dataset.fieldMode || 'warp';   // warp, wave oder continuum
+  const CONTINUUM = MODE === 'continuum';
+  const transitionSelector = canvas.dataset.fieldTransition;
+  const transitionNode = transitionSelector
+    ? section.querySelector(transitionSelector)
+    : null;
+  const RADIUS = 240;          // Wirkradius um den Zeiger (warp)
+  const WARP   = 26;           // maximale Verdrängung in px (warp)
+  const WAVELEN = 165;         // Abstand zweier Wellenberge in px (wave)
+  const SPEED   = 0.00055;     // Wellen pro Millisekunde (wave)
+  const REACH   = 640;         // Reichweite der Welle in px (wave)
+  const TAU     = Math.PI * 2;
+  const GOLDEN_ANGLE = Math.PI * (3 - Math.sqrt(5)); // ca. 137,5°
+  const BASE_A = parseFloat(canvas.dataset.fieldAlpha) || 0.09;   // Grunddeckkraft
+  const GLOW   = canvas.dataset.fieldGlow !== undefined
+               ? parseFloat(canvas.dataset.fieldGlow) : 1;        // Stärke des Scheins
+  const PEAK   = parseFloat(canvas.dataset.fieldPeak) || 0.55;    // Aufhellung am Zeiger
+  const CELL   = parseFloat(canvas.dataset.fieldCell) || 26;      // Rasterweite in px
+
+  let w = 0, h = 0, cell = 26, cols = 0, rows = 0;
+  let seamY = 0, transitionBand = 360;
+  let px = 0, py = 0, tx = 0, ty = 0;   // Zeiger: geglättet und Ziel
+  let pointerSeen = false, lastMove = -9999, raf = 0, running = false;
+  let previousViewTop = 0, previousViewBottom = 0;
+
+  function clamp01(value) {
+    return Math.max(0, Math.min(1, value));
+  }
+
+  function smoothstep(edge0, edge1, value) {
+    const t = clamp01((value - edge0) / Math.max(0.001, edge1 - edge0));
+    return t * t * (3 - 2 * t);
+  }
+
+  function resize() {
+    const r = section.getBoundingClientRect();
+    w = Math.round(r.width);
+    h = Math.round(r.height);
+    if (!w || !h) return;
+
+    // Große gemeinsame Felder bleiben auch auf Mobilgeräten unter den
+    // üblichen Canvas-Grenzen und benötigen nicht unnötig viel Speicher.
+    const naturalDpr = Math.min(window.devicePixelRatio || 1, 2);
+    const maxDimension = 8192;
+    const maxPixels = 12000000;
+    const dimensionScale = maxDimension / Math.max(w, h);
+    const areaScale = Math.sqrt(maxPixels / Math.max(1, w * h));
+    const dpr = Math.max(0.6, Math.min(naturalDpr, dimensionScale, areaScale));
+
+    canvas.width  = Math.round(w * dpr);
+    canvas.height = Math.round(h * dpr);
+    canvas.style.width  = w + 'px';
+    canvas.style.height = h + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    cell = w < 700 ? CELL + 8 : CELL;
+    cols = Math.ceil(w / cell) + 1;
+    rows = Math.ceil(h / cell) + 1;
+    seamY = transitionNode ? transitionNode.offsetTop : h * 0.5;
+    transitionBand = Math.max(240, Math.min(520, w * 0.36));
+    previousViewTop = previousViewBottom = 0;
+
+    if (!pointerSeen) {
+      tx = px = w * 0.5;
+      ty = py = CONTINUUM ? seamY : h * 0.5;
+    }
+  }
+
+  function drawFibonacciSwirl(now, viewTop, viewBottom) {
+    if (!CONTINUUM) return;
+
+    const seamProximity = 1 - clamp01(
+      Math.abs(py - seamY) / Math.max(1, transitionBand * 1.08)
+    );
+    const strength = seamProximity * (pointerSeen ? 1 : 0.22);
+    if (strength < 0.025 || py < viewTop - 240 || py > viewBottom + 240) return;
+
+    const count = w < 700 ? 34 : 55;
+    const rotation = now * 0.00022;
+
+    ctx.save();
+    ctx.globalCompositeOperation = 'lighter';
+
+    for (let i = 0; i < count; i++) {
+      const ratio = i / Math.max(1, count - 1);
+      const angle = i * GOLDEN_ANGLE + rotation;
+      const radius = 8 + Math.sqrt(i) * (w < 700 ? 10 : 13);
+      const x = px + Math.cos(angle) * radius;
+      const y = py + Math.sin(angle) * radius;
+      const alpha = strength * (0.13 - ratio * 0.065);
+      const size = 1.15 + (1 - ratio) * 1.35;
+
+      ctx.fillStyle = 'rgba(214, 230, 249, ' + alpha.toFixed(3) + ')';
+      ctx.beginPath();
+      ctx.arc(x, y, size, 0, TAU);
+      ctx.fill();
+    }
+
+    ctx.restore();
+  }
+
+  let lastFrame = 0;
+  function render(now) {
+    // Auf ~30 fps drosseln: der Backdrop-Filter der Glasfläche muss bei
+    // jedem Frame neu weichzeichnen — das ist der teure Teil, nicht das Canvas.
+    if (running && now - lastFrame < 32) { raf = requestAnimationFrame(render); return; }
+    lastFrame = now;
+
+    // Ruht die Maus, wandert das Feld langsam von selbst. Im gemeinsamen
+    // Feld bleibt diese Bewegung in der Nähe des Übergangs.
+    if (!pointerSeen || now - lastMove > 2500) {
+      const t = now * 0.00016;
+      tx = w * (0.5 + Math.cos(t) * 0.28);
+      ty = CONTINUUM
+        ? seamY + Math.sin(t * 1.35) * Math.min(transitionBand * 0.72, h * 0.18)
+        : h * (0.5 + Math.sin(t * 1.35) * 0.32);
+    }
+    px += (tx - px) * 0.075;
+    py += (ty - py) * 0.075;
+
+    // Nur der sichtbare Teil des eventuell sehr hohen gemeinsamen Feldes
+    // wird gelöscht und neu gezeichnet.
+    const sectionRect = section.getBoundingClientRect();
+    const viewTop = reduce
+      ? 0
+      : Math.max(0, -sectionRect.top - cell * 3);
+    const viewBottom = reduce
+      ? h
+      : Math.min(h, window.innerHeight - sectionRect.top + cell * 3);
+    if (viewBottom <= viewTop) {
+      if (running) raf = requestAnimationFrame(render);
+      return;
+    }
+
+    if (previousViewBottom > previousViewTop) {
+      ctx.clearRect(0, previousViewTop, w, previousViewBottom - previousViewTop);
+    }
+    ctx.clearRect(0, viewTop, w, viewBottom - viewTop);
+    previousViewTop = viewTop;
+    previousViewBottom = viewBottom;
+
+    // weicher Schein in navy-500
+    if (GLOW > 0) {
+      const g = ctx.createRadialGradient(px, py, 0, px, py, RADIUS * 1.7);
+      g.addColorStop(0, 'rgba(42, 65, 99, ' + (0.62 * GLOW).toFixed(3) + ')');
+      g.addColorStop(0.55, 'rgba(28, 48, 80, ' + (0.26 * GLOW).toFixed(3) + ')');
+      g.addColorStop(1, 'rgba(15, 29, 51, 0)');
+      ctx.fillStyle = g;
+      ctx.fillRect(0, viewTop, w, viewBottom - viewTop);
+    }
+
+    const r2 = RADIUS * RADIUS;
+    const reach2 = REACH * REACH;
+    const firstRow = Math.max(0, Math.floor(viewTop / cell));
+    const lastRow = Math.min(rows, Math.ceil(viewBottom / cell));
+
+    for (let iy = firstRow; iy < lastRow; iy++) {
+      const by = iy * cell;
+      for (let ix = 0; ix < cols; ix++) {
+        const bx = ix * cell;
+        const dx = bx - px, dy = by - py;
+        const d2 = dx * dx + dy * dy;
+        let x = bx, y = by, a = BASE_A, s = 1.7;
+
+        if (CONTINUUM) {
+          // Oberhalb: Warp. Unterhalb: Welle. Dazwischen liegt ein
+          // weicher Übergang über die gemeinsame Canvas-Fläche.
+          const lowerMix = smoothstep(
+            seamY - transitionBand,
+            seamY + transitionBand,
+            by
+          );
+          const seamWeight = 1 - smoothstep(
+            0,
+            transitionBand,
+            Math.abs(by - seamY)
+          );
+
+          let warpDx = 0, warpDy = 0, warpAmp = 0;
+          let waveDx = 0, waveDy = 0, waveAmp = 0;
+
+          if (d2 < r2) {
+            const d = Math.sqrt(d2) || 0.001;
+            const f = 1 - d / RADIUS;
+            const push = f * f * WARP;
+            warpDx = (dx / d) * push;
+            warpDy = (dy / d) * push;
+            warpAmp = f;
+
+            // Tangentiale Drehung im Übergang. Die Phase folgt dem
+            // goldenen Winkel und erzeugt den Fibonacci-Swirl.
+            const goldenPulse = 0.58 + 0.42 * Math.sin(
+              (d / Math.max(1, cell)) * GOLDEN_ANGLE - now * 0.00115
+            );
+            const curl = seamWeight * f * f * WARP * 1.55 * goldenPulse;
+            x += (-dy / d) * curl;
+            y += (dx / d) * curl;
+            a += seamWeight * f * PEAK * 0.28;
+            s += seamWeight * f * 1.2;
+          }
+
+          if (d2 < reach2) {
+            const d = Math.sqrt(d2) || 0.001;
+            const att = 1 - d / REACH;
+            const wave = Math.sin((d / WAVELEN - now * SPEED) * TAU);
+            waveAmp = wave > 0 ? wave * att : 0;
+            if (waveAmp > 0) {
+              const push = waveAmp * 7;
+              waveDx = (dx / d) * push;
+              waveDy = (dy / d) * push;
+            }
+          }
+
+          x += warpDx * (1 - lowerMix) + waveDx * lowerMix;
+          y += warpDy * (1 - lowerMix) + waveDy * lowerMix;
+          a += warpAmp * (1 - lowerMix) * PEAK * 0.48
+             + waveAmp * lowerMix * PEAK;
+          s += warpAmp * (1 - lowerMix) * 2.1
+             + waveAmp * lowerMix * 2.0;
+        } else if (MODE === 'wave') {
+          // Ringförmige Welle, die vom Zeiger nach außen läuft
+          if (d2 < reach2) {
+            const d = Math.sqrt(d2) || 0.001;
+            const att = 1 - d / REACH;
+            const wv = Math.sin((d / WAVELEN - now * SPEED) * TAU);
+            const amp = wv > 0 ? wv * att : 0;         // nur die Wellenberge leuchten
+            if (amp > 0) {
+              const push = amp * 7;
+              x += (dx / d) * push;
+              y += (dy / d) * push;
+              a = BASE_A + amp * PEAK;
+              s = 1.7 + amp * 2.0;
+            }
+          }
+        } else if (d2 < r2) {
+          const d = Math.sqrt(d2) || 0.001;
+          const f = 1 - d / RADIUS;            // 0 am Rand, 1 im Zentrum
+          const push = f * f * WARP;
+          x += (dx / d) * push;
+          y += (dy / d) * push;
+          a = BASE_A + f * PEAK;
+          s = 1.7 + f * 2.4;
+        }
+        ctx.fillStyle = 'rgba(184, 194, 208, ' + a.toFixed(3) + ')';
+        ctx.fillRect(x - s * 0.5, y - s * 0.5, s, s);
+      }
+    }
+
+    drawFibonacciSwirl(now, viewTop, viewBottom);
+
+    if (running) raf = requestAnimationFrame(render);
+  }
+
+  function start() {
+    if (running || reduce) return;
+    running = true;
+    raf = requestAnimationFrame(render);
+  }
+  function stop() {
+    running = false;
+    if (raf) cancelAnimationFrame(raf);
+    raf = 0;
+  }
+
+  section.addEventListener('pointermove', (e) => {
+    if (reduce || e.pointerType === 'touch') return; // Wischen soll scrollen, nicht malen
+    const r = section.getBoundingClientRect();
+    tx = e.clientX - r.left;
+    ty = e.clientY - r.top;
+    pointerSeen = true;
+    lastMove = performance.now();
+  }, { passive: true });
+
+  let rt = 0;
+  function remeasure() {
+    clearTimeout(rt);
+    rt = setTimeout(() => { resize(); if (reduce) render(performance.now()); }, 150);
+  }
+  window.addEventListener('resize', remeasure);
+  // Der Abschnitt kann wachsen (z. B. wenn eine Agenten-Kachel aufklappt) —
+  // dann muss das Canvas neu vermessen werden, sonst wird das Raster verzerrt.
+  if ('ResizeObserver' in window) new ResizeObserver(remeasure).observe(section);
+
+  resize();
+  if (reduce) {
+    render(performance.now());               // ein statisches Bild, keine Schleife
+  } else if ('IntersectionObserver' in window) {
+    new IntersectionObserver((entries) => {
+      entries.forEach(en => en.isIntersecting ? start() : stop());
+    }, { threshold: 0.05 }).observe(section);
+  } else {
+    start();
+  }
+}
+
+document.querySelectorAll('canvas[data-field]').forEach(initPointerField);
+</script>
+
 <script>
 // ============================================================
 // KI-Cockpit-Demo: iframe auf Containerbreite skalieren

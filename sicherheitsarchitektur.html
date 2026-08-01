@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Wie wir KI-Agenten bauen — Zwei-Pfad-Sicherheitsarchitektur · TM KI Consulting</title>
+<meta name="description" content="Jeder unserer KI-Agenten trennt sensible Rohdaten strukturell von der KI-Verarbeitung: Pfad A arbeitet auf abstrahierten Daten, Pfad B bleibt ein geschützter Kanal für Menschen. Dazu ein tokenminimaler Bau auf schlanken Modellen." />
+<meta property="og:title" content="Wie wir KI-Agenten bauen — Zwei-Pfad-Sicherheitsarchitektur" />
+<meta property="og:description" content="Sensible Daten strukturell von der KI getrennt, Entscheidungen beim Menschen, schlanke Modelle auf eigener Hardware." />
+<meta property="og:type" content="article" />
+<meta property="og:image" content="https://www.tm-ki-consulting.de/og-image.png" />
+<meta property="og:url" content="https://www.tm-ki-consulting.de/sicherheitsarchitektur.html" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="canonical" href="https://www.tm-ki-consulting.de/sicherheitsarchitektur.html" />
+
+<link rel="icon" href="favicon.ico" />
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
+<link rel="apple-touch-icon" href="apple-touch-icon.png" />
+
+<!-- Schriften werden lokal ausgeliefert (Self-Hosting, DSGVO-konform) -->
+<link rel="preload" as="font" type="font/woff2" href="assets/fonts/inter-latin-400-normal.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="assets/fonts/playfair-display-latin-400-normal.woff2" crossorigin>
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+
+<style>
+  :root {
+    --navy-900: #0a1628;
+    --navy-800: #0f1d33;
+    --navy-700: #152540;
+    --navy-600: #1c3050;
+    --navy-500: #2a4163;
+    --black:    #050a14;
+    --white:    #ffffff;
+    --off-white: #f4f6fa;
+    --gray-300: #b8c2d0;
+    --gray-400: #8a96a8;
+    --gray-500: #5a6578;
+    --line:     rgba(255, 255, 255, .1);
+    --line-light: rgba(255, 255, 255, .06);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: var(--navy-900);
+    color: var(--off-white);
+    font-family: 'Inter', system-ui, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    font-size: 16px;
+  }
+  body::before {
+    content: "";
+    position: fixed; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse 100% 80% at 50% 0%, rgba(28, 48, 80, .4), transparent 60%),
+      radial-gradient(ellipse 80% 60% at 100% 100%, rgba(15, 29, 51, .6), transparent 60%);
+    pointer-events: none;
+  }
+  body > * { position: relative; z-index: 1; }
+  h1, h2, h3, h4 { font-weight: 400; letter-spacing: -0.02em; line-height: 1.15; color: var(--white); }
+  .serif { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-weight: 400; }
+  a { color: var(--white); text-decoration: none; transition: opacity .2s; }
+  .container { max-width: 1280px; margin: 0 auto; padding: 0 48px; }
+
+  /* ===== HEADER (von der Startseite übernommen) ===== */
+  header.site {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(10, 22, 40, .8);
+    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--line-light);
+  }
+  .nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 22px 48px; max-width: 1280px; margin: 0 auto;
+  }
+  .brand { display: flex; align-items: center; gap: 14px; color: var(--white); }
+  .brand-logo {
+    width: 44px; height: 44px; border: 1px solid rgba(255,255,255,.18);
+    background: var(--white); display: grid; place-items: center; overflow: hidden; flex-shrink: 0;
+  }
+  .brand-logo img { width: 100%; height: 100%; object-fit: contain; display: block; }
+  .brand-text .title { font-size: 15px; font-weight: 500; letter-spacing: -0.01em; }
+  .brand-text .sub { font-size: 11px; color: var(--gray-400); letter-spacing: .14em; text-transform: uppercase; margin-top: 2px; }
+  nav.primary ul { list-style: none; display: flex; gap: 36px; align-items: center; }
+  nav.primary a { color: var(--off-white); font-size: 14px; font-weight: 400; opacity: .75; transition: opacity .2s; }
+  nav.primary a:hover { opacity: 1; }
+  nav.primary a[aria-current="page"] { opacity: 1; }
+  .nav-cta {
+    margin-left: 8px; background: var(--white); color: var(--navy-900) !important;
+    padding: 10px 22px; font-size: 13px; font-weight: 500; opacity: 1 !important; transition: background .2s;
+  }
+  .nav-cta:hover { background: var(--off-white); }
+  .nav-toggle {
+    display: none; flex-direction: column; justify-content: center; gap: 5px;
+    width: 44px; height: 44px; padding: 10px; background: transparent;
+    border: 1px solid rgba(255,255,255,.18); cursor: pointer; z-index: 110;
+  }
+  .nav-toggle span { display: block; width: 100%; height: 2px; background: var(--white); transition: transform .3s ease, opacity .3s ease; }
+  .nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+  .nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* ===== BUTTONS ===== */
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 16px 28px; font-size: 14px; font-weight: 500;
+    cursor: pointer; border: 1px solid transparent;
+    text-decoration: none; transition: all .25s; letter-spacing: .01em; font-family: inherit;
+  }
+  .btn-primary { background: var(--white); color: var(--navy-900); }
+  .btn-primary:hover { background: var(--off-white); color: var(--navy-900); }
+  .btn-ghost { background: transparent; color: var(--white); border-color: rgba(255,255,255,.25); }
+  .btn-ghost:hover { border-color: var(--white); background: rgba(255,255,255,.05); color: var(--white); }
+  .btn .arrow { transition: transform .25s; font-size: 16px; }
+  .btn:hover .arrow { transform: translateX(4px); }
+
+  /* ===== SEITENKOPF ===== */
+  main { padding-top: 92px; }
+  .p-hero { padding: 72px 0 56px; }
+  .p-back { display: flex; width: max-content; max-width: 100%; align-items: center; gap: 8px; font-size: 13px; color: var(--gray-400); margin-bottom: 30px; }
+  .p-back:hover { color: var(--white); }
+  .p-eyebrow {
+    display: inline-flex; align-items: center; gap: 12px; font-size: 12px;
+    letter-spacing: .14em; text-transform: uppercase; color: var(--gray-300); margin-bottom: 26px;
+  }
+  .p-eyebrow::before { content: ""; width: 32px; height: 1px; background: var(--gray-400); }
+  .p-hero h1 {
+    font-weight: 300; font-size: clamp(36px, 5.4vw, 60px);
+    line-height: 1.08; letter-spacing: -0.025em; margin-bottom: 26px;
+  }
+  .p-lead { font-size: clamp(17px, 1.6vw, 20px); line-height: 1.65; color: var(--gray-300); font-weight: 300; max-width: 62ch; }
+  .p-section { padding: 0 0 100px; }
+
+  /* ===== ARCHITEKTUR (von der Startseite übernommen) ===== */
+  .arch-sub { margin: 0 0 40px; max-width: 760px; }
+  .arch-sub .arch-kicker { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--gray-400); margin-bottom: 20px; }
+  .arch-sub h2 {
+    font-size: clamp(26px, 3vw, 38px);
+    font-weight: 300; letter-spacing: -.02em; line-height: 1.15; margin-bottom: 18px;
+  }
+  .arch-sub p { color: var(--gray-300); font-size: 16px; line-height: 1.65; font-weight: 300; }
+  .arch-paths { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-bottom: 28px; }
+  .arch-path {
+    background: var(--navy-700); border: 1px solid var(--line);
+    padding: 48px 44px; position: relative; transition: border-color .25s, background .25s;
+  }
+  .arch-path:hover { border-color: rgba(255,255,255,.25); background: var(--navy-600); }
+  .arch-path .pt { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--gray-400); margin-bottom: 20px; }
+  .arch-path h3 { font-size: 23px; font-weight: 400; letter-spacing: -.02em; line-height: 1.2; margin-bottom: 16px; }
+  .arch-path > p { color: var(--gray-300); font-size: 15px; line-height: 1.6; font-weight: 300; margin-bottom: 24px; }
+  .arch-list { list-style: none; padding-top: 22px; border-top: 1px solid var(--line); }
+  .arch-list li {
+    padding: 11px 0; font-size: 14px; color: var(--off-white);
+    display: flex; gap: 14px; align-items: start; border-bottom: 1px solid var(--line-light);
+  }
+  .arch-list li:last-child { border-bottom: 0; }
+  .arch-list li::before { content: ""; width: 14px; height: 1px; background: var(--gray-400); margin-top: 11px; flex-shrink: 0; }
+  .arch-list li strong { color: var(--white); font-weight: 500; }
+  .arch-note {
+    border: 1px solid var(--line); background: rgba(255,255,255,.035);
+    padding: 26px 30px; font-size: 15px; line-height: 1.65; color: var(--gray-300); font-weight: 300;
+  }
+  .arch-note strong { color: var(--white); font-weight: 500; }
+  .arch-diagram { margin: 0 0 28px; background: var(--navy-700); border: 1px solid var(--line); padding: 30px 30px 26px; }
+  .arch-diagram .ad-ttl { color: var(--white); font-weight: 500; font-size: 16px; margin-bottom: 5px; }
+  .arch-diagram .ad-sub { color: var(--gray-400); font-size: 13.5px; line-height: 1.55; margin-bottom: 20px; max-width: 78ch; }
+  .arch-diagram svg { width: 100%; height: auto; display: block; }
+  .eff-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+  .eff { border-top: 1px solid var(--white); padding-top: 34px; }
+  .eff-num { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--gray-400); margin-bottom: 26px; }
+  .eff h3 { font-size: 22px; font-weight: 400; margin-bottom: 16px; line-height: 1.2; letter-spacing: -.02em; }
+  .eff p { color: var(--gray-300); font-size: 15px; line-height: 1.6; font-weight: 300; }
+
+  .p-divider { height: 1px; background: var(--line); margin: 96px 0 80px; }
+
+  /* ===== CTA ===== */
+  .cta-box {
+    background: var(--navy-800); border: 1px solid var(--line);
+    padding: 48px 44px; box-shadow: 0 30px 60px -30px rgba(0,0,0,.6);
+  }
+  .cta-box h2 { margin: 0 0 14px; font-weight: 300; font-size: clamp(24px, 3vw, 34px); }
+  .cta-box p { color: var(--gray-300); font-size: 16px; font-weight: 300; line-height: 1.65; max-width: 62ch; }
+  .cta-row { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 26px; }
+
+  /* ===== FOOTER (von der Startseite übernommen) ===== */
+  footer { background: var(--black); padding: 80px 0 40px; border-top: 1px solid var(--line-light); }
+  .foot-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 56px; padding-bottom: 56px; border-bottom: 1px solid var(--line); }
+  .foot-brand .foot-name { font-size: 18px; font-weight: 500; margin-bottom: 6px; }
+  .foot-brand .foot-sub { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--gray-400); margin-bottom: 24px; }
+  .foot-brand p { font-size: 14px; line-height: 1.65; color: var(--gray-300); max-width: 34ch; font-weight: 300; }
+  footer h5 { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--gray-400); margin-bottom: 18px; font-weight: 500; }
+  footer ul { list-style: none; }
+  footer li { padding: 6px 0; }
+  footer a { color: var(--off-white); font-size: 14px; opacity: .8; }
+  footer a:hover { opacity: 1; }
+  .foot-bottom { padding-top: 32px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-size: 12px; letter-spacing: .04em; color: var(--gray-500); }
+
+  @media (max-width: 1024px) {
+    .nav { padding-left: 32px; padding-right: 32px; }
+    .container { padding: 0 32px; }
+    .eff-grid { grid-template-columns: 1fr; gap: 40px; }
+  }
+  @media (max-width: 768px) {
+    .nav-toggle { display: inline-flex; }
+    nav.primary {
+      position: absolute; top: 100%; left: 0; right: 0;
+      background: rgba(10, 22, 40, .97); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line-light); max-height: 0; overflow: hidden; visibility: hidden;
+      transition: max-height .35s ease, visibility .35s ease;
+    }
+    nav.primary.is-open { max-height: calc(100vh - 80px); visibility: visible; overflow-y: auto; }
+    nav.primary ul { display: flex; flex-direction: column; align-items: stretch; gap: 0; padding: 12px 24px 24px; }
+    nav.primary ul li { border-bottom: 1px solid var(--line-light); }
+    nav.primary ul li:last-child { border-bottom: none; }
+    nav.primary a { display: block; padding: 16px 4px; font-size: 16px; opacity: .9; }
+    nav.primary .nav-cta { margin: 16px 0 0; text-align: center; padding: 14px 22px; }
+    header.site { overflow: visible; }
+    .nav { position: relative; padding: 18px 24px; }
+    .container { padding: 0 24px; }
+    main { padding-top: 76px; }
+    .p-hero { padding: 48px 0 40px; }
+    .p-section { padding-bottom: 64px; }
+    .p-divider { margin: 64px 0 56px; }
+    .arch-paths { grid-template-columns: 1fr; gap: 24px; }
+    .arch-path { padding: 36px 28px; }
+    .arch-diagram { padding: 22px 20px 20px; }
+    .cta-box { padding: 32px 24px; }
+    .cta-row .btn { width: 100%; justify-content: center; text-align: center; }
+    .foot-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+    .foot-bottom { flex-direction: column; gap: 8px; }
+  }
+  @media (max-width: 480px) {
+    .nav { padding: 14px 16px; }
+    .container { padding: 0 16px; }
+    .arch-path { padding: 28px 22px; }
+    .foot-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site">
+  <div class="nav">
+    <a href="index.html" class="brand" aria-label="TM KI Consulting Startseite">
+      <div class="brand-logo">
+        <img src="assets/TM_KI_Logo.webp" alt="TM KI Consulting Logo" width="44" height="44" decoding="async" />
+      </div>
+      <div class="brand-text">
+        <div class="title">TM KI Consulting </div>
+        <div class="sub">Beratung · Strategie · Umsetzung</div>
+      </div>
+    </a>
+    <nav class="primary" id="primary-nav">
+      <ul>
+        <li><a href="index.html#leistungen">Leistungen</a></li>
+        <li><a href="index.html#leistungskatalog">Katalog</a></li>
+        <li><a href="index.html#ki-agenten" aria-current="page">KI-Agenten</a></li>
+        <li><a href="index.html#im-einsatz">Im Einsatz</a></li>
+        <li><a href="index.html#ki-cockpits">KI-Cockpits</a></li>
+        <li><a href="index.html#insights">Insights</a></li>
+        <li><a href="index.html#team">Team</a></li>
+        <li><a href="impressum.html">Impressum</a></li>
+        <li><a href="index.html#kontakt" class="nav-cta">Kontakt</a></li>
+      </ul>
+    </nav>
+    <button class="nav-toggle" type="button" aria-label="Menü öffnen" aria-expanded="false" aria-controls="primary-nav">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main>
+
+  <!-- SEITENKOPF -->
+  <div class="p-hero">
+    <div class="container">
+      <a class="p-back" href="index.html#ki-agenten">← Zurück zu unseren KI-Agenten</a>
+      <div class="p-eyebrow">Wie wir KI-Agenten bauen</div>
+      <h1>Sichere Agenten,<br><span class="serif">sparsam gebaut.</span></h1>
+      <p class="p-lead">
+        Unsere KI-Agenten folgen zwei Grundsätzen, die wir in jedem Projekt anwenden:
+        eine Sicherheitsarchitektur, die sensible Daten strukturell von der KI trennt,
+        und ein effizienter Bau auf schlanken Modellen, der mit wenig Rechenleistung
+        und planbaren Kosten auskommt.
+      </p>
+    </div>
+  </div>
+
+  <!-- 01 · SICHERHEIT -->
+  <section class="p-section" id="zwei-pfad-architektur">
+    <div class="container">
+      <div class="arch-sub">
+        <div class="arch-kicker">01 · Sicherheit</div>
+        <h2>Die Zwei-Pfad-Sicherheitsarchitektur</h2>
+        <p>
+          Jeder Agent ist strukturell in zwei getrennte Pfade aufgeteilt. So gelangt
+          kein sensibler Rohinhalt in die KI-Verarbeitung, und die Verantwortung über
+          schützenswerte Daten bleibt beim Menschen.
+        </p>
+      </div>
+
+      <figure class="arch-diagram">
+        <div class="ad-ttl">Die Zwei-Pfad-Architektur im Überblick</div>
+        <div class="ad-sub">Sensible Rohdaten und KI-Verarbeitung sind strukturell getrennt. Die KI arbeitet ausschließlich auf abstrahierten Daten (Pfad A). Originalinhalte bleiben im geschützten Kanal (Pfad B) und erreichen nur befugte Menschen nach Freigabe. Beide Wege münden in eine Entscheidung, die beim Menschen liegt.</div>
+        <svg viewBox="0 0 820 380" role="img" aria-label="Schema der Zwei-Pfad-Sicherheitsarchitektur: Eingangsdaten teilen sich in den KI-Pfad mit abstrahierten Daten und den geschützten Kanal mit sensiblen Rohdaten, der nur Menschen nach Freigabe zugänglich ist. Beide münden in eine menschliche Entscheidung." font-family="Inter, system-ui, sans-serif">
+          <defs>
+            <marker id="adArrow" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+              <path d="M0,0 L7,3 L0,6 Z" fill="#8a96a8"/>
+            </marker>
+          </defs>
+
+          <text x="300" y="26" text-anchor="middle" fill="#8a96a8" font-size="11" letter-spacing="1.5">PFAD A · KI-PFAD</text>
+          <text x="300" y="368" text-anchor="middle" fill="#8a96a8" font-size="11" letter-spacing="1.5">PFAD B · GESCHÜTZTER KANAL</text>
+
+          <g fill="none" stroke="#8a96a8" stroke-width="1.5">
+            <path d="M160,190 L185,190 L185,81 L206,81" marker-end="url(#adArrow)"/>
+            <path d="M160,190 L185,190 L185,299 L206,299" marker-end="url(#adArrow)"/>
+            <path d="M390,81 L416,81" marker-end="url(#adArrow)"/>
+            <path d="M390,299 L416,299" marker-end="url(#adArrow)"/>
+            <path d="M600,81 L624,81 L624,176 L640,176" marker-end="url(#adArrow)"/>
+            <path d="M600,299 L624,299 L624,204 L640,204" marker-end="url(#adArrow)"/>
+          </g>
+
+          <line x1="196" y1="190" x2="624" y2="190" stroke="#5a6578" stroke-width="1" stroke-dasharray="5 5"/>
+          <rect x="336" y="178" width="148" height="24" rx="12" fill="#0f1d33" stroke="#5a6578"/>
+          <text x="410" y="194" text-anchor="middle" fill="#b8c2d0" font-size="11" letter-spacing="1">STRIKTE TRENNUNG</text>
+
+          <rect x="20" y="150" width="140" height="80" rx="8" fill="#2a4163" stroke="rgba(255,255,255,.2)"/>
+          <text x="90" y="186" text-anchor="middle" fill="#f4f6fa" font-size="14" font-weight="500">Anfrage &amp;</text>
+          <text x="90" y="206" text-anchor="middle" fill="#f4f6fa" font-size="14" font-weight="500">Eingangsdaten</text>
+
+          <rect x="210" y="46" width="180" height="70" rx="8" fill="#1c3050" stroke="rgba(255,255,255,.2)"/>
+          <text x="300" y="76" text-anchor="middle" fill="#f4f6fa" font-size="14" font-weight="500">Abstrahierte Daten</text>
+          <text x="300" y="96" text-anchor="middle" fill="#8a96a8" font-size="12">Merkmals- &amp; Sachdaten</text>
+
+          <rect x="420" y="46" width="180" height="70" rx="8" fill="#1c3050" stroke="rgba(255,255,255,.4)"/>
+          <text x="510" y="76" text-anchor="middle" fill="#f4f6fa" font-size="14" font-weight="500">KI-Pfad</text>
+          <text x="510" y="96" text-anchor="middle" fill="#8a96a8" font-size="12">RAG · lokal · datensparsam</text>
+
+          <rect x="210" y="264" width="180" height="70" rx="8" fill="#1c3050" stroke="rgba(255,255,255,.2)"/>
+          <text x="300" y="294" text-anchor="middle" fill="#f4f6fa" font-size="14" font-weight="500">Sensible Rohdaten</text>
+          <text x="300" y="314" text-anchor="middle" fill="#8a96a8" font-size="12">Roh- &amp; Originaldaten</text>
+
+          <rect x="420" y="264" width="180" height="70" rx="8" fill="#1c3050" stroke="rgba(255,255,255,.2)"/>
+          <text x="510" y="294" text-anchor="middle" fill="#f4f6fa" font-size="14" font-weight="500">Geschützter Kanal</text>
+          <text x="510" y="314" text-anchor="middle" fill="#8a96a8" font-size="12">nur nach Freigabe</text>
+
+          <rect x="644" y="148" width="156" height="84" rx="8" fill="#2a4163" stroke="rgba(255,255,255,.2)"/>
+          <text x="722" y="184" text-anchor="middle" fill="#f4f6fa" font-size="14" font-weight="500">Mensch entscheidet</text>
+          <text x="722" y="204" text-anchor="middle" fill="#8a96a8" font-size="12">Sichtung &amp; Freigabe</text>
+        </svg>
+      </figure>
+
+      <div class="arch-paths">
+        <div class="arch-path">
+          <div class="pt">Pfad A · KI-Pfad</div>
+          <h3>Datensparsame Verarbeitung</h3>
+          <p>
+            Der KI-Pfad arbeitet ausschließlich auf abstrahierten, auf das Nötige
+            reduzierten Daten und beantwortet Anfragen nur aus verifizierten Quellen.
+          </p>
+          <ul class="arch-list">
+            <li>verarbeitet nur strukturierte Merkmals- und Sachdaten</li>
+            <li>kein Zugriff auf sensible Roh- oder Originalinhalte</li>
+            <li>Antworten <strong>ausschließlich</strong> aus geprüften Quellen (RAG)</li>
+            <li>läuft lokal auf eigener, kontrollierter Hardware</li>
+          </ul>
+        </div>
+        <div class="arch-path">
+          <div class="pt">Pfad B · Geschützter Kanal</div>
+          <h3>Nur menschlich, nur auf Freigabe</h3>
+          <p>
+            Sensible Rohinhalte laufen über einen getrennten, kontrollierten Kanal,
+            den ausschließlich befugte Personen einsehen, und auch das nur nach
+            ausdrücklicher Freigabe.
+          </p>
+          <ul class="arch-list">
+            <li>reiner Durchleitungskanal für schützenswerte Originaldaten</li>
+            <li>aktiv erst nach ausdrücklicher Freigabe durch befugtes Personal</li>
+            <li>wird von der KI <strong>nicht</strong> verarbeitet, ausgewertet oder gespeichert</li>
+            <li>dient allein der menschlichen Sichtung und Entscheidung</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="arch-note">
+        <strong>Wirkung der Trennung:</strong> Was die KI „sieht", ist abstrahiert und
+        datensparsam (Pfad A). Was ein Mensch bei Bedarf im Original sieht, bleibt strikt
+        getrennt und ohne KI-seitige Verarbeitung (Pfad B). Sensible Daten verlassen so
+        das geschützte System nicht, und jede kritische Entscheidung bleibt nachvollziehbar
+        in menschlicher Hand.
+      </div>
+
+      <div class="p-divider"></div>
+
+      <!-- 02 · EFFIZIENZ -->
+      <div class="arch-sub" id="effizienz">
+        <div class="arch-kicker">02 · Effizienz</div>
+        <h2>Schlanke Modelle, tokenminimal gebaut</h2>
+        <p>
+          Wir bauen unsere Agenten so effizient, dass leistungsfähige Low-Parameter-Modelle
+          lokal auf eigener Hardware in Deutschland laufen. Das senkt die nötige
+          Rechenleistung, macht Kosten planbar und hält die Daten im Haus.
+        </p>
+      </div>
+
+      <div class="eff-grid">
+        <div class="eff">
+          <div class="eff-num">Methode</div>
+          <h3>Wissen in Quellen, nicht im Prompt</h3>
+          <p>
+            Fachwissen lebt in pflegbaren RAG-Quellen und Werkzeugen, nicht in
+            überladenen Anweisungen. Der System-Prompt bleibt schlank und stabil,
+            die Quellen wachsen mit.
+          </p>
+        </div>
+        <div class="eff">
+          <div class="eff-num">Wirkung</div>
+          <h3>Jedes Token kostet Rechenzeit</h3>
+          <p>
+            Knappe, klare Anweisungen belegen weniger Speicher und sparen Rechenzeit
+            bei jeder Anfrage. Das erhöht den Durchsatz und die Zahl paralleler Nutzer
+            auch bei begrenzter Hardware.
+          </p>
+        </div>
+        <div class="eff">
+          <div class="eff-num">Nutzen</div>
+          <h3>Souverän und planbar</h3>
+          <p>
+            Eigene Hardware bedeutet planbare Fixkosten statt offener API-Kosten,
+            Unabhängigkeit von US- oder China-Clouds und einen Betrieb, der dem
+            EU AI Act und der DSGVO standhält.
+          </p>
+        </div>
+      </div>
+
+      <div class="p-divider"></div>
+
+      <div class="cta-box">
+        <h2>Diese Architektur steckt in <span class="serif">jedem unserer Agenten.</span></h2>
+        <p>
+          Ob Akquise, Gefahrgut, Wissensrecherche oder Betrugsprävention: Alle Agenten
+          werden nach denselben zwei Grundsätzen gebaut. Welches Foundation-Modell dabei
+          zu Ihnen passt, klären wir im Erstgespräch — fachlich, wirtschaftlich und
+          datenschutzrechtlich.
+        </p>
+        <div class="cta-row">
+          <a href="index.html#ki-agenten" class="btn btn-primary">Unsere sechs KI-Agenten ansehen <span class="arrow">→</span></a>
+          <a href="index.html#kontakt" class="btn btn-ghost">Erstgespräch buchen</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <div class="foot-name">TM KI Consulting UG (haftungsbeschränkt)</div>
+        <div class="foot-sub">Beratung · Strategie · Umsetzung</div>
+        <p>
+          Fachspezifische KI-Agenten und KI-Beratung.
+          Strategisch, technisch, menschlich.
+        </p>
+      </div>
+      <div>
+        <h5>Sektoren</h5>
+        <ul>
+          <li><a href="index.html#ki-agenten">KI-Agenten</a></li>
+          <li><a href="index.html#ki-cockpits">KI-Cockpits</a></li>
+          <li><a href="sicherheitsarchitektur.html">Sicherheitsarchitektur</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Unternehmen</h5>
+        <ul>
+          <li><a href="index.html#leistungen">Leistungen</a></li>
+          <li><a href="index.html#leistungskatalog">Leistungskatalog (PDF)</a></li>
+          <li><a href="index.html#insights">Insights</a></li>
+          <li><a href="index.html#team">Team</a></li>
+          <li><a href="impressum.html">Impressum</a></li>
+          <li><a href="datenschutz.html">Datenschutzerklärung</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Kontakt</h5>
+        <ul>
+          <li><a href="mailto:info@tm-ki-consulting.de">info@tm-ki-consulting.de</a></li>
+          <li><a href="tel:+4915737284004">+49 157 37284004</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 TM KI Consulting UG (haftungsbeschränkt)</span>
+      <span>Ernst-Tengelmann-Ring 22 · 45259 Essen</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Mobile Nav Toggle (Hamburger)
+(function () {
+  const toggle = document.querySelector('.nav-toggle');
+  const nav = document.getElementById('primary-nav');
+  if (!toggle || !nav) return;
+  function closeMenu() {
+    nav.classList.remove('is-open');
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.setAttribute('aria-label', 'Menü öffnen');
+  }
+  function openMenu() {
+    nav.classList.add('is-open');
+    toggle.setAttribute('aria-expanded', 'true');
+    toggle.setAttribute('aria-label', 'Menü schließen');
+  }
+  toggle.addEventListener('click', () => {
+    nav.classList.contains('is-open') ? closeMenu() : openMenu();
+  });
+  nav.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+  window.addEventListener('resize', () => { if (window.innerWidth > 768) closeMenu(); });
+})();
+</script>
+</body>
+</html>
