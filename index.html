@@ -582,6 +582,410 @@
     font-size: 12px; color: var(--gray-400); letter-spacing: .04em;
   }
 
+  /* ============ KI-AGENTEN — AUSGEKLAPPTES EINZEL-INTERFACE ============ */
+  /* Eine geöffnete Kachel breitet sich über die volle Rasterbreite aus und zeigt
+     ein agentenspezifisches Bedien-Interface. Jeder Agent hat ein eigenes
+     Farb- und Formklima — die Fenster sollen wie sechs unterschiedliche
+     Produkte wirken, nicht wie sechs Ausschnitte dieser Website.
+     Ohne JavaScript bleibt das native <details>-Verhalten erhalten. */
+
+  /* --- Basiswerte, werden je Agent überschrieben --- */
+  .agent-card {
+    --ac: var(--gray-300);                 /* Akzent auf dunklem Seitenhintergrund */
+    --ac-soft: rgba(255, 255, 255, .3);
+  }
+  .agent-ui {
+    --ui-bg: #101a2c;
+    --ui-bar: rgba(255, 255, 255, .04);
+    --ui-surface: rgba(255, 255, 255, .03);
+    --ui-line: rgba(255, 255, 255, .14);
+    --ui-line-soft: rgba(255, 255, 255, .08);
+    --ui-ink: #ffffff;
+    --ui-ink-2: #c6cedb;
+    --ui-mute: #8a96a8;
+    --ui-accent: #ffffff;
+    --ui-accent-soft: rgba(255, 255, 255, .3);
+    --ui-on-accent: #0a1628;
+    --ui-ok: #4ade80;
+    --ui-warn: #eab308;
+    --ui-bad: #ef4444;
+    --ui-msg-u: rgba(255, 255, 255, .07);
+    --ui-msg-a: rgba(0, 0, 0, .22);
+    --ui-code-bg: rgba(0, 0, 0, .3);
+    --ui-radius: 0px;
+    --ui-shadow: 0 26px 54px -34px rgba(0, 0, 0, .8);
+  }
+
+  .agent-card[open] {
+    grid-column: 1 / -1;
+    border-top: 2px solid var(--ac);
+    box-shadow: 0 40px 80px -50px rgba(0, 0, 0, .85);
+  }
+  .agent-card[open] > summary { padding: 32px 34px 26px; }
+  .agent-card[open] .agent-num { margin-bottom: 16px; color: var(--ac); }
+  .agent-card[open] h3 { font-size: 26px; }
+  .agent-card[open] .agent-claim { font-size: 15.5px; max-width: 80ch; }
+  .agent-card[open] .agent-body { padding: 0 34px 34px; }
+  .agent-card[open] .agent-toggle { top: 32px; right: 32px; }
+  .agent-card[open] .agent-toggle::before { background: var(--ac); }
+
+  .agent-detail {
+    display: grid;
+    grid-template-columns: minmax(0, 1.45fr) minmax(0, .9fr);
+    gap: 34px;
+    align-items: start;
+  }
+  .agent-copy p { color: var(--gray-300); font-size: 15px; line-height: 1.65; font-weight: 300; margin-bottom: 18px; }
+  .agent-copy p:last-of-type { margin-bottom: 0; }
+
+  /* --- Rahmen der Interface-Vorschau --- */
+  .agent-ui {
+    border: 1px solid var(--ui-line);
+    border-radius: var(--ui-radius);
+    background: var(--ui-bg);
+    color: var(--ui-ink-2);
+    box-shadow: var(--ui-shadow);
+    min-width: 0;
+    overflow: hidden;
+  }
+  .aui-bar {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 14px; flex-wrap: wrap;
+    padding: 13px 18px;
+    border-bottom: 1px solid var(--ui-line);
+    background: var(--ui-bar);
+  }
+  .aui-bar-l { display: flex; align-items: center; gap: 11px; min-width: 0; flex-wrap: wrap; }
+  .aui-dot {
+    width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0;
+    background: var(--ui-ok);
+    animation: aui-pulse 2.4s ease-out infinite;
+  }
+  @keyframes aui-pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(127, 127, 127, .0); opacity: 1; }
+    50%  { opacity: .45; }
+    100% { opacity: 1; }
+  }
+  .aui-name { color: var(--ui-ink); font-size: 13.5px; font-weight: 500; }
+  .aui-meta { color: var(--ui-mute); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; }
+  .aui-note {
+    font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--ui-mute); border: 1px solid var(--ui-line); padding: 4px 8px;
+    border-radius: var(--ui-radius); white-space: nowrap;
+  }
+  .aui-body { padding: 18px; display: grid; gap: 14px; }
+  .aui-foot {
+    border-top: 1px solid var(--ui-line);
+    padding: 12px 18px;
+    font-size: 11.5px; line-height: 1.55; color: var(--ui-mute); font-weight: 300;
+  }
+
+  /* --- Bausteine --- */
+  .aui-panel {
+    border: 1px solid var(--ui-line-soft);
+    border-radius: var(--ui-radius);
+    background: var(--ui-surface);
+    padding: 14px 16px; min-width: 0;
+  }
+  .aui-split { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .aui-k {
+    display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
+    font-size: 9.5px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--ui-mute); margin-bottom: 13px;
+  }
+  .aui-k b { color: var(--ui-ink-2); font-weight: 400; white-space: nowrap; }
+  .aui-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .aui-chip {
+    font-size: 11.5px; color: var(--ui-ink-2); letter-spacing: .01em;
+    border: 1px solid var(--ui-line); border-radius: var(--ui-radius);
+    background: var(--ui-bar); padding: 5px 9px;
+  }
+  .aui-t { color: var(--ui-ink); font-size: 13px; line-height: 1.4; }
+  /* Doppelselektor: sonst gewinnen die globalen .agent-body p / a-Regeln der Seite */
+  .agent-ui p { margin: 0; }
+  .agent-ui .aui-hint { color: var(--ui-mute); font-size: 11.5px; line-height: 1.55; font-weight: 300; margin-top: 10px; }
+  .agent-ui .aui-p { color: var(--ui-ink-2); font-size: 12.5px; line-height: 1.6; font-weight: 300; }
+
+  /* Trefferzeile mit Bewertung */
+  .aui-row {
+    display: grid; grid-template-columns: minmax(0, 1fr) auto;
+    gap: 6px 14px; align-items: center;
+    padding: 12px 0; border-top: 1px solid var(--ui-line-soft);
+  }
+  .aui-row:first-of-type { border-top: 0; padding-top: 0; }
+  .aui-row:last-child { padding-bottom: 0; }
+  .aui-s { grid-column: 1 / -1; color: var(--ui-mute); font-size: 11.5px; line-height: 1.55; font-weight: 300; }
+  .aui-score { display: flex; align-items: center; gap: 9px; }
+  .aui-meter { width: 62px; height: 3px; background: var(--ui-line); position: relative; overflow: hidden; }
+  .aui-meter i { position: absolute; top: 0; bottom: 0; left: 0; width: 0; background: var(--ui-accent); transition: width .95s cubic-bezier(.2, .7, .2, 1) .15s; }
+  .agent-card[open] .aui-meter i { width: var(--v, 0%); }
+  .aui-num { font-variant-numeric: tabular-nums; font-size: 12.5px; color: var(--ui-ink); min-width: 20px; text-align: right; }
+
+  /* Nachrichten */
+  .aui-msg {
+    border: 1px solid var(--ui-line); border-radius: var(--ui-radius);
+    padding: 12px 14px; font-size: 13px; line-height: 1.6;
+  }
+  .aui-msg.u { background: var(--ui-msg-u); color: var(--ui-ink); }
+  .aui-msg.a { background: var(--ui-msg-a); color: var(--ui-ink-2); font-weight: 300; }
+  .aui-msg sup {
+    font-size: 9.5px; color: var(--ui-accent); border: 1px solid var(--ui-accent-soft);
+    padding: 0 4px; margin-left: 3px; vertical-align: super;
+  }
+  .aui-cites { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+  .aui-cites span {
+    font-size: 10.5px; letter-spacing: .05em; color: var(--ui-accent);
+    border: 1px solid var(--ui-accent-soft); border-radius: var(--ui-radius); padding: 3px 7px;
+  }
+
+  /* Status-Marker */
+  .aui-list { display: grid; gap: 9px; }
+  .aui-flag { display: flex; align-items: flex-start; gap: 9px; font-size: 12.5px; line-height: 1.5; }
+  .aui-flag::before { content: ""; width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; margin-top: 6px; }
+  .aui-flag.ok   { color: var(--ui-ok); }   .aui-flag.ok::before   { background: var(--ui-ok); }
+  .aui-flag.warn { color: var(--ui-warn); } .aui-flag.warn::before { background: var(--ui-warn); }
+  .aui-flag.bad  { color: var(--ui-bad); }  .aui-flag.bad::before  { background: var(--ui-bad); }
+
+  /* Kennzahlen */
+  .aui-kpis { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .aui-kpis.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .aui-kpi {
+    border: 1px solid var(--ui-line-soft); border-radius: var(--ui-radius);
+    background: var(--ui-bar); padding: 12px 13px;
+  }
+  .aui-kpi span { display: block; font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--ui-mute); margin-bottom: 8px; }
+  .aui-kpi strong { display: block; font-size: 21px; font-weight: 400; line-height: 1; color: var(--ui-ink); }
+  .aui-kpi em { display: block; font-style: normal; font-size: 11px; color: var(--ui-mute); margin-top: 6px; font-weight: 300; }
+
+  /* Code-Diff */
+  .aui-code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 11.5px; line-height: 1.75; color: var(--ui-mute);
+    background: var(--ui-code-bg); border: 1px solid var(--ui-line-soft);
+    border-radius: var(--ui-radius);
+    padding: 12px 14px; overflow-x: auto; white-space: pre;
+  }
+  .aui-code .add { color: var(--ui-ok); display: block; }
+  .aui-code .del { color: var(--ui-bad); display: block; }
+
+  /* Fundstellen */
+  .aui-src { display: flex; gap: 10px; align-items: flex-start; padding: 9px 0; border-top: 1px solid var(--ui-line-soft); font-size: 12.5px; color: var(--ui-ink-2); font-weight: 300; line-height: 1.5; }
+  .aui-src:first-of-type { border-top: 0; padding-top: 0; }
+  .aui-src b { flex-shrink: 0; font-size: 10px; font-weight: 500; color: var(--ui-accent); border: 1px solid var(--ui-accent-soft); padding: 1px 6px; margin-top: 1px; }
+
+  /* Digest-Eintrag */
+  .aui-item { padding: 14px 0; border-top: 1px solid var(--ui-line-soft); }
+  .aui-item:first-of-type { border-top: 0; padding-top: 0; }
+  .aui-item:last-child { padding-bottom: 0; }
+  .aui-item-h { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; margin-bottom: 11px; }
+  .aui-tag { font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--ui-mute); border: 1px solid var(--ui-line); border-radius: var(--ui-radius); padding: 3px 7px; white-space: nowrap; }
+  .aui-tag.hi { color: var(--ui-accent); border-color: var(--ui-accent-soft); }
+  .aui-dl { display: grid; gap: 7px; }
+  .aui-dl > div { display: grid; grid-template-columns: 74px minmax(0, 1fr); gap: 12px; align-items: baseline; }
+  .aui-dl dt { font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--ui-mute); }
+  .aui-dl dd { font-size: 12.5px; line-height: 1.55; color: var(--ui-ink-2); font-weight: 300; }
+  .aui-srcline { margin-top: 11px; font-size: 11px; color: var(--ui-mute); letter-spacing: .02em; }
+
+  /* Ampel-Befund */
+  .aui-verdict { display: flex; align-items: center; gap: 16px; margin-bottom: 14px; }
+  .aui-lamp { display: flex; gap: 7px; flex-shrink: 0; }
+  .aui-lamp i { width: 13px; height: 13px; border-radius: 50%; border: 1px solid var(--ui-line); background: var(--ui-bar); }
+  .aui-lamp i.on.red { background: var(--ui-bad); border-color: var(--ui-bad); box-shadow: 0 0 14px rgba(220, 38, 38, .45); }
+  .aui-verdict strong { display: block; color: var(--ui-ink); font-size: 14.5px; font-weight: 600; }
+  .aui-verdict em { display: block; font-style: normal; font-size: 12px; color: var(--ui-mute); margin-top: 4px; font-weight: 400; }
+  .aui-steps { list-style: none; counter-reset: s; display: grid; gap: 10px; }
+  .aui-steps li { counter-increment: s; display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 11px; font-size: 12.5px; line-height: 1.55; color: var(--ui-ink-2); font-weight: 300; }
+  .aui-steps li::before {
+    content: counter(s); font-size: 10px; color: var(--ui-accent);
+    border: 1px solid var(--ui-accent-soft); width: 21px; height: 21px;
+    border-radius: var(--ui-radius);
+    display: grid; place-items: center; margin-top: -1px;
+  }
+  .aui-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 13px; }
+  .aui-btn {
+    font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase;
+    padding: 8px 13px; border: 1px solid var(--ui-line); color: var(--ui-ink-2);
+    border-radius: var(--ui-radius);
+  }
+  .aui-btn.primary { background: var(--ui-accent); border-color: var(--ui-accent); color: var(--ui-on-accent); }
+
+  /* ---------------------------------------------------------------
+     Eigenes Klima je Agent — jedes Fenster ist ein eigenes Produkt
+     --------------------------------------------------------------- */
+
+  /* 01 · Akquise — helles Vertriebswerkzeug, Pflaume */
+  .agent-card[data-agent="akquise"] { --ac: #e18ab8; --ac-soft: rgba(225, 138, 184, .38); }
+  .agent-card[data-agent="akquise"] .agent-ui {
+    --ui-bg: #f6f4f1; --ui-bar: rgba(124, 45, 90, .05);
+    --ui-surface: #ffffff; --ui-line: rgba(38, 22, 32, .16);
+    --ui-line-soft: rgba(38, 22, 32, .1);
+    --ui-ink: #24151d; --ui-ink-2: #4d3c45; --ui-mute: #6e5f69;
+    --ui-accent: #8e2f63; --ui-accent-soft: rgba(142, 47, 99, .35); --ui-on-accent: #ffffff;
+    --ui-ok: #15803d; --ui-warn: #a16207; --ui-bad: #b91c1c;
+    --ui-msg-u: rgba(142, 47, 99, .09); --ui-msg-a: #ffffff;
+    --ui-radius: 2px; --ui-shadow: 0 26px 54px -30px rgba(0, 0, 0, .55);
+  }
+  .agent-card[data-agent="akquise"] .aui-kpi strong,
+  .agent-card[data-agent="akquise"] .aui-num { font-variant-numeric: tabular-nums; }
+
+  /* 02 · Webdesign — dunkle Entwicklerumgebung, Violett, technische Labels */
+  .agent-card[data-agent="webdesign"] { --ac: #a78bfa; --ac-soft: rgba(167, 139, 250, .4); }
+  .agent-card[data-agent="webdesign"] .agent-ui {
+    --ui-bg: #101116; --ui-bar: rgba(167, 139, 250, .07);
+    --ui-surface: rgba(255, 255, 255, .028); --ui-line: rgba(167, 139, 250, .2);
+    --ui-line-soft: rgba(255, 255, 255, .08);
+    --ui-ink: #eceaf6; --ui-ink-2: #b6b2ca; --ui-mute: #8d89a6;
+    --ui-accent: #a78bfa; --ui-accent-soft: rgba(167, 139, 250, .42); --ui-on-accent: #14101f;
+    --ui-ok: #5fdba0; --ui-warn: #e3b341; --ui-bad: #f47268;
+    --ui-msg-u: rgba(167, 139, 250, .12); --ui-msg-a: rgba(0, 0, 0, .3);
+    --ui-code-bg: #0a0b0f;
+    --ui-radius: 0px;
+  }
+  .agent-card[data-agent="webdesign"] .aui-k,
+  .agent-card[data-agent="webdesign"] .aui-meta,
+  .agent-card[data-agent="webdesign"] .aui-kpi span,
+  .agent-card[data-agent="webdesign"] .aui-btn {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    letter-spacing: .04em;
+  }
+  .agent-card[data-agent="webdesign"] .aui-kpi strong {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 19px;
+  }
+
+  /* 03 · Gefahrgut — heller Industrieton, Warnorange, Gefahrgutstreifen */
+  .agent-card[data-agent="gefahrgut"] { --ac: #f0a35c; --ac-soft: rgba(240, 163, 92, .4); }
+  .agent-card[data-agent="gefahrgut"] .agent-ui {
+    --ui-bg: #f4f1ea; --ui-bar: rgba(31, 27, 20, .045);
+    --ui-surface: #fffdf8; --ui-line: rgba(31, 27, 20, .18);
+    --ui-line-soft: rgba(31, 27, 20, .1);
+    --ui-ink: #1f1b14; --ui-ink-2: #4a4238; --ui-mute: #6a6053;
+    --ui-accent: #b0530a; --ui-accent-soft: rgba(176, 83, 10, .4); --ui-on-accent: #ffffff;
+    --ui-ok: #15803d; --ui-warn: #9a6400; --ui-bad: #b91c1c;
+    --ui-msg-u: rgba(191, 90, 8, .1); --ui-msg-a: #fffdf8;
+    --ui-radius: 0px; --ui-shadow: 0 26px 54px -30px rgba(0, 0, 0, .55);
+  }
+  .agent-card[data-agent="gefahrgut"] .aui-bar {
+    border-bottom: 0;
+    box-shadow: inset 0 -6px 0 -3px transparent;
+  }
+  .agent-card[data-agent="gefahrgut"] .aui-bar::after {
+    content: ""; display: block; height: 5px; width: 100%;
+    order: 9; flex: 0 0 100%; margin: 11px -18px -13px;
+    width: calc(100% + 36px);
+    background: repeating-linear-gradient(
+      -45deg, #d9760f 0 9px, #1f1b14 9px 18px
+    );
+    opacity: .85;
+  }
+  .agent-card[data-agent="gefahrgut"] .aui-k { font-weight: 500; }
+
+  /* 04 · News-Radar — dunkles Redaktionsgrün, Mint, Serifentitel */
+  .agent-card[data-agent="news"] { --ac: #5eead4; --ac-soft: rgba(94, 234, 212, .38); }
+  .agent-card[data-agent="news"] .agent-ui {
+    --ui-bg: #0c1a17; --ui-bar: rgba(94, 234, 212, .06);
+    --ui-surface: rgba(255, 255, 255, .03); --ui-line: rgba(94, 234, 212, .18);
+    --ui-line-soft: rgba(255, 255, 255, .08);
+    --ui-ink: #e8f4f0; --ui-ink-2: #a9c4bd; --ui-mute: #7fa099;
+    --ui-accent: #4fd1a5; --ui-accent-soft: rgba(79, 209, 165, .4); --ui-on-accent: #06231c;
+    --ui-ok: #4fd1a5; --ui-warn: #e0b64a; --ui-bad: #f1786c;
+    --ui-msg-u: rgba(94, 234, 212, .1); --ui-msg-a: rgba(0, 0, 0, .25);
+    --ui-radius: 0px;
+  }
+  .agent-card[data-agent="news"] .aui-item .aui-t {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 16px; line-height: 1.3; letter-spacing: -.01em;
+  }
+  .agent-card[data-agent="news"] .aui-kpi strong {
+    font-family: 'Playfair Display', Georgia, serif; font-size: 26px;
+  }
+
+  /* 05 · Betrugsmaschen — helle Bürgeroberfläche, kontraststark, größere Schrift */
+  .agent-card[data-agent="betrug"] { --ac: #8fb3ff; --ac-soft: rgba(143, 179, 255, .4); }
+  .agent-card[data-agent="betrug"] .agent-ui {
+    --ui-bg: #ffffff; --ui-bar: #eef2f8;
+    --ui-surface: #f7f9fc; --ui-line: rgba(16, 24, 40, .18);
+    --ui-line-soft: rgba(16, 24, 40, .1);
+    --ui-ink: #101828; --ui-ink-2: #344054; --ui-mute: #5b6675;
+    --ui-accent: #1d4ed8; --ui-accent-soft: rgba(29, 78, 216, .35); --ui-on-accent: #ffffff;
+    --ui-ok: #15803d; --ui-warn: #a15c00; --ui-bad: #c81e1e;
+    --ui-msg-u: #f2f4f7; --ui-msg-a: #ffffff;
+    --ui-radius: 10px; --ui-shadow: 0 26px 54px -28px rgba(0, 0, 0, .6);
+  }
+  /* Zielgruppe 60+: bewusst größere, ruhigere Typografie */
+  .agent-card[data-agent="betrug"] .aui-msg,
+  .agent-card[data-agent="betrug"] .aui-flag,
+  .agent-card[data-agent="betrug"] .aui-steps li { font-size: 14.5px; line-height: 1.65; font-weight: 400; }
+  .agent-card[data-agent="betrug"] .aui-verdict strong { font-size: 17px; }
+  .agent-card[data-agent="betrug"] .aui-verdict em { font-size: 13.5px; }
+  .agent-card[data-agent="betrug"] .aui-lamp i { width: 16px; height: 16px; }
+  .agent-card[data-agent="betrug"] .aui-steps li::before { border-radius: 50%; }
+
+  /* 06 · Wissens-Agent — dunkles Archivbraun, Gold, Serifenantwort */
+  .agent-card[data-agent="wissen"] { --ac: #e0be74; --ac-soft: rgba(224, 190, 116, .38); }
+  .agent-card[data-agent="wissen"] .agent-ui {
+    --ui-bg: #191614; --ui-bar: rgba(217, 164, 65, .06);
+    --ui-surface: rgba(255, 255, 255, .028); --ui-line: rgba(217, 164, 65, .2);
+    --ui-line-soft: rgba(255, 255, 255, .08);
+    --ui-ink: #f2ece1; --ui-ink-2: #c2b7a6; --ui-mute: #998d7c;
+    --ui-accent: #d9a441; --ui-accent-soft: rgba(217, 164, 65, .4); --ui-on-accent: #1a1508;
+    --ui-ok: #7cc98f; --ui-warn: #d9a441; --ui-bad: #e58b7f;
+    --ui-msg-u: rgba(217, 164, 65, .1); --ui-msg-a: rgba(0, 0, 0, .28);
+    --ui-radius: 3px;
+  }
+  .agent-card[data-agent="wissen"] .aui-msg.a {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 15px; line-height: 1.7; font-weight: 400;
+  }
+
+  /* Ablauf im Textteil — nimmt den Akzent des jeweiligen Agenten auf */
+  .agent-flow { margin-top: 26px; padding-top: 22px; border-top: 1px solid var(--line-light); }
+  .agent-flow > .aui-k { margin-bottom: 15px; color: var(--gray-400); }
+  .agent-flow ol { list-style: none; display: grid; gap: 16px; counter-reset: fl; }
+  .agent-flow li {
+    counter-increment: fl;
+    display: grid;
+    grid-template-columns: 26px minmax(0, 1fr);
+    column-gap: 13px; row-gap: 3px;
+  }
+  .agent-flow li::before {
+    content: counter(fl, decimal-leading-zero);
+    grid-column: 1; grid-row: 1 / span 2;
+    font-size: 9.5px; letter-spacing: .08em; color: var(--ac);
+    border: 1px solid var(--ac-soft); width: 26px; height: 26px;
+    display: grid; place-items: center; align-self: start; margin-top: 1px;
+  }
+  .agent-flow li b { grid-column: 2; grid-row: 1; color: var(--white); font-size: 13px; font-weight: 500; }
+  .agent-flow li em { grid-column: 2; grid-row: 2; font-style: normal; color: var(--gray-400); font-size: 12.5px; line-height: 1.55; font-weight: 300; }
+
+  /* Einblenden beim Öffnen */
+  .agent-card[open] .agent-ui   { animation: aui-in .52s cubic-bezier(.2, .7, .2, 1) both; }
+  .agent-card[open] .agent-copy { animation: aui-in .52s .07s cubic-bezier(.2, .7, .2, 1) both; }
+  @keyframes aui-in { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) {
+    .agent-card[open] .agent-ui,
+    .agent-card[open] .agent-copy { animation: none; }
+    .aui-meter i { transition: none; }
+    .aui-dot { animation: none; }
+  }
+
+  @media (max-width: 1100px) {
+    .agent-detail { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  }
+  @media (max-width: 720px) {
+    .agent-card[open] > summary { padding: 28px 24px 22px; }
+    .agent-card[open] .agent-body { padding: 0 24px 28px; }
+    .agent-card[open] .agent-toggle { top: 26px; right: 22px; }
+    .agent-card[open] h3 { font-size: 23px; }
+    .aui-body { padding: 14px; gap: 12px; }
+    .aui-split { grid-template-columns: minmax(0, 1fr); }
+    .aui-kpis, .aui-kpis.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .aui-note { white-space: normal; }
+    .aui-dl > div { grid-template-columns: minmax(0, 1fr); gap: 3px; }
+    .aui-item-h { flex-direction: column; gap: 8px; align-items: flex-start; }
+    .aui-verdict { align-items: flex-start; }
+    .agent-card[data-agent="gefahrgut"] .aui-bar::after { margin: 11px -14px -13px; width: calc(100% + 28px); }
+  }
+
   .agent-arch-link {
     display: flex; align-items: center; justify-content: space-between;
     flex-wrap: wrap; gap: 18px;
@@ -2052,7 +2456,8 @@
 
       <div class="agent-grid">
 
-        <details class="agent-card reveal">
+        <!-- ── AGENT 01 · AKQUISE ───────────────────────────────────────── -->
+        <details class="agent-card reveal" data-agent="akquise">
           <summary>
             <span class="agent-toggle" aria-hidden="true"></span>
             <div class="agent-num">Agent 01</div>
@@ -2060,25 +2465,101 @@
             <div class="agent-claim">Findet passende Kunden, bevor der Wettbewerb sie anspricht.</div>
           </summary>
           <div class="agent-body">
-            <div class="agent-body-inner">
-              <p>
-                Der Akquise-Agent durchsucht öffentlich zugängliche Quellen nach Organisationen,
-                die zu Ihrem Idealkundenprofil passen, und bewertet jeden Treffer nach
-                nachvollziehbaren Kriterien statt nach Bauchgefühl.
-              </p>
-              <p>
-                Zu jedem Treffer entsteht ein Ansprache-Entwurf mit Bezug auf den konkreten
-                Anlass. Versendet wird nichts ohne Ihre Freigabe. Kontakt- und Personendaten
-                laufen dabei über den geschützten Pfad unserer
-                <a href="sicherheitsarchitektur.html">Zwei-Pfad-Sicherheitsarchitektur</a>
-                und erreichen die KI-Verarbeitung gar nicht erst.
-              </p>
-              <div class="agent-tag">Lead-Recherche · Fit-Bewertung · Ansprache-Entwürfe</div>
+            <div class="agent-body-inner agent-detail">
+
+              <div class="agent-ui">
+                <div class="aui-bar">
+                  <div class="aui-bar-l">
+                    <span class="aui-dot" aria-hidden="true"></span>
+                    <span class="aui-name">Akquise-Agent</span>
+                    <span class="aui-meta">Lauf 06:00 Uhr · 214 Quellen</span>
+                  </div>
+                  <span class="aui-note">Interface-Vorschau · Beispieldaten</span>
+                </div>
+                <div class="aui-body">
+
+                  <div class="aui-panel">
+                    <div class="aui-k"><span>Suchprofil</span><b>Idealkundenprofil v3</b></div>
+                    <div class="aui-chips">
+                      <span class="aui-chip">Maschinenbau</span>
+                      <span class="aui-chip">NRW · 60 km</span>
+                      <span class="aui-chip">50–250 Mitarbeitende</span>
+                      <span class="aui-chip">Signal: Digitalisierungsvorhaben</span>
+                    </div>
+                  </div>
+
+                  <div class="aui-panel">
+                    <div class="aui-k"><span>Treffer heute</span><b>3 von 41 bewertet</b></div>
+                    <div class="aui-row">
+                      <span class="aui-t">Fertigungsbetrieb · Hagen</span>
+                      <span class="aui-score"><span class="aui-meter"><i style="--v:92%"></i></span><span class="aui-num">92</span></span>
+                      <span class="aui-s">Anlass: Ausschreibung für ein Dokumentenmanagement veröffentlicht.</span>
+                    </div>
+                    <div class="aui-row">
+                      <span class="aui-t">Zulieferer · Kreis Recklinghausen</span>
+                      <span class="aui-score"><span class="aui-meter"><i style="--v:78%"></i></span><span class="aui-num">78</span></span>
+                      <span class="aui-s">Anlass: Zwei Stellen für Prozessdigitalisierung ausgeschrieben.</span>
+                    </div>
+                    <div class="aui-row">
+                      <span class="aui-t">Anlagenbauer · Wuppertal</span>
+                      <span class="aui-score"><span class="aui-meter"><i style="--v:61%"></i></span><span class="aui-num">61</span></span>
+                      <span class="aui-s">Anlass: Standorterweiterung angekündigt — Passung noch unsicher.</span>
+                    </div>
+                  </div>
+
+                  <div class="aui-panel">
+                    <div class="aui-k"><span>Ansprache-Entwurf</span><b>zu Treffer 01</b></div>
+                    <div class="aui-msg a">
+                      … in Ihrer Ausschreibung ist die Prüfung eingehender Lieferpapiere als
+                      eigener Posten aufgeführt. Genau an dieser Stelle setzen unsere Agenten an:
+                      Sie lesen die Papiere vor, markieren fehlende Angaben und übergeben den
+                      Rest an Ihre Fachkraft …
+                    </div>
+                    <div class="aui-actions">
+                      <span class="aui-btn primary">Freigeben</span>
+                      <span class="aui-btn">Bearbeiten</span>
+                      <span class="aui-btn">Verwerfen</span>
+                    </div>
+                    <p class="aui-hint">Ohne Ihre Freigabe wird nichts versendet.</p>
+                  </div>
+
+                </div>
+                <div class="aui-foot">
+                  Geschützter Pfad aktiv — Firmierungen, Ansprechpartner und Kontaktdaten
+                  werden getrennt gehalten und erreichen die KI-Verarbeitung nicht.
+                </div>
+              </div>
+
+              <div class="agent-copy">
+                <p>
+                  Der Akquise-Agent durchsucht öffentlich zugängliche Quellen nach Organisationen,
+                  die zu Ihrem Idealkundenprofil passen, und bewertet jeden Treffer nach
+                  nachvollziehbaren Kriterien statt nach Bauchgefühl.
+                </p>
+                <p>
+                  Zu jedem Treffer entsteht ein Ansprache-Entwurf mit Bezug auf den konkreten
+                  Anlass. Versendet wird nichts ohne Ihre Freigabe. Kontakt- und Personendaten
+                  laufen dabei über den geschützten Pfad unserer
+                  <a href="sicherheitsarchitektur.html">Zwei-Pfad-Sicherheitsarchitektur</a>
+                  und erreichen die KI-Verarbeitung gar nicht erst.
+                </p>
+                <div class="agent-flow">
+                  <div class="aui-k"><span>So arbeitet der Agent</span></div>
+                  <ol>
+                    <li><b>Auslöser</b><em>Täglicher Lauf über die Quellen, die Sie freigegeben haben.</em></li>
+                    <li><b>Bewertung</b><em>Jeder Treffer wird gegen das Idealkundenprofil bewertet — mit Begründung, nicht mit Blackbox-Punktzahl.</em></li>
+                    <li><b>Freigabe</b><em>Der Entwurf verlässt das Haus erst, wenn Sie ihn freigeben.</em></li>
+                  </ol>
+                </div>
+                <div class="agent-tag">Lead-Recherche · Fit-Bewertung · Ansprache-Entwürfe</div>
+              </div>
+
             </div>
           </div>
         </details>
 
-        <details class="agent-card reveal">
+        <!-- ── AGENT 02 · WEBDESIGN ─────────────────────────────────────── -->
+        <details class="agent-card reveal" data-agent="webdesign">
           <summary>
             <span class="agent-toggle" aria-hidden="true"></span>
             <div class="agent-num">Agent 02</div>
@@ -2086,23 +2567,89 @@
             <div class="agent-claim">Baut und pflegt Webauftritte nach Ihren Vorgaben statt nach Baukasten.</div>
           </summary>
           <div class="agent-body">
-            <div class="agent-body-inner">
-              <p>
-                Der Webdesign-Agent setzt Seiten, Komponenten und Änderungen direkt in Code um —
-                auf Grundlage Ihres Designsystems, nicht auf Basis generischer Templates.
-              </p>
-              <p>
-                Barrierefreiheit nach WCAG 2.1 AA, kurze Ladezeiten und selbst gehostete
-                Schriften und Skripte sind dabei Vorgabe, nicht Zusatzoption. Redaktions- und
-                Kundendaten bleiben im geschützten Pfad der
-                <a href="sicherheitsarchitektur.html">Zwei-Pfad-Sicherheitsarchitektur</a>.
-              </p>
-              <div class="agent-tag">HTML/CSS/JS · Next.js · WCAG 2.1 AA · DSGVO-konformes Hosting</div>
+            <div class="agent-body-inner agent-detail">
+
+              <div class="agent-ui">
+                <div class="aui-bar">
+                  <div class="aui-bar-l">
+                    <span class="aui-dot" aria-hidden="true"></span>
+                    <span class="aui-name">Webdesign-Agent</span>
+                    <span class="aui-meta">Auftrag #128 · Kontaktseite</span>
+                  </div>
+                  <span class="aui-note">Interface-Vorschau · Beispieldaten</span>
+                </div>
+                <div class="aui-body">
+
+                  <div class="aui-split">
+                    <div class="aui-panel">
+                      <div class="aui-k"><span>Umgesetzt</span><b>3 Änderungen</b></div>
+                      <div class="aui-list">
+                        <span class="aui-flag ok">Formular aus Ihrem Designsystem aufgebaut</span>
+                        <span class="aui-flag ok">Farben und Abstände aus den Tokens übernommen</span>
+                        <span class="aui-flag warn">Fehlender Alternativtext ergänzt — bitte fachlich prüfen</span>
+                      </div>
+                    </div>
+                    <div class="aui-panel">
+                      <div class="aui-k"><span>Automatische Prüfung</span></div>
+                      <div class="aui-kpis">
+                        <div class="aui-kpi"><span>WCAG 2.1 AA</span><strong>0</strong><em>Verstöße</em></div>
+                        <div class="aui-kpi"><span>Kontrast</span><strong>7,4:1</strong><em>Minimum</em></div>
+                        <div class="aui-kpi"><span>Ladezeit</span><strong>1,1 s</strong><em>LCP mobil</em></div>
+                        <div class="aui-kpi"><span>Fremdserver</span><strong>0</strong><em>externe Requests</em></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="aui-panel">
+                    <div class="aui-k"><span>Änderung im Code</span><b>Feld „E-Mail-Adresse“</b></div>
+<pre class="aui-code"><span class="del">- &lt;input type="email" placeholder="E-Mail"&gt;</span><span class="add">+ &lt;label for="mail"&gt;E-Mail-Adresse&lt;/label&gt;</span><span class="add">+ &lt;input id="mail" type="email" autocomplete="email"</span><span class="add">+        aria-describedby="mail-hint" required&gt;</span></pre>
+                    <p class="aui-hint">Platzhaltertexte ersetzen keine Beschriftung — Screenreader lesen sie nicht zuverlässig vor.</p>
+                  </div>
+
+                  <div class="aui-panel">
+                    <div class="aui-k"><span>Vorschau bereit</span><b>noch nicht live</b></div>
+                    <div class="aui-actions">
+                      <span class="aui-btn primary">Live schalten</span>
+                      <span class="aui-btn">Vorschau öffnen</span>
+                      <span class="aui-btn">Änderung zurücknehmen</span>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="aui-foot">
+                  Schriften und Skripte werden selbst ausgeliefert; Redaktions- und Kundendaten
+                  bleiben im geschützten Pfad und werden nicht an das Modell übergeben.
+                </div>
+              </div>
+
+              <div class="agent-copy">
+                <p>
+                  Der Webdesign-Agent setzt Seiten, Komponenten und Änderungen direkt in Code um —
+                  auf Grundlage Ihres Designsystems, nicht auf Basis generischer Templates.
+                </p>
+                <p>
+                  Barrierefreiheit nach WCAG 2.1 AA, kurze Ladezeiten und selbst gehostete
+                  Schriften und Skripte sind dabei Vorgabe, nicht Zusatzoption. Redaktions- und
+                  Kundendaten bleiben im geschützten Pfad der
+                  <a href="sicherheitsarchitektur.html">Zwei-Pfad-Sicherheitsarchitektur</a>.
+                </p>
+                <div class="agent-flow">
+                  <div class="aui-k"><span>So arbeitet der Agent</span></div>
+                  <ol>
+                    <li><b>Auftrag</b><em>Sie beschreiben die Änderung in normaler Sprache, nicht in Ticketsyntax.</em></li>
+                    <li><b>Umsetzung</b><em>Der Agent schreibt Code gegen Ihr Designsystem und prüft Barrierefreiheit und Ladezeit automatisch.</em></li>
+                    <li><b>Freigabe</b><em>Es entsteht zuerst eine Vorschau. Live geht nur, was Sie freigeben.</em></li>
+                  </ol>
+                </div>
+                <div class="agent-tag">HTML/CSS/JS · Next.js · WCAG 2.1 AA · DSGVO-konformes Hosting</div>
+              </div>
+
             </div>
           </div>
         </details>
 
-        <details class="agent-card reveal">
+        <!-- ── AGENT 03 · GEFAHRGUT ─────────────────────────────────────── -->
+        <details class="agent-card reveal" data-agent="gefahrgut">
           <summary>
             <span class="agent-toggle" aria-hidden="true"></span>
             <div class="agent-num">Agent 03 <span class="agent-status">Live testbar</span></div>
@@ -2110,25 +2657,93 @@
             <div class="agent-claim">Beantwortet Gefahrgutfragen aus dem Regelwerk — belegt, nicht geraten.</div>
           </summary>
           <div class="agent-body">
-            <div class="agent-body-inner">
-              <p>
-                Der Gefahrgut-Agent recherchiert UN-Nummern, prüft Sicherheitsdatenblätter und
-                Beförderungspapiere auf fehlende Angaben und lotst durch ADR, RID und IMDG-Code.
-              </p>
-              <p>
-                Er antwortet ausschließlich aus geprüften Quellen. Was er nicht sicher belegen kann,
-                reicht er an einen zertifizierten Gefahrgutbeauftragten weiter. Hochgeladene
-                Dokumente laufen über den geschützten Kanal der
-                <a href="sicherheitsarchitektur.html">Zwei-Pfad-Sicherheitsarchitektur</a>.
-                Öffentlich testbar bei der
-                <a href="https://gefahrgutberatung-manske.de/#ki" target="_blank" rel="noopener noreferrer">Gefahrgutberatung Manske ↗</a>.
-              </p>
-              <div class="agent-tag">ADR/RID/IMDG · SDB-Check · Human-in-the-Loop</div>
+            <div class="agent-body-inner agent-detail">
+
+              <div class="agent-ui">
+                <div class="aui-bar">
+                  <div class="aui-bar-l">
+                    <span class="aui-dot" aria-hidden="true"></span>
+                    <span class="aui-name">Gefahrgut-Berater-Agent</span>
+                    <span class="aui-meta">ADR · RID · IMDG-Code</span>
+                  </div>
+                  <span class="aui-note">Interface-Vorschau · Beispieldaten</span>
+                </div>
+                <div class="aui-body">
+
+                  <div class="aui-msg u">
+                    Wir wollen 200 l Farbe, UN 1263, Verpackungsgruppe II, mit dem Firmenanhänger
+                    zur Baustelle bringen. Geht das ohne ADR-Ausrüstung?
+                  </div>
+
+                  <div class="aui-msg a">
+                    Bei Verpackungsgruppe II fällt UN 1263 in Beförderungskategorie 2, Faktor 3.
+                    200 l ergeben 600 Punkte und bleiben damit unter der Grenze von 1.000 Punkten
+                    je Beförderungseinheit — die Freistellung für Kleinmengen ist anwendbar.
+                    Die Erleichterungen entbinden nicht von Verpackungs-, Kennzeichnungs- und
+                    Ladungssicherungspflichten.
+                    <span class="aui-cites">
+                      <span>ADR 1.1.3.6</span>
+                      <span>Tabelle A, Spalte 15</span>
+                      <span>SDB Abschnitt 14</span>
+                    </span>
+                  </div>
+
+                  <div class="aui-panel">
+                    <div class="aui-k"><span>Beförderungspapier geprüft</span><b>3 von 4 vollständig</b></div>
+                    <div class="aui-list">
+                      <span class="aui-flag ok">UN-Nummer und offizielle Benennung des Gutes</span>
+                      <span class="aui-flag ok">Verpackungsgruppe und Gefahrzettelmuster</span>
+                      <span class="aui-flag ok">Anzahl und Beschreibung der Versandstücke</span>
+                      <span class="aui-flag bad">Tunnelbeschränkungscode fehlt</span>
+                    </div>
+                  </div>
+
+                  <div class="aui-panel">
+                    <div class="aui-k"><span>Grenze der Auskunft</span><b>Weitergabe</b></div>
+                    <p class="aui-p">
+                      Zur Frage der mitzuführenden Feuerlöscher liegt für diese Konstellation
+                      keine eindeutige Fundstelle vor. Der Vorgang wurde an den zertifizierten
+                      Gefahrgutbeauftragten übergeben — der Agent rät nicht.
+                    </p>
+                  </div>
+
+                </div>
+                <div class="aui-foot">
+                  Hochgeladene Sicherheitsdatenblätter und Frachtpapiere laufen über den
+                  geschützten Kanal; die fachliche Endverantwortung bleibt beim Menschen.
+                </div>
+              </div>
+
+              <div class="agent-copy">
+                <p>
+                  Der Gefahrgut-Agent recherchiert UN-Nummern, prüft Sicherheitsdatenblätter und
+                  Beförderungspapiere auf fehlende Angaben und lotst durch ADR, RID und IMDG-Code.
+                </p>
+                <p>
+                  Er antwortet ausschließlich aus geprüften Quellen. Was er nicht sicher belegen kann,
+                  reicht er an einen zertifizierten Gefahrgutbeauftragten weiter. Hochgeladene
+                  Dokumente laufen über den geschützten Kanal der
+                  <a href="sicherheitsarchitektur.html">Zwei-Pfad-Sicherheitsarchitektur</a>.
+                  Öffentlich testbar bei der
+                  <a href="https://gefahrgutberatung-manske.de/#ki" target="_blank" rel="noopener noreferrer">Gefahrgutberatung Manske ↗</a>.
+                </p>
+                <div class="agent-flow">
+                  <div class="aui-k"><span>So arbeitet der Agent</span></div>
+                  <ol>
+                    <li><b>Frage</b><em>Freitext, Sicherheitsdatenblatt oder Beförderungspapier als Upload.</em></li>
+                    <li><b>Beleg</b><em>Die Antwort erscheint nur mit Fundstelle aus ADR, RID oder IMDG-Code.</em></li>
+                    <li><b>Weitergabe</b><em>Ohne eindeutige Fundstelle übernimmt der zertifizierte Gefahrgutbeauftragte.</em></li>
+                  </ol>
+                </div>
+                <div class="agent-tag">ADR/RID/IMDG · SDB-Check · Human-in-the-Loop</div>
+              </div>
+
             </div>
           </div>
         </details>
 
-        <details class="agent-card reveal">
+        <!-- ── AGENT 04 · NEWS-RADAR ────────────────────────────────────── -->
+        <details class="agent-card reveal" data-agent="news">
           <summary>
             <span class="agent-toggle" aria-hidden="true"></span>
             <div class="agent-num">Agent 04</div>
@@ -2136,24 +2751,100 @@
             <div class="agent-claim">Meldet, was in Ihrem Fachgebiet wirklich neu ist.</div>
           </summary>
           <div class="agent-body">
-            <div class="agent-body-inner">
-              <p>
-                Der News-Radar beobachtet die Quellen, die für Ihre Organisation zählen —
-                Rechtsänderungen, Förderprogramme, Ausschreibungen, Branchenmeldungen — und
-                filtert das Rauschen heraus.
-              </p>
-              <p>
-                Statt Linklisten liefert er kurze Einordnungen: was sich geändert hat, wen es
-                betrifft, was zu tun ist, jeweils mit Quellenangabe zum Nachlesen. Interne
-                Unterlagen, die er zum Abgleich heranzieht, bleiben im geschützten Pfad der
-                <a href="sicherheitsarchitektur.html">Zwei-Pfad-Sicherheitsarchitektur</a>.
-              </p>
-              <div class="agent-tag">Quellen-Monitoring · Relevanzfilter · Digest im eigenen Takt</div>
+            <div class="agent-body-inner agent-detail">
+
+              <div class="agent-ui">
+                <div class="aui-bar">
+                  <div class="aui-bar-l">
+                    <span class="aui-dot" aria-hidden="true"></span>
+                    <span class="aui-name">News-Radar-Agent</span>
+                    <span class="aui-meta">Digest · Kalenderwoche 31</span>
+                  </div>
+                  <span class="aui-note">Interface-Vorschau · Beispieldaten</span>
+                </div>
+                <div class="aui-body">
+
+                  <div class="aui-panel">
+                    <div class="aui-k"><span>Durchlauf</span><b>14 Quellen · 62 Meldungen</b></div>
+                    <div class="aui-kpis three">
+                      <div class="aui-kpi"><span>Relevant</span><strong>3</strong><em>zugestellt</em></div>
+                      <div class="aui-kpi"><span>Beobachten</span><strong>5</strong><em>im Archiv</em></div>
+                      <div class="aui-kpi"><span>Gefiltert</span><strong>54</strong><em>ohne Bezug</em></div>
+                    </div>
+                  </div>
+
+                  <div class="aui-panel">
+                    <div class="aui-k"><span>Zugestellte Meldungen</span><b>mit Einordnung</b></div>
+
+                    <div class="aui-item">
+                      <div class="aui-item-h">
+                        <span class="aui-t">Neue Antragsrunde im Digitalisierungsförderprogramm</span>
+                        <span class="aui-tag hi">Hoch</span>
+                      </div>
+                      <dl class="aui-dl">
+                        <div><dt>Geändert</dt><dd>Antragsfenster geöffnet, Fördersatz für kleine Unternehmen angehoben.</dd></div>
+                        <div><dt>Betrifft</dt><dd>Ihre beiden Standorte in NRW unterhalb der KMU-Schwelle.</dd></div>
+                        <div><dt>Zu tun</dt><dd>Vorhabenbeschreibung abstimmen und vor Fristende einreichen.</dd></div>
+                      </dl>
+                      <div class="aui-srcline">Quelle: Förderdatenbank des Bundes · Frist in 24 Tagen</div>
+                    </div>
+
+                    <div class="aui-item">
+                      <div class="aui-item-h">
+                        <span class="aui-t">Vergabeunterlagen einer Kommune veröffentlicht</span>
+                        <span class="aui-tag">Mittel</span>
+                      </div>
+                      <dl class="aui-dl">
+                        <div><dt>Geändert</dt><dd>Leistungsverzeichnis um einen Abschnitt zu KI-Assistenz erweitert.</dd></div>
+                        <div><dt>Betrifft</dt><dd>Ihr Angebotsprofil — Eignungsnachweise liegen bereits vor.</dd></div>
+                        <div><dt>Zu tun</dt><dd>Teilnahmeantrag prüfen, Referenzliste aktualisieren.</dd></div>
+                      </dl>
+                      <div class="aui-srcline">Quelle: Vergabeplattform des Landes · Frist in 11 Tagen</div>
+                    </div>
+
+                  </div>
+
+                  <p class="aui-hint">
+                    54 Meldungen ohne Bezug zu Ihrem Profil wurden nicht zugestellt — nachvollziehbar
+                    im Protokoll, jederzeit korrigierbar.
+                  </p>
+
+                </div>
+                <div class="aui-foot">
+                  Interne Unterlagen, die zum Abgleich herangezogen werden, bleiben im
+                  geschützten Pfad; zugestellt wird ausschließlich mit Quellenangabe.
+                </div>
+              </div>
+
+              <div class="agent-copy">
+                <p>
+                  Der News-Radar beobachtet die Quellen, die für Ihre Organisation zählen —
+                  Rechtsänderungen, Förderprogramme, Ausschreibungen, Branchenmeldungen — und
+                  filtert das Rauschen heraus.
+                </p>
+                <p>
+                  Statt Linklisten liefert er kurze Einordnungen: was sich geändert hat, wen es
+                  betrifft, was zu tun ist, jeweils mit Quellenangabe zum Nachlesen. Interne
+                  Unterlagen, die er zum Abgleich heranzieht, bleiben im geschützten Pfad der
+                  <a href="sicherheitsarchitektur.html">Zwei-Pfad-Sicherheitsarchitektur</a>.
+                </p>
+                <div class="agent-flow">
+                  <div class="aui-k"><span>So arbeitet der Agent</span></div>
+                  <ol>
+                    <li><b>Quellen</b><em>Sie legen fest, welche Amtsblätter, Portale und Fachdienste beobachtet werden.</em></li>
+                    <li><b>Filter</b><em>Jede Meldung wird gegen Ihr Profil geprüft; das Rauschen bleibt draußen und bleibt nachvollziehbar.</em></li>
+                    <li><b>Digest</b><em>Einordnung statt Linkliste — täglich, wöchentlich oder bei Eilmeldungen.</em></li>
+                  </ol>
+                </div>
+                <div class="agent-tag">Quellen-Monitoring · Relevanzfilter · Digest im eigenen Takt</div>
+              </div>
+
             </div>
           </div>
         </details>
 
-        <details class="agent-card reveal">
+        <!-- ── AGENT 05 · BETRUGSMASCHEN ────────────────────────────────── -->
+        <details class="agent-card reveal" data-agent="betrug">
           <summary>
             <span class="agent-toggle" aria-hidden="true"></span>
             <div class="agent-num">Agent 05</div>
@@ -2161,25 +2852,90 @@
             <div class="agent-claim">Prüft verdächtige Nachrichten und Anrufe in Sekunden.</div>
           </summary>
           <div class="agent-body">
-            <div class="agent-body-inner">
-              <p>
-                Der Betrugsmaschen-Agent bewertet verdächtige Nachrichten, Anrufe und Webseiten
-                nach einer klaren Ampellogik und erklärt in einfacher Sprache, woran die Masche
-                zu erkennen ist.
-              </p>
-              <p>
-                Entwickelt für Kommunen und öffentliche Einrichtungen, die Bürgerinnen und Bürger
-                vor Enkeltrick, Schockanruf und Phishing schützen wollen. Er warnt und erklärt,
-                ersetzt aber weder Anzeige noch Polizei. Eingereichte Screenshots und
-                Originalnachrichten bleiben im geschützten Kanal der
-                <a href="sicherheitsarchitektur.html">Zwei-Pfad-Sicherheitsarchitektur</a>.
-              </p>
-              <div class="agent-tag">Ampellogik · Einfache Sprache · Kommunen &amp; Zielgruppe 60+</div>
+            <div class="agent-body-inner agent-detail">
+
+              <div class="agent-ui">
+                <div class="aui-bar">
+                  <div class="aui-bar-l">
+                    <span class="aui-dot" aria-hidden="true"></span>
+                    <span class="aui-name">Betrugsmaschen-Agent</span>
+                    <span class="aui-meta">Prüfung · 4 Sekunden</span>
+                  </div>
+                  <span class="aui-note">Interface-Vorschau · Beispieldaten</span>
+                </div>
+                <div class="aui-body">
+
+                  <div class="aui-panel">
+                    <div class="aui-k"><span>Eingereichte Nachricht</span><b>SMS</b></div>
+                    <div class="aui-msg u">
+                      „Ihr Paket wartet im Lager. Restzoll 2,99 € bitte innerhalb von 24 Stunden
+                      bestätigen: paket-nachzahlung-service&#8203;.info/dhl“
+                    </div>
+                  </div>
+
+                  <div class="aui-panel">
+                    <div class="aui-verdict">
+                      <span class="aui-lamp" aria-hidden="true"><i class="on red"></i><i></i><i></i></span>
+                      <span>
+                        <strong>Rot — sehr wahrscheinlich Betrug</strong>
+                        <em>Nicht antworten. Den Link nicht öffnen.</em>
+                      </span>
+                    </div>
+                    <div class="aui-list">
+                      <span class="aui-flag bad">Die Adresse gehört keinem echten Paketdienst</span>
+                      <span class="aui-flag bad">Künstlicher Zeitdruck durch die 24-Stunden-Frist</span>
+                      <span class="aui-flag bad">Kleiner Betrag soll zur Eingabe von Kartendaten verleiten</span>
+                      <span class="aui-flag warn">Absendernummer aus dem Ausland, keine Sendungsnummer genannt</span>
+                    </div>
+                  </div>
+
+                  <div class="aui-panel">
+                    <div class="aui-k"><span>Was Sie jetzt tun können</span><b>Einfache Sprache</b></div>
+                    <ol class="aui-steps">
+                      <li>Antworten Sie nicht auf die Nachricht.</li>
+                      <li>Öffnen Sie den Link nicht und löschen Sie die Nachricht.</li>
+                      <li>Haben Sie schon Kartendaten eingegeben? Karte sperren lassen über den Sperr-Notruf 116 116.</li>
+                      <li>Ist bereits Geld abgebucht worden? Bank informieren und Anzeige bei der Polizei erstatten.</li>
+                    </ol>
+                  </div>
+
+                </div>
+                <div class="aui-foot">
+                  Der Agent warnt und erklärt. Er ersetzt weder Anzeige noch Polizei und
+                  gibt keine Rechtsberatung.
+                </div>
+              </div>
+
+              <div class="agent-copy">
+                <p>
+                  Der Betrugsmaschen-Agent bewertet verdächtige Nachrichten, Anrufe und Webseiten
+                  nach einer klaren Ampellogik und erklärt in einfacher Sprache, woran die Masche
+                  zu erkennen ist.
+                </p>
+                <p>
+                  Entwickelt für Kommunen und öffentliche Einrichtungen, die Bürgerinnen und Bürger
+                  vor Enkeltrick, Schockanruf und Phishing schützen wollen. Er warnt und erklärt,
+                  ersetzt aber weder Anzeige noch Polizei. Eingereichte Screenshots und
+                  Originalnachrichten bleiben im geschützten Kanal der
+                  <a href="sicherheitsarchitektur.html">Zwei-Pfad-Sicherheitsarchitektur</a>.
+                </p>
+                <div class="agent-flow">
+                  <div class="aui-k"><span>So arbeitet der Agent</span></div>
+                  <ol>
+                    <li><b>Einreichen</b><em>Screenshot, Nachrichtentext oder Beschreibung eines Anrufs — ohne Anmeldung.</em></li>
+                    <li><b>Einordnen</b><em>Ampelbefund mit Erklärung der Merkmale, an denen die Masche erkennbar ist.</em></li>
+                    <li><b>Handeln</b><em>Konkrete nächste Schritte in einfacher Sprache, inklusive Grenzen der Auskunft.</em></li>
+                  </ol>
+                </div>
+                <div class="agent-tag">Ampellogik · Einfache Sprache · Kommunen &amp; Zielgruppe 60+</div>
+              </div>
+
             </div>
           </div>
         </details>
 
-        <details class="agent-card reveal">
+        <!-- ── AGENT 06 · WISSEN ────────────────────────────────────────── -->
+        <details class="agent-card reveal" data-agent="wissen">
           <summary>
             <span class="agent-toggle" aria-hidden="true"></span>
             <div class="agent-num">Agent 06</div>
@@ -2187,18 +2943,81 @@
             <div class="agent-claim">Macht das Wissen Ihres Hauses durchsuchbar — mit Fundstelle.</div>
           </summary>
           <div class="agent-body">
-            <div class="agent-body-inner">
-              <p>
-                Handbücher, Schaltpläne, Protokolle, Servicehistorien: Der Wissens-Agent
-                beantwortet Fragen aus Ihren eigenen Dokumenten und nennt zu jeder Antwort die
-                Fundstelle, damit Mitarbeitende sie prüfen können.
-              </p>
-              <p>
-                Reicht die Quellenlage nicht, sagt er das, statt zu raten. Eine Rollen- und
-                Freigabelogik steuert, wer welche Inhalte sieht; die Trennung dahinter beschreibt
-                unsere <a href="sicherheitsarchitektur.html">Zwei-Pfad-Sicherheitsarchitektur</a>.
-              </p>
-              <div class="agent-tag">RAG · Quellenangabe zu jeder Antwort · Rollen &amp; Freigaben</div>
+            <div class="agent-body-inner agent-detail">
+
+              <div class="agent-ui">
+                <div class="aui-bar">
+                  <div class="aui-bar-l">
+                    <span class="aui-dot" aria-hidden="true"></span>
+                    <span class="aui-name">Wissens-Agent</span>
+                    <span class="aui-meta">Rolle: Instandhaltung</span>
+                  </div>
+                  <span class="aui-note">Interface-Vorschau · Beispieldaten</span>
+                </div>
+                <div class="aui-body">
+
+                  <div class="aui-msg u">
+                    Welches Anzugsdrehmoment gilt für die Flanschschrauben an Pumpe P-204?
+                  </div>
+
+                  <div class="aui-msg a">
+                    Für die Flanschverbindung DN 80 der Baureihe P-200 sind 85 Nm vorgegeben,
+                    über Kreuz in drei Stufen anzuziehen<sup>1</sup>. Beim letzten Service wurde
+                    an P-204 abweichend eine Weichstoffdichtung eingebaut; dafür ist der
+                    reduzierte Wert von 70 Nm dokumentiert<sup>2</sup>.
+                  </div>
+
+                  <div class="aui-panel">
+                    <div class="aui-k"><span>Fundstellen</span><b>2 Belege</b></div>
+                    <div class="aui-src"><b>1</b><span>Wartungshandbuch Baureihe P-200, Kapitel 6.3, Seite 47</span></div>
+                    <div class="aui-src"><b>2</b><span>Serviceprotokoll P-204 vom 08.11.2024, Position 4</span></div>
+                  </div>
+
+                  <div class="aui-split">
+                    <div class="aui-panel">
+                      <div class="aui-k"><span>Quellenlage</span></div>
+                      <span class="aui-flag ok">Belastbar — zwei unabhängige Belege</span>
+                      <p class="aui-hint">Ohne Fundstelle gibt der Agent keine Antwort aus, sondern meldet die Lücke.</p>
+                    </div>
+                    <div class="aui-panel">
+                      <div class="aui-k"><span>Sichtbar für</span></div>
+                      <div class="aui-chips">
+                        <span class="aui-chip">Instandhaltung</span>
+                        <span class="aui-chip">Werksleitung</span>
+                      </div>
+                      <p class="aui-hint">Kaufmännische Unterlagen bleiben für diese Rolle ausgeblendet.</p>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="aui-foot">
+                  Rollen- und Freigabelogik steuert den Zugriff; die Trennung dahinter
+                  beschreibt unsere Zwei-Pfad-Sicherheitsarchitektur.
+                </div>
+              </div>
+
+              <div class="agent-copy">
+                <p>
+                  Handbücher, Schaltpläne, Protokolle, Servicehistorien: Der Wissens-Agent
+                  beantwortet Fragen aus Ihren eigenen Dokumenten und nennt zu jeder Antwort die
+                  Fundstelle, damit Mitarbeitende sie prüfen können.
+                </p>
+                <p>
+                  Reicht die Quellenlage nicht, sagt er das, statt zu raten. Eine Rollen- und
+                  Freigabelogik steuert, wer welche Inhalte sieht; die Trennung dahinter beschreibt
+                  unsere <a href="sicherheitsarchitektur.html">Zwei-Pfad-Sicherheitsarchitektur</a>.
+                </p>
+                <div class="agent-flow">
+                  <div class="aui-k"><span>So arbeitet der Agent</span></div>
+                  <ol>
+                    <li><b>Ablage</b><em>Ihre Dokumente werden durchsuchbar gemacht, nicht in ein Modell trainiert.</em></li>
+                    <li><b>Antwort</b><em>Zu jeder Aussage gehört eine Fundstelle, die Mitarbeitende prüfen können.</em></li>
+                    <li><b>Kontrolle</b><em>Rollen steuern die Sichtbarkeit; fehlende Belege werden benannt statt überspielt.</em></li>
+                  </ol>
+                </div>
+                <div class="agent-tag">RAG · Quellenangabe zu jeder Antwort · Rollen &amp; Freigaben</div>
+              </div>
+
             </div>
           </div>
         </details>
@@ -2925,6 +3744,57 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
     });
   }, { threshold: 0.35 });
   io.observe(card);
+})();
+</script>
+
+<script>
+// ============================================================
+// KI-Agenten: Kachel aufklappen -> agentenspezifisches Interface
+// Es bleibt immer nur eine Kachel geoeffnet; die geoeffnete Kachel
+// wird in den Sichtbereich gerueckt. Ohne JavaScript funktioniert
+// das native <details>-Verhalten unveraendert weiter.
+// ============================================================
+(function () {
+  const grid = document.querySelector('.agent-grid');
+  if (!grid) return;
+  const cards = Array.from(grid.querySelectorAll('.agent-card'));
+  if (!cards.length) return;
+
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function headerOffset() {
+    const head = document.querySelector('header.site');
+    return (head ? head.offsetHeight : 0) + 24;
+  }
+
+  function bringIntoView(card) {
+    const top = card.getBoundingClientRect().top;
+    const off = headerOffset();
+    // Nur scrollen, wenn der Kachelkopf aus dem angenehmen Bereich gerutscht ist
+    if (top >= off && top <= window.innerHeight * 0.45) return;
+    const target = Math.max(0, window.scrollY + top - off);
+    try {
+      if (typeof lenis !== 'undefined' && lenis) {
+        lenis.scrollTo(target, { duration: reduce ? 0 : 1.0 });
+        return;
+      }
+    } catch (err) { /* Lenis nicht verfuegbar - nativer Fallback */ }
+    window.scrollTo({ top: target, behavior: reduce ? 'auto' : 'smooth' });
+  }
+
+  cards.forEach(card => {
+    const summary = card.querySelector('summary');
+    if (!summary) return;
+    summary.addEventListener('click', () => {
+      if (!card.open) {
+        cards.forEach(other => { if (other !== card) other.open = false; });
+      }
+    });
+    card.addEventListener('toggle', () => {
+      if (!card.open) return;
+      requestAnimationFrame(() => requestAnimationFrame(() => bringIntoView(card)));
+    });
+  });
 })();
 </script>
 
