@@ -1,0 +1,695 @@
+# TM KI Consulting UG (haftungsbeschränkt) — Volltext
+
+> Vollstaendige Textfassung aller Inhaltsseiten von www.tm-ki-consulting.de in einer Datei.
+> Ergaenzung zu /llms.txt (Kurzuebersicht). Massgeblich ist stets die jeweilige HTML-Seite.
+
+Stand dieser Datei: 2026-08-08
+
+
+==============================================================================
+
+# KI-Agenten, die Ihr Fachgebiet beherrschen.
+
+> Strategische KI-Beratung, modulare KI-Agenten und interaktive KI-Cockpits für Organisationen — mit neutralen, öffentlich testbaren Demonstrationen.
+
+TM KI Consulting UG (haftungsbeschränkt) · Beratung · Strategie · Umsetzung · Quelle: https://www.tm-ki-consulting.de/
+
+---
+
+## Das Unternehmen
+
+TM KI Consulting UG (haftungsbeschränkt) entwickelt fachspezifische KI-Agenten und modulare KI-Cockpits für kleine und mittlere Unternehmen sowie den öffentlichen Sektor in Deutschland — von der Use-Case-Bewertung über die Entwicklung bis zur Verankerung im Arbeitsalltag.
+
+- Sitz: Ernst-Tengelmann-Ring 22, 45259 Essen, Deutschland
+- Handelsregister: Amtsgericht Essen, HRB 38279
+- Geschäftsführer: Julian Manske · Mitgründer und CTO: Maurice Trogant
+- Kontakt: info@tm-ki-consulting.de · +49 157 37284004
+- Sprachen: Deutsch, Englisch
+
+Was uns unterscheidet: Unsere Agenten beantworten Fragen aus verifizierten Quellen (RAG) statt aus Vermutungen, nennen ihre Fundstellen, eskalieren an Menschen, wo die KI an Grenzen stößt, und sind an den Vorgaben des EU AI Act ausgerichtet. Ein Agent läuft öffentlich testbar in Produktion.
+
+## Leistungen
+
+Die Leistungen lassen sich kombinieren oder einzeln buchen. Jedes Mandat beginnt mit Zuhören — denn die richtige Lösung kennt nur, wer das Problem versteht.
+
+### 01 · Entwickeln — Fachspezifische KI-Agenten
+
+KI-Agenten, die exakt auf Ihre Fachprozesse zugeschnitten sind, nahtlos integriert in Website oder bestehende Systeme. Schwerpunkte: Custom Agents, Web-Integration, Schnittstellen.
+
+### 02 · Beraten — Beratung zu KI-Agenten
+
+Strategische Beratung zu Auswahl, Einführung und sicherer Nutzung von KI-Agenten — von der Use-Case-Bewertung bis zur produktiven Lösung. Schwerpunkte: Strategie, Use Cases, EU AI Act.
+
+### 03 · Verankern — Sicher einsetzen
+
+Begleitung der Mitarbeitenden bei der Nutzung, klare Regeln und Qualitätssicherung, damit die KI-Lösung verständlich, sicher und langfristig nutzbar bleibt. Schwerpunkte: Training, Support, Qualitätssicherung.
+
+### 04 · Zusammenführen — Maßgeschneiderte KI-Cockpits
+
+Schaltzentralen, die verstreute Unternehmensdaten an einem Ort zusammenziehen: modulare Inhalte je Prozess, eine Sicherheitsfreigabe-Logik pro Rolle und KI-Agenten, die aus den Daten Insights machen. Schwerpunkte: Datenintegration, Freigabelogik, KI-Insights.
+
+## Unsere KI-Agenten
+
+Sechs Agententypen, alle nach derselben Bauweise: Antworten aus geprüften Quellen, Fundstelle zu jeder Aussage, Eskalation an Menschen bei Unsicherheit, sensible Rohdaten strukturell getrennt von der KI-Verarbeitung ([Zwei-Pfad-Sicherheitsarchitektur](https://www.tm-ki-consulting.de/sicherheitsarchitektur.html)).
+
+### Agent 01 · Akquise-Agent
+
+Findet passende Kunden, bevor der Wettbewerb sie anspricht. Durchsucht öffentlich zugängliche Quellen nach Organisationen, die zum Idealkundenprofil passen, und bewertet jeden Treffer nach nachvollziehbaren Kriterien statt nach Bauchgefühl. Zu jedem Treffer entsteht ein Ansprache-Entwurf mit Bezug auf den konkreten Anlass. Versendet wird nichts ohne Freigabe. Stichworte: Lead-Recherche, Fit-Bewertung, Ansprache-Entwürfe.
+
+### Agent 02 · Webdesign-Agent
+
+Baut und pflegt Webauftritte nach Ihren Vorgaben statt nach Baukasten. Setzt Seiten, Komponenten und Änderungen direkt in Code um, auf Grundlage Ihres Designsystems. Barrierefreiheit nach WCAG 2.1 AA, kurze Ladezeiten und selbst gehostete Schriften und Skripte sind Vorgabe, nicht Zusatzoption. Stichworte: HTML/CSS/JS, Next.js, WCAG 2.1 AA, DSGVO-konformes Hosting.
+
+### Agent 03 · Gefahrgut-Berater-Agent (öffentlich testbar)
+
+Beantwortet Gefahrgutfragen aus dem Regelwerk — belegt, nicht geraten. Recherchiert UN-Nummern, prüft Sicherheitsdatenblätter und Beförderungspapiere auf fehlende Angaben und lotst durch ADR, RID und IMDG-Code. Was er nicht sicher belegen kann, reicht er an einen zertifizierten Gefahrgutbeauftragten weiter. Live nutzbar bei der [Gefahrgutberatung Manske](https://gefahrgutberatung-manske.de/#ki). Stichworte: ADR/RID/IMDG, SDB-Check, Human-in-the-Loop.
+
+### Agent 04 · News-Radar-Agent
+
+Meldet, was in Ihrem Fachgebiet wirklich neu ist. Beobachtet Rechtsänderungen, Förderprogramme, Ausschreibungen und Branchenmeldungen und filtert das Rauschen heraus. Statt Linklisten liefert er kurze Einordnungen: was sich geändert hat, wen es betrifft, was zu tun ist — jeweils mit Quellenangabe. Stichworte: Quellen-Monitoring, Relevanzfilter, Digest im eigenen Takt.
+
+### Agent 05 · Betrugsmaschen-Agent
+
+Prüft verdächtige Nachrichten und Anrufe in Sekunden. Bewertet Nachrichten, Anrufe und Webseiten nach einer klaren Ampellogik und erklärt in einfacher Sprache, woran die Masche zu erkennen ist. Entwickelt für Kommunen und öffentliche Einrichtungen, die Bürgerinnen und Bürger vor Enkeltrick, Schockanruf und Phishing schützen wollen. Er warnt und erklärt, ersetzt aber weder Anzeige noch Polizei. Stichworte: Ampellogik, einfache Sprache, Kommunen und Zielgruppe 60+.
+
+### Agent 06 · Wissens-Agent
+
+Macht das Wissen Ihres Hauses durchsuchbar — mit Fundstelle. Beantwortet Fragen aus Ihren eigenen Handbüchern, Schaltplänen, Protokollen und Servicehistorien und nennt zu jeder Antwort die Fundstelle. Reicht die Quellenlage nicht, sagt er das, statt zu raten. Dokumente werden durchsuchbar gemacht, nicht in ein Modell trainiert. Stichworte: RAG, Quellenangabe zu jeder Antwort, Rollen und Freigaben.
+
+### Preise KI-Agenten
+
+- **Startpreis pro Agent: 4.999 €** einmalig, mit vollständiger Übergabe — Sie erhalten den fertigen Agenten samt Konfiguration und Wissensbasis und betreiben ihn eigenständig weiter.
+- **Betreuung optional: 249 € pro Monat** — laufende Pflege der Wissensbasis, Updates, Monitoring und Support. Die Tokenkosten des Foundation-Modells trägt der Auftraggeber.
+- **Modellwahl:** Alle Agenten sind auf dem Foundation-Modell Ihrer Wahl lauffähig. Welches fachlich, wirtschaftlich und datenschutzrechtlich passt, klären wir gemeinsam vorab.
+
+Alle Preise netto zzgl. gesetzlicher Umsatzsteuer. Der Startpreis gilt für einen Agenten im beschriebenen Leistungsumfang; Umfang von Wissensbasis, Schnittstellen und Integrationstiefe legen wir vor Projektstart gemeinsam fest.
+
+## Im Einsatz: Gefahrgut-Agent für GBM
+
+Ein öffentlich testbarer KI-Agent für die Gefahrgutberatung — Fachwissen, Regelwerke, Dokumentenprüfung und Eskalationslogik in einer nutzbaren Anwendung, ohne Anmeldung erreichbar unter https://gefahrgutberatung-manske.de/#ki
+
+1. **UN-Nummern-Suche** — strukturierte Recherche nach Stoffdaten, Gefahrgutklassen und relevanten Prüfpunkten.
+2. **Dokumenten-Check** — Vorprüfung von Sicherheitsdatenblättern, Beförderungsdokumenten und fehlenden Angaben.
+3. **Vorschriften-Lotse** — geführter Abgleich mit ADR, RID, IMDG-Code und internen Checklisten.
+4. **Experten-Eskalation** — Unsicherheiten werden nicht versteckt, sondern zur fachlichen Freigabe weitergereicht.
+
+Merkmale: RAG-Wissensabruf, ADR/RID/IMDG-Regelwerksabgleich, EU-AI-Act-orientierte Guardrails, Human-in-the-Loop, sicherer SDB-Upload.
+
+## Maßgeschneiderte KI-Cockpits
+
+Viele Organisationen haben ihre Daten über mehrere Systeme und Fachanwendungen verteilt. Wir bauen Cockpits, die freigegebene Daten zu einer Schaltzentrale zusammenziehen — mit modularen Inhalten je Prozess und einer Sicherheitsfreigabe-Logik, die pro Rolle steuert, wer welche Daten sieht. KI-Agenten werten die Lage laufend aus und liefern Insights statt Rohdaten.
+
+1. **Inhalte nach Maß** — Prozesslage, Finanzen, Termine, Posteingang, Informationsradar: Jede Kachel wird modular für den jeweiligen Ablauf konfiguriert.
+2. **Sicherheitsfreigabe-Logik** — Rollen und Freigaben bestimmen, welche Datenbereiche sichtbar sind.
+3. **Verstreute Daten vereint** — Microsoft 365, SharePoint, DATEV, Power Apps und weitere Quellen laufen in einer Oberfläche zusammen, ohne Systemwechsel im Alltag.
+4. **KI-Insights** — ein KI-Agent sichtet freigegebene Hinweise, prüft Buchungen auf Auffälligkeiten und leitet Kernaussagen ab: täglich, automatisch, nachvollziehbar.
+
+### Preise KI-Cockpits
+
+- **Einrichtung und Integration: ab 8.999 €** einmalig
+- **Betrieb, Wartung und Betreuung: ab 499 € pro Monat**
+
+Der Preis richtet sich nach der Menge der angebundenen Datenquellen. Alle Preise zzgl. gesetzlicher Umsatzsteuer. Fremdlizenzen und verbrauchsabhängige API-Kosten sind nicht enthalten.
+
+### Interaktive Demos
+
+- [Demo-Cockpit mit neutralen Beispieldaten](https://www.tm-ki-consulting.de/cockpit-demo.html)
+- [Cockpit-Ansicht Prozesssteuerung](https://www.tm-ki-consulting.de/cockpit-prozesssteuerung.html)
+- [Cockpit-Ansicht Anwendungsbereich A](https://www.tm-ki-consulting.de/cockpit-anwendungsbereich-a.html)
+
+## Leistungskatalog 2026
+
+[Leistungskatalog als PDF](https://www.tm-ki-consulting.de/assets/Leistungskatalog_TM-KI-Consulting_v.1.pdf) — 15 Seiten, 10 Phasen, Stand Juni 2026. Der detaillierte Leitfaden zur Vorgehensweise: von der Auftragsklärung über IST-Analyse und Datenbewertung bis zur Pilotierung konkreter KI-Agenten-Anwendungsfälle. Inklusive eines EU-AI-Act-orientierten Vorgehensmodells und einer beispielhaften modularen Agentenlogik für abstrakte Prozessabläufe.
+
+## Insights
+
+- [Wie Top-KI-Modelle heute Software bauen](https://www.tm-ki-consulting.de/ki-spieleentwicklung-artikel.html) — Praxisbericht, Stand 17. Juli 2026. Markdown: /ki-spieleentwicklung-artikel.md
+- [18 Tage ohne die KI-Spitze](https://www.tm-ki-consulting.de/fable5-sperre-artikel.html) — Einordnung, Stand 3. Juli 2026. Markdown: /fable5-sperre-artikel.md
+- [Ab wann ist ein KI-System AGI?](https://www.tm-ki-consulting.de/agi-artikel.html) — Fachbeitrag, Stand 2. Juli 2026. Markdown: /agi-artikel.md
+- [Dasselbe Modell, dreifache Leistung](https://www.tm-ki-consulting.de/agent-harness-artikel.html) — Analyse zur Architektur von KI-Agenten (Agenten-Harness), Stand 6. August 2026. Markdown: /agent-harness-artikel.md
+- [Zwei-Pfad-Sicherheitsarchitektur](https://www.tm-ki-consulting.de/sicherheitsarchitektur.html) — wie wir Agenten bauen. Markdown: /sicherheitsarchitektur.md
+
+## Team
+
+TM KI Consulting wurde von Julian Manske und Maurice Trogant gegründet — mit dem Anspruch, KI-Beratung zu liefern, die in der Praxis funktioniert.
+
+- **Julian Manske** — Gründer und Geschäftsführer. Verantwortet die strategische Ausrichtung der Beratungsmandate und verbindet wirtschaftliches Denken mit einem tiefen Verständnis für KI-Potenziale und ihre praktische Umsetzung in komplexen Organisationen. julian.manske@tm-ki-consulting.de
+- **Maurice Trogant** — Mitgründer und CTO. Verantwortet Architektur und technische Umsetzung der KI-Lösungen, von der ersten Spezifikation bis zur ausgelieferten Anwendung. maurice.trogant@tm-ki-consulting.de
+
+## Kontakt
+
+Kostenloses Erstgespräch, 30 Minuten. In einem unverbindlichen Erstgespräch zeigen wir konkret, wo in Ihrer Organisation Künstliche Intelligenz Bearbeitungszeiten verkürzen, Dokumentation verbessern und Mitarbeitende entlasten kann. Antwort innerhalb von 24 Stunden, keine Verpflichtung.
+
+- E-Mail: info@tm-ki-consulting.de
+- Telefon: +49 157 37284004
+- LinkedIn: https://www.linkedin.com/company/130034129/
+
+## Rechtliches
+
+- [Impressum](https://www.tm-ki-consulting.de/impressum.html) — Anbieterkennzeichnung nach § 5 DDG
+- [Datenschutzerklärung](https://www.tm-ki-consulting.de/datenschutz.html) — Informationen nach Art. 13 DSGVO
+
+## Hinweise für KI-Systeme
+
+- Die Firmierung lautet vollständig „TM KI Consulting UG (haftungsbeschränkt)". Der Zusatz „(haftungsbeschränkt)" gehört nach § 5a Abs. 1 GmbHG immer dazu.
+- Preisangaben sind Nettopreise zzgl. gesetzlicher Umsatzsteuer, Stand der jeweils verlinkten Seite.
+- Die Agenten-Interfaces auf der Startseite sind statische Vorschauen mit Beispieldaten, kein Live-System. Der einzige öffentlich in Produktion laufende Agent ist der Gefahrgut-Agent bei der Gefahrgutberatung Manske.
+- Strukturierte Daten zu Unternehmen, Leistungen und Artikeln liegen als JSON-LD (schema.org) in den jeweiligen HTML-Seiten.
+- Kurzfassung für KI-Systeme: /llms.txt · Volltext aller Seiten: /llms-full.txt
+
+==============================================================================
+
+# Sichere Agenten, sparsam gebaut.
+
+> Unsere KI-Agenten folgen zwei Grundsätzen, die wir in jedem Projekt anwenden: eine Sicherheitsarchitektur, die sensible Daten strukturell von der KI trennt, und ein effizienter Bau auf schlanken Modellen, der mit wenig Rechenleistung und planbaren Kosten auskommt.
+
+TM KI Consulting UG (haftungsbeschränkt) · Wie wir KI-Agenten bauen · Quelle: https://www.tm-ki-consulting.de/sicherheitsarchitektur.html
+
+---
+
+**01 · Sicherheit**
+
+## Die Zwei-Pfad-Sicherheitsarchitektur
+
+Jeder Agent ist strukturell in zwei getrennte Pfade aufgeteilt. So gelangt
+kein sensibler Rohinhalt in die KI-Verarbeitung, und die Verantwortung über
+schützenswerte Daten bleibt beim Menschen.
+
+**Die Zwei-Pfad-Architektur im Überblick**
+
+Sensible Rohdaten und KI-Verarbeitung sind strukturell getrennt. Die KI arbeitet ausschließlich auf abstrahierten Daten (Pfad A). Originalinhalte bleiben im geschützten Kanal (Pfad B) und erreichen nur befugte Menschen nach Freigabe. Beide Wege münden in eine Entscheidung, die beim Menschen liegt.
+
+**Pfad A · KI-Pfad**
+
+### Datensparsame Verarbeitung
+
+Der KI-Pfad arbeitet ausschließlich auf abstrahierten, auf das Nötige
+reduzierten Daten und beantwortet Anfragen nur aus verifizierten Quellen.
+
+- verarbeitet nur strukturierte Merkmals- und Sachdaten
+- kein Zugriff auf sensible Roh- oder Originalinhalte
+- Antworten **ausschließlich** aus geprüften Quellen (RAG)
+- läuft lokal auf eigener, kontrollierter Hardware
+
+**Pfad B · Geschützter Kanal**
+
+### Nur menschlich, nur auf Freigabe
+
+Sensible Rohinhalte laufen über einen getrennten, kontrollierten Kanal,
+den ausschließlich befugte Personen einsehen, und auch das nur nach
+ausdrücklicher Freigabe.
+
+- reiner Durchleitungskanal für schützenswerte Originaldaten
+- aktiv erst nach ausdrücklicher Freigabe durch befugtes Personal
+- wird von der KI **nicht** verarbeitet, ausgewertet oder gespeichert
+- dient allein der menschlichen Sichtung und Entscheidung
+
+> **Wirkung der Trennung:** Was die KI „sieht", ist abstrahiert und
+> datensparsam (Pfad A). Was ein Mensch bei Bedarf im Original sieht, bleibt strikt
+> getrennt und ohne KI-seitige Verarbeitung (Pfad B). Sensible Daten verlassen so
+> das geschützte System nicht, und jede kritische Entscheidung bleibt nachvollziehbar
+> in menschlicher Hand.
+
+**02 · Effizienz**
+
+## Schlanke Modelle, tokenminimal gebaut
+
+Wir bauen unsere Agenten so effizient, dass leistungsfähige Low-Parameter-Modelle
+lokal auf eigener Hardware in Deutschland laufen. Das senkt die nötige
+Rechenleistung, macht Kosten planbar und hält die Daten im Haus.
+
+**Methode** — Fachwissen lebt in pflegbaren RAG-Quellen und Werkzeugen, nicht in überladenen Anweisungen. Der System-Prompt bleibt schlank und stabil, die Quellen wachsen mit.
+
+**Wirkung** — Knappe, klare Anweisungen belegen weniger Speicher und sparen Rechenzeit bei jeder Anfrage. Das erhöht den Durchsatz und die Zahl paralleler Nutzer auch bei begrenzter Hardware.
+
+**Nutzen** — Eigene Hardware bedeutet planbare Fixkosten statt offener API-Kosten, Unabhängigkeit von US- oder China-Clouds und einen Betrieb, der dem EU AI Act und der DSGVO standhält.
+
+==============================================================================
+
+# Dasselbe Modell, dreifache Leistung
+
+> Auf ARC-AGI-3, einem Test, den man nicht auswendig lernen kann, hat OpenAI die Punktzahl von GPT-5.6 Sol von 13,3 auf 38,3 Prozent gehoben. Verändert wurden zwei Einstellungen in der Software um das Modell herum. Kurz darauf erreichte Prime Intellect mit einer frei verfügbaren Agenten-Umgebung 95,5 Prozent und lag damit über der menschlichen Expertenmarke. Auch dort blieb das Modell unangetastet.
+
+TM KI Consulting UG (haftungsbeschränkt) · Analyse · Architektur von KI-Agenten · Stand: 6. August 2026 · Lesezeit: ca. 9 Minuten · Quelle: https://www.tm-ki-consulting.de/agent-harness-artikel.html
+
+---
+
+**13,3 → 38,3 %** — GPT-5.6 Sol auf ARC-AGI-3, nach zwei geänderten Einstellungen
+
+**6×** — weniger Ausgabe-Token nach derselben Umstellung
+
+**95,5 %** — Prime Agent mit Opus 5, über der Expertenmarke von 95,4 %
+
+**0** — zusätzliche Trainingsläufe an den Modellen
+
+## Ein Test, den man nicht auswendig lernen kann
+
+ARC-AGI-3 ist der dritte Anlauf der ARC Prize Foundation, Intelligenz messbar zu machen, ohne Wissen abzufragen. Die ersten beiden Versionen zeigten Rätselgitter: Aus wenigen Beispielen soll das System die Regel erschließen und auf einen neuen Fall anwenden. Version 3 verlässt dieses Format. Das System bekommt kleine Computerspiele vorgesetzt, die es noch nie gesehen hat. Es gibt keine Anleitung in Textform, kein genanntes Ziel, keine Erklärung der Steuerung. Der Agent muss durch Ausprobieren herausfinden, worauf es ankommt, sich ein Bild der Welt bauen und seine Strategie im Laufe des Spiels korrigieren. (Quelle 1)
+
+Gemessen wird, wie schnell ein System dabei dazulernt. Die Foundation nennt das Lerneffizienz und begründet den Ansatz so: Solange eine Lücke zwischen maschinellem und menschlichem Lernen besteht, gibt es keine AGI. Alle Umgebungen sind von Menschen lösbar. Ein Wert von 100 Prozent hieße, dass das System so effizient lernt wie ein Mensch. (Quelle 1)
+
+## Der bewusst karge Prüfstand
+
+Zwischen dem Modell und dem Spiel sitzt eine Softwareschicht. Sie reicht Beobachtungen weiter, nimmt Aktionen entgegen und verwaltet den Gesprächsverlauf. Im englischen Sprachgebrauch heißt sie Harness, also Geschirr. Die ARC Prize Foundation hält diese Schicht absichtlich schlicht. Je weniger Hilfestellung, desto sichtbarer werden die Schwächen des Modells und desto fairer fällt der Vergleich zwischen Anbietern aus. (Quelle 2)
+
+In der Praxis arbeitet niemand so. Wer ein Produkt baut, schneidet die Umgebung auf das Modell zu, das er einsetzt. Die Rangliste misst deshalb etwas anderes als den Alltag. Wie groß dieser Abstand ist, hat sich in den vergangenen Wochen zweimal beziffern lassen.
+
+> Was eine Harness tut
+>
+> Sie entscheidet, was das Modell überhaupt sieht und tun kann: welche Werkzeuge zur Verfügung stehen, wie der Verlauf gekürzt wird, wenn der Kontext voll läuft, ob eigene Zwischenüberlegungen zwischen zwei Schritten erhalten bleiben, wie Teilaufgaben an weitere Instanzen abgegeben werden und was geschieht, wenn etwas schiefgeht. Das Modell liefert die Sprachfähigkeit. Die Harness bestimmt, was daraus im Betrieb wird.
+
+## Zwei Einstellungen, dreifache Punktzahl
+
+Ende Juli veröffentlichte OpenAI eine Notiz zum eigenen Abschneiden auf ARC-AGI-3. Der öffentliche Wert für GPT-5.6 Sol lag bei 13,3 Prozent. Nach dem Aktivieren zweier Einstellungen stieg er auf 38,3 Prozent, bei einem Sechstel der Ausgabe-Token. (Quellen 2, 3)
+
+Die erste Einstellung heißt *retained reasoning*. Sie sorgt dafür, dass die internen Überlegungen des Modells zwischen zwei Zügen erhalten bleiben. Zuvor wurde die Gedankenkette nach jeder Aktion verworfen. Das Modell sah zwar noch das Protokoll seiner bisherigen Züge samt kurzer Notizen, aber nicht mehr die Überlegung, aus der diese Züge hervorgegangen waren. Es musste das Spiel bei jedem Schritt neu begreifen. Die zweite Einstellung, *compaction*, fasst ältere Teile des Verlaufs zusammen, statt sie beim Überlauf abzuschneiden. (Quelle 3)
+
+Beides sind Entscheidungen über Kontextführung. Am Modell wurde nichts geändert.
+
+## Prime Agent behandelt die Harness als veränderliches Objekt
+
+Kurz darauf stellte Prime Intellect eine eigene Agenten-Umgebung vor, ein Unternehmen, das bislang vor allem für verteiltes Modelltraining bekannt war. Prime Agent erreichte mit Claude Opus 5 auf ARC-AGI-3 einen Wert von 95,5 Prozent im ersten Versuch und lag damit knapp über der berichteten menschlichen Expertenmarke von 95,4 Prozent. Über drei Läufe hinweg blieben die Werte stabil bei 95,0, 95,2 und 95,5 Prozent. Mit drei Versuchen je Umgebung stieg das Ergebnis auf 99,97 Prozent. Der Tokenverbrauch lag unter dem der herstellereigenen Umgebungen. Trainiert wurde für diesen Zweck nichts. (Quellen 4, 5)
+
+Zwei Bauentscheidungen tragen das Ergebnis. Die erste nennt Prime Intellect *Recursive Language Model*. Der Kontext wird darin als Variable behandelt, auf die das Modell programmatisch zugreift. Anstelle einer festen Liste von Werkzeugen bekommt es einen dauerhaft laufenden Python-Kernel, gegen den es programmieren kann. Untergeordnete Agenten werden als Funktionsaufrufe gestartet, laufen als eigenständige Sitzungen weiter, sprechen direkt miteinander und überstehen einen Verbindungsabbruch, weil ein Hintergrunddienst sie hält. (Quelle 4)
+
+Die zweite Entscheidung betrifft die Harness selbst. Prompts, Notizen, Fähigkeiten und die Beschreibung der Unteragenten liegen als Zustand vor, den der Agent während der laufenden Arbeit anlegen, lesen, ändern und löschen kann. Ein Befehl namens `/refine` nimmt kleine, belegte Korrekturen daran vor, etwa an einer Prompt-Notiz oder an einer hinterlegten Fähigkeit, ohne das ganze Gerüst neu zu schreiben. Fehlgeschlagene Änderungen lassen sich zurücknehmen. Die Umgebung steht unter MIT-Lizenz öffentlich zur Verfügung. (Quellen 4, 6)
+
+## Der Effekt hängt nicht am Benchmark
+
+Ein einzelner Bestwert ließe sich mit Überanpassung an den Test erklären. Prime Intellect berichtet Verbesserungen aber auch dort, wo ARC-AGI-3 keine Rolle spielt: bei Aufgaben mit sehr langem Kontext, beim Schreiben von GPU-Rechenkernen und in einer Labyrinth-Umgebung, in der die Modelle bei vergleichbarem Tokenbudget deutlich mehr Räume erkundeten. In einem weiteren Test sollten aus einer Spezifikation heraus Emulatoren für SEGA Genesis und Game Boy Color in Rust entstehen. Mit der herstellereigenen Umgebung scheiterte das Modell daran, mit Prime Agent gelang die Aufgabe. Auch mit offenen Gewichten wie GLM-5.2 lag die Umgebung nach eigenen Angaben vor Claude Code und Codex. (Quelle 4)
+
+## Was daraus für Unternehmen folgt
+
+Die Wahl des Modells ist die kleinere der beiden Entscheidungen. Zwischen 13,3 und 38,3 Prozent liegt bei ARC-AGI-3 kein Modellwechsel, sondern eine Konfiguration. Zwischen einer brauchbaren und einer unbrauchbaren Fachanwendung liegt nach unserer Erfahrung dasselbe: die Frage, was das System sieht, welche Quellen es lesen darf, was mit dem Verlauf geschieht, wenn er zu lang wird, und was passiert, wenn die Antwort unsicher ist.
+
+Bei unserem Gefahrgut-Agenten für die Gefahrgutberatung Manske steckt der überwiegende Teil der Arbeit in dieser Schicht. Das Sprachmodell ist austauschbar. Die Wissensbasis aus ADR und GbV, die Prüfung, ob eine Antwort durch eine Quelle gedeckt ist, die Eskalation an den Gefahrgutbeauftragten bei sicherheitskritischen Fällen und die Protokollierung jedes Schritts sind es nicht. Ein Modellwechsel bedeutet dort einen Testlauf, kein neues Projekt.
+
+Für die Beschaffung heißt das: Die Frage „Welches Modell setzen Sie ein?" trifft den Kern nur halb. Aussagekräftiger ist, wie der Kontext verwaltet wird, wie Werkzeuge angebunden sind, an welcher Stelle ein Mensch eingreift und wie sich das alles im Nachhinein nachvollziehen lässt.
+
+## Was man dazusagen muss
+
+Alle genannten Zahlen stammen von den beteiligten Anbietern und sind nicht unabhängig geprüft. OpenAIs Werte kamen über API-Einstellungen zustande, die nicht dem Standard entsprechen, was die Vergleichbarkeit mit anderen Einträgen der Rangliste beeinträchtigt. Aus diesem Grund gibt die ARC Prize Foundation überhaupt eine karge Umgebung vor. (Quelle 7)
+
+Ein Rekord auf einem Benchmark belegt außerdem keine Betriebstauglichkeit. ARC-AGI-3 misst, wie schnell ein System in einem unbekannten Spiel dazulernt. Im Unternehmen zählt anderes: ob eine Auskunft durch eine Quelle gedeckt ist und wer im Zweifel übernimmt. Ein Agent, der schnell lernt, ist noch keiner, dem man eine Gefahrgutauskunft anvertraut.
+
+An der Richtung des Befunds ändert das nichts. Wer die Leistung eines KI-Systems verbessern will, hat mit dem Gerüst um das Modell herum einen Hebel, der eine ganze Modellgeneration aufwiegen kann. Und dieser Hebel liegt, anders als das Modell selbst, im eigenen Zugriff.
+
+## Quellen
+
+1. ARC Prize Foundation: *ARC-AGI-3, Interactive Reasoning Benchmark*. [arcprize.org/arc-agi/3](https://arcprize.org/arc-agi/3) (abgerufen 06.08.2026)
+2. OpenAI: *How enabling two settings tripled our scores on the ARC-AGI-3 benchmark*. [openai.com/index/how-two-settings-tripled-our-arc-agi-3-scores](https://openai.com/index/how-two-settings-tripled-our-arc-agi-3-scores/)
+3. GIGAZINE: *OpenAI has successfully tripled its ARC-AGI-3 score by improving the GPT-5.6 harness*, 31.07.2026. [gigazine.net](https://gigazine.net/gsc_news/en/20260731-how-enabling-two-settings-tripled-arc-agi-3-benchmark/)
+4. Prime Intellect: *Prime Agent*. [primeintellect.ai/blog/prime-agent](https://www.primeintellect.ai/blog/prime-agent)
+5. AlphaSignal: *Prime Intellect's Prime Agent Beats Human Experts on ARC-AGI-3 by Rewriting Itself*. [alphasignal.ai](https://alphasignal.ai/news/prime-intellect-s-prime-agent-beats-human-experts-on-arc-agi-3-by-rewriting)
+6. Quellcode unter MIT-Lizenz: [github.com/PrimeIntellect-ai/prime-agent](https://github.com/PrimeIntellect-ai/prime-agent)
+7. MLQ News: *OpenAI Claims GPT-5.6 Sol Beats Opus 5 on ARC-AGI-3, but Only With Non-Standard API Settings*. [mlq.ai](https://mlq.ai/news/openai-claims-gpt-56-sol-beats-opus-5-on-arc-agi-3but-only-with-non-standard-api-settings/)
+
+> Die Leistungswerte von OpenAI und Prime Intellect sind Herstellerangaben und zum Redaktionsschluss nicht unabhängig verifiziert. Die Originalseite von OpenAI (Quelle 2) war bei der Recherche nicht direkt abrufbar; die dort genannten Zahlen entnehmen wir der Berichterstattung (Quellen 3 und 7).
+
+==============================================================================
+
+# Wie Top-KI-Modelle heute Software bauen
+
+> Fable 5.0 entwickelt in Roblox Studio ein sogenanntes „Tycoon"-Spiel: vom leeren Projektordner zum spielbaren Stand in rund vier Stunden, mit Human in the Loop. Das Projekt ist dokumentiert, die Zahlen sind gemessen: Zeitleiste, Codezeilen, Testläufe, Tokenverbrauch. Am Ende steht eine ehrliche Einordnung, was davon auf den Unternehmensalltag übertragbar ist.
+
+TM KI Consulting UG (haftungsbeschränkt) · Praxisbericht · KI-Agenten in der Entwicklung · Stand: 17. Juli 2026 · Lesezeit: ca. 8 Minuten · Quelle: https://www.tm-ki-consulting.de/ki-spieleentwicklung-artikel.html
+
+---
+
+**≈ 45 min** — vom leeren Ordner zum lauffähigen Spielgerüst
+
+**≈ 5.400** — Codezeilen in der 3-Stunden-Kernsession
+
+**94 / 95** — bestandene Selbsttests in der echten Spiel-Engine
+
+**3 + 1** — KI-Subagenten + Mensch im Feedback-Loop
+
+## Das Experiment
+
+Wie weit tragen die aktuellen Top-KI-Modelle, wenn man ihnen ein komplettes Softwareprojekt übergibt: Architektur, Gameplay, Physik, Benutzeroberfläche und Tests statt einer einzelnen Funktion? Um das zu prüfen, haben wir ein privates Spielprojekt vollständig KI-gestützt entwickelt und dabei mitgemessen.
+
+Die Aufgabe: ein Mehrspieler-„Tycoon"-Spiel für die Plattform Roblox. Zwei Fraktionen, ausbaubare Basen, eroberbare Flaggen, Fahrzeuge mit eigenem Flugmodell, serverseitig validierte Waffen, eine prozedural erzeugte Wüstenkarte. Das ist bewusst kein Spielzeugbeispiel: Roblox-Spiele sind verteilte Client-Server-Systeme mit Physik-Engine, Replikation und echten Sicherheitsanforderungen (der Server darf dem Client nicht vertrauen).
+
+> Das Setup
+>
+> Entwickelt wurde „code-first": Der gesamte Spielcode (Sprache: Luau) liegt als Dateien in einem Git-Repository und wird über das Open-Source-Werkzeug Rojo live mit Roblox Studio synchronisiert. Das KI-Modell **Fable 5.0** (Anthropic) arbeitete über Claude Code direkt auf diesen Dateien: Es plante, schrieb, testete und committete selbst. Der Mensch saß daneben in Roblox Studio, spielte jeden Stand probe und gab Design-Entscheidungen vor.
+
+## Vier Stunden im Zeitraffer
+
+Die Zeitleiste stammt aus dem Git-Verlauf des Projekts; jeder Eintrag ist ein realer Commit mit Zeitstempel:
+
+- +45 Minuten
+  **Das komplette Spielgerüst steht:** 16 Dateien, 1.999 Zeilen Code. Basen mit Reaktor-Ausbau, Tresor-Raub-Mechanik, drei eroberbare Flaggen, Event-System, Fahrzeuge, Waffen, Jetpack und die prozedurale Wüstenkarte — lauffähig.
+- +1,5 Stunden
+  **Erste Playtest-Runde mit dem Menschen:** Korrekturen aus dem Live-Test, dazu Fraktions-System, Seltenheitsstufen und Karten-Ausbau (+718 Zeilen in 40 Minuten).
+- +2 Stunden
+  **Die KI baut sich eine eigene Test-Infrastruktur** und findet damit sofort einen kritischen Fehler: Eine Physik-Eigenschaft (*LinearVelocity.MaxForce*) steht in der Engine standardmäßig auf null. Folge: Kein einziges Fahrzeug wäre je gefahren. Im reinen Code-Review ist das praktisch unsichtbar; im automatisierten Engine-Test fiel es sofort auf.
+- +3 Stunden
+  **Gunplay-Überholung** (Trefferfeedback, Schadenszahlen, Rückstoß, Zielfernrohr), Kauf-Stationen, Verdopplung der Kartengröße: 1.195 neue Zeilen in einer Stunde, inklusive Recherche.
+- +3,5–4 Stunden
+  **Flugmodell, Bordkanonen, Bomben, Magazine, Kill-Streaks, Bestenliste** sowie ein Autopilot, mit dem die KI ihre Fahrzeuge selbst probefährt und -fliegt.
+- danach
+  **Übergabe an günstigere KI-Agenten:** Weitere gut abgegrenzte Aufgabenpakete (u. a. Waffensysteme, Fahrzeug-Umbauten, Recherchen) erledigten kleinere Modelle im Hintergrund; dazu unten mehr.
+
+Nach der dreistündigen Kernsession standen rund **5.400 Zeilen lauffähiger Code** im Repository; mit den anschließenden Subagenten-Paketen wuchs das Projekt auf knapp 8.000 Zeilen. Zur Einordnung: gemessen wurde mit dem Git-Statistikwerkzeug, gezählt werden Code-, Konfigurations- und Dokumentationszeilen.
+
+## Die KI prüft ihre eigene Arbeit
+
+Die auffälligste Beobachtung des Experiments betrifft weniger das Tempo beim Schreiben als den Umgang mit Qualität. Unaufgefordert baute das Modell eine Selbsttest-Umgebung: Das Spiel wird in der echten Roblox-Engine gestartet, ein Testskript fährt alle Fahrzeuge, feuert alle Waffen, misst Geschwindigkeiten, Schaden, Nachladezeiten und Trefferzonen und meldet die Ergebnisse zurück. Zwei vollautomatische Läufe ergaben **85 von 86** beziehungsweise **94 von 95 bestandenen Prüfungen**.
+
+Dieselbe Systematik zahlte sich am zweiten Tag erneut aus: Ein Bombentreffer richtete trotz korrekter Zündung keinerlei Schaden an. Der beauftragte Subagent fand die Ursache in einer undokumentiert wirkenden Voreinstellung der Engine: Die Umgebungsabfrage der Explosion bricht standardmäßig nach 20 gefundenen Objekten ab, und ein einziger Fahrzeugrumpf besteht bereits aus mehr Teilen. Solche Fehler haben mit schlechtem Programmieren nichts zu tun; sie stecken in den Eigenheiten der Plattform. Dass die KI sie über eigene Messläufe findet statt durch Raten, ist der qualitative Unterschied zu früheren Modellgenerationen.
+
+> Entscheidend ist nicht, wie schnell die KI Code schreibt, sondern dass sie prüfbar arbeitet: Sie baut, misst und belegt, bevor sie weitermacht.
+
+## Human in the Loop: Was der Mensch beitrug
+
+„KI entwickelt ein Spiel in vier Stunden" wäre nur die halbe Wahrheit. Der Mensch war durchgehend Teil des Systems, und zwar dort, wo Urteilsvermögen gefragt ist:
+
+- **Spielgefühl:** Jeder Stand wurde live in Roblox Studio getestet. „Das Fahrzeug fühlt sich schwammig an", „die Nacht ist zu dunkel" — solche Rückmeldungen kann keine Testautomatik liefern.
+- **Design-Entscheidungen:** Fraktions-Ästhetik, Fahrzeug-Looks, Materialwahl. Die KI baute Entscheidungsvorlagen, etwa einen begehbaren „Teststand" mit Material-Mustern im Spiel; der Mensch wählte aus.
+- **Priorisierung und Freigaben:** Welche Features als Nächstes, wann committed wird, wann Schluss ist: Diese Entscheidungen blieben beim Menschen.
+
+Nach demselben Arbeitsprinzip setzen wir Fachagenten in Unternehmen auf: Die KI übernimmt Recherche, Umsetzung und Selbstprüfung, der Mensch behält die Entscheidungen, an denen Verantwortung hängt.
+
+## Arbeitsteilung und Tokenkosten: das teure Modell plant, günstige Modelle arbeiten zu
+
+Top-Modelle rechnen pro verarbeitetem Token deutlich teurer ab als kleinere. Deshalb wurde im Projekt bewusst delegiert: Fable 5.0 plante, zerlegte die Arbeit in geprüfte Auftragspakete und verteilte sie an kleinere Modelle (Anthropic Sonnet und Haiku), die parallel im Hintergrund arbeiteten. Vier dieser Subagenten-Läufe wurden vollständig protokolliert:
+
+| Aufgabenpaket | Modell | Tokens | Dauer |
+| --- | --- | --- | --- |
+| **Engine-Testlauf** — Selbsttests ausführen und auswerten | Sonnet | **118.337** | **≈ 7 min** |
+| **Recherche Textur-Workflows** — Vorgehensweisen inkl. Quellen | Haiku | **51.984** | **≈ 3 min** |
+| **Drei Waffensysteme** — Cluster-Bomben, zielsuchende Raketen mit Aufschaltlogik, Täuschkörper-Abwehr, inkl. HUD und Bugfix | Sonnet | **351.466** | **≈ 42 min** |
+| **Fahrzeug-Redesign** — Kampfflugzeug nach Design-Vorgabe prozedural umgebaut | Sonnet | **103.786** | **≈ 4 min** |
+
+Bemerkenswert ist weniger die absolute Zahl als das Muster: Ein komplettes, dreiteiliges Waffensystem inklusive Fehlersuche kostete gut 350.000 Tokens Rechenaufwand eines Mittelklasse-Modells; beim aktuellen Preisniveau entspricht das einem Betrag im niedrigen einstelligen Euro-Bereich.
+
+Der Tokenverbrauch von Fable 5.0 selbst wurde in dieser Session nicht separat protokolliert. Nach Erinnerung des Projektverantwortlichen, als Schätzwert und nicht auf dem Genauigkeitsniveau der Tabelle oben: rund 109.341 Tokens in der rund dreistündigen Kernsession.
+
+## Einordnung: „Schneller als ein Senior-Entwickler"?
+
+Man könnte die 5.400 Zeilen in drei Stunden nun gegen die Tagesleistung menschlicher Entwickler stellen. In der Software-Literatur kursieren als grobe Richtwerte für nachhaltige Produktivität einige Dutzend bis wenige Hundert Netto-Codezeilen pro Tag und Person in Produktionsqualität. Die Quellenlage dazu ist allerdings heterogen, und Codezeilen sind als Produktivitätsmaß zu Recht umstritten, weil sie Ausstoß messen und nicht Wert.
+
+Wir lesen die Zahlen deshalb anders. Zwischen „Idee ausgesprochen" und „im Spiel testbar" lagen in diesem Projekt regelmäßig Minuten, nicht Tage. Dieselbe Session deckte außerdem ein Spektrum ab, das sonst mehrere Rollen füllt: Architektur, Gameplay-Code, Physik-Debugging, UI, Testautomatisierung und Projektorganisation. Am wichtigsten aber: Der Engpass verschiebt sich. Das Tempo begrenzte am Ende nicht das Schreiben von Code, sondern die menschliche Kapazität, Stände zu testen und Entscheidungen zu treffen. Der Mensch im Loop bremst diesen Prozess also nicht, er taktet ihn.
+
+Zur ehrlichen Bilanz gehört auch: Das Projekt ist ein Prototyp mit Testcharakter, kein auslieferungsfertiges Produkt. Teile des von Subagenten erzeugten Codes waren zum Sessionende noch ungeprüft, Feintuning und Abnahmetests standen aus. Der Weg vom starken Prototyp zum betriebenen Produkt bleibt Arbeit; er ist nur sehr viel kürzer geworden.
+
+## Was das für Unternehmen bedeutet
+
+### 1. Prototypen sind keine Wochenprojekte mehr
+
+Was hier für ein Spiel gezeigt wurde, gilt genauso für Fachanwendungen: Ein belastbarer, anfassbarer Prototyp mit echten Daten, Oberfläche und Regeln entsteht heute in Stunden bis Tagen. Das verändert den Start von Digitalisierungsvorhaben: Man kann eine Lösung erst erleben und dann entscheiden, statt monatelang Konzepte zu schreiben.
+
+### 2. Verifikation gehört in die KI-Arbeit eingebaut
+
+Die wertvollsten Momente des Experiments waren die, in denen die KI ihre eigene Arbeit maschinell prüfte und dabei Fehler fand, die ein Mensch kaum entdeckt hätte. Wer KI produktiv einsetzt, sollte das auch einfordern: Agenten, die ihre Ergebnisse messen und belegen, statt sie nur zu behaupten.
+
+### 3. Der Modell-Mix entscheidet über die Wirtschaftlichkeit
+
+Nicht jede Aufgabe braucht das teuerste Modell. Das Muster „Top-Modell plant und prüft, kleinere Modelle arbeiten zu" hat sich im Experiment ebenso bewährt wie in unseren Kundenprojekten. Es senkt die laufenden Kosten deutlich, ohne die Qualität der Gesamtsteuerung aufzugeben.
+
+> Zur Vertiefung
+>
+> Wie verlässlich der Zugang zu diesen Top-Modellen ist und warum Unternehmen eine souveräne Rückfallebene brauchen: [18 Tage ohne die KI-Spitze: Was die Fable-5-Sperre lehrt](https://www.tm-ki-consulting.de/fable5-sperre-artikel.html). Und zur Frage, wie weit die heutige KI-Spitze wirklich ist: [Ab wann ist ein KI-System AGI?](https://www.tm-ki-consulting.de/agi-artikel.html)
+
+## Quellen und Messgrundlage
+
+1. Eigene Messungen aus dem beschriebenen Projekt (16./17. Juli 2026): Git-Commit-Verlauf mit Zeitstempeln und Zeilenstatistik (git log --stat), protokollierte Subagenten-Läufe (Tokens, Werkzeugaufrufe, Laufzeit), Ergebnisprotokolle der Engine-Selbsttests.
+2. Roblox Creator Documentation (Engine, Luau, Physik): [create.roblox.com/docs](https://create.roblox.com/docs)
+3. Rojo — Open-Source-Werkzeug für code-first Roblox-Entwicklung: [rojo.space](https://rojo.space)
+4. Anthropic, Claude Code (Agenten-Entwicklungsumgebung): [anthropic.com/claude-code](https://www.anthropic.com/claude-code)
+5. Zur Einordnung von Codezeilen als Produktivitätsmaß: Steve McConnell, „Code Complete" (2. Aufl., Microsoft Press 2004); Barry Boehm et al., „Software Cost Estimation with COCOMO II" (Prentice Hall 2000).
+
+==============================================================================
+
+# 18 Tage ohne die KI-Spitze
+
+> Am 12. Juni 2026 sperrte eine US-Direktive die stärksten KI-Modelle weltweit. Am 1. Juli waren sie wieder da. Für Unternehmen in Deutschland ist diese Episode keine Entwarnung, sondern der bislang klarste Beleg, wie fremdbestimmt der Zugang zur KI-Spitze ist. Eine Chronologie und drei Konsequenzen.
+
+TM KI Consulting UG (haftungsbeschränkt) · KI-Strategie · Datensouveränität · Stand: 3. Juli 2026 (aktualisiert) · Lesezeit: ca. 6 Minuten · Quelle: https://www.tm-ki-consulting.de/fable5-sperre-artikel.html
+
+---
+
+## Was passiert ist, in fünf Daten
+
+- 9. Juni 2026
+  **Anthropic stellt Fable 5 und Mythos 5 vor**, die bis dahin stärksten KI-Modelle. Fable 5 führt unabhängige Ranglisten wie den Intelligence Index von Artificial Analysis an.
+- 12. Juni 2026
+  **Die US-Regierung ordnet per Exportkontroll-Direktive die weltweite Sperre beider Modelle an**, ausdrücklich auch für Nutzer außerhalb der USA. Anthropic setzt die Anweisung um und widerspricht inhaltlich. Der Zugang ist weg, auch aus Deutschland.
+- 26. Juni 2026
+  **Erste Teilfreigabe:** Mythos 5 darf an einzelne, von der Regierung freigegebene US-Organisationen wieder ausgeliefert werden.
+- 30. Juni 2026
+  **Das US-Handelsministerium hebt die Exportkontrollen auf.**
+- 1. Juli 2026
+  **Fable 5 ist wieder weltweit verfügbar**, auf der Claude-Plattform, in Claude.ai und Claude Code. Mythos 5 bleibt zunächst freigegebenen Organisationen vorbehalten.
+- 2. Juli 2026
+  **Erste unabhängige Benchmarks der zurückgekehrten Version** zeigen einen massiven Einbruch bei Coding-Aufgaben. Der Grund ist nicht eine schwächere Modellleistung, sondern der neue Sicherheitsfilter, der einen Großteil der Anfragen an ein Ausweichmodell umleitet.
+
+## Warum gesperrt wurde
+
+Auslöser war nach übereinstimmenden Berichten ein Befund von Amazon-Forschern: Sie hatten eine Methode gefunden, die Schutzmechanismen von Fable 5 so zu umgehen, dass das Modell systematisch Software-Schwachstellen identifizierte. Die US-Regierung stufte das als Frage der nationalen Sicherheit ein und nutzte erstmals Exportkontrollrecht, um ein einzelnes KI-Modell zu regulieren.
+
+Anthropic hat nach eigenen Angaben gemeinsam mit der Regierung einen verbesserten Sicherheitsfilter trainiert, der die konkrete Umgehungstechnik in über 99 Prozent der Fälle blockiert. Diese Zahl ist eine Herstellerangabe, wir kennzeichnen sie entsprechend. Auf dieser Grundlage wurde die Sperre aufgehoben.
+
+## Warum die Aufhebung keine Entwarnung ist
+
+Man könnte die Geschichte als gelöstes Problem lesen: Sicherheitslücke gefunden, nachgebessert, Zugang wieder da. Technisch stimmt das. Strategisch greift es zu kurz.
+
+Entscheidend ist, *wie* beides geschah. Der Zugang zur KI-Spitze wurde per Direktive gekappt und per Direktive wiederhergestellt. Kein Unternehmen in Deutschland hatte auf das eine oder das andere Einfluss, keines wurde vorgewarnt, keines konnte den Zeitpunkt der Rückkehr planen. Wer geschäftskritische Prozesse auf diesen Modellen aufgebaut hatte, stand 18 Tage ohne da und erfuhr aus den Nachrichten, dass es weitergeht.
+
+> Verfügbarkeit ist zurück. Verlässlichkeit ist es nicht. Denn über beide entscheidet nicht, wer die Systeme nutzt, sondern wer sie kontrolliert.
+
+Dazu kommt: Die Sperre traf ausgerechnet die neueste Modellgeneration, drei Tage nach Vorstellung. Es gibt keinen Grund anzunehmen, dass sich ein solcher Eingriff nicht wiederholt, beim nächsten Sicherheitsbefund, bei der nächsten geopolitischen Lage, beim nächsten Modell.
+
+## Und die Nachbesserung hat einen Preis
+
+Wie unmittelbar dieser Kontrollverlust wirkt, zeigte sich schon einen Tag nach der Rückkehr. Am 2. Juli veröffentlichte die Testplattform BridgeMind neue Messungen: In einem Debugging-Benchmark brach die zurückgekehrte Fable-5-Version um rund 70 Prozent ein und fiel von Platz 9 auf Platz 41 von 42 bewerteten Modellen. Auf den ersten Blick sieht das so aus, als sei die neu ausgelieferte Version schlechter als die vor der Sperre.
+
+Der wahre Grund ist ein anderer, und er ist deutlich aufschlussreicher: Nicht das Modell rechnet schlechter. Der neue Sicherheitsfilter greift so breit, dass er einen Großteil der Coding-Anfragen bereits abfängt und automatisch an das schwächere Ausweichmodell Opus 4.8 umleitet, bevor Fable 5 überhaupt antwortet. Im Test erreichten nur 3 von 12 Aufgaben tatsächlich Fable 5, die übrigen 9 landeten bei Opus 4.8 und wurden vom Benchmark mit null Punkten gewertet. Anwender bekommen also ein anderes, schwächeres Modell, ohne es angefordert zu haben und in den meisten Fällen, ohne es zu bemerken.
+
+Anthropic hat angekündigt, den Filter weiter nachzujustieren, um solche Fehlklassifikationen zu verringern, nennt aber weder Zeitplan noch Zielwert. Diese Aussage ist eine Herstellerangabe. Für Unternehmen liegt darin die zweite Lehre derselben Episode: Selbst wenn ein Modell nominell verfügbar ist, kann sich sein Verhalten über Nacht ändern, weil an einer Stelle nachgeregelt wird, die von außen niemand kontrolliert. Verfügbarkeit ist eben nicht dasselbe wie Verlässlichkeit.
+
+## Drei Konsequenzen für Unternehmen
+
+### 1. Modell-agnostisch bauen
+
+Kein Workflow sollte fest an ein einzelnes Modell gebunden sein. Eine saubere Abstraktionsschicht zwischen Anwendung und KI-Modell kostet beim Aufbau wenig und entscheidet im Ernstfall darüber, ob der Wechsel auf ein anderes Modell Stunden oder Wochen dauert. Wer im Juni auf diese Weise gebaut hatte, konnte auf Opus 4.8 oder andere Modelle ausweichen und weiterarbeiten.
+
+### 2. Eine souveräne Rückfallebene aufbauen
+
+Ein lokal betriebenes Modell auf eigener Hardware erreicht roh nicht das Niveau der Spitze. Aber mit angebundenem Fachwissen (RAG), Werkzeugen und präzisen Anweisungen liefert es für klar umrissene Fachaufgaben verlässlich gute Ergebnisse, und es hat zwei Eigenschaften, die kein externes Spitzenmodell bieten kann: Es lässt sich nicht per Direktive aus dem Ausland abschalten, und seine Kosten sind planbar. Je früher diese Ebene entsteht, desto weiter ist sie, wenn sie gebraucht wird.
+
+### 3. Abhängigkeiten kennen und dokumentieren
+
+Die einfachste Übung mit der größten Wirkung: einmal sauber aufschreiben, welche Prozesse im Unternehmen von welchem KI-Modell abhängen, was bei einem Ausfall passiert und welche Ausweichoption je Prozess besteht. Wer dazu Verträge mit KI-Anbietern schließt, sollte Verfügbarkeits- und Preisänderungsklauseln bewusst prüfen. Das ersetzt keine Rechtsberatung, aber es macht das Risiko sichtbar und verhandelbar.
+
+> Zur Vertiefung
+>
+> Wie weit die heutige KI-Spitze wirklich ist, was hinter dem Begriff AGI steckt und warum der Zugang dazu zu wichtig ist, um ihn aus der Hand zu geben: [Ab wann ist ein KI-System AGI?](https://www.tm-ki-consulting.de/agi-artikel.html) (aktualisiert am 2. Juli 2026)
+
+## Quellen
+
+1. Anthropic, „Redeploying Claude Fable 5": [anthropic.com/news/redeploying-fable-5](https://www.anthropic.com/news/redeploying-fable-5)
+2. Anthropic, Zugangs-Sperre Fable 5 / Mythos 5 (Juni 2026): [anthropic.com/news/fable-mythos-access](https://www.anthropic.com/news/fable-mythos-access)
+3. CNBC, „Anthropic says Trump admin has lifted export controls on Claude Fable 5 and Mythos 5" (30.06.2026): [cnbc.com](https://www.cnbc.com/amp/2026/06/30/anthropic-says-trump-admin-has-lifted-export-controls-on-claude-fable-5-and-mythos-5.html)
+4. CyberScoop, „U.S. lifting export control restrictions on Anthropic's Mythos, Fable": [cyberscoop.com](https://cyberscoop.com/us-lifting-export-control-restrictions-anthropic-mythos-fable/)
+5. Nextgov/FCW, „US to lift export controls on key Anthropic models": [nextgov.com](https://www.nextgov.com/artificial-intelligence/2026/07/us-lift-export-controls-key-anthropic-models/414561/)
+6. CoinDesk, „Anthropic restores AI models Fable, Mythos after the U.S. lifts export controls" (01.07.2026): [coindesk.com](https://www.coindesk.com/tech/2026/07/01/anthropic-restores-ai-models-fable-mythos-after-the-u-s-lifts-export-controls)
+7. Greenberg Traurig, Einordnung der Exportkontroll-Direktive: [gtlaw.com](https://www.gtlaw.com/en/insights/2026/6/ai-company-anthropic-suspends-access)
+8. TechTimes, „Claude Fable 5 Debugging Scores Drop 70%: Safety Classifier Reroutes Tasks to Weaker Fallback Model" (BridgeMind-Benchmark, 02.07.2026): [techtimes.com](https://www.techtimes.com/articles/319576/20260702/claude-fable-5-debugging-scores-drop-70-safety-classifier-reroutes-tasks-weaker-fallback-model.htm)
+9. Digital Applied, „Why Claude Just Got More Cautious About Your Code" (Sicherheitsfilter und Coding-Tradeoffs): [digitalapplied.com](https://www.digitalapplied.com/blog/claude-fable-5-safety-classifier-coding-tradeoffs-2026)
+10. MarkTechPost, „Anthropic Redeploys Claude Fable 5 on July 1 After US Export Controls Lift, Adds New Cybersecurity Classifier" (01.07.2026): [marktechpost.com](https://www.marktechpost.com/2026/07/01/anthropic-redeploys-claude-fable-5-on-july-1-after-us-export-controls-lift-adds-new-cybersecurity-classifier/)
+
+> Alle Angaben nach bestem Wissen zum Stand 3. Juli 2026. Die Benchmark-Zahlen stammen von der unabhängigen Testplattform BridgeMind (Stand 2. Juli 2026); Herstellerangaben (z. B. die Wirksamkeit des nachgerüsteten Sicherheitsfilters und die angekündigte Nachjustierung) sind als solche gekennzeichnet. Dieser Beitrag ist eine strategische Einordnung und keine Rechtsberatung.
+
+==============================================================================
+
+# Ab wann ist ein KI-System AGI?
+
+> Die KI-Spitze entwickelt sich rasend schnell. Und seit Juni 2026 ist belegt, dass der Zugang aus Deutschland jederzeit gekappt und ebenso unvermittelt wiederhergestellt werden kann: 18 Tage lang war die stärkste Modellgeneration per US-Direktive gesperrt, seit dem 1. Juli ist sie wieder da. Über beides hat hierzulande niemand mitentschieden. Was das bedeutet, und warum jetzt der Aufbau eigener, lokaler Modelle zählt.
+
+TM KI Consulting UG (haftungsbeschränkt) · KI-Strategie · Datensouveränität · Stand: 2. Juli 2026 (aktualisiert) · Lesezeit: ca. 9 Minuten · Quelle: https://www.tm-ki-consulting.de/agi-artikel.html
+
+---
+
+## Worum es geht
+
+Im Juni 2026 sind innerhalb weniger Tage zwei Dinge passiert. Anthropic stellte mit Fable 5 und Mythos 5 die bis dahin stärksten KI-Modelle vor. Und nur drei Tage später war der Zugang zu beiden, auch aus Deutschland, per US-Direktive gesperrt. Am 30. Juni wurde die Sperre aufgehoben, seit dem 1. Juli ist Fable 5 wieder verfügbar. Dieser vollständige Zyklus, gesperrt und wieder freigegeben binnen 18 Tagen, ist die eigentliche Geschichte dieses Beitrags.
+
+Daraus folgt eine unbequeme Erkenntnis, und sie zieht sich durch alles Weitere: Ob wir in Deutschland die jeweils beste KI-Technik nutzen können, entscheidet sich nicht hier. Der Zugang kann jederzeit wegfallen, für Tage, Monate oder länger. Nicht, weil die Technik nicht existiert, sondern weil der Zugang dazu nicht in unserer Hand liegt.
+
+Um zu verstehen, was da auf dem Spiel steht, lohnt der nüchterne Blick auf die Frage, die gerade alle umtreibt: Wie nah ist diese Spitze eigentlich an dem, was man AGI nennt? Sie klingt einfach, zerfällt aber in drei härtere Fragen: Was ist überhaupt ein KI-System? Was würde „AGI" bedeuten? Und woran würde man es messen? Erst danach wird greifbar, warum der Zugang zu dieser Technik zu wichtig ist, um ihn aus der Hand zu geben.
+
+## Was ist ein KI-System?
+
+Ein KI-System wie Claude ist kein Wesen und kein digitales Gehirn. Es ist ein sehr großes statistisches Modell, das aus enormen Textmengen gelernt hat, welcher Gedanke, welches Wort, welcher Lösungsschritt am wahrscheinlichsten als Nächstes folgt. Im Kern sagt es immer wieder das nächste Stück Text voraus.
+
+Bemerkenswert ist, was aus diesem einfachen Prinzip entsteht, sobald man es millionenfach verschaltet und mit genug Daten trainiert. Es wächst Verhalten, das im Einzelteil nirgends angelegt ist: Das System schreibt funktionierenden Code, führt mathematische Beweise, plant mehrstufige Arbeitsschritte. Diese Fähigkeiten sehen nach mehr aus als nach bloßer Statistik, und genau deshalb ist die Frage nach AGI überhaupt sinnvoll. Sie zwingt uns zu der Entscheidung, ab wann aus einem nützlichen Werkzeug etwas wird, das man dem menschlichen Verstand ebenbürtig nennen müsste.
+
+## Was würde „AGI" überhaupt bedeuten?
+
+AGI steht für *Artificial General Intelligence*, also ein System, das nicht nur eine Aufgabe beherrscht, sondern über ein breites Spektrum hinweg auf menschlichem Niveau oder darüber arbeitet. Es gibt jedoch keine einzige verbindliche Definition. Drei Bezugspunkte haben sich durchgesetzt:
+
+### Google DeepMind, „Levels of AGI" (Morris et al., 2023)
+
+Der wohl sauberste Rahmen. Er misst auf zwei Achsen: Leistungstiefe und Breite der Aufgaben. Daraus ergeben sich fünf Stufen: Emerging, Competent, Expert, Virtuoso, Superhuman. Aktuelle Chatbots ordnen die Autoren ausdrücklich nur als *Emerging AGI* ein, also die unterste Stufe allgemeiner Intelligenz. [(Quelle 11)](https://arxiv.org/abs/2311.02462)
+
+### OpenAIs fünf Stufen (2024)
+
+Chatbots, dann Reasoner, dann Agenten, dann Innovatoren, schließlich ganze Organisationen. Eine eingängige Leiter, allerdings nur über Berichterstattung bekannt, nicht als offizielles Dokument. [(Quelle 13)](https://theaiinsider.tech/2024/07/12/what-are-openais-five-levels-of-ai-and-where-are-we-now/)
+
+### Der Turing-Test, und warum er ausgedient hat
+
+Lange galt: Wer einen Menschen im Gespräch nicht mehr von der Maschine unterscheiden kann, hat den Test bestanden. 2025 hielten Probanden GPT-4.5 mit passender Rollenanweisung in 73 Prozent der Fälle für den Menschen. Formal bestanden. Doch ohne diese Anweisung fiel die Quote auf 36 Prozent. Der Test misst überzeugende Kommunikation und Täuschung, nicht Intelligenz. Als AGI-Maßstab ist er überholt. [(Quelle 14)](https://arxiv.org/pdf/2503.23674)
+
+Festhalten lässt sich: Selbst die Fachwelt hat keine scharfe Grenze. „AGI" ist heute eher eine Richtung als ein klar markierter Punkt.
+
+## Woran man es messen würde: die harten Benchmarks
+
+Wenn es keine saubere Definition gibt, behilft man sich mit Tests, die so konstruiert sind, dass reines Auswendiglernen nicht ausreicht. Ein wichtiger Vorbehalt vorab: Viele Bestwerte auf den Ranglisten sind **vom Hersteller selbst gemeldet und nicht unabhängig geprüft**. Wir kennzeichnen das hier.
+
+### ARC-AGI (François Chollet)
+
+Der wohl bekannteste AGI-nahe Test. Er prüft nicht Wissen, sondern die Fähigkeit, aus wenigen Beispielen eine neue Regel zu erschließen. Menschen lösen rund 85 Prozent. Ende 2024 überschritt OpenAIs Modell o3 mit 76 bis 88 Prozent erstmals diese Schwelle, im Hochleistungsmodus jedoch zu geschätzten 3.460 US-Dollar pro Aufgabe. Damit gilt die erste Version als weitgehend gelöst. Der Nachfolger **ARC-AGI-2** ist deutlich härter: Laut ARC-Prize-Report vom Dezember 2025 lag das beste *verifizierte* kommerzielle Modell, Claude Opus 4.5, bei nur 37,6 Prozent, zu 2,20 US-Dollar pro Aufgabe. Was für Menschen leicht ist, bleibt für Maschinen teuer und schwer. [(Quellen 1, 2, 3)](https://arcprize.org/arc-agi/1)
+
+### GPQA Diamond
+
+Naturwissenschaftliche Fragen auf Promotionsniveau, „google-sicher" formuliert. Fachpromovierte erreichen rund 65 Prozent. Hier sind die Spitzenmodelle inzwischen über 90 Prozent, der Test gilt als nahezu ausgereizt. [(Quelle 4)](https://epoch.ai/benchmarks/gpqa-diamond)
+
+### Humanity's Last Exam
+
+2.500 Expertenfragen über viele Fächer, bewusst als Härtetest gebaut. Bei Veröffentlichung Anfang 2025 erreichten Spitzenmodelle nur einstellige Werte (GPT-4o 2,7 Prozent, o1 8,0 Prozent). Wie schnell sich das verschoben hat, zeigt der nächste Abschnitt. [(Quellen 5, 6)](https://agi.safe.ai/)
+
+### SWE-bench
+
+Echte Programmierfehler aus GitHub, die das Modell mit lauffähigem Code beheben muss. Wichtig: Die meisten Werte sind herstellergemeldet, nicht unabhängig verifiziert. [(Quellen 7, 8)](https://leaderboard.steel.dev/leaderboards/swe-bench-verified/)
+
+### FrontierMath (Epoch AI)
+
+Sehr schwere, neue Forschungsmathematik. Ende 2024 lag der Bestwert bei 25,2 Prozent. Bezeichnend für die Vorsicht, die hier nötig ist: Am 12. Juni 2026 musste Epoch eine überarbeitete Fassung veröffentlichen, nachdem ein Audit in 42 Prozent der ursprünglichen Aufgaben kleine, aber kritische Fehler gefunden hatte. Selbst die Messlatten sind in Bewegung. [(Quelle 9)](https://epoch.ai/frontiermath/the-benchmark)
+
+**MMLU** schließlich, lange der Standardtest, gilt heute als gesättigt und taugt kaum noch als AGI-Maßstab.
+
+## Wie weit ist die Spitze heute? Das Beispiel Fable 5
+
+Anthropic stellte am 9. Juni 2026 zwei neue Modelle vor: Claude Fable 5 und Claude Mythos 5. Was sich seriös belegen lässt:
+
+Intelligence Index
+
+64,9 · Platz 1
+
+Fable 5 führt den unabhängigen Index von Artificial Analysis an, mit dem höchsten Score auf 5 von 10 Benchmarks.
+
+Drittquelle, verifiziert
+
+Humanity's Last Exam
+
+53 %
+
+Anfang 2025 lagen Spitzenmodelle hier noch im einstelligen Bereich. Ein Sprung um mehr als das Sechsfache.
+
+Drittquelle, verifiziert
+
+SWE-bench Pro
+
+80,3 %
+
+Reale Programmieraufgaben in der strengeren Pro-Variante.
+
+Herstellergemeldet
+
+Humanity's Last Exam: der Sprung an der Spitze
+
+Bestes öffentlich gelistetes Modell je Zeitpunkt, Anteil korrekt beantworteter Expertenfragen in Prozent. In rund anderthalb Jahren von einstellig auf über 50 Prozent.
+
+Datenquelle: öffentliche HLE-Ranglisten, bester gelisteter Wert je Zeitpunkt ([Artificial Analysis](https://artificialanalysis.ai/evaluations/humanitys-last-exam), [pricepertoken.com](https://pricepertoken.com/leaderboards/benchmark/hle)). Die Spitze wird zu verschiedenen Zeitpunkten von verschiedenen Modellen gehalten. Stand: Juni 2026.
+
+Aus Gründen der Redlichkeit: Einzelwerte von Fable 5 speziell für GPQA, ARC-AGI-2 oder FrontierMath ließen sich **nicht aus einer Primärquelle verifizieren**. Sie kursieren nur in widersprüchlichen Drittlisten. Wir nennen sie hier daher bewusst nicht. Was bleibt, ist trotzdem eindrucksvoll: Das Tempo der Fähigkeitszuwächse ist außergewöhnlich. [(Quellen 6, 8, 10)](https://artificialanalysis.ai/articles/claude-fable-5-mythos-intelligence-index)
+
+## Der Spiegeltest, und warum Benchmarks die eigentliche Frage nicht beantworten
+
+Hier kommt der unbequeme Teil. Keiner der genannten Tests misst Bewusstsein. Sie messen Leistung.
+
+Oft wird der Spiegeltest ins Spiel gebracht. Er stammt aus der Tierkognition, 1970 von Gordon Gallup entwickelt, und prüft, ob ein Lebewesen sich selbst im Spiegel erkennt. Bestanden haben ihn unter anderem Menschenaffen, Delfine und Elefanten. Auf eine KI übertragen ist er jedoch nur eine Analogie, kein etablierter Test.
+
+Der wissenschaftliche Befund ist eindeutig und sollte jeden ehrlichen Beitrag zum Thema prägen: **Es gibt keinen validierten Benchmark, der bei einem Sprachmodell Bewusstsein oder „echte" AGI beweist.** Ein Übersichtspapier von 2025 stellt ausdrücklich fest, dass ein einheitlicher Bewusstseins-Benchmark schlicht fehlt, schon weil es keinen Konsens über die richtige Bewusstseinstheorie gibt. [(Quellen 15, 16, 17)](https://www.nature.com/articles/s41599-025-05868-8)
+
+Damit lässt sich die Titelfrage so ehrlich beantworten, wie sie es verdient:
+
+> Ist Fable 5 AGI? Nach dem strengsten verfügbaren Rahmen, den DeepMind-Stufen, bewegen wir uns weiterhin im Bereich Emerging AGI, allerdings am oberen Rand, mit beeindruckendem Tempo. Ein Beweis für AGI im Vollsinn oder gar für Bewusstsein existiert nicht, weil es das Messinstrument dafür nicht gibt. Wer das Gegenteil behauptet, verkauft eine Gewissheit, die die Wissenschaft nicht hergibt.
+
+Genau diese Nüchternheit ist der Punkt. Man muss AGI nicht ausrufen, um zu erkennen, wie groß der Sprung bereits ist. Und gerade *weil* der Sprung so groß ist, wird die nächste Frage geschäftskritisch: Wer hat überhaupt verlässlich Zugriff auf diese Spitze, und wie lange noch?
+
+## Die Dringlichkeit: Warum das genau jetzt zählt
+
+Bis vor Kurzem war der wichtigste Einwand gegen das Verlassen auf externe Spitzenmodelle ein Szenario. Seit dem 12. Juni 2026 ist es ein Fall.
+
+> Belegte Realität, seit dem 12. Juni 2026
+>
+> **Der Zugang kann von heute auf morgen wegfallen.** An diesem Tag wies die US-Regierung Anthropic per Exportkontroll-Direktive an, Fable 5 und Mythos 5 weltweit für alle Nutzer zu sperren, ausdrücklich auch für „foreign nationals, whether inside or outside the United States". Anthropic hat das umgesetzt und widerspricht inhaltlich, doch der Zugang war weg. Die Kanzlei Greenberg Traurig ordnet den Vorgang als den „first known U.S. use of export control authorities to regulate a particular AI frontier model on a national security basis" ein.
+>
+> Für Unternehmen in Deutschland hieß das konkret: Über zweieinhalb Wochen war das beste verlässlich nutzbare Modell faktisch Opus 4.8. Wer seine Prozesse auf Fable 5 oder Mythos 5 aufgebaut hatte, stand über Nacht ohne da. [(Quellen 18, 19)](https://www.anthropic.com/news/fable-mythos-access)
+
+> Update, 2. Juli 2026
+>
+> **Die Sperre ist aufgehoben, die Lehre bleibt.** Am 30. Juni hob das US-Handelsministerium die Exportkontrollen auf, seit dem 1. Juli ist Fable 5 wieder weltweit verfügbar; Mythos 5 zunächst für einzeln freigegebene Organisationen. Hintergrund der Sperre war laut Berichten eine von Amazon-Forschern gefundene Methode, die Schutzmechanismen des Modells zur Schwachstellensuche zu umgehen; Anthropic hat gemeinsam mit der Regierung einen verbesserten Sicherheitsfilter nachgerüstet. [(Quellen 27, 28)](https://www.anthropic.com/news/redeploying-fable-5)
+>
+> Damit ist der Fall abgeschlossen, und er ist als Ganzes lehrreicher als die Sperre allein: Der Zugang zur KI-Spitze wurde per Direktive gekappt und per Direktive wiederhergestellt, binnen 18 Tagen, ohne dass ein Unternehmen in Deutschland auf das eine oder das andere Einfluss hatte. **Verfügbarkeit ist zurück. Verlässlichkeit ist es nicht.**
+
+Einordnung, weil Redlichkeit hier zählt: Dies war ein Einzelfall-Befehl, kein dauerhafter Lizenzrahmen. Die US-Regel, die so etwas hätte verstetigen können, die „AI Diffusion Rule", wurde im Mai 2025 zurückgenommen. Der EU AI Act wiederum reguliert den Einsatz, sperrt aber keine US-Modelle; seine Durchsetzung greift ab dem 2. August 2026. Eine dauerhafte, generelle Zugangssperre für Europa ist also weiterhin Szenario. Dass eine *einzelne* Anweisung den Zugang sofort kappen kann, ist dagegen seit dem 12. Juni belegte Realität. Und genau hier liegt der wunde Punkt dieses Beitrags: Für die Planung sollte man sich darauf einstellen, dass die jeweils beste Technik über einen längeren Zeitraum hinweg nicht verlässlich aus Deutschland nutzbar ist, auch wenn einzelne Modelle zwischendurch wieder freigeschaltet werden. [(Quellen 23, 24)](https://artificialintelligenceact.eu/implementation-timeline/)
+
+> Einschätzung, keine gesicherte Prognose
+>
+> **Und die Kosten geraten unter Druck.** Parallel laufen OpenAI und Anthropic auf Börsengänge zu, bei angepeilten Bewertungen jenseits von 800 Milliarden US-Dollar. Berichten zufolge erwartet OpenAI für 2026 über 20 Milliarden Dollar Umsatz bei rund 14 Milliarden Dollar Verlust, mit Profitabilität erst gegen 2029. CNBC titelte am 20. Mai 2026 „Cheap AI could derail OpenAI and Anthropic's IPOs". Wir kennzeichnen das als Medien- und Analystenlage, nicht als gesicherte Prognose. [(Quellen 22, 25)](https://www.cnbc.com/2026/05/20/cheap-ai-could-derail-openai-and-anthropics-ipos.html) Die betriebswirtschaftliche Logik ist dennoch eindeutig: Wer vor einem Börsengang Gewinne zeigen muss, hat wenig Anreiz, Inferenz dauerhaft unter Selbstkosten anzubieten. Steigende oder volatile Token-Preise sind damit ein reales Geschäftsrisiko.
+
+Ein struktureller Hinweis dazu, ohne unbelegte Zahl: Pauschal-Abos wie Claude Pro (rund 20 US-Dollar im Monat) oder Max (100 bis 200 US-Dollar) enthalten ein Nutzungskontingent zum Festpreis, während die API streng pro Token abrechnet (für die neuen Modelle 10 US-Dollar je Million Eingabe- und 50 US-Dollar je Million Ausgabe-Token). Wer produktiv und in Volumen arbeitet, zahlt über die API real oft deutlich mehr als über ein Abo. Eine seriöse, allgemeingültige „X-mal günstiger"-Zahl gibt es nicht, deshalb nennen wir keine. Die Richtung der Kosten aber ist klar: nach oben, und schwer kalkulierbar. [(Quellen 20, 21)](https://platform.claude.com/docs/en/about-claude/pricing)
+
+Was ein Modell pro Million Token kostet (API)
+
+Listenpreise der Claude-API. Die neuen Spitzenmodelle Fable 5 und Mythos 5 kosten pro Ausgabe-Token das Doppelte von Opus 4.8 und das Zehnfache von Haiku.
+
+Eingabe (Input)
+ Ausgabe (Output)
+
+Datenquelle: [Anthropic, Listenpreise der Claude-API](https://platform.claude.com/docs/en/about-claude/pricing). Stand: Juni 2026. Günstigere Optionen wie Batch-Verarbeitung (50 Prozent Rabatt) oder Prompt-Caching sind hier nicht berücksichtigt.
+
+## Was das für Unternehmen heißt
+
+Aus beidem, dem plötzlich kappbaren Zugang und der Kostenseite, folgt kein „zurück zu schwächerer Technik". Es folgt eine zweite Ebene, die man jetzt aufbauen sollte, solange die Lage es zulässt.
+
+Die ehrliche Botschaft lautet: Ein lokales Modell mit überschaubarer Parameterzahl auf eigener Hardware erreicht roh nicht das Niveau eines Spitzenmodells. Nutzbare, hochwertige Leistung entsteht nicht aus dem Modell allein, sondern aus der Architektur darum herum: angebundenes Fachwissen (RAG), Werkzeuge, saubere, kontextsparsame Anweisungen. Genau hier liegt unsere Überzeugung und unsere Praxis: Ein datensparsam und kosteneffizient betriebenes Low-Parameter-Modell liefert für klar umrissene Fachaufgaben bereits heute verlässlich gute Ergebnisse.
+
+Der entscheidende Vorteil: Ein solches System läuft auf eigenen Servern, in Deutschland, unter Ihrer Kontrolle. Es lässt sich nicht per Direktive aus dem Ausland abschalten, und seine Kosten sind planbar statt von einem Börsengang getrieben. Es ersetzt das Spitzenmodell nicht im Alltag, aber es ist die Rückfallebene, die übernimmt, wenn der externe Zugang wegbricht oder unbezahlbar wird. Und je früher man sie aufbaut, desto weiter ist sie, wenn man sie braucht.
+
+Die Frage „Ab wann ist ein KI-System AGI?" bleibt offen, und das ist wissenschaftlich ehrlich so. Die geschäftliche Frage dagegen ist längst entschieden. Wenn es gut möglich ist, dass die jeweils beste Technik über Jahre nicht verlässlich aus Deutschland nutzbar ist, dann braucht jeder, der auf KI baut, eine souveräne Ebene, die ihm gehört.
+
+## Quellen
+
+1. ARC Prize, ARC-AGI-1: [arcprize.org/arc-agi/1](https://arcprize.org/arc-agi/1)
+2. ARC Prize, o3-Durchbruch: [arcprize.org/blog/oai-o3-pub-breakthrough](https://arcprize.org/blog/oai-o3-pub-breakthrough)
+3. ARC Prize 2025, Ergebnisanalyse: [arcprize.org/blog/arc-prize-2025-results-analysis](https://arcprize.org/blog/arc-prize-2025-results-analysis)
+4. Epoch AI / Artificial Analysis, GPQA Diamond: [epoch.ai/benchmarks/gpqa-diamond](https://epoch.ai/benchmarks/gpqa-diamond)
+5. Humanity's Last Exam: [agi.safe.ai](https://agi.safe.ai/)
+6. Artificial Analysis zu Fable 5 / Mythos 5: [artificialanalysis.ai](https://artificialanalysis.ai/articles/claude-fable-5-mythos-intelligence-index)
+7. SWE-bench Verified Leaderboard: [leaderboard.steel.dev](https://leaderboard.steel.dev/leaderboards/swe-bench-verified/)
+8. Anthropic, Fable 5 / Mythos 5: [anthropic.com/news/claude-fable-5-mythos-5](https://www.anthropic.com/news/claude-fable-5-mythos-5)
+9. Epoch AI, FrontierMath: [epoch.ai/frontiermath/the-benchmark](https://epoch.ai/frontiermath/the-benchmark)
+10. Anthropic, Ankündigung + System Card: [anthropic.com/news/claude-fable-5-mythos-5](https://www.anthropic.com/news/claude-fable-5-mythos-5)
+11. Morris et al., „Levels of AGI": [arxiv.org/abs/2311.02462](https://arxiv.org/abs/2311.02462)
+12. MIT Technology Review zu DeepMinds AGI-Stufen: [technologyreview.com](https://www.technologyreview.com/2023/11/16/1083498/)
+13. OpenAIs fünf Stufen (Berichterstattung): [theaiinsider.tech](https://theaiinsider.tech/2024/07/12/what-are-openais-five-levels-of-ai-and-where-are-we-now/)
+14. Turing-Test-Studie, UC San Diego: [arxiv.org/pdf/2503.23674](https://arxiv.org/pdf/2503.23674)
+15. Spiegeltest (Gallup): [en.wikipedia.org/wiki/Mirror\_test](https://en.wikipedia.org/wiki/Mirror_test)
+16. „Exploring Consciousness in LLMs": [arxiv.org/html/2505.19806v1](https://arxiv.org/html/2505.19806v1)
+17. Nature, „There is no such thing as conscious artificial intelligence": [nature.com](https://www.nature.com/articles/s41599-025-05868-8)
+18. Anthropic, Zugangs-Sperre Fable 5 / Mythos 5: [anthropic.com/news/fable-mythos-access](https://www.anthropic.com/news/fable-mythos-access)
+19. Greenberg Traurig, Einordnung der Exportkontroll-Direktive: [gtlaw.com](https://www.gtlaw.com/en/insights/2026/6/ai-company-anthropic-suspends-access)
+20. Anthropic API-Preise: [platform.claude.com/docs/en/about-claude/pricing](https://platform.claude.com/docs/en/about-claude/pricing)
+21. Claude Abo-Preise: [claude.com/pricing](https://claude.com/pricing)
+22. CNBC, „Cheap AI could derail OpenAI and Anthropic's IPOs" (20.05.2026): [cnbc.com](https://www.cnbc.com/2026/05/20/cheap-ai-could-derail-openai-and-anthropics-ipos.html)
+23. EU AI Act, Zeitplan: [artificialintelligenceact.eu/implementation-timeline](https://artificialintelligenceact.eu/implementation-timeline/)
+24. US AI Diffusion Rule (zurückgenommen): [federalregister.gov](https://www.federalregister.gov/documents/2025/01/15/2025-00636/)
+25. Analyse zu Token-Preisen und IPO-Druck: [investing.com](https://www.investing.com/analysis/the-ai-token-pricing-crisis-behind-openai-and-anthropics-revenue-race-200680777)
+26. HLE-Zeitverlauf (Grafik): [artificialanalysis.ai](https://artificialanalysis.ai/evaluations/humanitys-last-exam), [pricepertoken.com](https://pricepertoken.com/leaderboards/benchmark/hle)
+27. Anthropic, „Redeploying Claude Fable 5" (Wiederfreischaltung): [anthropic.com/news/redeploying-fable-5](https://www.anthropic.com/news/redeploying-fable-5)
+28. CNBC (30.06.2026) und Nextgov/FCW zur Aufhebung der Exportkontrollen: [cnbc.com](https://www.cnbc.com/amp/2026/06/30/anthropic-says-trump-admin-has-lifted-export-controls-on-claude-fable-5-and-mythos-5.html), [nextgov.com](https://www.nextgov.com/artificial-intelligence/2026/07/us-lift-export-controls-key-anthropic-models/414561/)

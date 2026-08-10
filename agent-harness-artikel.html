@@ -3,16 +3,16 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>18 Tage ohne die KI-Spitze · TM KI Consulting</title>
-<meta name="description" content="Am 12. Juni 2026 sperrte eine US-Direktive Fable 5 und Mythos 5 weltweit, am 1. Juli waren sie wieder da. Und schon die ersten Benchmarks der zurückgekehrten Version brechen ein. Warum die Aufhebung keine Entwarnung ist und welche drei Konsequenzen Unternehmen jetzt ziehen sollten." />
-<meta property="og:title" content="18 Tage ohne die KI-Spitze: Was die Fable-5-Sperre lehrt" />
-<meta property="og:description" content="Gesperrt per Direktive, freigegeben per Direktive, und schon die ersten Benchmarks der Rückkehr brechen ein. Drei Konsequenzen für Unternehmen, die auf KI bauen." />
+<title>Agenten-Harness: Warum das Gerüst das Modell schlägt · TM KI Consulting</title>
+<meta name="description" content="Auf ARC-AGI-3 stieg GPT-5.6 Sol von 13,3 auf 38,3 Prozent, allein durch zwei Einstellungen der Agenten-Umgebung. Prime Agent von Prime Intellect erreichte mit Opus 5 95,5 Prozent und lag über der menschlichen Expertenmarke. Was gut gebaute Agenten-Harnesses aus Foundation-Modellen herausholen." />
+<meta property="og:title" content="Dasselbe Modell, dreifache Leistung: was Agenten-Harnesses ausmachen" />
+<meta property="og:description" content="ARC-AGI-3: 13,3 auf 38,3 Prozent durch zwei Einstellungen, 95,5 Prozent mit Prime Agent. Beide Male blieb das Modell unverändert." />
 <meta property="og:type" content="article" />
 <meta property="og:image" content="https://www.tm-ki-consulting.de/og-image.png" />
-<meta property="og:url" content="https://www.tm-ki-consulting.de/fable5-sperre-artikel.html" />
+<meta property="og:url" content="https://www.tm-ki-consulting.de/agent-harness-artikel.html" />
 <meta name="twitter:card" content="summary_large_image" />
-<link rel="canonical" href="https://www.tm-ki-consulting.de/fable5-sperre-artikel.html" />
-<link rel="alternate" type="text/markdown" href="fable5-sperre-artikel.md" title="Markdown-Fassung dieser Seite" />
+<link rel="canonical" href="https://www.tm-ki-consulting.de/agent-harness-artikel.html" />
+<link rel="alternate" type="text/markdown" href="agent-harness-artikel.md" title="Markdown-Fassung dieser Seite" />
 
 <link rel="icon" href="favicon.ico" />
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
@@ -139,6 +139,8 @@
   .article-body .btn { border-bottom: none; }
   .article-body .btn-primary { color: var(--navy-900); }
   .article-body .btn-ghost { color: var(--white); }
+  .article-body ul.plain { margin: 0 0 20px 20px; }
+  .article-body ul.plain li { color: var(--gray-300); font-size: 17px; line-height: 1.7; font-weight: 300; margin-bottom: 8px; }
 
   .callout { background: var(--navy-800); border: 1px solid var(--line); border-left: 3px solid var(--white); padding: 28px 30px; margin: 34px 0; box-shadow: 0 30px 60px -30px rgba(0,0,0,.6); }
   .callout .k { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--gray-400); font-weight: 500; display: block; margin-bottom: 10px; }
@@ -147,6 +149,12 @@
 
   .article-body blockquote { margin: 38px 0; padding: 6px 0 6px 30px; border-left: 2px solid var(--navy-500); }
   .article-body blockquote p { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-weight: 400; color: var(--off-white); font-size: 20px; line-height: 1.6; }
+
+  /* Kennzahlen-Kacheln */
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin: 34px 0; }
+  .stats .stat { background: var(--navy-800); border: 1px solid var(--line); padding: 22px 20px; }
+  .stats .v { display: block; font-size: clamp(22px, 3vw, 30px); font-weight: 300; color: var(--white); letter-spacing: -0.02em; line-height: 1.1; }
+  .stats .l { display: block; margin-top: 8px; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--gray-400); line-height: 1.5; }
 
   /* Zeitleiste */
   .tl-list { list-style: none; margin: 30px 0 10px; padding: 0; }
@@ -157,6 +165,14 @@
   .tl-list .d { display: block; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--gray-400); margin-bottom: 4px; }
   .tl-list .t { color: var(--gray-300); font-size: 16px; font-weight: 300; line-height: 1.6; }
   .tl-list .t strong { color: var(--off-white); font-weight: 600; }
+
+  /* Token-Tabelle */
+  .tok-wrap { overflow-x: auto; margin: 30px 0; }
+  table.tok { width: 100%; border-collapse: collapse; font-size: 14.5px; }
+  table.tok th { text-align: left; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--gray-400); font-weight: 500; padding: 10px 14px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  table.tok td { padding: 12px 14px; color: var(--gray-300); font-weight: 300; border-bottom: 1px solid var(--line-light); vertical-align: top; }
+  table.tok td.num { font-variant-numeric: tabular-nums; white-space: nowrap; color: var(--off-white); }
+  table.tok td strong { color: var(--off-white); font-weight: 600; }
 
   .cta-box { margin: 70px 0 20px; background: var(--navy-800); border: 1px solid var(--line); padding: 48px 44px; box-shadow: 0 30px 60px -30px rgba(0,0,0,.6); }
   .cta-box h2 { margin: 0 0 12px; font-weight: 300; font-size: clamp(24px, 3vw, 32px); }
@@ -206,6 +222,7 @@
     .foot-bottom { flex-direction: column; gap: 8px; }
     .cta-box { padding: 32px 24px; }
     .callout { padding: 26px 22px; }
+    .stats { grid-template-columns: 1fr 1fr; }
   }
 </style>
 
@@ -235,12 +252,13 @@
     },
     {
       "@type": "BlogPosting",
-      "@id": "https://www.tm-ki-consulting.de/fable5-sperre-artikel.html#article",
-      "headline": "18 Tage ohne die KI-Spitze",
-      "description": "Am 12. Juni 2026 sperrte eine US-Direktive Fable 5 und Mythos 5 weltweit, am 1. Juli waren sie wieder da. Warum die Aufhebung keine Entwarnung ist und welche drei Konsequenzen Unternehmen jetzt ziehen sollten.",
-      "articleSection": "KI-Strategie · Datensouveränität",
+      "@id": "https://www.tm-ki-consulting.de/agent-harness-artikel.html#article",
+      "headline": "Dasselbe Modell, dreifache Leistung: Agenten-Harnesses und ARC-AGI-3",
+      "description": "Auf ARC-AGI-3 stieg GPT-5.6 Sol von 13,3 auf 38,3 Prozent, allein durch zwei Einstellungen der Agenten-Umgebung. Prime Agent erreichte mit Opus 5 95,5 Prozent, ueber der menschlichen Expertenmarke. Eine Einordnung, was gut gebaute Harnesses aus Foundation-Modellen herausholen.",
+      "articleSection": "Analyse · Architektur von KI-Agenten",
       "inLanguage": "de",
-      "dateModified": "2026-07-03",
+      "datePublished": "2026-08-06",
+      "dateModified": "2026-08-06",
       "author": {
         "@id": "https://www.tm-ki-consulting.de/#organization"
       },
@@ -249,15 +267,15 @@
       },
       "image": "https://www.tm-ki-consulting.de/og-image.png",
       "mainEntityOfPage": {
-        "@id": "https://www.tm-ki-consulting.de/fable5-sperre-artikel.html#webpage"
+        "@id": "https://www.tm-ki-consulting.de/agent-harness-artikel.html#webpage"
       },
       "isAccessibleForFree": true
     },
     {
       "@type": "WebPage",
-      "@id": "https://www.tm-ki-consulting.de/fable5-sperre-artikel.html#webpage",
-      "url": "https://www.tm-ki-consulting.de/fable5-sperre-artikel.html",
-      "name": "18 Tage ohne die KI-Spitze · TM KI Consulting",
+      "@id": "https://www.tm-ki-consulting.de/agent-harness-artikel.html#webpage",
+      "url": "https://www.tm-ki-consulting.de/agent-harness-artikel.html",
+      "name": "Agenten-Harness: Warum das Gerüst das Modell schlägt · TM KI Consulting",
       "inLanguage": "de",
       "isPartOf": {
         "@id": "https://www.tm-ki-consulting.de/#website"
@@ -300,19 +318,18 @@
     </button>
   </div>
 </header>
-
 <main class="article-main">
 
   <div class="a-hero">
     <div class="read">
       <a class="a-back" href="index.html#insights">← Zurück zur Startseite</a>
-      <span class="a-eyebrow">KI-Strategie · Datensouveränität</span>
-      <h1>18 Tage ohne die <span class="serif">KI-Spitze</span></h1>
-      <p class="a-lead">Am 12. Juni 2026 sperrte eine US-Direktive die stärksten KI-Modelle weltweit. Am 1. Juli waren sie wieder da. Für Unternehmen in Deutschland ist diese Episode keine Entwarnung, sondern der bislang klarste Beleg, wie fremdbestimmt der Zugang zur KI-Spitze ist. Eine Chronologie und drei Konsequenzen.</p>
+      <span class="a-eyebrow">Analyse · Architektur von KI-Agenten</span>
+      <h1>Dasselbe Modell, <span class="serif">dreifache Leistung</span></h1>
+      <p class="a-lead">Auf ARC-AGI-3, einem Test, den man nicht auswendig lernen kann, hat OpenAI die Punktzahl von GPT-5.6 Sol von 13,3 auf 38,3 Prozent gehoben. Verändert wurden zwei Einstellungen in der Software um das Modell herum. Kurz darauf erreichte Prime Intellect mit einer frei verfügbaren Agenten-Umgebung 95,5 Prozent und lag damit über der menschlichen Expertenmarke. Auch dort blieb das Modell unangetastet.</p>
       <div class="a-meta">
         <span><b>TM KI Consulting</b></span>
-        <span>Stand: 3. Juli 2026 (aktualisiert)</span>
-        <span>Lesezeit: ca. 6 Minuten</span>
+        <span>Stand: 6. August 2026</span>
+        <span>Lesezeit: ca. 9 Minuten</span>
       </div>
     </div>
   </div>
@@ -320,93 +337,73 @@
   <article class="article-body">
     <div class="read">
 
-      <h2>Was passiert ist, in fünf Daten</h2>
-      <ul class="tl-list">
-        <li>
-          <span class="d">9. Juni 2026</span>
-          <span class="t"><strong>Anthropic stellt Fable 5 und Mythos 5 vor</strong>, die bis dahin stärksten KI-Modelle. Fable 5 führt unabhängige Ranglisten wie den Intelligence Index von Artificial Analysis an.</span>
-        </li>
-        <li class="hot">
-          <span class="d">12. Juni 2026</span>
-          <span class="t"><strong>Die US-Regierung ordnet per Exportkontroll-Direktive die weltweite Sperre beider Modelle an</strong>, ausdrücklich auch für Nutzer außerhalb der USA. Anthropic setzt die Anweisung um und widerspricht inhaltlich. Der Zugang ist weg, auch aus Deutschland.</span>
-        </li>
-        <li>
-          <span class="d">26. Juni 2026</span>
-          <span class="t"><strong>Erste Teilfreigabe:</strong> Mythos 5 darf an einzelne, von der Regierung freigegebene US-Organisationen wieder ausgeliefert werden.</span>
-        </li>
-        <li>
-          <span class="d">30. Juni 2026</span>
-          <span class="t"><strong>Das US-Handelsministerium hebt die Exportkontrollen auf.</strong></span>
-        </li>
-        <li class="hot">
-          <span class="d">1. Juli 2026</span>
-          <span class="t"><strong>Fable 5 ist wieder weltweit verfügbar</strong>, auf der Claude-Plattform, in Claude.ai und Claude Code. Mythos 5 bleibt zunächst freigegebenen Organisationen vorbehalten.</span>
-        </li>
-        <li class="hot">
-          <span class="d">2. Juli 2026</span>
-          <span class="t"><strong>Erste unabhängige Benchmarks der zurückgekehrten Version</strong> zeigen einen massiven Einbruch bei Coding-Aufgaben. Der Grund ist nicht eine schwächere Modellleistung, sondern der neue Sicherheitsfilter, der einen Großteil der Anfragen an ein Ausweichmodell umleitet.</span>
-        </li>
-      </ul>
-
-      <h2>Warum gesperrt wurde</h2>
-      <p>Auslöser war nach übereinstimmenden Berichten ein Befund von Amazon-Forschern: Sie hatten eine Methode gefunden, die Schutzmechanismen von Fable 5 so zu umgehen, dass das Modell systematisch Software-Schwachstellen identifizierte. Die US-Regierung stufte das als Frage der nationalen Sicherheit ein und nutzte erstmals Exportkontrollrecht, um ein einzelnes KI-Modell zu regulieren.</p>
-      <p>Anthropic hat nach eigenen Angaben gemeinsam mit der Regierung einen verbesserten Sicherheitsfilter trainiert, der die konkrete Umgehungstechnik in über 99 Prozent der Fälle blockiert. Diese Zahl ist eine Herstellerangabe, wir kennzeichnen sie entsprechend. Auf dieser Grundlage wurde die Sperre aufgehoben.</p>
-
-      <h2>Warum die Aufhebung keine Entwarnung ist</h2>
-      <p>Man könnte die Geschichte als gelöstes Problem lesen: Sicherheitslücke gefunden, nachgebessert, Zugang wieder da. Technisch stimmt das. Strategisch greift es zu kurz.</p>
-      <p>Entscheidend ist, <em>wie</em> beides geschah. Der Zugang zur KI-Spitze wurde per Direktive gekappt und per Direktive wiederhergestellt. Kein Unternehmen in Deutschland hatte auf das eine oder das andere Einfluss, keines wurde vorgewarnt, keines konnte den Zeitpunkt der Rückkehr planen. Wer geschäftskritische Prozesse auf diesen Modellen aufgebaut hatte, stand 18 Tage ohne da und erfuhr aus den Nachrichten, dass es weitergeht.</p>
-      <blockquote>
-        <p>Verfügbarkeit ist zurück. Verlässlichkeit ist es nicht. Denn über beide entscheidet nicht, wer die Systeme nutzt, sondern wer sie kontrolliert.</p>
-      </blockquote>
-      <p>Dazu kommt: Die Sperre traf ausgerechnet die neueste Modellgeneration, drei Tage nach Vorstellung. Es gibt keinen Grund anzunehmen, dass sich ein solcher Eingriff nicht wiederholt, beim nächsten Sicherheitsbefund, bei der nächsten geopolitischen Lage, beim nächsten Modell.</p>
-
-      <h2>Und die Nachbesserung hat einen Preis</h2>
-      <p>Wie unmittelbar dieser Kontrollverlust wirkt, zeigte sich schon einen Tag nach der Rückkehr. Am 2. Juli veröffentlichte die Testplattform BridgeMind neue Messungen: In einem Debugging-Benchmark brach die zurückgekehrte Fable-5-Version um rund 70 Prozent ein und fiel von Platz 9 auf Platz 41 von 42 bewerteten Modellen. Auf den ersten Blick sieht das so aus, als sei die neu ausgelieferte Version schlechter als die vor der Sperre.</p>
-      <p>Der wahre Grund ist ein anderer, und er ist deutlich aufschlussreicher: Nicht das Modell rechnet schlechter. Der neue Sicherheitsfilter greift so breit, dass er einen Großteil der Coding-Anfragen bereits abfängt und automatisch an das schwächere Ausweichmodell Opus 4.8 umleitet, bevor Fable 5 überhaupt antwortet. Im Test erreichten nur 3 von 12 Aufgaben tatsächlich Fable 5, die übrigen 9 landeten bei Opus 4.8 und wurden vom Benchmark mit null Punkten gewertet. Anwender bekommen also ein anderes, schwächeres Modell, ohne es angefordert zu haben und in den meisten Fällen, ohne es zu bemerken.</p>
-      <p>Anthropic hat angekündigt, den Filter weiter nachzujustieren, um solche Fehlklassifikationen zu verringern, nennt aber weder Zeitplan noch Zielwert. Diese Aussage ist eine Herstellerangabe. Für Unternehmen liegt darin die zweite Lehre derselben Episode: Selbst wenn ein Modell nominell verfügbar ist, kann sich sein Verhalten über Nacht ändern, weil an einer Stelle nachgeregelt wird, die von außen niemand kontrolliert. Verfügbarkeit ist eben nicht dasselbe wie Verlässlichkeit.</p>
-
-      <h2>Drei Konsequenzen für Unternehmen</h2>
-
-      <h3>1. Modell-agnostisch bauen</h3>
-      <p>Kein Workflow sollte fest an ein einzelnes Modell gebunden sein. Eine saubere Abstraktionsschicht zwischen Anwendung und KI-Modell kostet beim Aufbau wenig und entscheidet im Ernstfall darüber, ob der Wechsel auf ein anderes Modell Stunden oder Wochen dauert. Wer im Juni auf diese Weise gebaut hatte, konnte auf Opus 4.8 oder andere Modelle ausweichen und weiterarbeiten.</p>
-
-      <h3>2. Eine souveräne Rückfallebene aufbauen</h3>
-      <p>Ein lokal betriebenes Modell auf eigener Hardware erreicht roh nicht das Niveau der Spitze. Aber mit angebundenem Fachwissen (RAG), Werkzeugen und präzisen Anweisungen liefert es für klar umrissene Fachaufgaben verlässlich gute Ergebnisse, und es hat zwei Eigenschaften, die kein externes Spitzenmodell bieten kann: Es lässt sich nicht per Direktive aus dem Ausland abschalten, und seine Kosten sind planbar. Je früher diese Ebene entsteht, desto weiter ist sie, wenn sie gebraucht wird.</p>
-
-      <h3>3. Abhängigkeiten kennen und dokumentieren</h3>
-      <p>Die einfachste Übung mit der größten Wirkung: einmal sauber aufschreiben, welche Prozesse im Unternehmen von welchem KI-Modell abhängen, was bei einem Ausfall passiert und welche Ausweichoption je Prozess besteht. Wer dazu Verträge mit KI-Anbietern schließt, sollte Verfügbarkeits- und Preisänderungsklauseln bewusst prüfen. Das ersetzt keine Rechtsberatung, aber es macht das Risiko sichtbar und verhandelbar.</p>
-
-      <div class="callout">
-        <span class="k">Zur Vertiefung</span>
-        <p>Wie weit die heutige KI-Spitze wirklich ist, was hinter dem Begriff AGI steckt und warum der Zugang dazu zu wichtig ist, um ihn aus der Hand zu geben: <a href="agi-artikel.html">Ab wann ist ein KI-System AGI?</a> (aktualisiert am 2. Juli 2026)</p>
+      <div class="stats">
+        <div class="stat"><span class="v">13,3 → 38,3 %</span><span class="l">GPT-5.6 Sol auf ARC-AGI-3, nach zwei geänderten Einstellungen</span></div>
+        <div class="stat"><span class="v">6×</span><span class="l">weniger Ausgabe-Token nach derselben Umstellung</span></div>
+        <div class="stat"><span class="v">95,5 %</span><span class="l">Prime Agent mit Opus 5, über der Expertenmarke von 95,4 %</span></div>
+        <div class="stat"><span class="v">0</span><span class="l">zusätzliche Trainingsläufe an den Modellen</span></div>
       </div>
 
+      <h2>Ein Test, den man nicht auswendig lernen kann</h2>
+      <p>ARC-AGI-3 ist der dritte Anlauf der ARC Prize Foundation, Intelligenz messbar zu machen, ohne Wissen abzufragen. Die ersten beiden Versionen zeigten Rätselgitter: Aus wenigen Beispielen soll das System die Regel erschließen und auf einen neuen Fall anwenden. Version 3 verlässt dieses Format. Das System bekommt kleine Computerspiele vorgesetzt, die es noch nie gesehen hat. Es gibt keine Anleitung in Textform, kein genanntes Ziel, keine Erklärung der Steuerung. Der Agent muss durch Ausprobieren herausfinden, worauf es ankommt, sich ein Bild der Welt bauen und seine Strategie im Laufe des Spiels korrigieren. (Quelle 1)</p>
+      <p>Gemessen wird, wie schnell ein System dabei dazulernt. Die Foundation nennt das Lerneffizienz und begründet den Ansatz so: Solange eine Lücke zwischen maschinellem und menschlichem Lernen besteht, gibt es keine AGI. Alle Umgebungen sind von Menschen lösbar. Ein Wert von 100 Prozent hieße, dass das System so effizient lernt wie ein Mensch. (Quelle 1)</p>
+
+      <h2>Der bewusst karge Prüfstand</h2>
+      <p>Zwischen dem Modell und dem Spiel sitzt eine Softwareschicht. Sie reicht Beobachtungen weiter, nimmt Aktionen entgegen und verwaltet den Gesprächsverlauf. Im englischen Sprachgebrauch heißt sie Harness, also Geschirr. Die ARC Prize Foundation hält diese Schicht absichtlich schlicht. Je weniger Hilfestellung, desto sichtbarer werden die Schwächen des Modells und desto fairer fällt der Vergleich zwischen Anbietern aus. (Quelle 2)</p>
+      <p>In der Praxis arbeitet niemand so. Wer ein Produkt baut, schneidet die Umgebung auf das Modell zu, das er einsetzt. Die Rangliste misst deshalb etwas anderes als den Alltag. Wie groß dieser Abstand ist, hat sich in den vergangenen Wochen zweimal beziffern lassen.</p>
+
+      <div class="callout">
+        <span class="k">Was eine Harness tut</span>
+        <p>Sie entscheidet, was das Modell überhaupt sieht und tun kann: welche Werkzeuge zur Verfügung stehen, wie der Verlauf gekürzt wird, wenn der Kontext voll läuft, ob eigene Zwischenüberlegungen zwischen zwei Schritten erhalten bleiben, wie Teilaufgaben an weitere Instanzen abgegeben werden und was geschieht, wenn etwas schiefgeht. Das Modell liefert die Sprachfähigkeit. Die Harness bestimmt, was daraus im Betrieb wird.</p>
+      </div>
+
+      <h2>Zwei Einstellungen, dreifache Punktzahl</h2>
+      <p>Ende Juli veröffentlichte OpenAI eine Notiz zum eigenen Abschneiden auf ARC-AGI-3. Der öffentliche Wert für GPT-5.6 Sol lag bei 13,3 Prozent. Nach dem Aktivieren zweier Einstellungen stieg er auf 38,3 Prozent, bei einem Sechstel der Ausgabe-Token. (Quellen 2, 3)</p>
+      <p>Die erste Einstellung heißt <em>retained reasoning</em>. Sie sorgt dafür, dass die internen Überlegungen des Modells zwischen zwei Zügen erhalten bleiben. Zuvor wurde die Gedankenkette nach jeder Aktion verworfen. Das Modell sah zwar noch das Protokoll seiner bisherigen Züge samt kurzer Notizen, aber nicht mehr die Überlegung, aus der diese Züge hervorgegangen waren. Es musste das Spiel bei jedem Schritt neu begreifen. Die zweite Einstellung, <em>compaction</em>, fasst ältere Teile des Verlaufs zusammen, statt sie beim Überlauf abzuschneiden. (Quelle 3)</p>
+      <p>Beides sind Entscheidungen über Kontextführung. Am Modell wurde nichts geändert.</p>
+
+      <h2>Prime Agent behandelt die Harness als veränderliches Objekt</h2>
+      <p>Kurz darauf stellte Prime Intellect eine eigene Agenten-Umgebung vor, ein Unternehmen, das bislang vor allem für verteiltes Modelltraining bekannt war. Prime Agent erreichte mit Claude Opus 5 auf ARC-AGI-3 einen Wert von 95,5 Prozent im ersten Versuch und lag damit knapp über der berichteten menschlichen Expertenmarke von 95,4 Prozent. Über drei Läufe hinweg blieben die Werte stabil bei 95,0, 95,2 und 95,5 Prozent. Mit drei Versuchen je Umgebung stieg das Ergebnis auf 99,97 Prozent. Der Tokenverbrauch lag unter dem der herstellereigenen Umgebungen. Trainiert wurde für diesen Zweck nichts. (Quellen 4, 5)</p>
+      <p>Zwei Bauentscheidungen tragen das Ergebnis. Die erste nennt Prime Intellect <em>Recursive Language Model</em>. Der Kontext wird darin als Variable behandelt, auf die das Modell programmatisch zugreift. Anstelle einer festen Liste von Werkzeugen bekommt es einen dauerhaft laufenden Python-Kernel, gegen den es programmieren kann. Untergeordnete Agenten werden als Funktionsaufrufe gestartet, laufen als eigenständige Sitzungen weiter, sprechen direkt miteinander und überstehen einen Verbindungsabbruch, weil ein Hintergrunddienst sie hält. (Quelle 4)</p>
+      <p>Die zweite Entscheidung betrifft die Harness selbst. Prompts, Notizen, Fähigkeiten und die Beschreibung der Unteragenten liegen als Zustand vor, den der Agent während der laufenden Arbeit anlegen, lesen, ändern und löschen kann. Ein Befehl namens <code>/refine</code> nimmt kleine, belegte Korrekturen daran vor, etwa an einer Prompt-Notiz oder an einer hinterlegten Fähigkeit, ohne das ganze Gerüst neu zu schreiben. Fehlgeschlagene Änderungen lassen sich zurücknehmen. Die Umgebung steht unter MIT-Lizenz öffentlich zur Verfügung. (Quellen 4, 6)</p>
+
+      <h2>Der Effekt hängt nicht am Benchmark</h2>
+      <p>Ein einzelner Bestwert ließe sich mit Überanpassung an den Test erklären. Prime Intellect berichtet Verbesserungen aber auch dort, wo ARC-AGI-3 keine Rolle spielt: bei Aufgaben mit sehr langem Kontext, beim Schreiben von GPU-Rechenkernen und in einer Labyrinth-Umgebung, in der die Modelle bei vergleichbarem Tokenbudget deutlich mehr Räume erkundeten. In einem weiteren Test sollten aus einer Spezifikation heraus Emulatoren für SEGA Genesis und Game Boy Color in Rust entstehen. Mit der herstellereigenen Umgebung scheiterte das Modell daran, mit Prime Agent gelang die Aufgabe. Auch mit offenen Gewichten wie GLM-5.2 lag die Umgebung nach eigenen Angaben vor Claude Code und Codex. (Quelle 4)</p>
+
+      <h2>Was daraus für Unternehmen folgt</h2>
+      <p>Die Wahl des Modells ist die kleinere der beiden Entscheidungen. Zwischen 13,3 und 38,3 Prozent liegt bei ARC-AGI-3 kein Modellwechsel, sondern eine Konfiguration. Zwischen einer brauchbaren und einer unbrauchbaren Fachanwendung liegt nach unserer Erfahrung dasselbe: die Frage, was das System sieht, welche Quellen es lesen darf, was mit dem Verlauf geschieht, wenn er zu lang wird, und was passiert, wenn die Antwort unsicher ist.</p>
+      <p>Bei unserem Gefahrgut-Agenten für die Gefahrgutberatung Manske steckt der überwiegende Teil der Arbeit in dieser Schicht. Das Sprachmodell ist austauschbar. Die Wissensbasis aus ADR und GbV, die Prüfung, ob eine Antwort durch eine Quelle gedeckt ist, die Eskalation an den Gefahrgutbeauftragten bei sicherheitskritischen Fällen und die Protokollierung jedes Schritts sind es nicht. Ein Modellwechsel bedeutet dort einen Testlauf, kein neues Projekt.</p>
+      <p>Für die Beschaffung heißt das: Die Frage „Welches Modell setzen Sie ein?" trifft den Kern nur halb. Aussagekräftiger ist, wie der Kontext verwaltet wird, wie Werkzeuge angebunden sind, an welcher Stelle ein Mensch eingreift und wie sich das alles im Nachhinein nachvollziehen lässt.</p>
+
+      <h2>Was man dazusagen muss</h2>
+      <p>Alle genannten Zahlen stammen von den beteiligten Anbietern und sind nicht unabhängig geprüft. OpenAIs Werte kamen über API-Einstellungen zustande, die nicht dem Standard entsprechen, was die Vergleichbarkeit mit anderen Einträgen der Rangliste beeinträchtigt. Aus diesem Grund gibt die ARC Prize Foundation überhaupt eine karge Umgebung vor. (Quelle 7)</p>
+      <p>Ein Rekord auf einem Benchmark belegt außerdem keine Betriebstauglichkeit. ARC-AGI-3 misst, wie schnell ein System in einem unbekannten Spiel dazulernt. Im Unternehmen zählt anderes: ob eine Auskunft durch eine Quelle gedeckt ist und wer im Zweifel übernimmt. Ein Agent, der schnell lernt, ist noch keiner, dem man eine Gefahrgutauskunft anvertraut.</p>
+      <p>An der Richtung des Befunds ändert das nichts. Wer die Leistung eines KI-Systems verbessern will, hat mit dem Gerüst um das Modell herum einen Hebel, der eine ganze Modellgeneration aufwiegen kann. Und dieser Hebel liegt, anders als das Modell selbst, im eigenen Zugriff.</p>
+
       <div class="cta-box">
-        <h2>Souverän statt abhängig</h2>
-        <p>Die TM KI Consulting baut für mittelständische Unternehmen datensouveräne, lokal betriebene KI-Systeme: vom einsatzbereiten Fachagenten bis zum eigenen Modell auf eigener Hardware in Deutschland. Planbare Kosten, volle Datenkontrolle, kein Abschaltrisiko aus dem Ausland.</p>
+        <h2>Die Arbeit steckt <span class="serif">im Gerüst</span></h2>
+        <p>Die TM KI Consulting baut KI-Agenten für eine konkrete Fachdomäne: mit Wissensbasis aus geprüften Quellen, klaren Eskalationswegen und protokollierten Entscheidungen. Wie das in Produktion aussieht, zeigt unser <a href="https://gefahrgutberatung-manske.de/#ki" target="_blank" rel="noopener">Gefahrgut-Agent</a>: kein Konzeptpapier, sondern ein laufender Agent zum Anfassen.</p>
         <a class="btn btn-primary" href="mailto:info@tm-ki-consulting.de">Erstgespräch vereinbaren <span class="arrow">→</span></a>
       </div>
 
       <div class="sources">
         <h2>Quellen</h2>
         <ol>
-          <li>Anthropic, „Redeploying Claude Fable 5": <a href="https://www.anthropic.com/news/redeploying-fable-5">anthropic.com/news/redeploying-fable-5</a></li>
-          <li>Anthropic, Zugangs-Sperre Fable 5 / Mythos 5 (Juni 2026): <a href="https://www.anthropic.com/news/fable-mythos-access">anthropic.com/news/fable-mythos-access</a></li>
-          <li>CNBC, „Anthropic says Trump admin has lifted export controls on Claude Fable 5 and Mythos 5" (30.06.2026): <a href="https://www.cnbc.com/amp/2026/06/30/anthropic-says-trump-admin-has-lifted-export-controls-on-claude-fable-5-and-mythos-5.html">cnbc.com</a></li>
-          <li>CyberScoop, „U.S. lifting export control restrictions on Anthropic's Mythos, Fable": <a href="https://cyberscoop.com/us-lifting-export-control-restrictions-anthropic-mythos-fable/">cyberscoop.com</a></li>
-          <li>Nextgov/FCW, „US to lift export controls on key Anthropic models": <a href="https://www.nextgov.com/artificial-intelligence/2026/07/us-lift-export-controls-key-anthropic-models/414561/">nextgov.com</a></li>
-          <li>CoinDesk, „Anthropic restores AI models Fable, Mythos after the U.S. lifts export controls" (01.07.2026): <a href="https://www.coindesk.com/tech/2026/07/01/anthropic-restores-ai-models-fable-mythos-after-the-u-s-lifts-export-controls">coindesk.com</a></li>
-          <li>Greenberg Traurig, Einordnung der Exportkontroll-Direktive: <a href="https://www.gtlaw.com/en/insights/2026/6/ai-company-anthropic-suspends-access">gtlaw.com</a></li>
-          <li>TechTimes, „Claude Fable 5 Debugging Scores Drop 70%: Safety Classifier Reroutes Tasks to Weaker Fallback Model" (BridgeMind-Benchmark, 02.07.2026): <a href="https://www.techtimes.com/articles/319576/20260702/claude-fable-5-debugging-scores-drop-70-safety-classifier-reroutes-tasks-weaker-fallback-model.htm">techtimes.com</a></li>
-          <li>Digital Applied, „Why Claude Just Got More Cautious About Your Code" (Sicherheitsfilter und Coding-Tradeoffs): <a href="https://www.digitalapplied.com/blog/claude-fable-5-safety-classifier-coding-tradeoffs-2026">digitalapplied.com</a></li>
-          <li>MarkTechPost, „Anthropic Redeploys Claude Fable 5 on July 1 After US Export Controls Lift, Adds New Cybersecurity Classifier" (01.07.2026): <a href="https://www.marktechpost.com/2026/07/01/anthropic-redeploys-claude-fable-5-on-july-1-after-us-export-controls-lift-adds-new-cybersecurity-classifier/">marktechpost.com</a></li>
+          <li>ARC Prize Foundation: <em>ARC-AGI-3, Interactive Reasoning Benchmark</em>. <a href="https://arcprize.org/arc-agi/3" target="_blank" rel="noopener">arcprize.org/arc-agi/3</a> (abgerufen 06.08.2026)</li>
+          <li>OpenAI: <em>How enabling two settings tripled our scores on the ARC-AGI-3 benchmark</em>. <a href="https://openai.com/index/how-two-settings-tripled-our-arc-agi-3-scores/" target="_blank" rel="noopener">openai.com/index/how-two-settings-tripled-our-arc-agi-3-scores</a></li>
+          <li>GIGAZINE: <em>OpenAI has successfully tripled its ARC-AGI-3 score by improving the GPT-5.6 harness</em>, 31.07.2026. <a href="https://gigazine.net/gsc_news/en/20260731-how-enabling-two-settings-tripled-arc-agi-3-benchmark/" target="_blank" rel="noopener">gigazine.net</a></li>
+          <li>Prime Intellect: <em>Prime Agent</em>. <a href="https://www.primeintellect.ai/blog/prime-agent" target="_blank" rel="noopener">primeintellect.ai/blog/prime-agent</a></li>
+          <li>AlphaSignal: <em>Prime Intellect's Prime Agent Beats Human Experts on ARC-AGI-3 by Rewriting Itself</em>. <a href="https://alphasignal.ai/news/prime-intellect-s-prime-agent-beats-human-experts-on-arc-agi-3-by-rewriting" target="_blank" rel="noopener">alphasignal.ai</a></li>
+          <li>Quellcode unter MIT-Lizenz: <a href="https://github.com/PrimeIntellect-ai/prime-agent" target="_blank" rel="noopener">github.com/PrimeIntellect-ai/prime-agent</a></li>
+          <li>MLQ News: <em>OpenAI Claims GPT-5.6 Sol Beats Opus 5 on ARC-AGI-3, but Only With Non-Standard API Settings</em>. <a href="https://mlq.ai/news/openai-claims-gpt-56-sol-beats-opus-5-on-arc-agi-3but-only-with-non-standard-api-settings/" target="_blank" rel="noopener">mlq.ai</a></li>
         </ol>
-        <p class="note">Alle Angaben nach bestem Wissen zum Stand 3. Juli 2026. Die Benchmark-Zahlen stammen von der unabhängigen Testplattform BridgeMind (Stand 2. Juli 2026); Herstellerangaben (z. B. die Wirksamkeit des nachgerüsteten Sicherheitsfilters und die angekündigte Nachjustierung) sind als solche gekennzeichnet. Dieser Beitrag ist eine strategische Einordnung und keine Rechtsberatung.</p>
+        <p class="note">Die Leistungswerte von OpenAI und Prime Intellect sind Herstellerangaben und zum Redaktionsschluss nicht unabhängig verifiziert. Die Originalseite von OpenAI (Quelle 2) war bei der Recherche nicht direkt abrufbar; die dort genannten Zahlen entnehmen wir der Berichterstattung (Quellen 3 und 7).</p>
       </div>
 
     </div>
   </article>
 
+</main>
 </main>
 
 <footer>

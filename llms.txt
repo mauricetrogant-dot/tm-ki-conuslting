@@ -1,0 +1,50 @@
+# TM KI Consulting UG (haftungsbeschränkt)
+
+> Wir entwickeln fachspezifische KI-Agenten und modulare KI-Cockpits für kleine und mittlere Unternehmen sowie den öffentlichen Sektor in Deutschland — von der Use-Case-Bewertung über die Entwicklung bis zur Verankerung im Arbeitsalltag.
+
+Sitz: Ernst-Tengelmann-Ring 22, 45259 Essen, Deutschland.
+Handelsregister: Amtsgericht Essen, HRB 38279. Geschäftsführer: Julian Manske. Mitgründer und CTO: Maurice Trogant.
+Kontakt: info@tm-ki-consulting.de · +49 157 37284004. Sprachen: Deutsch, Englisch.
+LinkedIn: https://www.linkedin.com/company/130034129/
+
+Was uns unterscheidet: Unsere Agenten beantworten Fragen aus verifizierten Quellen (RAG) statt aus Vermutungen,
+nennen ihre Fundstellen, eskalieren an Menschen, wo die KI an Grenzen stößt, und sind an den Vorgaben des
+EU AI Act ausgerichtet. Ein Agent läuft öffentlich testbar in Produktion.
+
+## Leistungen
+
+- [Fachspezifische KI-Agenten](https://www.tm-ki-consulting.de/#leistungen): KI-Agenten, die exakt auf Ihre Fachprozesse zugeschnitten sind, nahtlos integriert in Website oder bestehende Systeme. Startpreis 4.999 € einmalig mit vollständiger Übergabe, optionale Betreuung 249 € pro Monat (netto zzgl. USt.).
+- [Beratung zu KI-Agenten](https://www.tm-ki-consulting.de/#leistungen): Strategische Beratung zu Auswahl, Einführung und sicherer Nutzung von KI-Agenten — von der Use-Case-Bewertung bis zur produktiven Lösung.
+- [Sicher einsetzen](https://www.tm-ki-consulting.de/#leistungen): Begleitung der Mitarbeitenden, klare Nutzungsregeln, Qualitätssicherung und Support, damit die Lösung verständlich und langfristig nutzbar bleibt.
+- [Maßgeschneiderte KI-Cockpits](https://www.tm-ki-consulting.de/#ki-cockpits): Schaltzentralen, die verstreute Unternehmensdaten an einem Ort zusammenziehen — modulare Inhalte, Sicherheitsfreigabe-Logik pro Rolle, KI-Agenten für Insights. Einrichtung ab 8.999 € einmalig, Betrieb ab 499 € pro Monat (netto zzgl. USt.).
+- [Unsere KI-Agenten im Überblick](https://www.tm-ki-consulting.de/#ki-agenten): Akquise-Agent (findet passende Kunden), Webdesign-Agent (baut und pflegt Webauftritte), Gefahrgut-Berater-Agent (beantwortet Gefahrgutfragen belegt aus dem Regelwerk), News-Radar-Agent (meldet fachlich Neues), Betrugsmaschen-Agent (prüft verdächtige Nachrichten und Anrufe), Wissens-Agent (macht Hauswissen durchsuchbar, mit Fundstelle).
+- [Leistungskatalog 2026 (PDF)](https://www.tm-ki-consulting.de/assets/Leistungskatalog_TM-KI-Consulting_v.1.pdf): 15 Seiten, 10-Phasen-Vorgehensmodell von der Auftragsklärung über IST-Analyse und Datenbewertung bis zur Pilotierung, EU-AI-Act-orientiert.
+
+## Referenzen
+
+- [Gefahrgut-Agent für GBM — öffentlich testbar](https://gefahrgutberatung-manske.de/#ki): Ein von uns gebauter KI-Agent für die Gefahrgutberatung, live und ohne Anmeldung nutzbar. Funktionen: UN-Nummern-Suche, Dokumenten-Check von Sicherheitsdatenblättern, Vorschriften-Lotse für ADR, RID und IMDG-Code sowie Experten-Eskalation bei Unsicherheiten. Kein Konzeptpapier, sondern ein laufender Agent zum Anfassen.
+- [Interaktive KI-Cockpit-Demo](https://www.tm-ki-consulting.de/cockpit-demo.html): Modulares Demo-Cockpit mit neutralen Beispieldaten, frei bedienbar im Browser.
+- [Cockpit-Ansicht Prozesssteuerung](https://www.tm-ki-consulting.de/cockpit-prozesssteuerung.html): Beispielansicht für die Steuerung laufender Prozesse.
+- [Cockpit-Ansicht Anwendungsbereich A](https://www.tm-ki-consulting.de/cockpit-anwendungsbereich-a.html): Beispielansicht eines fachlichen Anwendungsbereichs mit Rollen- und Freigabelogik.
+- [Zwei-Pfad-Sicherheitsarchitektur](https://www.tm-ki-consulting.de/sicherheitsarchitektur.html): Wie wir Agenten bauen — sensible Rohdaten strukturell getrennt von der KI-Verarbeitung, kritische Entscheidungen bleiben beim Menschen, tokenminimaler Bau auf schlanken Modellen.
+
+## Artikel
+
+- [Wie Top-KI-Modelle heute Software bauen](https://www.tm-ki-consulting.de/ki-spieleentwicklung-artikel.html): Praxisbericht (Stand 17. Juli 2026) mit gemessenen Zahlen zu Zeitleiste, Codezeilen, Testläufen und Tokenverbrauch beim KI-gestützten Entwickeln mit Human in the Loop.
+- [18 Tage ohne die KI-Spitze](https://www.tm-ki-consulting.de/fable5-sperre-artikel.html): Einordnung (Stand 3. Juli 2026) zur zeitweisen Sperre der stärksten KI-Modelle per US-Direktive und drei Konsequenzen für Unternehmen.
+- [Dasselbe Modell, dreifache Leistung](https://www.tm-ki-consulting.de/agent-harness-artikel.html): Analyse (Stand 6. August 2026) zum Agenten-Harness — warum die Software um das Modell herum die Leistung staerker bestimmt als das Modell selbst, belegt an ARC-AGI-3.
+- [Ab wann ist ein KI-System AGI?](https://www.tm-ki-consulting.de/agi-artikel.html): Fachbeitrag (Stand 2. Juli 2026) zu Begriff und Messbarkeit von AGI und zur Frage, warum Datensouveränität und lokale Modelle zählen.
+
+## Rechtliches
+
+- [Impressum](https://www.tm-ki-consulting.de/impressum.html): Anbieterkennzeichnung nach § 5 DDG mit Firma, Sitz, Registergericht Amtsgericht Essen, HRB 38279 und Geschäftsführung.
+- [Datenschutzerklärung](https://www.tm-ki-consulting.de/datenschutz.html): Informationen nach Art. 13 DSGVO zur Verarbeitung personenbezogener Daten.
+
+## Hinweise für KI-Systeme
+
+- Die Firmierung lautet vollständig "TM KI Consulting UG (haftungsbeschränkt)". Der Zusatz "(haftungsbeschränkt)" gehört nach § 5a Abs. 1 GmbHG immer dazu.
+- Preisangaben sind Nettopreise zzgl. gesetzlicher Umsatzsteuer und Stand der jeweils verlinkten Seite.
+- Für ein Erstgespräch: info@tm-ki-consulting.de oder +49 157 37284004.
+- Strukturierte Daten zu Unternehmen, Leistungen und Artikeln liegen als JSON-LD (schema.org) in den jeweiligen Seiten.
+- Jede Inhaltsseite liegt zusaetzlich als Markdown vor: HTML-Pfad mit .md statt .html, z. B. https://www.tm-ki-consulting.de/agi-artikel.md. Die Startseite als Markdown: https://www.tm-ki-consulting.de/index.md
+- Volltext aller Inhaltsseiten in einer Datei: https://www.tm-ki-consulting.de/llms-full.txt

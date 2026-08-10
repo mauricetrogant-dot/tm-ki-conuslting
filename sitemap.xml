@@ -1,33 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Sitemap TM KI Consulting UG (haftungsbeschraenkt).
+  Nicht enthalten: datenschutz.html und 404.html (beide meta robots="noindex")
+  sowie die Altfassung TM-KI-Consulting.v.0.2.html.
+  Die .md-Spiegelfassungen sind bewusst NICHT gelistet: Sie sind Duplikate der
+  HTML-Seiten und werden ueber rel="alternate" und llms.txt bekanntgemacht.
+  lastmod der Artikelseiten = im Beitrag sichtbares Standdatum,
+  lastmod der uebrigen Seiten = Dateidatum.
+-->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.tm-ki-consulting.de/</loc>
+    <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://www.tm-ki-consulting.de/sicherheitsarchitektur.html</loc>
+    <lastmod>2026-08-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.tm-ki-consulting.de/agi-artikel.html</loc>
+    <loc>https://www.tm-ki-consulting.de/cockpit-demo.html</loc>
+    <lastmod>2026-08-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.tm-ki-consulting.de/cockpit-prozesssteuerung.html</loc>
+    <lastmod>2026-08-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.tm-ki-consulting.de/cockpit-anwendungsbereich-a.html</loc>
+    <lastmod>2026-08-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.tm-ki-consulting.de/ki-spieleentwicklung-artikel.html</loc>
+    <lastmod>2026-07-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.tm-ki-consulting.de/fable5-sperre-artikel.html</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.tm-ki-consulting.de/ki-spieleentwicklung-artikel.html</loc>
+    <loc>https://www.tm-ki-consulting.de/agi-artikel.html</loc>
+    <lastmod>2026-07-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.tm-ki-consulting.de/cockpit-demo.html</loc>
+    <loc>https://www.tm-ki-consulting.de/agent-harness-artikel.html</loc>
+    <lastmod>2026-08-06</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.tm-ki-consulting.de/impressum.html</loc>
+    <lastmod>2026-08-02</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.tm-ki-consulting.de/llms.txt</loc>
+    <lastmod>2026-08-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.tm-ki-consulting.de/llms-full.txt</loc>
+    <lastmod>2026-08-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
   </url>
 </urlset>

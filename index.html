@@ -12,6 +12,7 @@
 <meta property="og:url" content="https://www.tm-ki-consulting.de/" />
 <meta name="twitter:card" content="summary_large_image" />
 <link rel="canonical" href="https://www.tm-ki-consulting.de/" />
+<link rel="alternate" type="text/markdown" href="index.md" title="Markdown-Fassung dieser Seite" />
 
 <link rel="icon" href="favicon.ico" />
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
@@ -25,6 +26,10 @@
 <link rel="stylesheet" href="assets/fonts/fonts.css">
 
 <script defer src="assets/js/vendor/lenis.min.js"></script>
+
+<!-- WebMCP: meldet Werkzeuge für KI-Agenten im Browser an.
+     Ohne WebMCP-Unterstützung passiert nichts (Feature-Detection im Skript). -->
+<script defer src="assets/js/webmcp.js"></script>
 
 <style>
   :root {
@@ -2287,6 +2292,447 @@
     .cockpit-price-card { padding: 24px 20px; }
   }
 </style>
+
+<!-- Strukturierte Daten (schema.org / JSON-LD) fuer Suchmaschinen und KI-Systeme -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": [
+        "Organization",
+        "ProfessionalService"
+      ],
+      "@id": "https://www.tm-ki-consulting.de/#organization",
+      "name": "TM KI Consulting UG (haftungsbeschränkt)",
+      "legalName": "TM KI Consulting UG (haftungsbeschränkt)",
+      "alternateName": "TM KI Consulting",
+      "url": "https://www.tm-ki-consulting.de/",
+      "description": "KI-gestützte Unternehmensberatung, Prozessanalyse sowie Entwicklung und Implementierung von KI-Agentensystemen für den öffentlichen und privaten Sektor.",
+      "slogan": "Jedes Mandat beginnt mit Zuhören.",
+      "foundingDate": "2026-07-27",
+      "logo": {
+        "@type": "ImageObject",
+        "@id": "https://www.tm-ki-consulting.de/#logo",
+        "url": "https://www.tm-ki-consulting.de/assets/TM_KI_Logo.png",
+        "caption": "Logo der TM KI Consulting UG (haftungsbeschränkt)"
+      },
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://www.tm-ki-consulting.de/og-image.png"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Ernst-Tengelmann-Ring 22",
+        "postalCode": "45259",
+        "addressLocality": "Essen",
+        "addressRegion": "Nordrhein-Westfalen",
+        "addressCountry": "DE"
+      },
+      "telephone": "+49 157 37284004",
+      "email": "info@tm-ki-consulting.de",
+      "sameAs": [
+        "https://www.linkedin.com/company/130034129/"
+      ],
+      "identifier": [
+        {
+          "@type": "PropertyValue",
+          "propertyID": "Handelsregisternummer",
+          "name": "Handelsregister",
+          "value": "HRB 38279",
+          "description": "Amtsgericht Essen"
+        }
+      ],
+      "contactPoint": [
+        {
+          "@type": "ContactPoint",
+          "contactType": "Kundenkontakt",
+          "telephone": "+49 157 37284004",
+          "email": "info@tm-ki-consulting.de",
+          "availableLanguage": [
+            "de",
+            "en"
+          ],
+          "areaServed": "DE"
+        }
+      ],
+      "founder": [
+        {
+          "@type": "Person",
+          "@id": "https://www.tm-ki-consulting.de/#julian-manske",
+          "name": "Julian Manske",
+          "jobTitle": "Gründer und Geschäftsführer",
+          "email": "julian.manske@tm-ki-consulting.de",
+          "image": "https://www.tm-ki-consulting.de/assets/julian-manske.png",
+          "sameAs": [
+            "https://www.linkedin.com/in/julian-manske-9ab853406"
+          ],
+          "worksFor": {
+            "@id": "https://www.tm-ki-consulting.de/#organization"
+          }
+        },
+        {
+          "@type": "Person",
+          "@id": "https://www.tm-ki-consulting.de/#maurice-trogant",
+          "name": "Maurice Trogant",
+          "jobTitle": "Mitgründer und CTO",
+          "email": "maurice.trogant@tm-ki-consulting.de",
+          "image": "https://www.tm-ki-consulting.de/assets/maurice-trogant.jpg",
+          "sameAs": [
+            "https://www.linkedin.com/in/maurice-trogant-8a6109359"
+          ],
+          "worksFor": {
+            "@id": "https://www.tm-ki-consulting.de/#organization"
+          }
+        }
+      ],
+      "employee": [
+        {
+          "@id": "https://www.tm-ki-consulting.de/#julian-manske"
+        },
+        {
+          "@id": "https://www.tm-ki-consulting.de/#maurice-trogant"
+        }
+      ],
+      "areaServed": [
+        {
+          "@type": "AdministrativeArea",
+          "name": "Nordrhein-Westfalen"
+        },
+        {
+          "@type": "Country",
+          "name": "Deutschland"
+        }
+      ],
+      "knowsLanguage": [
+        "de",
+        "en"
+      ],
+      "knowsAbout": [
+        "Fachspezifische KI-Agenten",
+        "Retrieval Augmented Generation (RAG)",
+        "EU AI Act",
+        "KI-Cockpits und Datenintegration",
+        "Rollen- und Freigabelogik",
+        "Gefahrgutrecht (ADR, RID, IMDG-Code)",
+        "Prozessanalyse und Use-Case-Bewertung",
+        "KI-Einführung in KMU und öffentlichen Einrichtungen"
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Leistungen der TM KI Consulting UG (haftungsbeschränkt)",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@id": "https://www.tm-ki-consulting.de/#service-ki-agenten"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@id": "https://www.tm-ki-consulting.de/#service-beratung"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@id": "https://www.tm-ki-consulting.de/#service-verankern"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@id": "https://www.tm-ki-consulting.de/#service-ki-cockpits"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://www.tm-ki-consulting.de/#website",
+      "url": "https://www.tm-ki-consulting.de/",
+      "name": "TM KI Consulting UG (haftungsbeschränkt)",
+      "description": "Strategische KI-Beratung, modulare KI-Agenten und interaktive KI-Cockpits für Organisationen — mit neutralen, öffentlich testbaren Demonstrationen.",
+      "inLanguage": "de",
+      "publisher": {
+        "@id": "https://www.tm-ki-consulting.de/#organization"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://www.tm-ki-consulting.de/#webpage",
+      "url": "https://www.tm-ki-consulting.de/",
+      "name": "TM KI Consulting UG (haftungsbeschränkt) — Modulare KI-Agenten und KI-Beratung",
+      "description": "Strategische KI-Beratung, modulare KI-Agenten und interaktive KI-Cockpits für Organisationen — mit neutralen, öffentlich testbaren Demonstrationen.",
+      "inLanguage": "de",
+      "isPartOf": {
+        "@id": "https://www.tm-ki-consulting.de/#website"
+      },
+      "about": {
+        "@id": "https://www.tm-ki-consulting.de/#organization"
+      },
+      "primaryImageOfPage": {
+        "@id": "https://www.tm-ki-consulting.de/#logo"
+      },
+      "mentions": [
+        {
+          "@id": "https://www.tm-ki-consulting.de/#gb-agent"
+        }
+      ]
+    },
+    {
+      "@type": "Service",
+      "@id": "https://www.tm-ki-consulting.de/#service-ki-agenten",
+      "name": "Fachspezifische KI-Agenten",
+      "serviceType": "Entwicklung von KI-Agenten",
+      "description": "Wir entwickeln KI-Agenten, die exakt auf Ihre Fachprozesse zugeschnitten sind — und integrieren sie nahtlos in Ihre Website oder bestehende Systeme.",
+      "provider": {
+        "@id": "https://www.tm-ki-consulting.de/#organization"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "Deutschland"
+      },
+      "url": "https://www.tm-ki-consulting.de/#leistungen",
+      "offers": [
+        {
+          "@type": "Offer",
+          "name": "Startpreis pro Agent",
+          "description": "Einmalig, mit vollständiger Übergabe: Sie erhalten den fertigen Agenten samt Konfiguration und Wissensbasis und betreiben ihn eigenständig weiter. Alle Preise netto zzgl. gesetzlicher Umsatzsteuer.",
+          "priceCurrency": "EUR",
+          "priceSpecification": {
+            "@type": "PriceSpecification",
+            "price": "4999",
+            "priceCurrency": "EUR",
+            "valueAddedTaxIncluded": false
+          }
+        },
+        {
+          "@type": "Offer",
+          "name": "Betreuung (optional)",
+          "description": "Laufende Pflege der Wissensbasis, Updates, Monitoring und Support. Die Tokenkosten des Foundation-Modells trägt der Auftraggeber. Alle Preise netto zzgl. gesetzlicher Umsatzsteuer.",
+          "priceCurrency": "EUR",
+          "priceSpecification": {
+            "@type": "UnitPriceSpecification",
+            "price": "249",
+            "priceCurrency": "EUR",
+            "valueAddedTaxIncluded": false,
+            "unitText": "Monat",
+            "billingDuration": 1,
+            "billingIncrement": 1
+          }
+        }
+      ]
+    },
+    {
+      "@type": "Service",
+      "@id": "https://www.tm-ki-consulting.de/#service-beratung",
+      "name": "Beratung zu KI-Agenten",
+      "serviceType": "KI-Beratung",
+      "description": "Wir beraten Sie strategisch zur Auswahl, Einführung und sicheren Nutzung von KI-Agenten — von der Use-Case-Bewertung bis zur produktiven Lösung.",
+      "provider": {
+        "@id": "https://www.tm-ki-consulting.de/#organization"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "Deutschland"
+      },
+      "url": "https://www.tm-ki-consulting.de/#leistungen"
+    },
+    {
+      "@type": "Service",
+      "@id": "https://www.tm-ki-consulting.de/#service-verankern",
+      "name": "Sicher einsetzen",
+      "serviceType": "Schulung, Support und Qualitätssicherung",
+      "description": "Wir begleiten Mitarbeitende bei der Nutzung, schaffen klare Regeln und sorgen dafür, dass die KI-Lösung verständlich, sicher und langfristig nutzbar bleibt.",
+      "provider": {
+        "@id": "https://www.tm-ki-consulting.de/#organization"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "Deutschland"
+      },
+      "url": "https://www.tm-ki-consulting.de/#leistungen"
+    },
+    {
+      "@type": "Service",
+      "@id": "https://www.tm-ki-consulting.de/#service-ki-cockpits",
+      "name": "Maßgeschneiderte KI-Cockpits",
+      "serviceType": "Datenintegration, Freigabelogik und KI-Insights",
+      "description": "Wir bauen Schaltzentralen, die verstreute Unternehmensdaten an einem Ort zusammenziehen: mit Inhalten, die auf Ihre Bedürfnisse zugeschnitten sind, einer Sicherheitsfreigabe-Logik, die pro Rolle steuert, wer was sieht, und KI-Agenten, die daraus Insights machen.",
+      "provider": {
+        "@id": "https://www.tm-ki-consulting.de/#organization"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "Deutschland"
+      },
+      "url": "https://www.tm-ki-consulting.de/#ki-cockpits",
+      "offers": [
+        {
+          "@type": "Offer",
+          "name": "Einrichtung und Integration",
+          "description": "Konzeption, individuelle Konfiguration, Anbindung Ihrer Datenquellen, Rollen- und Freigabelogik sowie Tests und Begleitung bis zum Go-live. Der Preis richtet sich nach der Menge der angebundenen Datenquellen. Alle Preise zzgl. gesetzlicher Umsatzsteuer.",
+          "priceCurrency": "EUR",
+          "priceSpecification": {
+            "@type": "PriceSpecification",
+            "minPrice": "8999",
+            "priceCurrency": "EUR",
+            "valueAddedTaxIncluded": false
+          }
+        },
+        {
+          "@type": "Offer",
+          "name": "Betrieb, Wartung und Betreuung",
+          "description": "Laufender Betrieb des Cockpits. Alle Preise zzgl. gesetzlicher Umsatzsteuer; Fremdlizenzen und verbrauchsabhängige API-Kosten sind nicht enthalten.",
+          "priceCurrency": "EUR",
+          "priceSpecification": {
+            "@type": "UnitPriceSpecification",
+            "minPrice": "499",
+            "priceCurrency": "EUR",
+            "valueAddedTaxIncluded": false,
+            "unitText": "Monat",
+            "billingDuration": 1,
+            "billingIncrement": 1
+          }
+        }
+      ]
+    },
+    {
+      "@type": "ItemList",
+      "@id": "https://www.tm-ki-consulting.de/#ki-agenten-liste",
+      "name": "Unsere KI-Agenten",
+      "itemListOrder": "https://schema.org/ItemListOrderAscending",
+      "numberOfItems": 6,
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "item": {
+            "@type": "Service",
+            "@id": "https://www.tm-ki-consulting.de/#agent-akquise",
+            "name": "Akquise-Agent",
+            "serviceType": "KI-Agent",
+            "description": "Findet passende Kunden, bevor der Wettbewerb sie anspricht.",
+            "provider": {
+              "@id": "https://www.tm-ki-consulting.de/#organization"
+            }
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "item": {
+            "@type": "Service",
+            "@id": "https://www.tm-ki-consulting.de/#agent-webdesign",
+            "name": "Webdesign-Agent",
+            "serviceType": "KI-Agent",
+            "description": "Baut und pflegt Webauftritte nach Ihren Vorgaben statt nach Baukasten.",
+            "provider": {
+              "@id": "https://www.tm-ki-consulting.de/#organization"
+            }
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "item": {
+            "@type": "Service",
+            "@id": "https://www.tm-ki-consulting.de/#agent-gefahrgut",
+            "name": "Gefahrgut-Berater-Agent",
+            "serviceType": "KI-Agent",
+            "description": "Beantwortet Gefahrgutfragen aus dem Regelwerk — belegt, nicht geraten.",
+            "provider": {
+              "@id": "https://www.tm-ki-consulting.de/#organization"
+            }
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "item": {
+            "@type": "Service",
+            "@id": "https://www.tm-ki-consulting.de/#agent-news-radar",
+            "name": "News-Radar-Agent",
+            "serviceType": "KI-Agent",
+            "description": "Meldet, was in Ihrem Fachgebiet wirklich neu ist.",
+            "provider": {
+              "@id": "https://www.tm-ki-consulting.de/#organization"
+            }
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 5,
+          "item": {
+            "@type": "Service",
+            "@id": "https://www.tm-ki-consulting.de/#agent-betrugsmaschen",
+            "name": "Betrugsmaschen-Agent",
+            "serviceType": "KI-Agent",
+            "description": "Prüft verdächtige Nachrichten und Anrufe in Sekunden.",
+            "provider": {
+              "@id": "https://www.tm-ki-consulting.de/#organization"
+            }
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 6,
+          "item": {
+            "@type": "Service",
+            "@id": "https://www.tm-ki-consulting.de/#agent-wissen",
+            "name": "Wissens-Agent",
+            "serviceType": "KI-Agent",
+            "description": "Macht das Wissen Ihres Hauses durchsuchbar — mit Fundstelle.",
+            "provider": {
+              "@id": "https://www.tm-ki-consulting.de/#organization"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "@type": "WebApplication",
+      "@id": "https://www.tm-ki-consulting.de/#gb-agent",
+      "name": "Gefahrgut-Agent für GBM",
+      "url": "https://gefahrgutberatung-manske.de/#ki",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web-Browser",
+      "inLanguage": "de",
+      "description": "Ein öffentlich testbarer KI-Agent für die Gefahrgutberatung: Fachwissen, Regelwerke, Dokumentenprüfung und Eskalationslogik in einer nutzbaren Anwendung.",
+      "featureList": [
+        "UN-Nummern-Suche: strukturierte Recherche nach Stoffdaten, Gefahrgutklassen und relevanten Prüfpunkten",
+        "Dokumenten-Check: Vorprüfung von Sicherheitsdatenblättern, Beförderungsdokumenten und fehlenden Angaben",
+        "Vorschriften-Lotse: geführter Abgleich mit ADR, RID, IMDG-Code und internen Checklisten",
+        "Experten-Eskalation: Unsicherheiten werden zur fachlichen Freigabe weitergereicht",
+        "RAG-Wissensabruf",
+        "EU-AI-Act-orientierte Guardrails",
+        "Sicherer SDB-Upload"
+      ],
+      "provider": {
+        "@id": "https://www.tm-ki-consulting.de/#organization"
+      },
+      "creator": {
+        "@id": "https://www.tm-ki-consulting.de/#organization"
+      }
+    },
+    {
+      "@type": "DigitalDocument",
+      "@id": "https://www.tm-ki-consulting.de/#leistungskatalog",
+      "name": "Leistungskatalog 2026",
+      "description": "Der detaillierte Leitfaden zu unserer Vorgehensweise — von der Auftragsklärung über die IST-Analyse und Datenbewertung bis hin zur Pilotierung konkreter KI-Agenten-Anwendungsfälle. Inklusive eines EU-AI-Act-orientierten Vorgehensmodells. Umfang: 15 Seiten, 10 Phasen.",
+      "url": "https://www.tm-ki-consulting.de/assets/Leistungskatalog_TM-KI-Consulting_v.1.pdf",
+      "encodingFormat": "application/pdf",
+      "inLanguage": "de",
+      "publisher": {
+        "@id": "https://www.tm-ki-consulting.de/#organization"
+      }
+    }
+  ]
+}
+</script>
 </head>
 
 <body>
@@ -3301,6 +3747,50 @@
         </p>
       </div>
 
+      <a href="agent-harness-artikel.html" class="insight-card reveal" aria-label="Artikel öffnen: Dasselbe Modell, dreifache Leistung">
+        <div class="insight-body">
+          <span class="insight-eyebrow">Analyse · Architektur von KI-Agenten</span>
+          <h3>Dasselbe Modell, <span class="serif">dreifache Leistung</span></h3>
+          <p>
+            Auf dem Lerntest ARC-AGI-3 stieg GPT-5.6 Sol von 13,3 auf 38,3 Prozent, allein
+            durch zwei Einstellungen der Agenten-Umgebung. Prime Agent erreichte mit Opus 5
+            95,5 Prozent und lag über der menschlichen Expertenmarke. Beide Male blieb das
+            Modell unverändert.
+          </p>
+          <div class="insight-meta">
+            <span>Stand: 6. August 2026</span>
+            <span>·</span>
+            <span>Lesezeit ca. 9 Minuten</span>
+          </div>
+          <span class="insight-readmore">Artikel lesen <span class="arrow" aria-hidden="true">→</span></span>
+        </div>
+        <div class="insight-visual" aria-hidden="true">
+          <svg viewBox="0 0 360 200" font-family="Inter, system-ui, sans-serif">
+            <defs>
+              <linearGradient id="insightFillHarness" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#ffffff" stop-opacity="0.16"/>
+                <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <g stroke="rgba(255,255,255,0.10)" stroke-width="1">
+              <line x1="20" y1="40" x2="340" y2="40"/>
+              <line x1="20" y1="90" x2="340" y2="90"/>
+              <line x1="20" y1="140" x2="340" y2="140"/>
+            </g>
+            <line x1="20" y1="168" x2="340" y2="168" stroke="rgba(255,255,255,0.18)" stroke-width="1"/>
+            <rect x="52" y="146" width="52" height="22" fill="rgba(255,255,255,0.22)"/>
+            <rect x="132" y="104" width="52" height="64" fill="url(#insightFillHarness)" stroke="#ffffff" stroke-width="1.5"/>
+            <rect x="248" y="44" width="52" height="124" fill="#ffffff" fill-opacity="0.92"/>
+            <text x="78" y="140" text-anchor="middle" fill="#8a96a8" font-size="11">13,3 %</text>
+            <text x="158" y="98" text-anchor="middle" fill="#b8c2d0" font-size="11">38,3 %</text>
+            <text x="274" y="38" text-anchor="middle" fill="#ffffff" font-size="11">95,5 %</text>
+            <text x="78" y="184" text-anchor="middle" fill="#5a6578" font-size="10">Standard</text>
+            <text x="158" y="184" text-anchor="middle" fill="#5a6578" font-size="10">2 Einstellungen</text>
+            <text x="274" y="184" text-anchor="middle" fill="#5a6578" font-size="10">Prime Agent</text>
+          </svg>
+        </div>
+      </a>
+
       <a href="ki-spieleentwicklung-artikel.html" class="insight-card reveal" aria-label="Artikel öffnen: Wie Top-KI-Modelle heute Software bauen">
         <div class="insight-body">
           <span class="insight-eyebrow">Praxisbericht · KI-Agenten</span>
@@ -3536,7 +4026,7 @@
         <ul>
           <li><a href="mailto:info@tm-ki-consulting.de">info@tm-ki-consulting.de</a></li>
           <li><a href="tel:+4915737284004">+49 157 37284004</a></li>
-          <li><a href="#">LinkedIn</a></li>
+          <li><a href="https://www.linkedin.com/company/130034129/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn-Unternehmensprofil von TM KI Consulting öffnen">LinkedIn</a></li>
         </ul>
       </div>
     </div>

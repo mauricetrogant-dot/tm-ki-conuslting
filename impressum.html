@@ -864,6 +864,82 @@
     .catalog-meta { grid-template-columns: 1fr; gap: 18px; }
   }
 </style>
+
+<!-- Strukturierte Daten (schema.org / JSON-LD) fuer Suchmaschinen und KI-Systeme -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": [
+        "Organization",
+        "ProfessionalService"
+      ],
+      "@id": "https://www.tm-ki-consulting.de/#organization",
+      "name": "TM KI Consulting UG (haftungsbeschränkt)",
+      "legalName": "TM KI Consulting UG (haftungsbeschränkt)",
+      "alternateName": "TM KI Consulting",
+      "url": "https://www.tm-ki-consulting.de/",
+      "logo": {
+        "@type": "ImageObject",
+        "@id": "https://www.tm-ki-consulting.de/#logo",
+        "url": "https://www.tm-ki-consulting.de/assets/TM_KI_Logo.png"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Ernst-Tengelmann-Ring 22",
+        "postalCode": "45259",
+        "addressLocality": "Essen",
+        "addressRegion": "Nordrhein-Westfalen",
+        "addressCountry": "DE"
+      },
+      "telephone": "+49 157 37284004",
+      "email": "info@tm-ki-consulting.de",
+      "foundingDate": "2026-07-27",
+      "sameAs": [
+        "https://www.linkedin.com/company/130034129/"
+      ],
+      "identifier": [
+        {
+          "@type": "PropertyValue",
+          "propertyID": "Handelsregisternummer",
+          "name": "Handelsregister",
+          "value": "HRB 38279",
+          "description": "Amtsgericht Essen"
+        }
+      ],
+      "employee": [
+        {
+          "@type": "Person",
+          "@id": "https://www.tm-ki-consulting.de/#julian-manske",
+          "name": "Julian Manske",
+          "jobTitle": "Geschäftsführer"
+        }
+      ],
+      "founder": {
+        "@id": "https://www.tm-ki-consulting.de/#julian-manske"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://www.tm-ki-consulting.de/impressum.html#webpage",
+      "url": "https://www.tm-ki-consulting.de/impressum.html",
+      "name": "Impressum — TM KI Consulting UG (haftungsbeschränkt)",
+      "description": "Impressum und Anbieterkennzeichnung gemäß § 5 DDG: Firma, Sitz, Registergericht, Registernummer und Geschäftsführung der TM KI Consulting UG (haftungsbeschränkt).",
+      "inLanguage": "de",
+      "isPartOf": {
+        "@id": "https://www.tm-ki-consulting.de/#website"
+      },
+      "about": {
+        "@id": "https://www.tm-ki-consulting.de/#organization"
+      },
+      "publisher": {
+        "@id": "https://www.tm-ki-consulting.de/#organization"
+      }
+    }
+  ]
+}
+</script>
 </head>
 
 <body>

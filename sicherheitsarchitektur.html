@@ -12,6 +12,7 @@
 <meta property="og:url" content="https://www.tm-ki-consulting.de/sicherheitsarchitektur.html" />
 <meta name="twitter:card" content="summary_large_image" />
 <link rel="canonical" href="https://www.tm-ki-consulting.de/sicherheitsarchitektur.html" />
+<link rel="alternate" type="text/markdown" href="sicherheitsarchitektur.md" title="Markdown-Fassung dieser Seite" />
 
 <link rel="icon" href="favicon.ico" />
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
@@ -237,6 +238,71 @@
     .foot-grid { grid-template-columns: 1fr; }
   }
 </style>
+
+<!-- Strukturierte Daten (schema.org / JSON-LD) fuer Suchmaschinen und KI-Systeme -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://www.tm-ki-consulting.de/#organization",
+      "name": "TM KI Consulting UG (haftungsbeschränkt)",
+      "url": "https://www.tm-ki-consulting.de/",
+      "logo": {
+        "@type": "ImageObject",
+        "@id": "https://www.tm-ki-consulting.de/#logo",
+        "url": "https://www.tm-ki-consulting.de/assets/TM_KI_Logo.png"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Ernst-Tengelmann-Ring 22",
+        "postalCode": "45259",
+        "addressLocality": "Essen",
+        "addressRegion": "Nordrhein-Westfalen",
+        "addressCountry": "DE"
+      }
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://www.tm-ki-consulting.de/sicherheitsarchitektur.html#article",
+      "headline": "Wie wir KI-Agenten bauen — Zwei-Pfad-Sicherheitsarchitektur",
+      "description": "Jeder unserer KI-Agenten trennt sensible Rohdaten strukturell von der KI-Verarbeitung: Pfad A arbeitet auf abstrahierten Daten, Pfad B bleibt ein geschützter Kanal für Menschen. Dazu ein tokenminimaler Bau auf schlanken Modellen.",
+      "inLanguage": "de",
+      "author": {
+        "@id": "https://www.tm-ki-consulting.de/#organization"
+      },
+      "publisher": {
+        "@id": "https://www.tm-ki-consulting.de/#organization"
+      },
+      "image": "https://www.tm-ki-consulting.de/og-image.png",
+      "mainEntityOfPage": {
+        "@id": "https://www.tm-ki-consulting.de/sicherheitsarchitektur.html#webpage"
+      },
+      "about": [
+        "Zwei-Pfad-Sicherheitsarchitektur für KI-Agenten",
+        "Trennung sensibler Rohdaten von der KI-Verarbeitung",
+        "Human-in-the-Loop",
+        "Tokenminimaler Bau von KI-Agenten"
+      ],
+      "isAccessibleForFree": true
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://www.tm-ki-consulting.de/sicherheitsarchitektur.html#webpage",
+      "url": "https://www.tm-ki-consulting.de/sicherheitsarchitektur.html",
+      "name": "Wie wir KI-Agenten bauen — Zwei-Pfad-Sicherheitsarchitektur · TM KI Consulting",
+      "inLanguage": "de",
+      "isPartOf": {
+        "@id": "https://www.tm-ki-consulting.de/#website"
+      },
+      "publisher": {
+        "@id": "https://www.tm-ki-consulting.de/#organization"
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
 
