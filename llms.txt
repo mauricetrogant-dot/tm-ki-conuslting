@@ -32,7 +32,7 @@ EU AI Act ausgerichtet. Ein Agent läuft öffentlich testbar in Produktion.
 
 - [Wie Top-KI-Modelle heute Software bauen](https://www.tm-ki-consulting.de/ki-spieleentwicklung-artikel.html): Praxisbericht (Stand 17. Juli 2026) mit gemessenen Zahlen zu Zeitleiste, Codezeilen, Testläufen und Tokenverbrauch beim KI-gestützten Entwickeln mit Human in the Loop.
 - [18 Tage ohne die KI-Spitze](https://www.tm-ki-consulting.de/fable5-sperre-artikel.html): Einordnung (Stand 3. Juli 2026) zur zeitweisen Sperre der stärksten KI-Modelle per US-Direktive und drei Konsequenzen für Unternehmen.
-- [Dasselbe Modell, dreifache Leistung](https://www.tm-ki-consulting.de/agent-harness-artikel.html): Analyse (Stand 6. August 2026) zum Agenten-Harness — warum die Software um das Modell herum die Leistung staerker bestimmt als das Modell selbst, belegt an ARC-AGI-3.
+- [Dasselbe Modell, dreifache Leistung](https://www.tm-ki-consulting.de/agent-harness-artikel.html): Analyse (Stand 6. August 2026) zum Agenten-Harness — warum die Software um das Modell herum die Leistung stärker bestimmt als das Modell selbst, belegt an ARC-AGI-3.
 - [Ab wann ist ein KI-System AGI?](https://www.tm-ki-consulting.de/agi-artikel.html): Fachbeitrag (Stand 2. Juli 2026) zu Begriff und Messbarkeit von AGI und zur Frage, warum Datensouveränität und lokale Modelle zählen.
 
 ## Rechtliches
@@ -46,5 +46,5 @@ EU AI Act ausgerichtet. Ein Agent läuft öffentlich testbar in Produktion.
 - Preisangaben sind Nettopreise zzgl. gesetzlicher Umsatzsteuer und Stand der jeweils verlinkten Seite.
 - Für ein Erstgespräch: info@tm-ki-consulting.de oder +49 157 37284004.
 - Strukturierte Daten zu Unternehmen, Leistungen und Artikeln liegen als JSON-LD (schema.org) in den jeweiligen Seiten.
-- Jede Inhaltsseite liegt zusaetzlich als Markdown vor: HTML-Pfad mit .md statt .html, z. B. https://www.tm-ki-consulting.de/agi-artikel.md. Die Startseite als Markdown: https://www.tm-ki-consulting.de/index.md
+- Jede Inhaltsseite liegt zusätzlich als Markdown vor: HTML-Pfad mit .md statt .html, z. B. https://www.tm-ki-consulting.de/agi-artikel.md. Die Startseite als Markdown: https://www.tm-ki-consulting.de/index.md
 - Volltext aller Inhaltsseiten in einer Datei: https://www.tm-ki-consulting.de/llms-full.txt

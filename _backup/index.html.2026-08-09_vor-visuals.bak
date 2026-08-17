@@ -12,7 +12,6 @@
 <meta property="og:url" content="https://www.tm-ki-consulting.de/" />
 <meta name="twitter:card" content="summary_large_image" />
 <link rel="canonical" href="https://www.tm-ki-consulting.de/" />
-<link rel="alternate" type="text/markdown" href="index.md" title="Markdown-Fassung dieser Seite" />
 
 <link rel="icon" href="favicon.ico" />
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
@@ -1895,77 +1894,6 @@
     opacity: 1;
     transform: translateY(0);
   }
-
-  /* ============ AUFDECK-EFFEKT FÜR ABSCHNITTSKÖPFE ============
-     Baut auf derselben .reveal-Mechanik auf (Klasse .is-visible wird vom
-     vorhandenen IntersectionObserver gesetzt, inklusive 2-Sekunden-
-     Sicherheitsnetz). Statt eines reinen Ein-Fadens wandert ein weicher
-     Maskenverlauf über Eyebrow, Überschrift und Absatz — leicht gestaffelt.
-
-     Der Verlauf ist nur der Sichtbarkeitsschalter: Ohne Maskenunterstützung
-     (@supports greift nicht), ohne JavaScript oder bei reduzierter Bewegung
-     steht der Kopf sofort vollständig da.
-     Der Orb-Anker (.agent-anchor) ist bewusst ausgenommen — an dessen
-     Darstellung wird nichts geändert. */
-  @supports ((-webkit-mask-image: linear-gradient(#000, #000)) or (mask-image: linear-gradient(#000, #000))) {
-    /* Der Kopf selbst bewegt sich nicht mehr — die Maske übernimmt das Aufdecken. */
-    html.js-ready .section-head.reveal:not(.is-visible) {
-      opacity: 1;
-      transform: none;
-    }
-    html.js-ready .section-head.reveal > .section-eyebrow,
-    html.js-ready .section-head.reveal > h2,
-    html.js-ready .section-head.reveal > p {
-      --head-mask: linear-gradient(90deg, #000 0%, #000 42%, rgba(0, 0, 0, 0) 70%);
-      -webkit-mask-image: var(--head-mask);
-              mask-image: var(--head-mask);
-      -webkit-mask-size: 320% 100%;
-              mask-size: 320% 100%;
-      -webkit-mask-repeat: no-repeat;
-              mask-repeat: no-repeat;
-      -webkit-mask-position: 100% 0;
-              mask-position: 100% 0;
-      transition: -webkit-mask-position 1.05s cubic-bezier(.22, .61, .36, 1),
-                          mask-position 1.05s cubic-bezier(.22, .61, .36, 1);
-    }
-    html.js-ready .section-head.reveal.is-visible > .section-eyebrow,
-    html.js-ready .section-head.reveal.is-visible > h2,
-    html.js-ready .section-head.reveal.is-visible > p {
-      -webkit-mask-position: 0 0;
-              mask-position: 0 0;
-    }
-    /* Staffelung über gut 200 ms — mehr wäre Zirkus. */
-    html.js-ready .section-head.reveal > h2 { transition-delay: .11s; }
-    html.js-ready .section-head.reveal > p  { transition-delay: .22s; }
-
-    /* Nach dem Durchlauf wird die Maske wieder entfernt (Klasse kommt aus dem
-       Reveal-Skript). Danach rendert der Text wieder ohne Zwischenebene. */
-    html.js-ready .section-head.reveal.head-done > .section-eyebrow,
-    html.js-ready .section-head.reveal.head-done > h2,
-    html.js-ready .section-head.reveal.head-done > p {
-      -webkit-mask-image: none;
-              mask-image: none;
-      transition: none;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      html.js-ready .section-head.reveal > .section-eyebrow,
-      html.js-ready .section-head.reveal > h2,
-      html.js-ready .section-head.reveal > p {
-        -webkit-mask-image: none;
-                mask-image: none;
-        transition: none;
-      }
-    }
-  }
-
-  /* ============ HOCHLAUFENDE ZAHLEN ============
-     Die Endwerte stehen im Markup und werden nur ausgelesen. Hier wird
-     lediglich dafür gesorgt, dass beim Zählen nichts wackelt: Ziffern mit
-     gleicher Laufweite, und die Kennzahl behält ihre Zeilenhöhe. */
-  .aui-kpi strong { font-variant-numeric: tabular-nums; min-height: 1em; }
-  /* .aui-num bringt tabular-nums, min-width und rechtsbündige Ausrichtung
-     bereits mit — dort ist nichts zu ergänzen. */
 
   /* ============ LEISTUNGSKATALOG ============ */
   .catalog-section {
@@ -4165,24 +4093,10 @@ document.documentElement.classList.add('js-ready');
 // ============================================================
 // IntersectionObserver für Reveals (funktioniert ohne GSAP)
 // ============================================================
-const wenigerBewegung = window.matchMedia('(prefers-reduced-motion: reduce)');
-
-// Abschnittsköpfe decken sich über einen Maskenverlauf auf (CSS). Die Maske
-// wird nach dem Durchlauf wieder entfernt, damit der Text ohne Zwischenebene
-// gerendert wird — deshalb hier, im selben Schritt wie .is-visible.
-const KOPF_AUFDECKDAUER = 1500; // ms: 1,05 s Übergang + 0,22 s Staffelung + Reserve
-
-function sichtbarMachen(el) {
-  el.classList.add('is-visible');
-  if (!el.classList.contains('section-head')) return;
-  if (wenigerBewegung.matches) { el.classList.add('head-done'); return; }
-  setTimeout(() => el.classList.add('head-done'), KOPF_AUFDECKDAUER);
-}
-
 const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
-      sichtbarMachen(entry.target);
+      entry.target.classList.add('is-visible');
       revealObserver.unobserve(entry.target);
     }
   });
@@ -4193,119 +4107,9 @@ document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 // Safety-Net: alles spätestens nach 2s sichtbar machen (falls Observer nichts tut)
 setTimeout(() => {
   document.querySelectorAll('.reveal:not(.is-visible)').forEach(el => {
-    sichtbarMachen(el);
+    el.classList.add('is-visible');
   });
 }, 2000);
-
-// ============================================================
-// Hochlaufende Zahlen in den Agenten-Kacheln
-//
-// Es werden ausschließlich Werte animiert, die bereits im HTML stehen:
-// Der Endwert wird aus dem Text ausgelesen und am Ende wortgleich wieder
-// eingesetzt. Es wird kein Wert erfunden und keiner verändert.
-//
-// Ohne JavaScript bleibt die Zahl schlicht stehen. Bei
-// prefers-reduced-motion läuft nichts. Gestartet wird erst, wenn die
-// Kachel aufgeklappt UND die Zahl im Sichtbereich ist — sonst würde der
-// Hochlauf unsichtbar verpuffen.
-// ============================================================
-(function initZahlenHochlauf() {
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  if (!('IntersectionObserver' in window)) return;
-
-  const ZAHLTEIL = /^(\D*?)(\d+(?:[.,]\d+)?)(.*)$/;  // Vorsatz · Zahl · Nachsatz
-  const DAUER = 1100;                                 // ms
-
-  const zahlen = [];
-  document.querySelectorAll('.agent-card .aui-num, .agent-card .aui-kpi strong').forEach(el => {
-    const text = el.textContent.trim();
-    const treffer = ZAHLTEIL.exec(text);
-    if (!treffer) return;
-    const roh = treffer[2];
-    const ziel = parseFloat(roh.replace(',', '.'));
-    if (!isFinite(ziel) || ziel === 0) return;        // bei 0 gibt es nichts hochzuzählen
-    const nachkomma = roh.split(/[.,]/)[1];
-    el.setAttribute('data-zaehlt', '');
-    zahlen.push({
-      el: el,
-      karte: el.closest('details.agent-card'),
-      original: text,
-      vorsatz: treffer[1],
-      nachsatz: treffer[3],
-      ziel: ziel,
-      stellen: nachkomma ? nachkomma.length : 0,
-      trenner: roh.indexOf(',') >= 0 ? ',' : '.',
-      sichtbar: false,
-      gestartet: false,
-      fertig: false
-    });
-  });
-  if (!zahlen.length) return;
-
-  function formatiere(z, wert) {
-    let s = wert.toFixed(z.stellen);
-    if (z.trenner === ',') s = s.replace('.', ',');
-    return z.vorsatz + s + z.nachsatz;
-  }
-
-  function beenden(z) {
-    if (z.fertig) return;
-    z.fertig = true;
-    z.el.textContent = z.original;        // exakt der Wert aus dem Markup
-    z.el.removeAttribute('aria-hidden');
-  }
-
-  function starte(z) {
-    if (z.gestartet || !z.sichtbar) return;
-    if (z.karte && !z.karte.open) return;
-    z.gestartet = true;
-
-    // Die Zwischenwerte sind für Screenreader ohne Aussage. Sie werden
-    // ausgeblendet; unmittelbar nach dem Lauf steht der Endwert wieder da.
-    z.el.setAttribute('aria-hidden', 'true');
-    z.el.textContent = formatiere(z, 0);
-
-    const beginn = performance.now();
-    (function schritt(jetzt) {
-      const t = Math.min(1, (jetzt - beginn) / DAUER);
-      const weich = 1 - Math.pow(1 - t, 3);   // ruhiges Auslaufen
-      z.el.textContent = formatiere(z, z.ziel * weich);
-      if (t < 1) { requestAnimationFrame(schritt); return; }
-      beenden(z);
-    })(beginn);
-
-    // Sicherheitsnetz, falls keine Frames mehr kommen (verstecktes Tab o. Ä.)
-    setTimeout(function () { beenden(z); }, DAUER + 900);
-  }
-
-  const zahlBeobachter = new IntersectionObserver(function (eintraege) {
-    eintraege.forEach(function (e) {
-      if (!e.isIntersecting) return;
-      const z = zahlen.filter(function (x) { return x.el === e.target; })[0];
-      if (!z) return;
-      z.sichtbar = true;
-      zahlBeobachter.unobserve(e.target);
-      starte(z);
-    });
-  }, { threshold: 0.6 });
-
-  zahlen.forEach(function (z) { zahlBeobachter.observe(z.el); });
-
-  // Zugeklappt sind die Zahlen nicht im Layout — erst das Aufklappen
-  // macht sie messbar. Deshalb hier zusätzlich anstoßen.
-  document.querySelectorAll('details.agent-card').forEach(function (karte) {
-    karte.addEventListener('toggle', function () {
-      if (!karte.open) return;
-      zahlen.forEach(function (z) {
-        if (z.karte !== karte || z.gestartet) return;
-        const r = z.el.getBoundingClientRect();
-        if (r.bottom <= 0 || r.top >= window.innerHeight) return;  // liegt außerhalb
-        z.sichtbar = true;
-        starte(z);
-      });
-    });
-  });
-})();
 
 // ============================================================
 // Data-Scan-Hover: Lichtpunkt folgt der Maus innerhalb der

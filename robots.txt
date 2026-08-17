@@ -3,11 +3,11 @@
 # Strukturierte Kurzfassung fuer KI-Systeme:
 # llms.txt:      https://www.tm-ki-consulting.de/llms.txt
 # llms-full.txt: https://www.tm-ki-consulting.de/llms-full.txt
-# Jede Inhaltsseite gibt es zusaetzlich als Markdown: .html -> .md
+# Jede Inhaltsseite gibt es zusätzlich als Markdown: .html -> .md
 #
 # Hinweis: Ein Crawler befolgt immer nur die Gruppe mit dem passendsten
 # User-agent. Deshalb steht der Ausschluss der Datenschutzerklaerung
-# (traegt zusaetzlich meta robots="noindex") in jeder Gruppe erneut.
+# (traegt zusätzlich meta robots="noindex") in jeder Gruppe erneut.
 # Das Impressum ist bewusst freigegeben: Es ist die Quelle fuer Firmensitz,
 # Registergericht und Geschaeftsfuehrung.
 
@@ -76,3 +76,8 @@ Allow: /
 Disallow: /datenschutz.html
 
 Sitemap: https://www.tm-ki-consulting.de/sitemap.xml
+
+# Arbeitsmaterial, gehört nicht in den Index.
+User-agent: *
+Disallow: /_backup/
+Disallow: /AENDERUNGEN.md

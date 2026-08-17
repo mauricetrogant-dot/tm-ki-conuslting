@@ -1,9 +1,9 @@
 # TM KI Consulting UG (haftungsbeschränkt) — Volltext
 
-> Vollstaendige Textfassung aller Inhaltsseiten von www.tm-ki-consulting.de in einer Datei.
-> Ergaenzung zu /llms.txt (Kurzuebersicht). Massgeblich ist stets die jeweilige HTML-Seite.
+> Vollständige Textfassung aller Inhaltsseiten von www.tm-ki-consulting.de in einer Datei.
+> Ergänzung zu /llms.txt (Kurzübersicht). Maßgeblich ist stets die jeweilige HTML-Seite.
 
-Stand dieser Datei: 2026-08-08
+Stand dieser Datei: 2026-08-09
 
 
 ==============================================================================
@@ -50,7 +50,7 @@ Schaltzentralen, die verstreute Unternehmensdaten an einem Ort zusammenziehen: m
 
 ## Unsere KI-Agenten
 
-Sechs Agententypen, alle nach derselben Bauweise: Antworten aus geprüften Quellen, Fundstelle zu jeder Aussage, Eskalation an Menschen bei Unsicherheit, sensible Rohdaten strukturell getrennt von der KI-Verarbeitung ([Zwei-Pfad-Sicherheitsarchitektur](https://www.tm-ki-consulting.de/sicherheitsarchitektur.html)).
+Sechs Agenten, ein Bauprinzip: Fachdomäne, geprüfte Quellen, menschliche Freigabe. Antworten kommen aus geprüften Quellen, zu jeder Aussage gehört eine Fundstelle, bei Unsicherheit wird an Menschen eskaliert, und sensible Rohdaten sind strukturell von der KI-Verarbeitung getrennt ([Zwei-Pfad-Sicherheitsarchitektur](https://www.tm-ki-consulting.de/sicherheitsarchitektur.html)).
 
 ### Agent 01 · Akquise-Agent
 
@@ -218,11 +218,29 @@ Wir bauen unsere Agenten so effizient, dass leistungsfähige Low-Parameter-Model
 lokal auf eigener Hardware in Deutschland laufen. Das senkt die nötige
 Rechenleistung, macht Kosten planbar und hält die Daten im Haus.
 
-**Methode** — Fachwissen lebt in pflegbaren RAG-Quellen und Werkzeugen, nicht in überladenen Anweisungen. Der System-Prompt bleibt schlank und stabil, die Quellen wachsen mit.
+**Methode**
 
-**Wirkung** — Knappe, klare Anweisungen belegen weniger Speicher und sparen Rechenzeit bei jeder Anfrage. Das erhöht den Durchsatz und die Zahl paralleler Nutzer auch bei begrenzter Hardware.
+### Wissen in Quellen, nicht im Prompt
 
-**Nutzen** — Eigene Hardware bedeutet planbare Fixkosten statt offener API-Kosten, Unabhängigkeit von US- oder China-Clouds und einen Betrieb, der dem EU AI Act und der DSGVO standhält.
+Fachwissen lebt in pflegbaren RAG-Quellen und Werkzeugen, nicht in
+überladenen Anweisungen. Der System-Prompt bleibt schlank und stabil,
+die Quellen wachsen mit.
+
+**Wirkung**
+
+### Jedes Token kostet Rechenzeit
+
+Knappe, klare Anweisungen belegen weniger Speicher und sparen Rechenzeit
+bei jeder Anfrage. Das erhöht den Durchsatz und die Zahl paralleler Nutzer
+auch bei begrenzter Hardware.
+
+**Nutzen**
+
+### Souverän und planbar
+
+Eigene Hardware bedeutet planbare Fixkosten statt offener API-Kosten,
+Unabhängigkeit von US- oder China-Clouds und einen Betrieb, der dem
+EU AI Act und der DSGVO standhält.
 
 ==============================================================================
 

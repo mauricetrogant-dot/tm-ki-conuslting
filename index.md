@@ -40,7 +40,7 @@ Schaltzentralen, die verstreute Unternehmensdaten an einem Ort zusammenziehen: m
 
 ## Unsere KI-Agenten
 
-Sechs Agententypen, alle nach derselben Bauweise: Antworten aus geprüften Quellen, Fundstelle zu jeder Aussage, Eskalation an Menschen bei Unsicherheit, sensible Rohdaten strukturell getrennt von der KI-Verarbeitung ([Zwei-Pfad-Sicherheitsarchitektur](https://www.tm-ki-consulting.de/sicherheitsarchitektur.html)).
+Sechs Agenten, ein Bauprinzip: Fachdomäne, geprüfte Quellen, menschliche Freigabe. Antworten kommen aus geprüften Quellen, zu jeder Aussage gehört eine Fundstelle, bei Unsicherheit wird an Menschen eskaliert, und sensible Rohdaten sind strukturell von der KI-Verarbeitung getrennt ([Zwei-Pfad-Sicherheitsarchitektur](https://www.tm-ki-consulting.de/sicherheitsarchitektur.html)).
 
 ### Agent 01 · Akquise-Agent
 

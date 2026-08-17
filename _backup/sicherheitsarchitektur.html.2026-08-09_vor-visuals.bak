@@ -12,7 +12,6 @@
 <meta property="og:url" content="https://www.tm-ki-consulting.de/sicherheitsarchitektur.html" />
 <meta name="twitter:card" content="summary_large_image" />
 <link rel="canonical" href="https://www.tm-ki-consulting.de/sicherheitsarchitektur.html" />
-<link rel="alternate" type="text/markdown" href="sicherheitsarchitektur.md" title="Markdown-Fassung dieser Seite" />
 
 <link rel="icon" href="favicon.ico" />
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
@@ -380,20 +379,13 @@
           <text x="300" y="26" text-anchor="middle" fill="#8a96a8" font-size="11" letter-spacing="1.5">PFAD A · KI-PFAD</text>
           <text x="300" y="368" text-anchor="middle" fill="#8a96a8" font-size="11" letter-spacing="1.5">PFAD B · GESCHÜTZTER KANAL</text>
 
-          <!-- Verbindungslinien. data-ad-step gibt nur die Reihenfolge vor, in der
-               sie sich beim Scrollen zeichnen (1 = gemeinsamer Eingang, 2/3 = Pfad A,
-               4/5 = Pfad B, 6 = Zusammenführung). Ohne JavaScript und bei reduzierter
-               Bewegung sind alle Linien von Anfang an vollständig da. -->
           <g fill="none" stroke="#8a96a8" stroke-width="1.5">
-            <!-- Deckungsgleiche Kopie des gemeinsamen Stücks: nur damit sich der
-                 Eingang zuerst zeichnen kann. Ändert die Darstellung nicht. -->
-            <path class="ad-line" data-ad-step="1" d="M160,190 L185,190"/>
-            <path class="ad-line" data-ad-step="2" d="M160,190 L185,190 L185,81 L206,81" marker-end="url(#adArrow)"/>
-            <path class="ad-line" data-ad-step="4" d="M160,190 L185,190 L185,299 L206,299" marker-end="url(#adArrow)"/>
-            <path class="ad-line" data-ad-step="3" d="M390,81 L416,81" marker-end="url(#adArrow)"/>
-            <path class="ad-line" data-ad-step="5" d="M390,299 L416,299" marker-end="url(#adArrow)"/>
-            <path class="ad-line" data-ad-step="6" d="M600,81 L624,81 L624,176 L640,176" marker-end="url(#adArrow)"/>
-            <path class="ad-line" data-ad-step="6" d="M600,299 L624,299 L624,204 L640,204" marker-end="url(#adArrow)"/>
+            <path d="M160,190 L185,190 L185,81 L206,81" marker-end="url(#adArrow)"/>
+            <path d="M160,190 L185,190 L185,299 L206,299" marker-end="url(#adArrow)"/>
+            <path d="M390,81 L416,81" marker-end="url(#adArrow)"/>
+            <path d="M390,299 L416,299" marker-end="url(#adArrow)"/>
+            <path d="M600,81 L624,81 L624,176 L640,176" marker-end="url(#adArrow)"/>
+            <path d="M600,299 L624,299 L624,204 L640,204" marker-end="url(#adArrow)"/>
           </g>
 
           <line x1="196" y1="190" x2="624" y2="190" stroke="#5a6578" stroke-width="1" stroke-dasharray="5 5"/>
@@ -595,108 +587,6 @@
   });
   nav.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
   window.addEventListener('resize', () => { if (window.innerWidth > 768) closeMenu(); });
-})();
-
-// ============================================================
-// Diagramm der Zwei-Pfad-Architektur: die Verbindungslinien
-// zeichnen sich beim ersten Sichtbarwerden nacheinander.
-//
-// Grundzustand ist bewusst das FERTIGE Diagramm. Erst wenn die
-// Animation wirklich startet, werden die Linien per Inline-Stil
-// kurz verkürzt und wieder ausgezogen; danach werden dieselben
-// Inline-Stile restlos entfernt. Ohne JavaScript, ohne
-// IntersectionObserver oder bei prefers-reduced-motion bleibt
-// alles unverändert vollständig sichtbar.
-//
-// Für Screenreader ändert sich nichts: die Beschreibung steht im
-// aria-label des <svg>, die Linien selbst tragen keine Bedeutung.
-// ============================================================
-(function () {
-  const figur = document.querySelector('.arch-diagram');
-  if (!figur) return;
-  const linien = Array.from(figur.querySelectorAll('.ad-line'));
-  if (!linien.length) return;
-
-  if (!('IntersectionObserver' in window)) return;
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-  // Startzeitpunkt und Dauer je Stufe in Millisekunden.
-  // Bewusst langsam: das Diagramm soll sich aufbauen, nicht blinken.
-  const STUFEN = {
-    1: { start:    0, dauer: 380 },   // gemeinsamer Eingang
-    2: { start:  380, dauer: 900 },   // Pfad A · Abzweig nach oben
-    3: { start: 1240, dauer: 320 },   // Pfad A · weiter in den KI-Pfad
-    4: { start: 1620, dauer: 900 },   // Pfad B · Abzweig nach unten
-    5: { start: 2480, dauer: 320 },   // Pfad B · weiter in den geschützten Kanal
-    6: { start: 2860, dauer: 820 }    // Zusammenführung „Mensch entscheidet"
-  };
-  const WEICH = 'cubic-bezier(.25,.6,.2,1)';
-  const GESAMT = 3700;
-
-  let gelaufen = false;
-
-  function aufraeumen() {
-    linien.forEach(pfad => {
-      pfad.style.removeProperty('stroke-dasharray');
-      pfad.style.removeProperty('stroke-dashoffset');
-      pfad.style.removeProperty('transition');
-      pfad.style.removeProperty('marker-end');
-    });
-  }
-
-  function zeichnen() {
-    if (gelaufen) return;
-    gelaufen = true;
-
-    let laengen;
-    try {
-      laengen = linien.map(pfad => pfad.getTotalLength());
-    } catch (e) {
-      return; // getTotalLength nicht verfügbar — Diagramm bleibt einfach fertig stehen
-    }
-
-    linien.forEach((pfad, i) => {
-      pfad.style.transition = 'none';
-      pfad.style.strokeDasharray = laengen[i];
-      pfad.style.strokeDashoffset = laengen[i];
-      // Pfeilspitze erst zeigen, wenn die zugehörige Linie angekommen ist.
-      if (pfad.getAttribute('marker-end')) pfad.style.markerEnd = 'none';
-    });
-
-    // Erzwingt, dass der Ausgangszustand vom Browser übernommen wird,
-    // bevor die Übergänge gesetzt werden.
-    figur.getBoundingClientRect();
-
-    requestAnimationFrame(() => {
-      linien.forEach((pfad, i) => {
-        const s = STUFEN[pfad.dataset.adStep] || STUFEN[1];
-        pfad.style.transition =
-          'stroke-dashoffset ' + s.dauer + 'ms ' + WEICH + ' ' + s.start + 'ms';
-        pfad.style.strokeDashoffset = '0';
-        if (pfad.getAttribute('marker-end')) {
-          setTimeout(() => { pfad.style.removeProperty('marker-end'); }, s.start + s.dauer);
-        }
-      });
-    });
-
-    // Sicherheitsnetz: spätestens kurz nach der letzten Stufe steht das
-    // Diagramm wieder exakt so da, wie es im Markup steht.
-    setTimeout(aufraeumen, GESAMT + 600);
-  }
-
-  const beobachter = new IntersectionObserver(eintraege => {
-    eintraege.forEach(e => {
-      if (!e.isIntersecting) return;
-      beobachter.unobserve(e.target);   // nur einmal, nicht bei jedem Scrollen
-      zeichnen();
-    });
-  // Das Diagramm ist hoch (rund 690 px auf dem Desktop) und ragt schon beim
-  // Laden mit dem oberen Rand ins Bild. Erst ab gut einem Drittel Sichtbarkeit
-  // und mit etwas Abstand zur Unterkante zeichnen — sonst läuft die Animation
-  // ab, während man nur den obersten Streifen sieht.
-  }, { threshold: 0.35, rootMargin: '0px 0px -120px 0px' });
-
-  beobachter.observe(figur);
 })();
 </script>
 </body>

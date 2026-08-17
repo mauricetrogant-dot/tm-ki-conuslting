@@ -57,8 +57,26 @@ Wir bauen unsere Agenten so effizient, dass leistungsfähige Low-Parameter-Model
 lokal auf eigener Hardware in Deutschland laufen. Das senkt die nötige
 Rechenleistung, macht Kosten planbar und hält die Daten im Haus.
 
-**Methode** — Fachwissen lebt in pflegbaren RAG-Quellen und Werkzeugen, nicht in überladenen Anweisungen. Der System-Prompt bleibt schlank und stabil, die Quellen wachsen mit.
+**Methode**
 
-**Wirkung** — Knappe, klare Anweisungen belegen weniger Speicher und sparen Rechenzeit bei jeder Anfrage. Das erhöht den Durchsatz und die Zahl paralleler Nutzer auch bei begrenzter Hardware.
+### Wissen in Quellen, nicht im Prompt
 
-**Nutzen** — Eigene Hardware bedeutet planbare Fixkosten statt offener API-Kosten, Unabhängigkeit von US- oder China-Clouds und einen Betrieb, der dem EU AI Act und der DSGVO standhält.
+Fachwissen lebt in pflegbaren RAG-Quellen und Werkzeugen, nicht in
+überladenen Anweisungen. Der System-Prompt bleibt schlank und stabil,
+die Quellen wachsen mit.
+
+**Wirkung**
+
+### Jedes Token kostet Rechenzeit
+
+Knappe, klare Anweisungen belegen weniger Speicher und sparen Rechenzeit
+bei jeder Anfrage. Das erhöht den Durchsatz und die Zahl paralleler Nutzer
+auch bei begrenzter Hardware.
+
+**Nutzen**
+
+### Souverän und planbar
+
+Eigene Hardware bedeutet planbare Fixkosten statt offener API-Kosten,
+Unabhängigkeit von US- oder China-Clouds und einen Betrieb, der dem
+EU AI Act und der DSGVO standhält.

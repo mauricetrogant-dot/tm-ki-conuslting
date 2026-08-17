@@ -1,4 +1,4 @@
-# TM KI Consulting — Website (v3.9)
+# TM KI Consulting — Website (v4.0)
 
 Statische Website der TM KI Consulting UG (haftungsbeschränkt), ausgeliefert über
 GitHub Pages unter **https://www.tm-ki-consulting.de**.
@@ -28,6 +28,20 @@ HTML gerendert und wären nicht mehr im Rohformat abrufbar. Achtung: Manche
 Datei-Uploads über die GitHub-Weboberfläche ignorieren Dateien, die mit einem
 Punkt beginnen. Im Zweifel `.nojekyll` nach dem Upload einmal über
 `Add file → Create new file` von Hand anlegen (leerer Inhalt genügt).
+
+### Was nicht auf den Server gehört
+
+`_backup/` und `AENDERUNGEN.md` sind Arbeitsmaterial. Auf GitHub Pages wären sie
+öffentlich abrufbar — `AENDERUNGEN.md` beschreibt interne Abläufe, die `.bak`-Dateien
+sind vollständige Altfassungen der Seiten.
+
+Die mitgelieferte `.gitignore` hält beide aus dem Repository heraus; beim Arbeiten mit
+`git push` musst du nichts weiter tun. Lädst du dagegen **manuell über die
+GitHub-Weboberfläche** hoch, greift die `.gitignore` nicht — dann beide vorher aus dem
+Upload weglassen. Ergänzend sind sie in `robots.txt` auf `Disallow` gesetzt; das ist
+aber nur eine Bitte an Crawler, kein Zugriffsschutz.
+
+Lokal können beide liegen bleiben, sie stören beim Testen nicht.
 
 ### Lokal ansehen
 
@@ -88,6 +102,8 @@ local-server.js                     Wird von start.bat genutzt, wenn nur Node.js
 impressum.html                      Impressum (auch als Popup auf der Startseite)
 datenschutz.html                    Datenschutzerklärung
 404.html                            Fehlerseite (von GitHub Pages automatisch genutzt)
+AENDERUNGEN.md                      Arbeitsdoku zu den Visual-Effekten — nicht deployen
+_backup/                            Sicherungen vor den Visual-Änderungen — nicht deployen
 assets/
   TM_KI_Logo.png/.webp              Logo
   julian-manske.*, maurice-trogant.*
@@ -95,6 +111,8 @@ assets/
   Leistungskatalog_TM-KI-Consulting_v.1.pdf
   fonts/                            Lokal gehostete Schriften (Inter, Playfair) + fonts.css
   js/hero-three.js                  Hero-Animation (Three.js-Agentenfeld)
+  js/thinking-orbs/                 Orb-Bibliothek (MIT, lokal gehostet, kein npm-Aufruf)
+    orb.js, thinking-orbs.mjs, LICENSE
   js/webmcp.js                      Meldet Werkzeuge für KI-Agenten im Browser an
   js/vendor/lenis.min.js            Scroll-Bibliothek
   js/vendor/three.module.min.js     Three.js (lokal, kein CDN)
@@ -124,18 +142,27 @@ assets/
 
 ---
 
-## Änderungen in v3.9
+## Änderungen in v4.0
 
-- `.nojekyll` ergänzt (Voraussetzung dafür, dass `.md`-Dateien roh ausgeliefert werden).
-- Markdown-Spiegel für die sechs Inhaltsseiten erzeugt, jeweils per
+Aufsetzend auf dem Visual-Stand vom 09.08.2026 (Orb-Anker, gezeichnete
+Verbindungslinien, hochlaufende Zahlen, Aufdeck-Effekt — im Detail beschrieben in
+`AENDERUNGEN.md`) wurden ergänzt:
+
+- `.nojekyll` (Voraussetzung dafür, dass `.md`-Dateien roh ausgeliefert werden).
+- Markdown-Spiegel für die sechs Inhaltsseiten, jeweils per
   `<link rel="alternate" type="text/markdown">` im `<head>` verlinkt.
-- `llms-full.txt` ergänzt (Volltext aller Inhaltsseiten).
+- `llms-full.txt` (Volltext aller Inhaltsseiten).
 - `llms.txt`: `agent-harness-artikel.html` ergänzt (fehlte), Hinweise auf die
   Markdown-Fassungen und `llms-full.txt` aufgenommen.
 - `sitemap.xml`: `agent-harness-artikel.html` ergänzt (fehlte), `llms-full.txt`
   aufgenommen.
-- `robots.txt`: Verweis auf `llms-full.txt` und die Markdown-Fassungen im Kopfkommentar.
-- Entfernt: die verwaiste Kopie `hero-three.js` im Root — verwendet wird
-  `assets/js/hero-three.js`. `start.bat` und `local-server.js` bleiben erhalten
-  (lokale Vorschau unter Windows).
+- `robots.txt`: Verweis auf `llms-full.txt` und die Markdown-Fassungen im
+  Kopfkommentar; `_backup/` und `AENDERUNGEN.md` auf `Disallow`.
+- `.gitignore` neu — hält `_backup/` und `AENDERUNGEN.md` aus dem Repository.
 - `README.txt` → `README.md` (wird von GitHub im Repository gerendert).
+
+`start.bat` und `local-server.js` sind unverändert übernommen.
+
+Die Textinhalte der Seiten sind gegenüber v3.8 unverändert, mit einer Ausnahme: Im
+Abschnitt „Unsere KI-Agenten" ist eine Unterzeile hinzugekommen („Sechs Agenten, ein
+Bauprinzip …"). Sie ist in `index.md` und `llms-full.txt` nachgezogen.
