@@ -154,6 +154,22 @@
   }
   .nav-cta:hover { background: var(--off-white); }
 
+  /* Geschuetzter Zugang fuer bestehende Benutzer. Der Login bleibt optisch
+     bewusst hinter dem Kontakt-CTA zurueck, ist aber als Schaltflaeche klar
+     erkennbar. Die eigentliche Anmeldung und 2FA laufen auf der getrennten
+     Cockpit-Subdomain. */
+  .nav-login {
+    margin-left: 8px;
+    border: 1px solid rgba(255, 255, 255, .22);
+    padding: 9px 18px; font-size: 13px; font-weight: 500;
+    opacity: 1 !important;
+    transition: border-color .2s, background .2s;
+  }
+  .nav-login:hover {
+    border-color: var(--gray-300);
+    background: rgba(255, 255, 255, .06);
+  }
+
   /* ============ MOBILE NAV TOGGLE ============ */
   .nav-toggle {
     display: none;
@@ -2158,6 +2174,11 @@
       text-align: center;
       padding: 14px 22px;
     }
+    nav.primary .nav-login {
+      margin: 16px 0 0;
+      text-align: center;
+      padding: 13px 22px;
+    }
     header.site { overflow: visible; }
     .nav { position: relative; }
     .nav { padding: 18px 24px; }
@@ -2855,6 +2876,7 @@
         <li><a href="#insights">Insights</a></li>
         <li><a href="#team">Team</a></li>
         <li><a href="impressum.html">Impressum</a></li>
+        <li><a href="https://cockpit.tm-ki-consulting.de/" class="nav-login" rel="noopener">Anmelden</a></li>
         <li><a href="#kontakt" class="nav-cta">Kontakt</a></li>
       </ul>
     </nav>

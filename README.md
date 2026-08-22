@@ -1,11 +1,34 @@
-# TM KI Consulting — Website (v4.0)
+# TM KI Consulting — Website (v4.1)
 
-Statische Website der TM KI Consulting UG (haftungsbeschränkt), ausgeliefert über
-GitHub Pages unter **https://www.tm-ki-consulting.de**.
+Statische Website der TM KI Consulting UG (haftungsbeschränkt), produktiv unter
+**https://www.tm-ki-consulting.de**. Der eigene VPS zieht den freigegebenen Stand
+aus diesem Repository und veröffentlicht ihn atomar über nginx.
 
 ---
 
-## Deployment auf GitHub Pages
+## Produktivbetrieb auf dem eigenen VPS
+
+Die Serverkonfiguration liegt im privaten Repository
+`TM-KI-Consulting/Betrieb` unter `server/`. Verwendet werden dort insbesondere:
+
+- `nginx-website.conf` für HTTPS, kanonische Domain und Sicherheitskopfzeilen,
+- `website-aktualisieren.sh` für den atomaren Release-Wechsel,
+- `website-aktualisieren.timer` für den automatischen Abgleich alle fünf Minuten,
+- `INSTALLATION-GESAMTSYSTEM.md` für die vollständige Einrichtung.
+
+`_backup/`, Git-Metadaten, lokale Startskripte, `README.md`, `AENDERUNGEN.md`,
+`CNAME` und `.nojekyll` werden nicht in den nginx-Webroot kopiert. Die
+Markdown-Spiegel und `llms*.txt` bleiben dagegen bewusst öffentlich erreichbar.
+
+Der Navigationspunkt **Anmelden** führt auf das getrennte interne Cockpit unter
+`https://cockpit.tm-ki-consulting.de/`. Das Cockpit ist nicht Teil dieses
+statischen Webroots und wird durch Entra ID mit MFA geschützt.
+
+## GitHub Pages (nur Übergang/Rückfallweg)
+
+Bis VPS, TLS und Anmeldung vollständig abgenommen sind, kann GitHub Pages als
+Rückfallweg aktiv bleiben. Danach Pages in den Repository-Einstellungen
+deaktivieren; die Datei `CNAME` bleibt nur für diesen Übergang im Repository.
 
 1. Repository anlegen (öffentlich oder privat mit Pages-Berechtigung).
 2. **Den gesamten Inhalt dieses Ordners** in das Repository-Root laden — nicht den
@@ -166,3 +189,10 @@ Verbindungslinien, hochlaufende Zahlen, Aufdeck-Effekt — im Detail beschrieben
 Die Textinhalte der Seiten sind gegenüber v3.8 unverändert, mit einer Ausnahme: Im
 Abschnitt „Unsere KI-Agenten" ist eine Unterzeile hinzugekommen („Sechs Agenten, ein
 Bauprinzip …"). Sie ist in `index.md` und `llms-full.txt` nachgezogen.
+
+## Änderungen in v4.1
+
+- Navigationspunkt **Anmelden** ergänzt; Ziel ist ausschließlich die geschützte
+  Cockpit-Subdomain.
+- Dokumentation vom GitHub-Pages-Dauerbetrieb auf den eigenen VPS mit nginx
+  umgestellt.

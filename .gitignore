@@ -1,0 +1,7 @@
+# Arbeitsmaterial — bleibt lokal, wird nicht deployed.
+_backup/
+AENDERUNGEN.md
+
+# Betriebssystem / Editor
+.DS_Store
+Thumbs.db
